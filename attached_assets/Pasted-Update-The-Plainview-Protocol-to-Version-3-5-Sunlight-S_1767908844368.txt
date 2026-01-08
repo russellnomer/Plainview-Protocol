@@ -1,0 +1,44 @@
+Update "The Plainview Protocol" to Version 3.5: Sunlight & Shadow Edition.
+
+Goal: Expand accountability to State/Local levels (Governors, Mayors) and implement a "Shadow Penalty" for officials who hide their data.
+
+PART 1: ARCHITECTURE UPDATE (`sources.json`)
+Add these new placeholders for State-Level Data:
+{
+  "legiscan_api": "https://api.legiscan.com/?key=TEST", 
+  "open_states": "https://v3.openstates.org/"
+}
+
+PART 2: NEW SCORING LOGIC (`app.py`)
+
+1. THE "ADVERSE INFERENCE" ENGINE:
+   - Create a function `calculate_transparency_score(visible_votes, total_sessions)`:
+   - Logic: 
+     - If `visible_votes` / `total_sessions` < 50%: Apply "Shadow Penalty" (-50 Points).
+     - Label: "⚠️ DATA WITHHELD (Adverse Inference Applied)".
+     - Text: "This official hides more than they show. Under the Plainview Protocol, we assume hidden records contain betrayal."
+
+2. PAGE UPDATE: "Leader Scorecard" -> "The Accountability Tribunal"
+   - Add Filter: "Federal", "State (Governor/Leg)", "Local (Mayor/Sheriff)".
+   
+   - STATE LEVEL (Mockup for Prototype):
+     - Create a dataset for Governors (e.g., NY, CA, FL, TX).
+     - Column: "Veto Record" (Did they veto Border Security?).
+     - Column: "Transparency Score" (Are their calendars public?).
+   
+   - LOCAL LEVEL (The "Warlord" Tracker):
+     - Allow Users to "Add an Official" (Local input).
+     - Checkbox: "Are voting records easily available online?"
+     - If User checks "No": Auto-assign "Shadow Score: F-".
+     - Display: "Status: HIDDEN. Presumed Hostile to Liberty."
+
+3. TRANSPARENCY METHODOLOGY PAGE (New Tab in Scorecard):
+   - Header: "How We Rate: The Spoliation Doctrine."
+   - Text: "In law, 'Spoliation' means destroying evidence. If a politician hides their record, we do not give them the benefit of the doubt. We apply 'Adverse Inference'—we assume the missing data proves their guilt."
+   - Chart: Pie Chart showing "Public Record" vs "The Shadow Gap".
+
+4. MAINTAIN EXISTING FEATURES:
+   - Keep Tariff Tracker, Watchdog, and Ecosystem.
+   - Ensure "State Multiplier" applies to Governors (e.g., Border State Governors held to higher standard).
+
+Generate updated `app.py` and `sources.json`.
