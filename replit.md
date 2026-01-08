@@ -1,7 +1,7 @@
 # The Plainview Protocol: Truth, Kindness, & Security
 
 ## Overview
-Version 3.1 - Self-Healing National Edition. A production-ready Streamlit web application with live data fetching from U.S. Treasury API, Senate feeds, and Wikipedia. Features state-specific calculations, leader scorecards, and activism tools. Pro-American, rule of law, domestic security focus.
+Version 3.7 - Live Data & Transparency Edition. A production-ready Streamlit web application with live data fetching from U.S. Treasury API, Senate feeds, and UnitedStates.io Congress data. Features state-specific calculations, leader scorecards, FOIA generator, and activism tools. Pro-American, rule of law, domestic security focus with full transparency expanders on every page.
 
 ## Features
 - **The National Lens**: Live national debt from Treasury API, state debt share, immigration burden with border state multipliers (1.6x)
@@ -33,7 +33,7 @@ streamlit run app.py --server.port 5000
 ## Data Sources
 - **Treasury Debt**: https://api.fiscaldata.treasury.gov (live, cached 1 hour)
 - **Senate Votes**: senate.gov XML feed
-- **Representatives**: Wikipedia scraping via pd.read_html
+- **Congress Legislators**: UnitedStates.io live JSON API (real Senators/Representatives by state)
 
 ## Sidebar Controls
 - State selector (all 50 states, default: New York)
