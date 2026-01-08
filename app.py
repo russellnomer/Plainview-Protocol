@@ -78,6 +78,24 @@ def get_reps(state_name):
         pass
     return fallback_df
 
+@st.cache_data(ttl=3600)
+def get_tariff_revenue():
+    """Fetches tariff/customs revenue from Treasury API. Fallback: FY2025 Estimate."""
+    fallback_tariff = 195000000000.00
+    try:
+        url = SOURCES.get("treasury_tariffs", "")
+        if url:
+            r = requests.get(url, timeout=5)
+            if r.status_code == 200:
+                data = r.json()
+                if data.get("data") and len(data["data"]) > 0:
+                    for key in ["customs_duties_amount", "current_month_gross_amt", "current_fytd_gross_amt"]:
+                        if key in data["data"][0]:
+                            return float(data["data"][0][key]) * 1000000
+    except Exception:
+        pass
+    return fallback_tariff
+
 STATES = [
     "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", 
     "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", 
@@ -101,10 +119,10 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v3.1 | Self-Healing Architecture")
+st.sidebar.caption("v3.2 | Self-Healing Architecture")
 
 selected_state = st.sidebar.selectbox("Select Your State", STATES, index=31)
-selected_focus = st.sidebar.selectbox("Select Focus", ["All", "Border Security", "Veterans First", "Education & Skills", "Crime & Safety"])
+selected_focus = st.sidebar.selectbox("Select Focus", ["All", "Border Security", "Veterans First", "Education & Skills", "Crime & Safety", "Trade & Tariffs"])
 
 st.sidebar.divider()
 if is_system_online:
@@ -116,7 +134,7 @@ st.sidebar.divider()
 st.sidebar.markdown("### Fuel the Mission")
 st.sidebar.link_button("☕ Support Russell", "https://buymeacoffee.com/russellnomer")
 
-page = st.radio("Navigate", ["The National Lens", "The 2027 Fork", "The Activism Hub", "Leader Scorecard", "Support"], horizontal=True, label_visibility="collapsed")
+page = st.radio("Navigate", ["The National Lens", "The 2027 Fork", "Tariff Tracker", "The Activism Hub", "Leader Scorecard", "Support"], horizontal=True, label_visibility="collapsed")
 
 if page == "The National Lens":
     st.header(f"📍 State of the Union: {selected_state}")
@@ -190,6 +208,64 @@ elif page == "The 2027 Fork":
     
     savings = (status_quo[-1] - reform[-1]) * 1000
     st.success(f"💰 **Potential Savings by 2030:** ${savings:,.0f} Billion through fiscal accountability.")
+
+elif page == "Tariff Tracker":
+    st.header("🇺🇸 Bringing Money Home: The Tariff Offset")
+    
+    tariff_revenue = get_tariff_revenue()
+    immigration_cost = 150700000000
+    
+    pop = STATE_POPS.get(selected_state, 6000000)
+    state_dividend = (tariff_revenue / US_POP) * pop
+    per_capita_dividend = tariff_revenue / US_POP
+    
+    col1, col2 = st.columns(2)
+    col1.metric("💵 Total Tariff Revenue (FY To Date)", f"${tariff_revenue:,.0f}")
+    col2.metric(f"🎁 {selected_state}'s Plainview Dividend", f"${state_dividend:,.0f}")
+    
+    st.caption("*This is foreign money entering the US Treasury through trade policy.*")
+    
+    st.divider()
+    st.subheader("⚖️ The Debate: Pain vs. Gain")
+    
+    pain_col, gain_col = st.columns(2)
+    
+    with pain_col:
+        st.markdown("### 😰 The Pain: Importers' Cost")
+        st.warning("Businesses relying on foreign manufacturing face higher costs ($500k+/yr for some). Consumer prices may rise on imported goods.")
+    
+    with gain_col:
+        st.markdown("### 💪 The Gain: American Strength")
+        st.success("Incentivizes domestic production, creates jobs, and funds Veteran/Border priorities. Foreign nations pay into our Treasury.")
+    
+    st.divider()
+    st.subheader("📊 The Offset Strategy")
+    
+    offset_data = pd.DataFrame({
+        "Category": ["Immigration Cost", "Tariff Revenue"],
+        "Amount (Billions)": [immigration_cost / 1e9, tariff_revenue / 1e9]
+    })
+    
+    fig = px.bar(offset_data, x="Category", y="Amount (Billions)", 
+                 color="Category",
+                 color_discrete_map={"Immigration Cost": "#b22222", "Tariff Revenue": "#0d3b66"})
+    fig.update_layout(showlegend=False)
+    st.plotly_chart(fig, use_container_width=True)
+    
+    net_position = tariff_revenue - immigration_cost
+    if net_position >= 0:
+        st.success(f"✅ **In the Black:** Tariff revenue exceeds immigration cost by ${net_position/1e9:.1f}B")
+    else:
+        st.error(f"❌ **In the Red:** Immigration cost exceeds tariff revenue by ${abs(net_position)/1e9:.1f}B")
+        st.info("Increasing tariff enforcement or reducing policy gaps could close this deficit.")
+    
+    st.divider()
+    st.subheader("🌉 Bridge Builder: Trade Edition")
+    st.markdown("**Concerned about rising prices?** Ask your reps to use tariff revenue to cut income tax, not just spend it.")
+    
+    trade_template = f"In {selected_state}, we support smart trade policy. Use tariff revenue to cut our taxes, not grow government. #PlainviewProtocol #FairTrade"
+    st.code(trade_template, language=None)
+    st.link_button("Share on X (Twitter)", f"https://twitter.com/intent/tweet?text={trade_template.replace(' ', '%20').replace('#', '%23')}")
 
 elif page == "The Activism Hub":
     st.header("🌉 The Bridge Builder: Facts Over Rage")
