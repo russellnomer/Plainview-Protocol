@@ -1,29 +1,48 @@
 import json
 import requests
+import os
 
-def check_sources():
-    with open('sources.json', 'r') as f:
-        sources = json.load(f)
+STATUS_FILE = "system_status.json"
+SOURCES_FILE = "sources.json"
+
+def check_health():
+    print("🐕 Watchdog started: Checking data sources...")
     
-    status = {}
-    
+    try:
+        with open(SOURCES_FILE, "r") as f:
+            sources = json.load(f)
+    except FileNotFoundError:
+        print("❌ Error: sources.json not found.")
+        return
+
+    status_report = {}
+    all_healthy = True
+
     for name, url in sources.items():
         try:
-            response = requests.get(url, timeout=10)
+            print(f"   Pinging {name}...", end=" ")
+            headers = {"User-Agent": "Mozilla/5.0"}
+            response = requests.get(url, headers=headers, timeout=10)
+            
             if response.status_code == 200:
-                status[name] = "OK"
+                print("✅ OK")
+                status_report[name] = "OK"
             else:
-                status[name] = "ERROR"
-                print(f"WARNING: {name} returned status {response.status_code}")
+                print(f"❌ FAIL ({response.status_code})")
+                status_report[name] = "ERROR"
+                all_healthy = False
         except Exception as e:
-            status[name] = "ERROR"
-            print(f"WARNING: {name} failed - {str(e)}")
+            print(f"❌ FAIL (Exception: {e})")
+            status_report[name] = "ERROR"
+            all_healthy = False
+
+    with open(STATUS_FILE, "w") as f:
+        json.dump(status_report, f)
     
-    with open('system_status.json', 'w') as f:
-        json.dump(status, f, indent=2)
-    
-    print("System status updated:", status)
-    return status
+    if all_healthy:
+        print("🟢 All systems nominal.")
+    else:
+        print("⚠️ Warning: Some systems are down. App will use fallbacks.")
 
 if __name__ == "__main__":
-    check_sources()
+    check_health()
