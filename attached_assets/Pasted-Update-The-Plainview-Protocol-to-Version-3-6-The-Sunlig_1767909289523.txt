@@ -1,0 +1,46 @@
+Update "The Plainview Protocol" to Version 3.6: The Sunlight Cannon.
+
+Goal: Add a "FOIA Generator" that automates the creation of legal public records requests with "Spoliation" warnings to demand transparency.
+
+PART 1: UPDATE `sources.json`
+Add these resources:
+"foia_gov": "https://www.foia.gov",
+"muckrock": "https://www.muckrock.com",
+"state_laws": "https://www.nfoic.org/coalitions/state-foi-resources/"
+
+PART 2: UPDATE `app.py`
+
+1. NEW PAGE: "The Sunlight Cannon (FOIA)"
+   - Add to Sidebar Navigation.
+
+   - HEADER: "🔦 The Sunlight Cannon: Wake the Watchers"
+   - TEXT: "Apathy is over. Use this tool to generate a legal Freedom of Information Act (FOIA) request. We demand the data. If they hide it, we apply 'Adverse Inference'—assuming the hidden data proves corruption."
+
+   - SECTION 1: THE CONFIGURATOR
+     - Select Jurisdiction: [Radio Button: "Federal (US Agencies)", "State/Local (Governor, Mayor, Sheriff)"]
+     - Input: Target Agency Name (e.g., "Department of Homeland Security", "Nassau County PD").
+     - Input: Specific Records Requested (e.g., "All emails regarding migrant housing contracts between Jan 2025 and Present").
+     - Checkbox: "Include 'Spoliation of Evidence' Warning?" (Default: Checked).
+
+   - SECTION 2: THE GENERATOR (The Engine)
+     - Create a function `generate_foia(jurisdiction, agency, topic, spoliation)`:
+       - IF Federal: Cite "5 U.S.C. § 552".
+       - IF State: Cite "State Public Records / Sunshine Laws".
+       - IF Spoliation Checked: Insert bold text: "**NOTICE OF SPOLIATION:** You are hereby placed on notice to preserve all records. Failure to produce these documents will be viewed as spoliation of evidence, leading to an adverse inference that the missing evidence contained proof of negligence or malfeasance."
+     
+     - BUTTON: "Generate Legal Request"
+     
+     - OUTPUT: Display the fully formatted letter in a text box.
+     - ACTION BUTTONS:
+       - "Copy to Clipboard"
+       - "Find Federal Agency Email (FOIA.gov)" -> Link to sources.json.
+       - "Find State Laws (NFOIC)" -> Link to sources.json.
+
+   - SECTION 3: THE TRACKER (Local Storage)
+     - Simple text note: "Did you send it? Mark it on your calendar. They have 20 days (Federal) to respond."
+
+2. MAINTAIN ALL EXISTING FEATURES:
+   - Keep Watchdog, Tariff Tracker, Sourcing Finder, Ecosystem, and Scorecard.
+   - Ensure the "Support the Mission" button remains visible.
+
+Generate updated `app.py` and `sources.json`.

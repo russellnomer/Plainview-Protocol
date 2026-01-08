@@ -4,5 +4,8 @@
   "senate_feed": "https://www.senate.gov/legislative/LIS/roll_call_lists/vote_menu_119_1.xml",
   "wiki_reps": "https://en.wikipedia.org/wiki/List_of_current_members_of_the_United_States_House_of_Representatives",
   "legiscan_api": "https://api.legiscan.com/?key=TEST",
-  "open_states": "https://v3.openstates.org/"
+  "open_states": "https://v3.openstates.org/",
+  "foia_gov": "https://www.foia.gov",
+  "muckrock": "https://www.muckrock.com",
+  "state_laws": "https://www.nfoic.org/coalitions/state-foi-resources/"
 }
