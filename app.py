@@ -389,127 +389,54 @@ elif page == "The Activism Hub":
 
 elif page == "Accountability Tribunal":
     st.header("⚖️ The Accountability Tribunal")
-    
-    level_filter = st.radio("Filter by Level:", ["Federal", "State (Governor/Leg)", "Local (Mayor/Sheriff)"], horizontal=True)
-    
-    tab_officials, tab_methodology = st.tabs(["📊 Officials", "📖 Methodology"])
-    
-    with tab_officials:
-        if level_filter == "Federal":
-            col1, col2 = st.columns(2)
-            
-            with col1:
-                st.subheader("📜 Latest Senate Actions")
-                votes = get_senate_votes()
-                for v in votes:
-                    st.text(f"• {v}")
-                    
-            with col2:
-                st.subheader(f"👥 Your {selected_state} Reps")
-                reps_df = get_reps(selected_state)
-                st.dataframe(reps_df, hide_index=True)
-                
-            st.caption("Data fetched live from Senate.gov and Wikipedia public records.")
-        
-        elif level_filter == "State (Governor/Leg)":
-            st.subheader("🏛️ Governor Accountability Matrix")
-            
-            border_multiplier = 1.6 if selected_state in BORDER_STATES else 1.0
-            st.caption(f"*Border State Multiplier: {border_multiplier}x (Higher standard for border enforcement)*")
-            
-            gov_records = []
-            for state, data in GOVERNOR_DATA.items():
-                score, status = calculate_transparency_score(data["visible_votes"], data["total_sessions"])
-                adjusted_score = score
-                if state in BORDER_STATES and data["veto_border"] == "Yes":
-                    adjusted_score = max(0, score - 20)
-                
-                gov_records.append({
-                    "State": state,
-                    "Governor": data["name"],
-                    "Party": data["party"],
-                    "Vetoed Border Security": data["veto_border"],
-                    "Calendar Public": "✅" if data["calendar_public"] else "❌",
-                    "Transparency Score": adjusted_score,
-                    "Status": status
-                })
-            
-            gov_df = pd.DataFrame(gov_records)
-            st.dataframe(gov_df, hide_index=True, use_container_width=True)
-            
-            st.warning("⚠️ Officials with <50% transparency receive the **Shadow Penalty**: We assume hidden records contain betrayal.")
-        
-        elif level_filter == "Local (Mayor/Sheriff)":
-            st.subheader("🔦 The Warlord Tracker: Local Accountability")
-            st.markdown("*Add local officials and rate their transparency.*")
-            
-            if 'local_officials' not in st.session_state:
-                st.session_state.local_officials = []
-            
-            with st.expander("➕ Add a Local Official"):
-                local_name = st.text_input("Official Name (e.g., Mayor John Smith)")
-                local_role = st.selectbox("Role", ["Mayor", "Sheriff", "City Council", "County Commissioner", "Other"])
-                local_city = st.text_input("City/County")
-                records_available = st.checkbox("Are voting records easily available online?")
-                
-                if st.button("Add Official"):
-                    if local_name and local_city:
-                        if records_available:
-                            shadow_score = "C"
-                            status = "⚠️ Needs Review"
-                        else:
-                            shadow_score = "F-"
-                            status = "🚨 HIDDEN. Presumed Hostile to Liberty."
-                        
-                        st.session_state.local_officials.append({
-                            "Name": local_name,
-                            "Role": local_role,
-                            "Location": local_city,
-                            "Records Available": "✅" if records_available else "❌",
-                            "Shadow Score": shadow_score,
-                            "Status": status
-                        })
-                        st.success(f"Added {local_name}")
-                        st.rerun()
-            
-            if st.session_state.local_officials:
-                local_df = pd.DataFrame(st.session_state.local_officials)
-                st.dataframe(local_df, hide_index=True, use_container_width=True)
-            else:
-                st.info("No local officials tracked yet. Add one above!")
-    
-    with tab_methodology:
-        st.subheader("📜 How We Rate: The Spoliation Doctrine")
-        
-        st.markdown("""
-In law, **'Spoliation'** means destroying or hiding evidence. When a party destroys evidence, 
-courts apply **'Adverse Inference'**—they assume the missing evidence would have been harmful to the party who hid it.
+    st.markdown("We apply the **Spoliation Doctrine**: If a leader hides their record, we assume the worst.")
 
-**The Plainview Protocol applies this same doctrine to politicians:**
+    type_tab1, type_tab2 = st.tabs(["Federal (Senate/House)", "State & Local (The Shadow List)"])
 
-- If a politician hides their voting record, we do **not** give them the benefit of the doubt.
-- We assume the missing data proves their guilt.
-- Officials who hide more than 50% of their records receive a **Shadow Penalty** (-50 points).
-        """)
-        
-        st.divider()
-        st.subheader("📊 The Shadow Gap")
-        
-        public_pct = 65
-        hidden_pct = 35
-        
-        shadow_data = pd.DataFrame({
-            "Category": ["Public Record", "The Shadow Gap"],
-            "Percentage": [public_pct, hidden_pct]
-        })
-        
-        fig = px.pie(shadow_data, values="Percentage", names="Category",
-                     color="Category",
-                     color_discrete_map={"Public Record": "#0d3b66", "The Shadow Gap": "#b22222"})
-        fig.update_traces(textposition='inside', textinfo='percent+label')
-        st.plotly_chart(fig, use_container_width=True)
-        
-        st.error(f"**{hidden_pct}% of political activity happens in the shadows.** The Plainview Protocol shines a light.")
+    with type_tab1:
+        st.subheader("📜 Federal Record")
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("#### Latest Senate Actions")
+            votes = get_senate_votes()
+            for v in votes:
+                st.info(f"• {v}")
+        with col2:
+            st.markdown(f"#### Your {selected_state} Reps")
+            reps_df = get_reps(selected_state)
+            st.dataframe(reps_df, hide_index=True)
+
+    with type_tab2:
+        st.subheader("🔦 The Shadow List (Governors & Local Officials)")
+        st.caption("Leaders are rated on transparency. Missing data = -50 Point 'Shadow Penalty'.")
+
+        local_data = [
+            {"Name": f"Governor of {selected_state}", "Role": "Governor", "Transparency": "High", "Score": 85, "Status": "Visible"},
+            {"Name": "Local County Executive", "Role": "County Exec", "Transparency": "Low", "Score": -50, "Status": "HIDDEN (Adverse Inference)"},
+            {"Name": "City Mayor", "Role": "Mayor", "Transparency": "Medium", "Score": 45, "Status": "Partial Data"}
+        ]
+
+        df_shadow = pd.DataFrame(local_data)
+
+        for index, row in df_shadow.iterrows():
+            with st.container():
+                c1, c2, c3 = st.columns([2, 1, 1])
+                c1.markdown(f"**{row['Name']}** ({row['Role']})")
+                
+                score = row['Score']
+                if score < 0:
+                    c2.error(f"Score: {score} (F)")
+                    c3.markdown("🔴 **SHADOW PENALTY**")
+                    st.warning(f"⚠️ **Adverse Inference Applied:** {row['Name']} has withheld public records. We assume this data conceals malfeasance.")
+                    if st.button(f"File FOIA on {row['Name']}", key=f"foia_{index}"):
+                        st.info("Go to 'FOIA Cannon' page to generate your legal demand.")
+                elif score < 50:
+                    c2.warning(f"Score: {score} (D)")
+                    c3.markdown("🟡 **AT RISK**")
+                else:
+                    c2.success(f"Score: {score} (A)")
+                    c3.markdown("🟢 **TRANSPARENT**")
+                st.divider()
 
 elif page == "FOIA Cannon":
     st.header("🔦 The Sunlight Cannon: Wake the Watchers")

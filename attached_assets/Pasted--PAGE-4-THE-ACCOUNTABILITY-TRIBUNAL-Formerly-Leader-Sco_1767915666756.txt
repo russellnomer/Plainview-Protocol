@@ -1,0 +1,57 @@
+# --- PAGE 4: THE ACCOUNTABILITY TRIBUNAL (Formerly Leader Scorecard) ---
+elif page == "The Accountability Tribunal":
+    st.header("⚖️ The Accountability Tribunal")
+    st.markdown("We apply the **Spoliation Doctrine**: If a leader hides their record, we assume the worst.")
+
+    # TABS for Different Levels of Government
+    type_tab1, type_tab2 = st.tabs(["Federal (Senate/House)", "State & Local (The Shadow List)"])
+
+    with type_tab1:
+        st.subheader("📜 Federal Record")
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("#### Latest Senate Actions")
+            votes = get_senate_votes()
+            for v in votes:
+                st.info(f"• {v}")
+        with col2:
+            st.markdown(f"#### Your {selected_state} Reps")
+            reps_df = get_reps(selected_state)
+            st.dataframe(reps_df, hide_index=True)
+
+    with type_tab2:
+        st.subheader("🔦 The Shadow List (Governors & Local Officials)")
+        st.caption("Leaders are rated on transparency. Missing data = -50 Point 'Shadow Penalty'.")
+
+        # Mock Data for Demonstration (Connect to real data later)
+        # Logic: If transparency < 50%, Score is penalized.
+        local_data = [
+            {"Name": f"Governor of {selected_state}", "Role": "Governor", "Transparency": "High", "Score": 85, "Status": "Visible"},
+            {"Name": "Local County Executive", "Role": "County Exec", "Transparency": "Low", "Score": -50, "Status": "HIDDEN (Adverse Inference)"},
+            {"Name": "City Mayor", "Role": "Mayor", "Transparency": "Medium", "Score": 45, "Status": "Partial Data"}
+        ]
+
+        # Convert to DataFrame for display
+        df_shadow = pd.DataFrame(local_data)
+
+        # Display Cards logic
+        for index, row in df_shadow.iterrows():
+            with st.container():
+                c1, c2, c3 = st.columns([2, 1, 1])
+                c1.markdown(f"**{row['Name']}** ({row['Role']})")
+                
+                # Score Logic & Coloring
+                score = row['Score']
+                if score < 0:
+                    c2.error(f"Score: {score} (F)")
+                    c3.markdown("🔴 **SHADOW PENALTY**")
+                    st.warning(f"⚠️ **Adverse Inference Applied:** {row['Name']} has withheld public records. We assume this data conceals malfeasance.")
+                    if st.button(f"File FOIA on {row['Name']}", key=f"foia_{index}"):
+                        st.info("Go to 'The Sunlight Cannon' page to generate your legal demand.")
+                elif score < 50:
+                    c2.warning(f"Score: {score} (D)")
+                    c3.markdown("🟡 **AT RISK**")
+                else:
+                    c2.success(f"Score: {score} (A)")
+                    c3.markdown("🟢 **TRANSPARENT**")
+                st.divider()
