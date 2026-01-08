@@ -109,7 +109,8 @@ page = st.sidebar.radio(
         "The 2027 Fork in the Road",
         "The Bridge Builder",
         "Support the Protocol",
-        "Leader Scorecard"
+        "Leader Scorecard",
+        "Support the Creator"
     ]
 )
 
@@ -553,6 +554,62 @@ elif page == "Leader Scorecard":
     <strong>Non-partisan educational tool.</strong></p>
     <p><em>Data shown is illustrative. For actual voting records, visit 
     <a href="https://www.congress.gov" target="_blank">Congress.gov</a>.</em></p>
+    </div>
+    """, unsafe_allow_html=True)
+
+
+elif page == "Support the Creator":
+    st.header("☕ Sustain the Mission – Support Russell Directly")
+    
+    st.markdown("""
+    <div class='support-card'>
+    <p style='font-size: 1.1em;'>The Plainview Protocol is built and maintained by <strong>Russell Nomer</strong> in Plainview, NY. 
+    It's free for all because of community support.</p>
+    <p>If this tool helps you understand costs, see the immunity gap, or voice concerns kindly, 
+    consider buying Russell a coffee.</p>
+    <p><strong>100% of funds go to development, hosting, and expansion—no grift, full transparency.</strong></p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("### ☕ Buy a Coffee")
+        st.markdown("Direct support for development and hosting.")
+        st.link_button(
+            "Buy Russell a Coffee",
+            "https://buymeacoffee.com/russellnomer",
+            type="primary",
+            use_container_width=True
+        )
+    
+    with col2:
+        st.markdown("### 📱 Follow for Updates")
+        st.markdown("Stay informed on new features and expansions.")
+        st.link_button(
+            "Follow on X",
+            "https://x.com/russellnomer",
+            type="secondary",
+            use_container_width=True
+        )
+    
+    with col3:
+        st.markdown("### 💻 View the Source")
+        st.markdown("See how it's built and fork your own version.")
+        st.link_button(
+            "View Live App Source",
+            "https://replit.com/@russellnomer/The-Plainview-Protocol",
+            type="secondary",
+            use_container_width=True
+        )
+    
+    st.markdown("---")
+    
+    st.markdown("""
+    <div class='info-box' style='text-align: center;'>
+    <h4>🙏 Thank you for helping keep truth and kindness growing. 🇺🇸</h4>
     </div>
     """, unsafe_allow_html=True)
 
