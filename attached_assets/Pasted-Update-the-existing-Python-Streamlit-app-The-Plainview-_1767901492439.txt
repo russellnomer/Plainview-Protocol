@@ -1,0 +1,49 @@
+Update the existing Python Streamlit app "The Plainview Protocol: Truth, Kindness, & Security" to Version 2.0 for national expansion and sustainability.
+
+Goal: Transform from a local tool into a decentralized national platform with state-specific data, monetization, and leader accountability tracking—all while maintaining objective, fact-based, pro-American tone focused on rule of law and domestic security.
+
+Sidebar Updates:
+- Add "Select Your State" dropdown (all 50 states as options, default: "New York")
+- Add "Your Role" dropdown (options: "Taxpayer", "Business Owner", "Concerned Citizen", default: "Taxpayer")
+
+Page 1: The National Lens (Renamed & Enhanced)
+- Header: "How Federal Costs Hit Home in [Selected State]"
+- Inputs: Keep tax input (default $15,000), update dynamically with state selection
+- Logic: State Multiplier for Waste/Policy Gap Share (base 5%):
+  - Border States (Texas, Arizona, California, New Mexico): 1.5x multiplier
+  - All others: 1.0x
+- Display updated metrics: "Your Share to Debt Interest (~18%)", "Your Share to Waste & Policy Gaps"
+- Text: "Based on $150.7 Billion net annual taxpayer cost of illegal immigration (FAIR 2023-2024 report) and rising debt interest (~$1T annually projected 2026). Accountability protects families and futures."
+
+Page 2: The 2027 Fork in the Road (Enhanced)
+- Keep red/blue debt-to-GDP line chart (2024-2030)
+- Add prominent metric: "Current National Debt: ~$36.5 Trillion" (static, high-impact)
+- Optional: Add simple "debt clock" effect if feasible (st.empty + time refresh), else static
+- Keep immunity double-standard table and text
+
+Page 3: The Bridge Builder (Keep as-is)
+- Retain full kindness rewrite functionality—it's working perfectly
+
+New Page 4: Support the Protocol (Monetization & Sustainability)
+- Header: "Sustain the Movement – Zero Grift, Full Transparency"
+- Use st.link_button for:
+  - "Donate via PayPal" → https://www.paypal.com (or your real link)
+  - "Become a Sponsor" → mailto:sponsor@plainviewprotocol.com
+  - "Fork on GitHub & Build Your Version" → https://github.com (placeholder; update with real repo)
+- Text: "All funds go to hosting, data access, and expansion. No salaries. Full transparency. Help keep this free and uncensorable."
+
+New Page 5: Leader Scorecard (Fact-Based Accountability)
+- Header: "Know Your Leaders: Voting Records on Key Issues"
+- Create pandas DataFrame with example rows (hard-coded, real public data style):
+  - Columns: "Representative", "State/District", "Border Security Vote", "Immunity/Fraud Reform Vote", "Accountability Score (0-100)"
+  - Include 5-6 balanced examples (mix of high and low scores from public records)
+- Display as interactive st.dataframe
+- Disclaimer: "Scores based solely on public voting records from Congress.gov. Focused on fiscal responsibility, rule of law, and domestic security. Non-partisan educational tool."
+
+General:
+- Patriotic red/white/blue theme, professional layout
+- All pages update dynamically with state selection where relevant
+- Footer: "Built by Russell Nomer in Plainview, NY – Kindness, truth, secure America. Fork this project to create your state's version."
+- requirements.txt: streamlit, pandas, plotly, time (if needed)
+
+Generate complete updated app.py and requirements.txt code.
