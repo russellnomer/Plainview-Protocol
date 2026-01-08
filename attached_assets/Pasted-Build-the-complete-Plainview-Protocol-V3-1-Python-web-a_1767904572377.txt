@@ -1,0 +1,77 @@
+Build the complete "Plainview Protocol V3.1" Python web application using Streamlit.
+Goal: A production-ready, self-healing national platform that drives fact-based advocacy.
+
+ARCHITECTURE:
+The app must be modular and resilient. Create 4 specific files:
+1. `sources.json` (Stores all data URLs).
+2. `watchdog.py` (Script to check URL health).
+3. `app.py` (The main application).
+4. `requirements.txt` (Dependencies).
+
+PART 1: CONFIGURATION (`sources.json`)
+Create a JSON file containing these exact endpoints:
+{
+  "treasury_debt": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny?sort=-record_date&limit=1",
+  "senate_feed": "https://www.senate.gov/legislative/LIS/roll_call_lists/vote_menu_119_1.xml",
+  "wiki_reps": "https://en.wikipedia.org/wiki/List_of_current_members_of_the_United_States_House_of_Representatives"
+}
+
+PART 2: THE WATCHDOG (`watchdog.py`)
+Write a script that:
+- Loads `sources.json`.
+- Pings each URL using `requests.get()`.
+- Creates/Updates a `system_status.json` file: {"treasury": "OK", "senate": "OK", "wiki": "OK"} (or "ERROR").
+- If a URL fails, print a warning to the console.
+
+PART 3: THE MAIN APP (`app.py`)
+- Import `streamlit`, `pandas`, `requests`, `json`, `plotly.express`.
+- Use `@st.cache_data(ttl=3600)` for all data fetching functions to prevent rate limiting.
+
+DATA FETCHING LOGIC (Robust & Keyless):
+- `get_live_debt()`: Fetch from `sources.json['treasury_debt']`. Return the "tot_pub_debt_out_amt".
+  - *Fallback:* If fetch fails, return hardcoded 36500000000000.00.
+- `get_senate_votes()`: Fetch XML from `sources.json['senate_feed']`. Parse top 3 bill titles.
+  - *Fallback:* Return list ["Vote data currently unavailable - Check back later"].
+- `get_reps(state)`: Use `pd.read_html` on `sources.json['wiki_reps']`. Filter by State.
+  - *Fallback:* Return a generic DataFrame: ["Rep. Doe", "District 1", "N/A"].
+
+UI STRUCTURE (Patriotic Theme):
+
+Sidebar:
+- Dropdown: "Select State" (List all 50 States, Default NY).
+- Dropdown: "Select Focus" (Border, Veterans, Education, All).
+- Bottom: "System Status: 🟢 Online" (Check `system_status.json`).
+- Bottom: Divider + "☕ Support Russell" link.
+
+Page 1: The National Lens (Live Data)
+- Header: "State of the Union: [Selected State]"
+- Metric 1: "Real-Time National Debt" (Display live fetched number).
+- Metric 2: "Your State's Share" (Debt / 330M people * State Pop).
+- Metric 3: "Immigration Burden" (Base $150.7B * State Multiplier).
+  - Logic: IF state in [TX, AZ, NM, CA] multiplier = 1.6; ELSE = 1.0.
+
+Page 2: The Fork in the Road
+- Plotly Chart: Red Line (Status Quo) vs Blue Line (Reform) for Debt 2024-2030.
+- Anchor the start point to the `get_live_debt()` value.
+
+Page 3: The Activism Hub (Bridge Builder)
+- Tabs: "Veterans", "Border Security", "Education".
+- Input: "Vent your frustration".
+- Button: "Rewrite Kindly".
+- Logic: Keyword swap (angry -> professional).
+- Share Button: `st.link_button` to "Post on X" with pre-filled text: "In [State], we pay too much for broken policies. Fix it now! #PlainviewProtocol".
+
+Page 4: Leader Scorecard (Live)
+- Header: "Recent Senate Action".
+- Display the list from `get_senate_votes()`.
+- Header: "Your [State] Reps".
+- Display DataFrame from `get_reps()`.
+
+Page 5: Support the Mission
+- "Sustain this Tool".
+- Link Buttons: PayPal, BuyMeACoffee, GitHub.
+
+PART 4: DEPENDENCIES (`requirements.txt`)
+- streamlit, pandas, requests, plotly, lxml, openpyxl
+
+Generate ALL code files now.

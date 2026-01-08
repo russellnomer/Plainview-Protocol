@@ -1,0 +1,257 @@
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+import requests
+import json
+import xml.etree.ElementTree as ET
+import os
+
+# --- CONFIGURATION & SETUP ---
+st.set_page_config(
+    page_title="The Plainview Protocol",
+    page_icon="🇺🇸",
+    layout="wide"
+)
+
+# Load Sources
+with open("sources.json", "r") as f:
+    SOURCES = json.load(f)
+
+# Load System Status (Created by Watchdog)
+try:
+    with open("system_status.json", "r") as f:
+        SYSTEM_STATUS = json.load(f)
+        is_system_online = all(val == "OK" for val in SYSTEM_STATUS.values())
+except FileNotFoundError:
+    # Default to assuming online if watchdog hasn't run yet
+    SYSTEM_STATUS = {"treasury": "Unknown", "senate": "Unknown", "wiki": "Unknown"}
+    is_system_online = True
+
+# --- DATA FETCHING FUNCTIONS (Cached) ---
+
+@st.cache_data(ttl=3600)
+def get_live_debt():
+    """Fetches live debt from US Treasury API. Fallback: Hardcoded Projection."""
+    fallback_debt = 36500000000000.00
+    try:
+        url = SOURCES["treasury_debt"]
+        r = requests.get(url, timeout=5)
+        if r.status_code == 200:
+            data = r.json()
+            # Parse the specific field
+            debt_str = data["data"][0]["tot_pub_debt_out_amt"]
+            return float(debt_str)
+    except Exception:
+        pass
+    return fallback_debt
+
+@st.cache_data(ttl=3600)
+def get_senate_votes():
+    """Fetches Senate XML feed. Fallback: Generic Message."""
+    fallback_votes = ["Vote data currently unavailable - Check back later", "System Maintenance"]
+    votes = []
+    try:
+        url = SOURCES["senate_feed"]
+        r = requests.get(url, timeout=5)
+        if r.status_code == 200:
+            root = ET.fromstring(r.content)
+            # Iterate over votes (structure varies, simplified logic for XML)
+            # Usually <vote> -> <question> or <title>
+            # This is a robust parser attempt for standard Senate XML
+            for vote in root.findall(".//vote")[:5]: # Get top 5
+                # Try finding question or description
+                question = vote.find("question")
+                if question is not None:
+                    votes.append(question.text)
+    except Exception:
+        pass
+    
+    if not votes:
+        return fallback_votes
+    return votes
+
+@st.cache_data(ttl=86400) # Cache for 24 hours
+def get_reps(state_name):
+    """Scrapes Wikipedia for House Reps. Fallback: Placeholder."""
+    fallback_df = pd.DataFrame({"Representative": ["Rep. Doe"], "District": ["1"], "Party": ["N/A"]})
+    try:
+        url = SOURCES["wiki_reps"]
+        # Pandas read_html returns a list of dataframes found on the page
+        dfs = pd.read_html(url, match="District") 
+        # Usually the big table is the one we want. Logic to find the right one:
+        for df in dfs:
+            if "District" in df.columns and "Member" in df.columns:
+                # Filter by State (Wikipedia often has a 'District' column like 'Alabama 1')
+                # Or sometimes separate tables per state.
+                # Robust strategy: Check if 'District' column contains State Name OR create a State Column
+                
+                # Simplified Wikipedia scraping logic for the main table
+                # Ensure we have a column for Member
+                clean_df = df[['District', 'Member', 'Party']].copy()
+                
+                # Filter logic: Check if the 'District' string starts with the State Name
+                # Wikipedia format: "Alabama 1", "California 23"
+                # State_name passed in is e.g. "New York"
+                clean_df = clean_df[clean_df['District'].str.contains(state_name, case=False, na=False)]
+                
+                if not clean_df.empty:
+                    return clean_df
+    except Exception as e:
+        # print(e) # Debugging
+        pass
+    return fallback_df
+
+# --- HELPER DATA ---
+STATES = [
+    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", 
+    "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", 
+    "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", 
+    "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", 
+    "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", 
+    "West Virginia", "Wisconsin", "Wyoming"
+]
+
+# State Populations (Approximate for Ratio calc) - simplified dictionary
+STATE_POPS = {
+    "California": 39000000, "Texas": 30000000, "Florida": 22000000, "New York": 19000000,
+    # Fallback average for others to prevent zero division
+}
+US_POP = 333000000
+
+# --- STYLING ---
+st.markdown("""
+    <style>
+    .stMetric { background-color: #f0f2f6; padding: 10px; border-radius: 5px; border-left: 5px solid #0d3b66; }
+    h1, h2, h3 { color: #0d3b66; }
+    .stButton>button { background-color: #b22222; color: white; }
+    </style>
+""", unsafe_allow_html=True)
+
+# --- SIDEBAR ---
+st.sidebar.title("🇺🇸 Plainview Protocol")
+st.sidebar.caption("v3.1 | Self-Healing Architecture")
+
+selected_state = st.sidebar.selectbox("Select Your State", STATES, index=31) # Default NY
+selected_focus = st.sidebar.selectbox("Select Focus", ["All", "Border Security", "Veterans First", "Education & Skills", "Crime & Safety"])
+
+# System Status Indicator
+st.sidebar.divider()
+if is_system_online:
+    st.sidebar.success("🟢 System Status: Online")
+else:
+    st.sidebar.warning("⚠️ System Status: Degraded")
+
+st.sidebar.divider()
+st.sidebar.markdown("### Fuel the Mission")
+st.sidebar.link_button("☕ Support Russell", "https://buymeacoffee.com/russellnomer")
+
+# --- NAVIGATION ---
+page = st.radio("Navigate", ["The National Lens", "The 2027 Fork", "The Activism Hub", "Leader Scorecard", "Support"], horizontal=True, label_visibility="collapsed")
+
+# --- PAGE 1: THE NATIONAL LENS ---
+if page == "The National Lens":
+    st.header(f"📍 State of the Union: {selected_state}")
+    
+    # Live Data Fetch
+    live_debt = get_live_debt()
+    
+    # Calculations
+    pop = STATE_POPS.get(selected_state, 6000000) # Default avg pop
+    state_share_debt = (live_debt / US_POP) * pop
+    
+    # Border Logic
+    border_multiplier = 1.6 if selected_state in ["Texas", "Arizona", "New Mexico", "California"] else 1.0
+    # National Burden $150.7B -> State Share by Pop -> Multiplier
+    immigration_burden = (150700000000 / US_POP) * pop * border_multiplier
+    
+    col1, col2, col3 = st.columns(3)
+    col1.metric("🇺🇸 Real-Time National Debt", f"${live_debt:,.0f}")
+    col2.metric(f"{selected_state}'s Share of Debt", f"${state_share_debt:,.0f}")
+    col3.metric("State Immigration Burden", f"${immigration_burden:,.0f}", delta="Est. Annual Cost", delta_color="inverse")
+    
+    st.info(f"**Data Logic:** {selected_state} burden calculated using a {border_multiplier}x multiplier based on geographic exposure to border policy gaps.")
+
+# --- PAGE 2: THE 2027 FORK ---
+elif page == "The 2027 Fork":
+    st.header("🛤️ The Fork in the Road: 2024-2030")
+    
+    live_debt = get_live_debt() / 1e12 # Convert to Trillions for chart
+    
+    # Create Data for Chart
+    years = [2024, 2025, 2026, 2027, 2028, 2029, 2030]
+    # Red Line: Exponential growth from current point
+    status_quo = [live_debt * (1.05**i) for i in range(len(years))]
+    # Blue Line: Stabilization
+    reform = [live_debt * (1.01**i) for i in range(len(years))]
+    
+    df_chart = pd.DataFrame({"Year": years, "Status Quo (Crisis)": status_quo, "Reform (Accountability)": reform})
+    
+    fig = px.line(df_chart, x="Year", y=["Status Quo (Crisis)", "Reform (Accountability)"], 
+                  color_discrete_map={"Status Quo (Crisis)": "red", "Reform (Accountability)": "blue"})
+    
+    st.plotly_chart(fig, use_container_width=True)
+    
+    savings = (status_quo[-1] - reform[-1]) * 1000 # Billions
+    st.success(f"💰 **Potential Savings by 2030:** ${savings:,.0f} Billion through fiscal accountability.")
+
+# --- PAGE 3: THE ACTIVISM HUB ---
+elif page == "The Activism Hub":
+    st.header("🌉 The Bridge Builder: Facts Over Rage")
+    
+    tab1, tab2, tab3 = st.tabs(["Veterans First", "Border Security", "Education"])
+    
+    with tab1:
+        st.write("Compare the cost of housing a homeless veteran vs. federal waste.")
+        st.info("In 2024, approx 35,000 veterans experienced homelessness. The cost to house them is a fraction of the $150B immigration burden.")
+        tweet_text = f"In {selected_state}, we believe Veterans come first. Why is the budget prioritizing waste over heroes? Fix it now. #PlainviewProtocol"
+        st.link_button("Share on X (Twitter)", f"https://twitter.com/intent/tweet?text={tweet_text}")
+
+    with tab2:
+        st.write("Secure borders ensure safe communities and fiscal sanity.")
+        tweet_text = f"Security is not optional. {selected_state} taxpayers are footing the bill for unsecured borders. Enforce the law. #PlainviewProtocol"
+        st.link_button("Share on X (Twitter)", f"https://twitter.com/intent/tweet?text={tweet_text}")
+
+    st.divider()
+    
+    st.subheader("Draft Your Message")
+    user_input = st.text_area("Vent your frustration here (we will make it professional):")
+    if st.button("Rewrite Kindly"):
+        if user_input:
+            # Simple keyword swap logic
+            cleaned = user_input.replace("hate", "am concerned about").replace("idiots", "officials").replace("destroying", "negatively impacting")
+            final_msg = f"{cleaned}. I respectfully urge you to prioritize domestic security and the rule of law."
+            st.success("✅ Ready to Send:")
+            st.code(final_msg, language=None)
+
+# --- PAGE 4: LEADER SCORECARD ---
+elif page == "Leader Scorecard":
+    st.header("🏛️ Real-Time Democracy Tracker")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.subheader("📜 Latest Senate Actions")
+        votes = get_senate_votes()
+        for v in votes:
+            st.text(f"• {v}")
+            
+    with col2:
+        st.subheader(f"👥 Your {selected_state} Reps")
+        reps_df = get_reps(selected_state)
+        st.dataframe(reps_df, hide_index=True)
+        
+    st.caption("Data fetched live from Senate.gov and Wikipedia public records.")
+
+# --- PAGE 5: SUPPORT ---
+elif page == "Support":
+    st.header("☕ Sustain the Mission")
+    st.write("This tool is free, ad-free, and uncensorable thanks to supporters like you.")
+    
+    c1, c2, c3 = st.columns(3)
+    c1.link_button("Donate via PayPal", "https://paypal.com")
+    c2.link_button("Buy Russell a Coffee", "https://buymeacoffee.com/russellnomer")
+    c3.link_button("Fork on GitHub", "https://github.com")
+
+# --- FOOTER ---
+st.markdown("---")
+st.markdown("<center>Built by Russell Nomer in Plainview, NY | <i>Truth, Kindness, Security</i></center>", unsafe_allow_html=True)
