@@ -1,0 +1,52 @@
+Update "The Plainview Protocol" to Version 3.3.
+
+Goal: Add the "Russell Nomer Ecosystem" page AND a "Trade & Industry" section that helps businesses pivot from China to US manufacturing with empathy and facts.
+
+PART 1: UPDATE `sources.json`
+Add this endpoint to the JSON file:
+"treasury_tariffs": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/customs_duties?sort=-record_date&limit=1"
+
+PART 2: UPDATE `app.py`
+
+1. ADD DATA FETCHING:
+   - Create `get_tariff_revenue()`: Fetch `customs_duties_amount` from `sources.json['treasury_tariffs']`.
+   - Fallback: 195000000000.00.
+
+2. NEW SIDEBAR NAVIGATION:
+   - Add "Trade & Industry" and "The Russell Nomer Ecosystem" to the navigation list.
+
+3. NEW PAGE: "Trade & Industry"
+   - Header: "🇺🇸 Made in America: The Pivot"
+   - Create 2 Tabs: "The Tariff Dividend" and "Domestic Sourcing Finder".
+
+   TAB 1: THE TARIFF DIVIDEND
+   - Metric 1: "Live Tariff Revenue" (Fetch from Treasury).
+   - Metric 2: "The Plainview Dividend" (Revenue / 330M people).
+   - Chart: Bar Chart "Immigration Cost ($150B)" vs "Tariff Revenue".
+   - Text: "Tariffs capture value from foreign markets to fund American strength."
+
+   TAB 2: DOMESTIC SOURCING FINDER (The Empathy Engine)
+   - Header: "The Pivot: Source Locally, Save Globally"
+   - Text: "Transitioning is hard, but American resilience pays off. Here are vetted US resources to replace Chinese supply chains."
+   - Input: Select Industry (Dropdown: General, Electronics, Textiles/Apparel, Consumer Goods).
+   - Logic: Display specific resources based on selection:
+     - *General:* "Thomasnet.com", "US Dept of Commerce Supply Chain Hub".
+     - *Electronics:* "Circuits Assembly Directory", "Reshoring Institute".
+     - *Textiles:* "Maker's Row", "American Blanket Company".
+     - *Consumer:* "Wholesale Central", "TopTenWholesale (USA Section)".
+   - CALCULATOR: "Total Landed Cost"
+     - Inputs: Unit Cost, Shipping, Tariff % (Default 25%), Lead Time (Weeks).
+     - Output: Compare "China Total" vs "USA Total".
+     - Note: "Don't forget the cost of your time. 6 weeks on a boat costs money."
+
+4. NEW PAGE: "The Russell Nomer Ecosystem"
+   - Header: "From Pain to Purpose: The Full Grove"
+   - Text: "I'm Russell Nomer—recovering from loss, building tools for truth. Join the Grove."
+   - LINKS (Use st.link_button):
+     - Apps: "Market Architect" (https://marketarchitect.app), "Home Cooked Connections" (https://homecookedconnections.com), "Verbum VIP" (https://verbum.vip).
+     - Media: "The Grove (Book)" (https://amzn.to/4sukXoc), "YouTube" (https://www.youtube.com/@russellnomermusic), "UnitedMasters" (https://unitedmasters.com/russell-nomer-music).
+   - Footer: "Music, books, apps—channeling resilience into protecting America."
+
+5. MAINTAIN ALL EXISTING FEATURES (Watchdog, National Lens, Bridge Builder).
+
+Generate updated `app.py` and `sources.json`.

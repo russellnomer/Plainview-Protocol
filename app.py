@@ -250,32 +250,28 @@ elif page == "Trade & Industry":
         st.info("💡 Tariffs bring money back, but the transition is hard. We must support businesses that pivot to domestic manufacturing.")
     
     with tab_sourcing:
-        st.subheader("🛑 Stop Funding China. Start Building Here.")
+        st.subheader("🔄 The Pivot: Source Locally, Save Globally")
+        st.markdown("*Transitioning is hard, but American resilience pays off. Here are vetted US resources to replace Chinese supply chains.*")
         
         sourcing_resources = {
-            "All Industries": [
+            "General": [
                 ("Thomasnet.com", "Industrial Sourcing Directory"),
-                ("Maker's Row", "Apparel, Furniture & Consumer Goods"),
-                ("US Dept of Commerce Supply Chain Hub", "Government Resources")
+                ("US Dept of Commerce Supply Chain Hub", "Government Resources"),
+                ("Maker's Row", "Apparel, Furniture & Consumer Goods")
+            ],
+            "Electronics": [
+                ("Circuits Assembly Directory", "PCB & Electronics Manufacturing"),
+                ("Reshoring Institute", "Reshoring Strategy & Resources"),
+                ("IPC - Association Connecting Electronics", "Industry Standards")
             ],
             "Textiles & Apparel": [
                 ("Maker's Row", "American Factories for Fashion"),
-                ("Sewn Products Equipment Suppliers", "Industrial Sewing"),
+                ("American Blanket Company", "Domestic Textile Manufacturing"),
                 ("American Apparel & Footwear Association", "Industry Trade Group")
             ],
-            "Electronics": [
-                ("Reshoring Institute", "Reshoring Strategy & Resources"),
-                ("Circuits Assembly Directory", "PCB & Electronics Manufacturing"),
-                ("IPC - Association Connecting Electronics", "Industry Standards")
-            ],
-            "Machining & Metal": [
-                ("Thomasnet.com", "CNC & Metal Fabrication"),
-                ("Modern Machine Shop", "Industry Directory"),
-                ("NTMA - National Tooling & Machining Assoc", "Trade Association")
-            ],
             "Consumer Goods": [
-                ("Maker's Row", "Product Manufacturing"),
-                ("ThomasNet.com", "Packaging & Assembly"),
+                ("Wholesale Central", "US Wholesale Directory"),
+                ("TopTenWholesale (USA Section)", "Verified US Suppliers"),
                 ("Made in USA Certified", "Certification Program")
             ]
         }
@@ -287,8 +283,9 @@ elif page == "Trade & Industry":
             st.markdown(f"- **{name}**: {desc}")
         
         st.divider()
-        st.subheader("🧮 The Real Cost Calculator")
+        st.subheader("🧮 Total Landed Cost Calculator")
         st.markdown("*See the true landed cost—often USA is closer than you think.*")
+        st.caption("💡 Don't forget the cost of your time. 6 weeks on a boat costs money.")
         
         col_china, col_usa = st.columns(2)
         
