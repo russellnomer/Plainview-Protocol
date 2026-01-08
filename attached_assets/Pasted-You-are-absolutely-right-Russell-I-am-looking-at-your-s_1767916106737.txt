@@ -1,0 +1,82 @@
+You are absolutely right, Russell. I am looking at your screenshot (File: image_c861a2.jpg), and I see:
+
+Representative: Rep. Doe District: 1 Party: N/A
+
+That is Mock Data. It means the app's internal "phone book" is empty, so it's showing you a placeholder instead of the real representatives. That is a fail for a transparency app.
+
+We need to connect your app to a real, live database.
+
+We are going to replace your get_reps function with a new engine that pulls directly from the UnitedStates.io Open Data Project. This is a free, open-source database of every sitting legislator. It does not require an API key, so it will work immediately.
+
+The Fix: "The Real Roll Call"
+Step 1: Locate the old function Scroll up in your app.py (likely near the top, around line 50-80) and look for def get_reps(state_name):. It probably has the fake "Rep. Doe" code inside it.
+
+Step 2: Delete it and Paste this Code This new version downloads the live list of Congress members, matches your state (converting "New York" to "NY" automatically), and displays the real people.
+
+Python
+
+# --- HELPERS ---
+@st.cache_data
+def get_reps(state_full_name):
+    """
+    Fetches real legislators from UnitedStates.io (Open Data).
+    Converts state name (New York) to code (NY) and filters.
+    """
+    # 1. State Name to Abbreviation Mapping
+    us_state_to_abbrev = {
+        "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR", "California": "CA",
+        "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE", "Florida": "FL", "Georgia": "GA",
+        "Hawaii": "HI", "Idaho": "ID", "Illinois": "IL", "Indiana": "IN", "Iowa": "IA",
+        "Kansas": "KS", "Kentucky": "KY", "Louisiana": "LA", "Maine": "ME", "Maryland": "MD",
+        "Massachusetts": "MA", "Michigan": "MI", "Minnesota": "MN", "Mississippi": "MS", "Missouri": "MO",
+        "Montana": "MT", "Nebraska": "NE", "Nevada": "NV", "New Hampshire": "NH", "New Jersey": "NJ",
+        "New Mexico": "NM", "New York": "NY", "North Carolina": "NC", "North Dakota": "ND", "Ohio": "OH",
+        "Oklahoma": "OK", "Oregon": "OR", "Pennsylvania": "PA", "Rhode Island": "RI", "South Carolina": "SC",
+        "South Dakota": "SD", "Tennessee": "TN", "Texas": "TX", "Utah": "UT", "Vermont": "VT",
+        "Virginia": "VA", "Washington": "WA", "West Virginia": "WV", "Wisconsin": "WI", "Wyoming": "WY"
+    }
+
+    # 2. Get the code (e.g., "NY")
+    state_code = us_state_to_abbrev.get(state_full_name)
+    if not state_code:
+        return pd.DataFrame([{"Error": "Select a valid state"}])
+
+    # 3. Fetch Live Data from UnitedStates.io
+    try:
+        url = "https://theunitedstates.io/congress-legislators/legislators-current.json"
+        response = requests.get(url)
+        data = response.json()
+        
+        reps_list = []
+        for person in data:
+            # Check if they are currently in office and match the state
+            current_term = person['terms'][-1]
+            if current_term['state'] == state_code:
+                # Format Name
+                full_name = f"{person['name']['first']} {person['name']['last']}"
+                # Format Role (Sen vs Rep)
+                role = "Senator" if current_term['type'] == 'sen' else f"Rep (Dist {current_term.get('district', 'At-Large')})"
+                party = current_term['party']
+                
+                reps_list.append({
+                    "Name": full_name,
+                    "Role": role,
+                    "Party": party
+                })
+        
+        # 4. Create DataFrame
+        if not reps_list:
+            return pd.DataFrame([{"Status": "No reps found (Check State selection)"}])
+            
+        df = pd.DataFrame(reps_list)
+        return df
+
+    except Exception as e:
+        return pd.DataFrame([{"Error": f"Data fetch failed: {str(e)}"}])
+Step 3: Run it. Now, when you select New York in the sidebar:
+
+Rep. Doe will vanish.
+
+You will see Chuck Schumer, Kirsten Gillibrand, and every House Rep for NY listed by name and party.
+
+This is the real data. Make the swap and tell me when you see Schumer's name. 🇺🇸

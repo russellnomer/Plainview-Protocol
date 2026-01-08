@@ -1,0 +1,75 @@
+Russell, this smoke test report is the "smoking gun." It reveals exactly why you aren't seeing the Reps or the Tribunal: The Navigation Logic is broken.
+
+The app is rendering as a "Single Page" because the sidebar menu code was likely overwritten or malformed in the last edit. The features are there (in the code), but you can't click to get to them.
+
+We are going to fix everything in one shot.
+
+This V3.7 "Structure & Transparency" Prompt does three things:
+
+Restores Navigation: It forces the Sidebar Menu to work so you can click between "Accountability Tribunal," "Sunlight Cannon," etc.
+
+Injects Real Data: It adds the UnitedStates.io connection so your Reps show up (no more "Rep. Doe").
+
+Adds Transparency: It adds the st.expander "Sources & Math" boxes you requested to every single page.
+
+🚀 The Master Fix Prompt
+Copy and paste this entire block into the Replit Agent:
+
+Plaintext
+
+Update "The Plainview Protocol" to Version 3.7: Structure & Transparency.
+
+CRITICAL GOAL: Fix the broken sidebar navigation and add transparency citations to all metrics.
+
+1. REWRITE `app.py` NAVIGATION STRUCTURE:
+   - The app must use `st.sidebar.radio` (or similar) to switch between these distinct pages:
+     1. "The National Lens" (Home/Debt Ticker)
+     2. "The Accountability Tribunal" (Scorecards/Spoliation)
+     3. "The Sunlight Cannon (FOIA)" (Generator)
+     4. "Trade & Industry" (Tariffs/Sourcing)
+     5. "The Russell Nomer Ecosystem" (Links)
+     6. "Support the Mission"
+   - Ensure clicking a valid option clears the main area and renders ONLY that page's content.
+
+2. PAGE-BY-PAGE UPDATES:
+
+   A. "THE NATIONAL LENS" (Home):
+      - Display the Real-Time Debt Ticker.
+      - ADD EXPANDER: Create an `st.expander("ℹ️ Sources & Math")` below the ticker.
+        - Text inside: "Source: U.S. Treasury Fiscal Data API (fiscaldata.treasury.gov). Math: Total Public Debt / U.S. Census Population Estimate."
+
+   B. "THE ACCOUNTABILITY TRIBUNAL":
+      - REPLACE the `get_reps` function with a fetch from "https://theunitedstates.io/congress-legislators/legislators-current.json" to show REAL Senators/Reps for the selected state.
+      - Keep the "Shadow List" logic (State/Local) with the "-50 Shadow Penalty" and "Adverse Inference" warning for hidden records.
+      - ADD EXPANDER: `st.expander("ℹ️ Sources & Math")` -> "Source: UnitedStates.io Open Data & Local Transparency Indexes. Math: 100 points base - 50 points for spoliation (hidden records)."
+
+   C. "THE SUNLIGHT CANNON (FOIA)":
+      - Keep the "Federal (5 U.S.C. § 552)" and "State" generator.
+      - Ensure the "Notice of Spoliation" text is bold and visible in the output.
+      - ADD EXPANDER: `st.expander("ℹ️ Legal Basis")` -> "Source: Freedom of Information Act (5 U.S.C. § 552) and State Sunshine Laws. Penalty: Civil contempt and adverse inference in litigation."
+
+   D. "TRADE & INDUSTRY":
+      - Keep the "Tariff Dividend" and "Sourcing Finder."
+      - ADD EXPANDER: `st.expander("ℹ️ Sources & Math")` -> "Source: U.S. Customs & Border Protection (CBP) Monthly Trade Data. Math: Total Duties Collected / Registered U.S. Households."
+
+3. GENERAL FIXES:
+   - Ensure the sidebar has a "State Selector" that persists across all pages.
+   - Ensure "System Status: Online" is visible in the sidebar.
+
+Generate the full, corrected `app.py` code.
+Why This Fixes It
+The Navigation: By explicitly telling Replit to "Rewrite Navigation Structure," we force it to organize the pages correctly so you don't get stuck on the homepage.
+
+The Trust: The Expanders answer the critics before they even speak. "Where did you get that number?" Click. "Treasury.gov." Done.
+
+The Reality: The UnitedStates.io link ensures that when you click "New York," you see Schumer and Gillibrand, not placeholders.
+
+Deploy this. Once it loads:
+
+Check the Sidebar: Can you click "Accountability Tribunal"?
+
+Check the Reps: Do you see real names?
+
+Check the Expanders: Click "Sources & Math" under the debt ticker.
+
+This is the final polish, Russell. Make it shine. 🇺🇸
