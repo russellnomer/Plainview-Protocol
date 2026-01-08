@@ -5,6 +5,7 @@ import requests
 import json
 import xml.etree.ElementTree as ET
 import os
+import time
 
 st.set_page_config(
     page_title="The Plainview Protocol",
@@ -122,6 +123,37 @@ if page == "The National Lens":
     
     live_debt = get_live_debt()
     
+    if 'debt_base' not in st.session_state:
+        st.session_state.debt_base = live_debt
+        st.session_state.debt_start_time = time.time()
+    
+    tick_rate = 15000
+    elapsed = time.time() - st.session_state.debt_start_time
+    ticking_debt = st.session_state.debt_base + (tick_rate * elapsed)
+    
+    st.markdown("""
+    <style>
+    .debt-ticker {
+        background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);
+        color: white;
+        padding: 25px;
+        border-radius: 12px;
+        text-align: center;
+        font-size: 2.2em;
+        font-weight: bold;
+        margin: 15px 0;
+        font-family: 'Courier New', monospace;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    st.markdown(
+        f"<div class='debt-ticker'>💰 Real-Time National Debt (Ticking): ${ticking_debt:,.0f}</div>",
+        unsafe_allow_html=True
+    )
+    
+    st.caption("⏱️ Ticks based on ~$15,000/second average rate (~$2T annual deficit). Actual daily figures from U.S. Treasury.")
+    
     pop = STATE_POPS.get(selected_state, 6000000)
     state_share_debt = (live_debt / US_POP) * pop
     
@@ -129,11 +161,16 @@ if page == "The National Lens":
     immigration_burden = (150700000000 / US_POP) * pop * border_multiplier
     
     col1, col2, col3 = st.columns(3)
-    col1.metric("🇺🇸 Real-Time National Debt", f"${live_debt:,.0f}")
+    col1.metric("🇺🇸 Base Debt (Treasury)", f"${live_debt:,.0f}")
     col2.metric(f"{selected_state}'s Share of Debt", f"${state_share_debt:,.0f}")
     col3.metric("State Immigration Burden", f"${immigration_burden:,.0f}", delta="Est. Annual Cost", delta_color="inverse")
     
     st.info(f"**Data Logic:** {selected_state} burden calculated using a {border_multiplier}x multiplier based on geographic exposure to border policy gaps.")
+    
+    if st.button("🔄 Refresh Ticker"):
+        st.session_state.debt_base = live_debt
+        st.session_state.debt_start_time = time.time()
+        st.rerun()
 
 elif page == "The 2027 Fork":
     st.header("🛤️ The Fork in the Road: 2024-2030")
