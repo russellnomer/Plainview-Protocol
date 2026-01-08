@@ -1,0 +1,43 @@
+I want to build a Python web app using Streamlit. Title: "The Plainview Protocol: Truth, Kindness, & Security"
+
+The app educates citizens on policy costs (e.g., border gaps, fraud, immunity shields) and helps voice concerns kindly. Tone: Objective, pro-American, rule of law, domestic security focus.
+
+Sidebar navigation with three pages:
+
+Page 1: The Local Lens (Your Wallet Impact)
+- Header: "How Federal Costs Hit Home in Plainview"
+- Inputs: Number input "Estimated Annual Federal Taxes Paid" (default: 15000), text input "County" (default: "Nassau County, NY")
+- Calculations (prototype ratios):
+  - Debt Interest Share: 18% (2026 projection: interest ~$1T annually)
+  - Waste/Policy Gap Share: 5% (including unchecked burdens like $150.7B net annual immigration cost per FAIR/House reports)
+- Display as st.metric: "Your Share to Debt Interest: $X", "Your Share to Waste/Gaps: $Y"
+- Text: "This could fund local roads, schools, or security. Accountability protects taxpayer dollars and America's future."
+
+Page 2: The 2027 Fork in the Road (Future Outlook)
+- Header: "Two Paths Ahead: Crisis or Reform"
+- Use plotly or st.line_chart: Debt-to-GDP % (2024-2030, hard-coded points)
+  - Red (Status Quo): Sharp rise e.g. [100, 105, 112, 120, 130, 140]
+  - Blue (Accountability): Flattens e.g. [100, 102, 104, 105, 106, 107]
+- Table: "Immunity Double Standard"
+  - Columns: "Scenario", "Average Citizen Consequence", "Shielded Official Consequence"
+  - Rows:
+    1. Fraud/Enabling Fraud -> Fines/Prison/Seizure -> Often Protected by Immunity
+    2. Public-Harming Negligence -> Full Liability -> Frequently Dismissed
+- Text: "Equal rule of law restores trust, saves billions, secures borders."
+
+Page 3: The Bridge Builder (Effective Voice)
+- Header: "Turn Concern into Impact"
+- Text area: "Share thoughts here (e.g., borders, fraud, immunity, costs):"
+- Button: "Rewrite Professionally & Kindly"
+- On click: Python function rewrite
+  - Keyword swaps: e.g., angry terms ("destroying", "idiots", "liars", swears) -> "negligent", "leaders", "violating trust", "deeply concerned"
+  - Focus: Facts on security, taxpayer impact, rule of law
+  - Append: "I respectfully urge enforcement of laws and accountability to protect America's domestic interests and future."
+  - Show in expander/box for copy-paste.
+
+General:
+- Patriotic accents: Blue/red/white, clean layout.
+- Footer: "Built by Russell Nomer in Plainview, NY – Kindness, truth, secure America."
+- requirements.txt: streamlit, pandas, plotly
+
+Generate full app.py and requirements.txt code.
