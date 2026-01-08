@@ -119,10 +119,10 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v3.2 | Self-Healing Architecture")
+st.sidebar.caption("v3.3 | Trade & Industry Edition")
 
 selected_state = st.sidebar.selectbox("Select Your State", STATES, index=31)
-selected_focus = st.sidebar.selectbox("Select Focus", ["All", "Border Security", "Veterans First", "Education & Skills", "Crime & Safety", "Trade & Tariffs"])
+selected_focus = st.sidebar.selectbox("Select Focus", ["All", "Border Security", "Veterans First", "Education & Skills", "Crime & Safety", "Trade & Industry"])
 
 st.sidebar.divider()
 if is_system_online:
@@ -134,7 +134,7 @@ st.sidebar.divider()
 st.sidebar.markdown("### Fuel the Mission")
 st.sidebar.link_button("☕ Support Russell", "https://buymeacoffee.com/russellnomer")
 
-page = st.radio("Navigate", ["The National Lens", "The 2027 Fork", "Tariff Tracker", "The Activism Hub", "Leader Scorecard", "Support"], horizontal=True, label_visibility="collapsed")
+page = st.radio("Navigate", ["The National Lens", "The 2027 Fork", "Trade & Industry", "The Activism Hub", "Leader Scorecard", "Support"], horizontal=True, label_visibility="collapsed")
 
 if page == "The National Lens":
     st.header(f"📍 State of the Union: {selected_state}")
@@ -209,68 +209,129 @@ elif page == "The 2027 Fork":
     savings = (status_quo[-1] - reform[-1]) * 1000
     st.success(f"💰 **Potential Savings by 2030:** ${savings:,.0f} Billion through fiscal accountability.")
 
-elif page == "Tariff Tracker":
-    st.header("🇺🇸 Bringing Money Home: The Tariff Offset")
+elif page == "Trade & Industry":
+    st.header("🇺🇸 Made in America: The Pivot")
     
-    tariff_revenue = get_tariff_revenue()
-    immigration_cost = 150700000000
+    tab_dividend, tab_sourcing = st.tabs(["💵 The Tariff Dividend", "🏭 Sourcing Finder"])
     
-    pop = STATE_POPS.get(selected_state, 6000000)
-    state_dividend = (tariff_revenue / US_POP) * pop
-    per_capita_dividend = tariff_revenue / US_POP
+    with tab_dividend:
+        tariff_revenue = get_tariff_revenue()
+        immigration_cost = 150700000000
+        
+        pop = STATE_POPS.get(selected_state, 6000000)
+        per_capita_offset = tariff_revenue / US_POP
+        
+        col1, col2 = st.columns(2)
+        col1.metric("💵 Live Tariff Revenue", f"${tariff_revenue:,.0f}")
+        col2.metric("🎁 The Offset (Per Capita)", f"${per_capita_offset:,.0f}")
+        
+        st.caption("*Foreign money entering the US Treasury through trade policy.*")
+        
+        st.divider()
+        st.subheader("📊 The Offset Strategy")
+        
+        offset_data = pd.DataFrame({
+            "Category": ["Immigration Cost", "Tariff Revenue"],
+            "Amount (Billions)": [immigration_cost / 1e9, tariff_revenue / 1e9]
+        })
+        
+        fig = px.bar(offset_data, x="Category", y="Amount (Billions)", 
+                     color="Category",
+                     color_discrete_map={"Immigration Cost": "#b22222", "Tariff Revenue": "#0d3b66"})
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig, use_container_width=True)
+        
+        net_position = tariff_revenue - immigration_cost
+        if net_position >= 0:
+            st.success(f"✅ **In the Black:** Tariff revenue exceeds immigration cost by ${net_position/1e9:.1f}B")
+        else:
+            st.error(f"❌ **In the Red:** Immigration cost exceeds tariff revenue by ${abs(net_position)/1e9:.1f}B")
+        
+        st.info("💡 Tariffs bring money back, but the transition is hard. We must support businesses that pivot to domestic manufacturing.")
     
-    col1, col2 = st.columns(2)
-    col1.metric("💵 Total Tariff Revenue (FY To Date)", f"${tariff_revenue:,.0f}")
-    col2.metric(f"🎁 {selected_state}'s Plainview Dividend", f"${state_dividend:,.0f}")
-    
-    st.caption("*This is foreign money entering the US Treasury through trade policy.*")
-    
-    st.divider()
-    st.subheader("⚖️ The Debate: Pain vs. Gain")
-    
-    pain_col, gain_col = st.columns(2)
-    
-    with pain_col:
-        st.markdown("### 😰 The Pain: Importers' Cost")
-        st.warning("Businesses relying on foreign manufacturing face higher costs ($500k+/yr for some). Consumer prices may rise on imported goods.")
-    
-    with gain_col:
-        st.markdown("### 💪 The Gain: American Strength")
-        st.success("Incentivizes domestic production, creates jobs, and funds Veteran/Border priorities. Foreign nations pay into our Treasury.")
-    
-    st.divider()
-    st.subheader("📊 The Offset Strategy")
-    
-    offset_data = pd.DataFrame({
-        "Category": ["Immigration Cost", "Tariff Revenue"],
-        "Amount (Billions)": [immigration_cost / 1e9, tariff_revenue / 1e9]
-    })
-    
-    fig = px.bar(offset_data, x="Category", y="Amount (Billions)", 
-                 color="Category",
-                 color_discrete_map={"Immigration Cost": "#b22222", "Tariff Revenue": "#0d3b66"})
-    fig.update_layout(showlegend=False)
-    st.plotly_chart(fig, use_container_width=True)
-    
-    net_position = tariff_revenue - immigration_cost
-    if net_position >= 0:
-        st.success(f"✅ **In the Black:** Tariff revenue exceeds immigration cost by ${net_position/1e9:.1f}B")
-    else:
-        st.error(f"❌ **In the Red:** Immigration cost exceeds tariff revenue by ${abs(net_position)/1e9:.1f}B")
-        st.info("Increasing tariff enforcement or reducing policy gaps could close this deficit.")
-    
-    st.divider()
-    st.subheader("🌉 Bridge Builder: Trade Edition")
-    st.markdown("**Concerned about rising prices?** Ask your reps to use tariff revenue to cut income tax, not just spend it.")
-    
-    trade_template = f"In {selected_state}, we support smart trade policy. Use tariff revenue to cut our taxes, not grow government. #PlainviewProtocol #FairTrade"
-    st.code(trade_template, language=None)
-    st.link_button("Share on X (Twitter)", f"https://twitter.com/intent/tweet?text={trade_template.replace(' ', '%20').replace('#', '%23')}")
+    with tab_sourcing:
+        st.subheader("🛑 Stop Funding China. Start Building Here.")
+        
+        sourcing_resources = {
+            "All Industries": [
+                ("Thomasnet.com", "Industrial Sourcing Directory"),
+                ("Maker's Row", "Apparel, Furniture & Consumer Goods"),
+                ("US Dept of Commerce Supply Chain Hub", "Government Resources")
+            ],
+            "Textiles & Apparel": [
+                ("Maker's Row", "American Factories for Fashion"),
+                ("Sewn Products Equipment Suppliers", "Industrial Sewing"),
+                ("American Apparel & Footwear Association", "Industry Trade Group")
+            ],
+            "Electronics": [
+                ("Reshoring Institute", "Reshoring Strategy & Resources"),
+                ("Circuits Assembly Directory", "PCB & Electronics Manufacturing"),
+                ("IPC - Association Connecting Electronics", "Industry Standards")
+            ],
+            "Machining & Metal": [
+                ("Thomasnet.com", "CNC & Metal Fabrication"),
+                ("Modern Machine Shop", "Industry Directory"),
+                ("NTMA - National Tooling & Machining Assoc", "Trade Association")
+            ],
+            "Consumer Goods": [
+                ("Maker's Row", "Product Manufacturing"),
+                ("ThomasNet.com", "Packaging & Assembly"),
+                ("Made in USA Certified", "Certification Program")
+            ]
+        }
+        
+        selected_industry = st.selectbox("Select Your Industry:", list(sourcing_resources.keys()))
+        
+        st.markdown(f"### Resources for {selected_industry}")
+        for name, desc in sourcing_resources[selected_industry]:
+            st.markdown(f"- **{name}**: {desc}")
+        
+        st.divider()
+        st.subheader("🧮 The Real Cost Calculator")
+        st.markdown("*See the true landed cost—often USA is closer than you think.*")
+        
+        col_china, col_usa = st.columns(2)
+        
+        with col_china:
+            st.markdown("### 🇨🇳 Importing from China")
+            china_unit = st.number_input("Unit Cost ($)", value=5.00, key="china_unit", min_value=0.0)
+            china_shipping = st.number_input("Shipping per Unit ($)", value=2.00, key="china_ship", min_value=0.0)
+            tariff_rate = st.slider("Tariff Rate (%)", 0, 60, 25)
+            transit_weeks = st.number_input("Weeks in Transit", value=6, key="china_transit", min_value=1)
+            
+            china_tariff_cost = china_unit * (tariff_rate / 100)
+            china_total = china_unit + china_shipping + china_tariff_cost
+            st.metric("Total Landed Cost", f"${china_total:.2f}")
+            st.caption(f"+ {transit_weeks} weeks inventory delay")
+        
+        with col_usa:
+            st.markdown("### 🇺🇸 Making in USA")
+            usa_unit = st.number_input("Unit Cost ($)", value=8.00, key="usa_unit", min_value=0.0)
+            usa_shipping = st.number_input("Shipping per Unit ($)", value=0.50, key="usa_ship", min_value=0.0)
+            usa_transit = st.number_input("Weeks in Transit", value=1, key="usa_transit", min_value=1)
+            
+            usa_total = usa_unit + usa_shipping
+            st.metric("Total Landed Cost", f"${usa_total:.2f}")
+            st.caption(f"+ {usa_transit} week inventory delay")
+        
+        st.divider()
+        
+        difference = china_total - usa_total
+        if difference >= 0:
+            st.success(f"✅ **USA is ${difference:.2f} CHEAPER** per unit when tariffs are included!")
+        else:
+            st.warning(f"⚠️ USA is ${abs(difference):.2f} more per unit, but consider: faster delivery, quality control, no supply chain risk, American jobs.")
+        
+        st.divider()
+        st.subheader("🌉 Bridge Builder: Business Owner to Rep")
+        biz_template = f"I'm a {selected_state} business owner who wants to hire American. Use Tariff revenue to give tax credits to small businesses who switch to US suppliers. #MadeInAmerica #PlainviewProtocol"
+        st.code(biz_template, language=None)
+        st.link_button("Share on X", f"https://twitter.com/intent/tweet?text={biz_template.replace(' ', '%20').replace('#', '%23')}")
 
 elif page == "The Activism Hub":
     st.header("🌉 The Bridge Builder: Facts Over Rage")
     
-    tab1, tab2, tab3 = st.tabs(["Veterans First", "Border Security", "Education"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Veterans First", "Border Security", "Education", "Business Owner"])
     
     with tab1:
         st.write("Compare the cost of housing a homeless veteran vs. federal waste.")
@@ -282,6 +343,18 @@ elif page == "The Activism Hub":
         st.write("Secure borders ensure safe communities and fiscal sanity.")
         tweet_text = f"Security is not optional. {selected_state} taxpayers are footing the bill for unsecured borders. Enforce the law. #PlainviewProtocol"
         st.link_button("Share on X (Twitter)", f"https://twitter.com/intent/tweet?text={tweet_text}")
+
+    with tab3:
+        st.write("Invest in American skills and education for a stronger workforce.")
+        tweet_text = f"In {selected_state}, we need skills-based education that prepares workers for good jobs. Invest in our future. #PlainviewProtocol"
+        st.link_button("Share on X (Twitter)", f"https://twitter.com/intent/tweet?text={tweet_text}")
+
+    with tab4:
+        st.write("**Business Owner to Rep: Help Me Reshore**")
+        st.info("Use this template if you're a business owner wanting to bring manufacturing back to the USA.")
+        biz_template = f"I'm a {selected_state} business owner who wants to hire American. Use Tariff revenue to give tax credits to small businesses who switch to US suppliers. Help me reshore! #MadeInAmerica #PlainviewProtocol"
+        st.code(biz_template, language=None)
+        st.link_button("Share on X (Twitter)", f"https://twitter.com/intent/tweet?text={biz_template.replace(' ', '%20').replace('#', '%23')}")
 
     st.divider()
     

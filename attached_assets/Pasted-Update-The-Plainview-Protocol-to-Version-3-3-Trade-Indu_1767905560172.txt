@@ -1,0 +1,46 @@
+Update "The Plainview Protocol" to Version 3.3: Trade & Industry Edition.
+
+Goal: Add a powerful new section that tracks Tariff Revenue (The "Dividend") and helps businesses pivot to US Manufacturing (The "Solution").
+
+PART 1: UPDATE `sources.json`
+Add this endpoint to the JSON file:
+"treasury_tariffs": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/customs_duties?sort=-record_date&limit=1"
+
+PART 2: UPDATE `app.py`
+
+1. ADD DATA FETCHING:
+   - Create `get_tariff_revenue()`: Fetch `customs_duties_amount` from `sources.json['treasury_tariffs']`.
+   - Fallback: 195000000000.00 (FY2025 Estimate).
+
+2. SIDEBAR UPDATE:
+   - Add "Trade & Industry" to the "Select Focus" dropdown.
+
+3. NEW PAGE: "Trade & Industry" (Add to Navigation)
+   - Header: "🇺🇸 Made in America: The Pivot"
+   - Create 2 Tabs: "The Tariff Dividend" and "Sourcing Finder".
+
+   TAB 1: THE TARIFF DIVIDEND
+   - Metric 1: "Live Tariff Revenue" (Fetch from Treasury).
+   - Metric 2: "The Offset" (Revenue / 330M people). Text: "Foreign money entering the US Treasury."
+   - Chart: Bar Chart comparing "Immigration Cost ($150B)" vs "Tariff Revenue".
+   - Text: "Tariffs bring money back, but the transition is hard. We must support businesses that pivot."
+
+   TAB 2: DOMESTIC SOURCING FINDER (The Solution)
+   - Header: "Stop Funding China. Start Building Here."
+   - Input: Select Industry (Textiles, Electronics, Machining, Consumer Goods).
+   - Output: Display a curated list of resources based on selection (Hard-coded dictionary):
+     - *All:* "Thomasnet.com (Industrial Sourcing)", "Maker's Row (Apparel/Furniture)".
+     - *Electronics:* "Reshoring Institute", "Circuits Assembly Directory".
+     - *General:* "US Dept of Commerce Supply Chain Hub".
+
+   - THE "REAL COST" CALCULATOR (The Empathy Tool):
+     - Create 2 Columns: "Importing from China" vs "Making in USA".
+     - Inputs: "Unit Cost", "Shipping Cost", "Tariff Rate %" (Default 25%), "Weeks in Transit".
+     - Logic: Calculate "Total Landed Cost" for China (Unit + Shipping + Tariff) vs USA (Unit + higher labor - no tariff - low shipping).
+     - Display: "The True Cost Difference." Often, USA is closer than it looks when tariffs are added.
+
+4. ACTIVISM UPDATE:
+   - Add a template to "Bridge Builder": "Business Owner to Rep: Help me Reshore."
+     - "I want to hire American. Use Tariff revenue to give tax credits to small businesses who switch to US suppliers."
+
+Generate updated `app.py` and `sources.json`.
