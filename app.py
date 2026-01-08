@@ -110,8 +110,15 @@ page = st.sidebar.radio(
         "The Bridge Builder",
         "Support the Protocol",
         "Leader Scorecard",
-        "Support the Creator"
+        "Support the Mission"
     ]
+)
+
+st.sidebar.divider()
+st.sidebar.link_button(
+    "☕ Support the Builder",
+    "https://buymeacoffee.com/russellnomer",
+    use_container_width=True
 )
 
 st.markdown("<h1 class='main-header'>The Plainview Protocol: Truth, Kindness, & Security</h1>", unsafe_allow_html=True)
@@ -558,13 +565,13 @@ elif page == "Leader Scorecard":
     """, unsafe_allow_html=True)
 
 
-elif page == "Support the Creator":
-    st.header("☕ Sustain the Mission – Support Russell Directly")
+elif page == "Support the Mission":
+    st.header("⚡ Power the Protocol: Support Russell Directly")
     
     st.markdown("""
     <div class='support-card'>
     <p style='font-size: 1.1em;'>The Plainview Protocol is built and maintained by <strong>Russell Nomer</strong> in Plainview, NY. 
-    It's free for all because of community support.</p>
+    It is free for all because of community support.</p>
     <p>If this tool helps you understand costs, see the immunity gap, or voice concerns kindly, 
     consider buying Russell a coffee.</p>
     <p><strong>100% of funds go to development, hosting, and expansion—no grift, full transparency.</strong></p>
@@ -573,13 +580,13 @@ elif page == "Support the Creator":
     
     st.markdown("---")
     
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
     
     with col1:
         st.markdown("### ☕ Buy a Coffee")
         st.markdown("Direct support for development and hosting.")
         st.link_button(
-            "Buy Russell a Coffee",
+            "☕ Buy Russell a Coffee",
             "https://buymeacoffee.com/russellnomer",
             type="primary",
             use_container_width=True
@@ -589,18 +596,8 @@ elif page == "Support the Creator":
         st.markdown("### 📱 Follow for Updates")
         st.markdown("Stay informed on new features and expansions.")
         st.link_button(
-            "Follow on X",
+            "Follow on X for Updates",
             "https://x.com/russellnomer",
-            type="secondary",
-            use_container_width=True
-        )
-    
-    with col3:
-        st.markdown("### 💻 View the Source")
-        st.markdown("See how it's built and fork your own version.")
-        st.link_button(
-            "View Live App Source",
-            "https://replit.com/@russellnomer/The-Plainview-Protocol",
             type="secondary",
             use_container_width=True
         )
