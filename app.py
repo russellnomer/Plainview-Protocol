@@ -61,22 +61,44 @@ def get_senate_votes():
     return votes
 
 @st.cache_data(ttl=86400)
-def get_reps(state_name):
-    """Scrapes Wikipedia for House Reps. Fallback: Placeholder."""
-    fallback_df = pd.DataFrame({"Representative": ["Rep. Doe"], "District": ["1"], "Party": ["N/A"]})
+def get_reps(state_full_name):
+    """Fetches live Congress data from UnitedStates.io Open Data."""
+    us_state_to_abbrev = {
+        "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR", "California": "CA",
+        "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE", "Florida": "FL", "Georgia": "GA",
+        "Hawaii": "HI", "Idaho": "ID", "Illinois": "IL", "Indiana": "IN", "Iowa": "IA",
+        "Kansas": "KS", "Kentucky": "KY", "Louisiana": "LA", "Maine": "ME", "Maryland": "MD",
+        "Massachusetts": "MA", "Michigan": "MI", "Minnesota": "MN", "Mississippi": "MS", "Missouri": "MO",
+        "Montana": "MT", "Nebraska": "NE", "Nevada": "NV", "New Hampshire": "NH", "New Jersey": "NJ",
+        "New Mexico": "NM", "New York": "NY", "North Carolina": "NC", "North Dakota": "ND", "Ohio": "OH",
+        "Oklahoma": "OK", "Oregon": "OR", "Pennsylvania": "PA", "Rhode Island": "RI", "South Carolina": "SC",
+        "South Dakota": "SD", "Tennessee": "TN", "Texas": "TX", "Utah": "UT", "Vermont": "VT",
+        "Virginia": "VA", "Washington": "WA", "West Virginia": "WV", "Wisconsin": "WI", "Wyoming": "WY"
+    }
+    
+    code = us_state_to_abbrev.get(state_full_name)
+    if not code:
+        return pd.DataFrame([{"Error": "Invalid State"}])
+
     try:
-        url = SOURCES["wiki_reps"]
-        dfs = pd.read_html(url, match="District") 
-        for df in dfs:
-            if "District" in df.columns and "Member" in df.columns:
-                clean_df = df[['District', 'Member', 'Party']].copy()
-                clean_df = clean_df[clean_df['District'].str.contains(state_name, case=False, na=False)]
-                
-                if not clean_df.empty:
-                    return clean_df
+        url = SOURCES.get("congress_legislators", "https://theunitedstates.io/congress-legislators/legislators-current.json")
+        response = requests.get(url, timeout=10)
+        data = response.json()
+        
+        reps = []
+        for p in data:
+            current = p['terms'][-1]
+            if current['state'] == code:
+                role = "Senator" if current['type'] == 'sen' else f"Rep (Dist {current.get('district', 'At-Large')})"
+                reps.append({
+                    "Name": f"{p['name']['first']} {p['name']['last']}",
+                    "Role": role,
+                    "Party": current['party']
+                })
+        
+        return pd.DataFrame(reps) if reps else pd.DataFrame([{"Status": "No reps found"}])
     except Exception as e:
-        pass
-    return fallback_df
+        return pd.DataFrame([{"Error": "Data Fetch Failed - Check connection"}])
 
 @st.cache_data(ttl=3600)
 def get_tariff_revenue():
@@ -142,7 +164,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v3.6 | The Sunlight Cannon")
+st.sidebar.caption("v3.7 | Live Data & Transparency")
 
 selected_state = st.sidebar.selectbox("Select Your State", STATES, index=31)
 selected_focus = st.sidebar.selectbox("Select Focus", ["All", "Border Security", "Veterans First", "Education & Skills", "Crime & Safety", "Trade & Industry"])
@@ -212,6 +234,15 @@ if page == "The National Lens":
         st.session_state.debt_base = live_debt
         st.session_state.debt_start_time = time.time()
         st.rerun()
+    
+    with st.expander("ℹ️ Transparency: Sources & Math"):
+        st.markdown("""
+* **Source:** U.S. Treasury Fiscal Data API (`fiscaldata.treasury.gov`)
+* **Math:** Total Public Debt divided by U.S. Census Population Estimate
+* **Immigration Burden:** FAIR (Federation for American Immigration Reform) 2023 Report: $150.7B annual fiscal impact
+* **Border Multiplier:** 1.6x applied to TX, AZ, NM, CA based on geographic exposure
+* **Update Frequency:** Real-time (Daily Treasury Statement)
+        """)
 
 elif page == "The 2027 Fork":
     st.header("🛤️ The Fork in the Road: 2024-2030")
@@ -231,6 +262,14 @@ elif page == "The 2027 Fork":
     
     savings = (status_quo[-1] - reform[-1]) * 1000
     st.success(f"💰 **Potential Savings by 2030:** ${savings:,.0f} Billion through fiscal accountability.")
+    
+    with st.expander("ℹ️ Transparency: Projection Methodology"):
+        st.markdown("""
+* **Status Quo Data:** Bureau of Labor Statistics (CPI), FAIR Immigration Cost Reports, Treasury Debt Projections
+* **Status Quo Growth:** 5% annual debt growth (historical average under current spending)
+* **Reform Projection:** 1% annual growth (assumes fiscal accountability measures)
+* **Savings Calculation:** Difference between projected endpoints x $1 Trillion scale factor
+        """)
 
 elif page == "Trade & Industry":
     st.header("🇺🇸 Made in America: The Pivot")
@@ -249,6 +288,14 @@ elif page == "Trade & Industry":
         col2.metric("🎁 The Offset (Per Capita)", f"${per_capita_offset:,.0f}")
         
         st.caption("*Foreign money entering the US Treasury through trade policy.*")
+        
+        with st.expander("ℹ️ Transparency: Tariff Data Sources"):
+            st.markdown("""
+* **Source:** U.S. Treasury Fiscal Data API - Customs Duties Collection
+* **Math:** Total Duties Collected / U.S. Census Population Estimate
+* **Immigration Cost Baseline:** FAIR 2023 Report: $150.7B annual fiscal impact
+* **Update Frequency:** Monthly (Treasury Monthly Statement)
+            """)
         
         st.divider()
         st.subheader("📊 The Offset Strategy")
@@ -437,6 +484,14 @@ elif page == "Accountability Tribunal":
                     c2.success(f"Score: {score} (A)")
                     c3.markdown("🟢 **TRANSPARENT**")
                 st.divider()
+    
+    with st.expander("ℹ️ Transparency: Scoring Methodology"):
+        st.markdown("""
+* **Federal Data:** Live feed from **UnitedStates.io** (Open Congress Data Project)
+* **Senate Actions:** Senate.gov Official Roll Call XML Feed
+* **Shadow Penalty:** A -50 point deduction applied via the **Spoliation Doctrine** when a public official refuses to release public records (FOIA/Sunshine Law violations)
+* **Adverse Inference:** Legal principle that hidden evidence is presumed to be harmful to the party hiding it
+        """)
 
 elif page == "FOIA Cannon":
     st.header("🔦 The Sunlight Cannon: Wake the Watchers")
@@ -534,6 +589,15 @@ Generated by The Plainview Protocol | Truth, Kindness, Security
     st.subheader("📅 The Tracker")
     st.info("**Did you send it?** Mark it on your calendar. Federal agencies have **20 business days** to respond. State timelines vary.")
     st.caption("Pro tip: Send via email with read receipt, or certified mail for a paper trail.")
+    
+    with st.expander("ℹ️ Transparency: Legal Basis"):
+        st.markdown("""
+* **Federal Law:** Freedom of Information Act (5 U.S.C. § 552) - Enacted 1967, strengthened 2016
+* **State Laws:** Each state has its own "Sunshine Law" or Public Records Act
+* **Response Time:** Federal agencies must respond within 20 business days; state timelines vary (typically 5-30 days)
+* **Spoliation Doctrine:** Legal principle that destruction of evidence creates adverse inference against the destroying party
+* **Resources:** FOIA.gov (Federal), NFOIC.org (State-by-State), MuckRock.com (Community Support)
+        """)
 
 elif page == "The Ecosystem":
     st.header("🌳 From Pain to Purpose: The Full Grove")
