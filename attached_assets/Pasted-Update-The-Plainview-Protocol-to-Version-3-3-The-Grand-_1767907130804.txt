@@ -1,0 +1,59 @@
+Update "The Plainview Protocol" to Version 3.3: The Grand Unification.
+
+Goal: Add powerful economic tools for businesses (Tariffs/Sourcing) AND integrate the creator's full ecosystem of apps, books, and music with real links.
+
+PART 1: UPDATE `sources.json`
+Add this endpoint to the JSON file:
+"treasury_tariffs": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/customs_duties?sort=-record_date&limit=1"
+
+PART 2: UPDATE `app.py`
+
+1. ADD DATA FETCHING:
+   - Create `get_tariff_revenue()`: Fetch `customs_duties_amount` from `sources.json['treasury_tariffs']`.
+   - Fallback: 195000000000.00 (FY2025 Estimate).
+
+2. SIDEBAR UPDATE:
+   - Add "Trade & Industry" to the "Select Focus" dropdown.
+   - Add a new Navigation Page: "The Russell Nomer Ecosystem".
+
+3. NEW PAGE: "Trade & Industry"
+   - Header: "🇺🇸 Made in America: The Pivot"
+   - Create 2 Tabs: "The Tariff Dividend" and "Sourcing Finder".
+
+   TAB 1: THE TARIFF DIVIDEND
+   - Metric 1: "Live Tariff Revenue" (Fetch from Treasury).
+   - Metric 2: "The Offset" (Revenue / 330M people). Text: "Foreign money entering the US Treasury."
+   - Chart: Bar Chart comparing "Immigration Cost ($150B)" vs "Tariff Revenue".
+   - Text: "Tariffs bring money back, but the transition is hard. We must support businesses that pivot."
+
+   TAB 2: DOMESTIC SOURCING FINDER
+   - Header: "Stop Funding China. Start Building Here."
+   - Input: Select Industry (Textiles, Electronics, Machining, Consumer Goods).
+   - Output: Display resources: "Thomasnet.com", "Maker's Row", "US Dept of Commerce Hub".
+   - CALCULATOR: "The Real Cost of China"
+     - Inputs: Unit Cost, Shipping, Tariff % (Default 25%), Weeks Delay.
+     - Logic: Calculate Total Landed Cost vs US Cost.
+     - Display: "True Savings/Cost."
+
+4. NEW PAGE: "The Russell Nomer Ecosystem"
+   - Header: "From Pain to Purpose: The Full Grove"
+   - Text: "I'm Russell Nomer—a 54-year-old dad from Plainview, NY, recovering from accidents and loss, turning it all into tools for truth and protection. The Plainview Protocol is one part—here's the rest:"
+   
+   - SECTION: APPS & TOOLS
+     - Use `st.link_button` for:
+       - "🏠 Market Architect App" -> https://marketarchitect.app
+       - "🍳 Home Cooked Connections" -> https://homecookedconnections.com
+       - "💎 Verbum VIP" -> https://verbum.vip
+   
+   - SECTION: MUSIC & BOOKS
+     - Use `st.link_button` for:
+       - "📚 The Grove (Book on Amazon)" -> https://amzn.to/4sukXoc
+       - "📺 YouTube Channel" -> https://www.youtube.com/@russellnomermusic
+       - "🎵 UnitedMasters (Music)" -> https://unitedmasters.com/russell-nomer-music
+       - "🎧 Apple Music" -> https://music.apple.com/us/artist/russell-nomer/1762452726
+       - "🎹 Bandcamp" -> https://russellnomer.bandcamp.com/
+       - "☁️ SoundCloud" -> https://soundcloud.com/russell-nomer
+       
+   - Footer: "Music, books, apps—all channeling resilience into protecting America. Join the Grove."
+
+Generate updated `app.py` and `sources.json`.

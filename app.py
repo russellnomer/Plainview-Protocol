@@ -134,7 +134,7 @@ st.sidebar.divider()
 st.sidebar.markdown("### Fuel the Mission")
 st.sidebar.link_button("☕ Support Russell", "https://buymeacoffee.com/russellnomer")
 
-page = st.radio("Navigate", ["The National Lens", "The 2027 Fork", "Trade & Industry", "The Activism Hub", "Leader Scorecard", "Support"], horizontal=True, label_visibility="collapsed")
+page = st.radio("Navigate", ["The National Lens", "The 2027 Fork", "Trade & Industry", "The Activism Hub", "Leader Scorecard", "The Ecosystem", "Support"], horizontal=True, label_visibility="collapsed")
 
 if page == "The National Lens":
     st.header(f"📍 State of the Union: {selected_state}")
@@ -384,6 +384,40 @@ elif page == "Leader Scorecard":
         st.dataframe(reps_df, hide_index=True)
         
     st.caption("Data fetched live from Senate.gov and Wikipedia public records.")
+
+elif page == "The Ecosystem":
+    st.header("🌳 From Pain to Purpose: The Full Grove")
+    
+    st.markdown("""
+I'm **Russell Nomer**—a 54-year-old dad from Plainview, NY, recovering from accidents and loss, 
+turning it all into tools for truth and protection. The Plainview Protocol is one part—here's the rest:
+    """)
+    
+    st.divider()
+    st.subheader("🛠️ Apps & Tools")
+    col1, col2, col3 = st.columns(3)
+    col1.link_button("🏠 Market Architect App", "https://marketarchitect.app")
+    col2.link_button("🍳 Home Cooked Connections", "https://homecookedconnections.com")
+    col3.link_button("💎 Verbum VIP", "https://verbum.vip")
+    
+    st.divider()
+    st.subheader("📚 Books")
+    st.link_button("📖 The Grove (Book on Amazon)", "https://amzn.to/4sukXoc")
+    
+    st.divider()
+    st.subheader("🎵 Music")
+    
+    music_col1, music_col2, music_col3 = st.columns(3)
+    music_col1.link_button("📺 YouTube Channel", "https://www.youtube.com/@russellnomermusic")
+    music_col2.link_button("🎵 UnitedMasters", "https://unitedmasters.com/russell-nomer-music")
+    music_col3.link_button("🎧 Apple Music", "https://music.apple.com/us/artist/russell-nomer/1762452726")
+    
+    music_col4, music_col5 = st.columns(2)
+    music_col4.link_button("🎹 Bandcamp", "https://russellnomer.bandcamp.com/")
+    music_col5.link_button("☁️ SoundCloud", "https://soundcloud.com/russell-nomer")
+    
+    st.divider()
+    st.info("🌲 Music, books, apps—all channeling resilience into protecting America. **Join the Grove.**")
 
 elif page == "Support":
     st.header("☕ Sustain the Mission")
