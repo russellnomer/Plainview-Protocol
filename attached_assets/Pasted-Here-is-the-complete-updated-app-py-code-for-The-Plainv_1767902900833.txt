@@ -1,0 +1,219 @@
+Here is the complete, updated `app.py` code for **The Plainview Protocol**. This version integrates the new "Support the Mission" page and the persistent sidebar link while keeping all your original tools fully functional.
+
+I have also included the `requirements.txt` content you will need.
+
+### 1. The Code (`app.py`)
+
+```python
+import streamlit as st
+import pandas as pd
+
+# --- Page Configuration ---
+st.set_page_config(
+    page_title="The Plainview Protocol",
+    page_icon="🇺🇸",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# --- Custom Styling (Patriotic Theme) ---
+st.markdown("""
+    <style>
+    .main {
+        background-color: #f9f9f9;
+    }
+    h1, h2, h3 {
+        color: #0d3b66; /* Navy Blue */
+    }
+    .stMetric {
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+    }
+    .stButton>button {
+        color: white;
+        background-color: #b22222; /* Patriotic Red */
+        border: none;
+    }
+    .stButton>button:hover {
+        background-color: #8b0000;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+# --- Sidebar Navigation ---
+st.sidebar.title("🇺🇸 The Plainview Protocol")
+st.sidebar.markdown("*Truth, Kindness, & Security*")
+
+page = st.sidebar.radio(
+    "Navigate",
+    ["The Local Lens", "The 2027 Fork in the Road", "The Bridge Builder", "Support the Mission"]
+)
+
+# --- Persistent Sidebar Footer ---
+st.sidebar.divider()
+st.sidebar.markdown("### Fuel the Builder")
+st.sidebar.link_button("☕ Support Russell", "https://buymeacoffee.com/russellnomer", help="Buy a coffee to support the app development")
+st.sidebar.caption("Built by Russell Nomer in Plainview, NY.")
+
+# --- PAGE 1: THE LOCAL LENS ---
+if page == "The Local Lens":
+    st.title("📍 The Local Lens: Your Wallet Impact")
+    st.markdown("### See How Federal Costs Hit Home in Plainview")
+    
+    col1, col2 = st.columns([1, 2])
+    
+    with col1:
+        st.info("Input your estimated details below to see the breakdown.")
+        tax_input = st.number_input("Estimated Annual Federal Tax Paid ($)", value=15000, step=1000)
+        county_input = st.text_input("Your County", value="Nassau County, NY")
+    
+    with col2:
+        # Hard-coded prototype ratios
+        # Debt Interest ~18% (Based on approx $1T interest on $6T budget)
+        # Waste/Fraud/Policy Gaps ~5% (Conservative estimate including immigration net costs)
+        debt_share = tax_input * 0.18
+        waste_share = tax_input * 0.05
+        
+        m1, m2 = st.columns(2)
+        m1.metric("Your Share to Debt Interest", f"${debt_share:,.2f}")
+        m2.metric("Your Share to Waste/Gaps", f"${waste_share:,.2f}")
+        
+        st.warning(f"📉 **Impact on {county_input}:** This is **${waste_share + debt_share:,.2f}** leaving your pocket that isn't fixing local roads, schools, or securing our community.")
+        st.markdown("*Calculations based on 2025-2026 federal budget projections (Interest on Debt ~18%) and estimated policy costs (FAIR/House Reports ~5%).*")
+
+# --- PAGE 2: THE 2027 FORK IN THE ROAD ---
+elif page == "The 2027 Fork in the Road":
+    st.title("🛤️ The 2027 Fork in the Road")
+    st.markdown("### Two Paths Ahead: Crisis or Reform")
+    
+    st.write("Visualizing the trajectory of our National Debt based on policy choices.")
+    
+    # Data for the Chart
+    chart_data = pd.DataFrame({
+        'Year': [2024, 2025, 2026, 2027, 2028, 2029, 2030],
+        'Status Quo (Crisis)': [100, 105, 112, 122, 135, 148, 160], # Exponential growth
+        'Accountability (Reform)': [100, 102, 103, 104, 104.5, 105, 105] # Flattening curve
+    })
+    chart_data.set_index('Year', inplace=True)
+    
+    # Line Chart with custom colors (Red for crisis, Blue for reform)
+    st.line_chart(chart_data, color=["#FF0000", "#0000FF"])
+    
+    st.divider()
+    
+    st.subheader("⚖️ The Immunity Double Standard")
+    st.markdown("Why reform is necessary for fiscal sanity:")
+    
+    immunity_data = {
+        "Scenario": ["Citizen Commits Fraud", "Official Enables Policy Fraud", "Negligence Harming Public"],
+        "Consequence for Average Citizen": ["Prison / Asset Seizure", "N/A", "Full Legal Liability"],
+        "Consequence for Shielded Official": ["N/A", "Protected by Immunity", "Frequently Dismissed"]
+    }
+    st.table(pd.DataFrame(immunity_data))
+    st.caption("Equal rule of law restores trust and saves billions.")
+
+# --- PAGE 3: THE BRIDGE BUILDER ---
+elif page == "The Bridge Builder":
+    st.title("🌉 The Bridge Builder")
+    st.markdown("### Turn Frustration into Effective Impact")
+    st.write("Anger gets ignored. Professional, firm demands for accountability get filed.")
+    
+    user_text = st.text_area("Vent your frustration here (e.g., 'These leaders are destroying us with these costs!'):", height=150)
+    
+    if st.button("Rewrite Professionally & Kindly"):
+        if user_text:
+            # Simple Prototype Logic (Keyword Swaps)
+            rewritten = user_text.lower()
+            
+            # 1. Swapping angry terms for professional ones
+            replacements = {
+                "destroying": "negligent regarding",
+                "idiots": "elected officials",
+                "liars": "those violating public trust",
+                "stupid": "ill-advised",
+                "hate": "am deeply concerned about",
+                "hell": "a difficult situation",
+                "criminal": "unlawful",
+                "corrupt": "ethically compromised"
+            }
+            
+            for word, replacement in replacements.items():
+                rewritten = rewritten.replace(word, replacement)
+            
+            # 2. Capitalize sentences (basic cleanup)
+            rewritten = ". ".join(s.capitalize() for s in rewritten.split(". "))
+            
+            # 3. Append the standard closing
+            final_output = (
+                f"{rewritten}\n\n"
+                "I respectfully urge enforcement of laws and accountability to protect America's domestic interests and future. "
+                "Please support an audit of these expenditures."
+            )
+            
+            st.success("✅ **Draft Ready for Action:**")
+            st.text_area("Copy this version:", value=final_output, height=200)
+        else:
+            st.error("Please enter some text above first.")
+
+# --- PAGE 4: SUPPORT THE MISSION (NEW) ---
+elif page == "Support the Mission":
+    st.title("☕ Power the Protocol")
+    st.markdown("### Sustain the Mission – Support Russell Directly")
+    
+    col1, col2 = st.columns([2, 1])
+    
+    with col1:
+        st.markdown("""
+        **The Plainview Protocol** is built and maintained by **Russell Nomer** in Plainview, NY. 
+        
+        It is free for all because of community support. If this tool helps you understand costs, 
+        see the immunity gap, or voice concerns kindly, consider buying Russell a coffee.
+        
+        **100% of funds go to:**
+        * 💻 Development & Hosting
+        * 📊 Data API Access
+        * 🚀 National Expansion
+        
+        *No grift. Full transparency.*
+        """)
+        
+        st.write("") # Spacer
+        
+        # Primary Call to Action
+        st.link_button("☕ Buy Russell a Coffee", "https://buymeacoffee.com/russellnomer", type="primary", use_container_width=True)
+        
+        st.write("") # Spacer
+        
+        # Secondary Call to Action
+        st.link_button("🐦 Follow on X for Updates", "https://x.com/russellnomer", use_container_width=True)
+
+    with col2:
+        # You could add a placeholder image here if you wanted, or just keep it clean text
+        st.info("Your support keeps this tool ad-free and uncensorable.")
+
+    st.divider()
+    st.caption("Thank you for helping keep truth and kindness growing. 🇺🇸")
+
+# --- Footer ---
+st.markdown("---")
+st.markdown(
+    "<div style='text-align: center; color: #666;'>"
+    "Built by Russell Nomer in Plainview, NY – <i>Kindness, Truth, Secure America.</i>"
+    "</div>", 
+    unsafe_allow_html=True
+)
+
+```
+
+### 2. The `requirements.txt` File
+
+Make sure this file in your Replit project contains these lines so the app runs correctly:
+
+```text
+streamlit
+pandas
+
+```

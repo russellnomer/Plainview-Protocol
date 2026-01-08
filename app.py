@@ -1,13 +1,11 @@
 import streamlit as st
 import pandas as pd
-import plotly.graph_objects as go
-import time
-import re
 
 st.set_page_config(
-    page_title="The Plainview Protocol: Truth, Kindness, & Security",
+    page_title="The Plainview Protocol",
     page_icon="🇺🇸",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 ALL_STATES = [
@@ -25,69 +23,101 @@ ALL_STATES = [
 
 BORDER_STATES = ["Texas", "Arizona", "California", "New Mexico"]
 
+STATE_POPULATION_RATIOS = {
+    "California": 0.118,
+    "Texas": 0.088,
+    "Florida": 0.066,
+    "New York": 0.059,
+    "Pennsylvania": 0.039,
+    "Illinois": 0.038,
+    "Ohio": 0.035,
+    "Georgia": 0.032,
+    "North Carolina": 0.032,
+    "Michigan": 0.030,
+    "New Jersey": 0.028,
+    "Virginia": 0.026,
+    "Washington": 0.023,
+    "Arizona": 0.022,
+    "Massachusetts": 0.021,
+    "Tennessee": 0.021,
+    "Indiana": 0.020,
+    "Maryland": 0.018,
+    "Missouri": 0.018,
+    "Wisconsin": 0.018,
+    "Colorado": 0.017,
+    "Minnesota": 0.017,
+    "South Carolina": 0.016,
+    "Alabama": 0.015,
+    "Louisiana": 0.014,
+    "Kentucky": 0.014,
+    "Oregon": 0.013,
+    "Oklahoma": 0.012,
+    "Connecticut": 0.011,
+    "Utah": 0.010,
+    "Iowa": 0.010,
+    "Nevada": 0.010,
+    "Arkansas": 0.009,
+    "Mississippi": 0.009,
+    "Kansas": 0.009,
+    "New Mexico": 0.006,
+    "Nebraska": 0.006,
+    "Idaho": 0.006,
+    "West Virginia": 0.005,
+    "Hawaii": 0.004,
+    "New Hampshire": 0.004,
+    "Maine": 0.004,
+    "Montana": 0.003,
+    "Rhode Island": 0.003,
+    "Delaware": 0.003,
+    "South Dakota": 0.003,
+    "North Dakota": 0.002,
+    "Alaska": 0.002,
+    "Vermont": 0.002,
+    "Wyoming": 0.002
+}
+
 st.markdown("""
-<style>
-    .main-header {
-        color: #002868;
-        text-align: center;
-        border-bottom: 3px solid #BF0A30;
-        padding-bottom: 10px;
-        margin-bottom: 20px;
+    <style>
+    .main {
+        background-color: #f9f9f9;
     }
-    .metric-container {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border-left: 4px solid #002868;
+    h1, h2, h3 {
+        color: #0d3b66;
+    }
+    .stMetric {
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
         padding: 15px;
         border-radius: 5px;
-        margin: 10px 0;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
     }
-    .footer {
-        text-align: center;
-        color: #002868;
-        border-top: 2px solid #BF0A30;
-        padding-top: 15px;
-        margin-top: 30px;
-        font-style: italic;
-    }
-    .info-box {
-        background-color: #f0f4f8;
-        border: 1px solid #002868;
-        border-radius: 8px;
-        padding: 15px;
-        margin: 15px 0;
-    }
-    .rewrite-box {
-        background-color: #e8f4e8;
-        border: 2px solid #28a745;
-        border-radius: 8px;
-        padding: 20px;
-        margin: 15px 0;
-    }
-    .debt-clock {
-        background: linear-gradient(135deg, #BF0A30 0%, #8B0000 100%);
+    .stButton>button {
         color: white;
-        padding: 30px;
-        border-radius: 15px;
+        background-color: #b22222;
+        border: none;
+    }
+    .stButton>button:hover {
+        background-color: #8b0000;
+    }
+    .debt-display {
+        background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
         text-align: center;
-        font-size: 2.5em;
+        font-size: 1.8em;
         font-weight: bold;
-        margin: 20px 0;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-    .support-card {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border: 2px solid #002868;
-        border-radius: 12px;
-        padding: 25px;
         margin: 15px 0;
-        text-align: center;
     }
-</style>
-""", unsafe_allow_html=True)
+    </style>
+    """, unsafe_allow_html=True)
 
-st.sidebar.markdown("## 🇺🇸 Navigation")
+st.sidebar.title("🇺🇸 The Plainview Protocol")
+st.sidebar.markdown("*Truth, Kindness, & Security*")
+st.sidebar.markdown("**Version 2.0 – National Edition**")
 
-st.sidebar.markdown("---")
+st.sidebar.divider()
+
 selected_state = st.sidebar.selectbox(
     "Select Your State:",
     ALL_STATES,
@@ -100,428 +130,226 @@ user_role = st.sidebar.selectbox(
     index=0
 )
 
-st.sidebar.markdown("---")
+st.sidebar.divider()
 
 page = st.sidebar.radio(
-    "Select a Page:",
-    [
-        "The National Lens",
-        "The 2027 Fork in the Road",
-        "The Bridge Builder",
-        "Support the Protocol",
-        "Leader Scorecard",
-        "Support the Mission"
-    ]
+    "Navigate",
+    ["The National Lens", "The 2027 Fork in the Road", "The Bridge Builder", "Support the Mission", "Leader Scorecard"]
 )
 
 st.sidebar.divider()
-st.sidebar.link_button(
-    "☕ Support the Builder",
-    "https://buymeacoffee.com/russellnomer",
-    use_container_width=True
-)
-
-st.markdown("<h1 class='main-header'>The Plainview Protocol: Truth, Kindness, & Security</h1>", unsafe_allow_html=True)
-st.markdown(f"<p style='text-align: center; color: #666;'>Version 2.0 | Viewing as: <strong>{user_role}</strong> in <strong>{selected_state}</strong></p>", unsafe_allow_html=True)
-
-
-def rewrite_professionally(text):
-    """Rewrite angry text into professional, kind language."""
-    if not text.strip():
-        return ""
-    
-    replacements = {
-        "destroying": "undermining",
-        "destroy": "undermine",
-        "idiots": "leaders",
-        "idiot": "leader",
-        "liars": "those violating public trust",
-        "liar": "one violating public trust",
-        "stupid": "misguided",
-        "corrupt": "ethically compromised",
-        "criminals": "those acting unlawfully",
-        "criminal": "one acting unlawfully",
-        "stealing": "misappropriating",
-        "steal": "misappropriate",
-        "thieves": "those misappropriating funds",
-        "thief": "one misappropriating funds",
-        "hate": "am deeply concerned about",
-        "hated": "was deeply concerned about",
-        "damn": "significant",
-        "damned": "significant",
-        "hell": "unacceptable situation",
-        "crap": "concerning matter",
-        "craziness": "dysfunction",
-        "crazy": "dysfunctional",
-        "insane": "unreasonable",
-        "ridiculous": "concerning",
-        "outrageous": "deeply troubling",
-        "disgusting": "unacceptable",
-        "terrible": "inadequate",
-        "horrible": "deeply problematic",
-        "worst": "most concerning",
-        "evil": "harmful",
-        "crooked": "acting with conflicts of interest",
-        "scumbag": "individual of concern",
-        "scumbags": "individuals of concern",
-        "moron": "decision-maker",
-        "morons": "decision-makers",
-        "incompetent": "negligent",
-        "failed": "has not fulfilled duties",
-        "failure": "shortcoming",
-        "betrayed": "failed to uphold commitments to",
-        "betraying": "failing to uphold commitments to",
-        "screwing": "negatively impacting",
-        "screw": "negatively impact",
-        "screwed": "negatively impacted",
-    }
-    
-    result = text
-    for angry_term, kind_term in replacements.items():
-        pattern = re.compile(re.escape(angry_term), re.IGNORECASE)
-        result = pattern.sub(kind_term, result)
-    
-    closing = "\n\nI respectfully urge enforcement of laws and accountability to protect America's domestic interests and future."
-    
-    if not result.strip().endswith(closing.strip()):
-        result = result.strip() + closing
-    
-    return result
+st.sidebar.markdown("### Fuel the Builder")
+st.sidebar.link_button("☕ Support Russell", "https://buymeacoffee.com/russellnomer", help="Buy a coffee to support the app development")
+st.sidebar.caption("Built by Russell Nomer in Plainview, NY.")
 
 
 def get_state_multiplier(state):
-    """Get waste/gap multiplier based on state (border states have higher impact)."""
     if state in BORDER_STATES:
         return 1.5
     return 1.0
 
 
-if page == "The National Lens":
-    st.header(f"📍 How Federal Costs Hit Home in {selected_state}")
-    st.markdown("*Your Wallet Impact*")
-    
-    is_border_state = selected_state in BORDER_STATES
-    if is_border_state:
-        st.info(f"🚨 {selected_state} is a border state with higher direct policy gap impacts (1.5x multiplier applied)")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        annual_taxes = st.number_input(
-            "Estimated Annual Federal Taxes Paid ($)",
-            min_value=0,
-            max_value=1000000,
-            value=15000,
-            step=500
-        )
-    
-    with col2:
-        st.markdown(f"**State:** {selected_state}")
-        st.markdown(f"**Role:** {user_role}")
-        st.markdown(f"**Policy Gap Multiplier:** {get_state_multiplier(selected_state)}x")
-    
-    st.markdown("---")
-    
-    debt_interest_rate = 0.18
-    base_waste_gap_rate = 0.05
-    state_multiplier = get_state_multiplier(selected_state)
-    adjusted_waste_gap_rate = base_waste_gap_rate * state_multiplier
-    
-    debt_interest_share = annual_taxes * debt_interest_rate
-    waste_gap_share = annual_taxes * adjusted_waste_gap_rate
-    
-    st.subheader(f"Your Federal Tax Breakdown for {selected_state}")
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.metric(
-            label="Your Share to Debt Interest",
-            value=f"${debt_interest_share:,.2f}",
-            delta="~18% of taxes",
-            delta_color="inverse"
-        )
-    
-    with col2:
-        waste_pct = adjusted_waste_gap_rate * 100
-        st.metric(
-            label="Your Share to Waste & Policy Gaps",
-            value=f"${waste_gap_share:,.2f}",
-            delta=f"~{waste_pct:.1f}% of taxes",
-            delta_color="inverse"
-        )
-    
-    with col3:
-        total_impact = debt_interest_share + waste_gap_share
-        total_pct = (debt_interest_rate + adjusted_waste_gap_rate) * 100
-        st.metric(
-            label="Total Accountability Gap",
-            value=f"${total_impact:,.2f}",
-            delta=f"~{total_pct:.1f}% of taxes",
-            delta_color="inverse"
-        )
-    
-    st.markdown("---")
-    
-    st.markdown(f"""
-    <div class='info-box'>
-    <h4>📊 What This Means for {selected_state}</h4>
-    <p>Based on <strong>$150.7 Billion</strong> net annual taxpayer cost of illegal immigration (FAIR 2023-2024 report) 
-    and rising debt interest (~$1T annually projected 2026).</p>
-    <ul>
-        <li><strong>Debt Interest (~18%):</strong> Federal interest payments approaching $1 trillion annually by 2026</li>
-        <li><strong>Waste/Policy Gaps ({waste_pct:.1f}%):</strong> {"Border state multiplier applied due to direct immigration impact" if is_border_state else "Base rate for policy gap costs"}</li>
-    </ul>
-    <p><strong>Accountability protects families and futures.</strong></p>
-    </div>
-    """, unsafe_allow_html=True)
+def get_state_immigration_cost(state):
+    national_cost = 150.7
+    ratio = STATE_POPULATION_RATIOS.get(state, 0.005)
+    return national_cost * ratio
 
+
+if page == "The National Lens":
+    st.title(f"📍 Federal Costs in {selected_state}")
+    st.markdown(f"### Your Wallet Impact as a {user_role}")
+    
+    is_border = selected_state in BORDER_STATES
+    if is_border:
+        st.warning(f"🚨 {selected_state} is a border state – 1.5x policy gap multiplier applied due to direct immigration impact.")
+    
+    col1, col2 = st.columns([1, 2])
+    
+    with col1:
+        st.info("Input your estimated details below to see the breakdown.")
+        tax_input = st.number_input("Estimated Annual Federal Tax Paid ($)", value=15000, step=1000)
+    
+    with col2:
+        multiplier = get_state_multiplier(selected_state)
+        state_imm_cost = get_state_immigration_cost(selected_state)
+        
+        debt_share = tax_input * 0.18
+        base_waste = tax_input * 0.05
+        waste_share = base_waste * multiplier
+        
+        m1, m2, m3 = st.columns(3)
+        m1.metric("Debt Interest Share", f"${debt_share:,.2f}", "~18%")
+        m2.metric("Waste/Policy Gaps", f"${waste_share:,.2f}", f"~{5 * multiplier:.1f}%")
+        m3.metric("Total Impact", f"${debt_share + waste_share:,.2f}")
+        
+        st.warning(f"📉 **Impact on {selected_state}:** ${waste_share + debt_share:,.2f} of your taxes goes toward debt interest and policy gaps instead of local infrastructure, schools, or security.")
+        
+        st.markdown(f"""
+        **{selected_state}'s Share of Immigration Net Cost:** ~${state_imm_cost:.1f}B annually  
+        *(Based on $150.7B national net cost – FAIR 2023-2024 report, prorated by state population)*
+        """)
 
 elif page == "The 2027 Fork in the Road":
-    st.header("🔀 Two Paths Ahead: Crisis or Reform")
-    st.markdown("*Future Outlook*")
+    st.title("🛤️ The 2027 Fork in the Road")
+    st.markdown("### Two Paths Ahead: Crisis or Reform")
     
     st.markdown("""
-    <div class='debt-clock'>
+    <div class='debt-display'>
         💰 Current National Debt: ~$36.5 Trillion
     </div>
     """, unsafe_allow_html=True)
     
-    debt_placeholder = st.empty()
+    st.write("Visualizing the trajectory of our National Debt based on policy choices.")
     
-    years = [2024, 2025, 2026, 2027, 2028, 2029, 2030]
-    status_quo = [100, 105, 112, 120, 130, 140, 152]
-    accountability = [100, 102, 104, 105, 106, 107, 108]
+    chart_data = pd.DataFrame({
+        'Year': [2024, 2025, 2026, 2027, 2028, 2029, 2030],
+        'Status Quo (Crisis)': [100, 105, 112, 122, 135, 148, 160],
+        'Accountability (Reform)': [100, 102, 103, 104, 104.5, 105, 105]
+    })
+    chart_data.set_index('Year', inplace=True)
     
-    fig = go.Figure()
+    st.line_chart(chart_data, color=["#FF0000", "#0000FF"])
     
-    fig.add_trace(go.Scatter(
-        x=years,
-        y=status_quo,
-        mode='lines+markers',
-        name='Status Quo',
-        line=dict(color='#BF0A30', width=3),
-        marker=dict(size=10)
-    ))
+    st.divider()
     
-    fig.add_trace(go.Scatter(
-        x=years,
-        y=accountability,
-        mode='lines+markers',
-        name='Accountability Path',
-        line=dict(color='#002868', width=3),
-        marker=dict(size=10)
-    ))
-    
-    fig.update_layout(
-        title='Debt-to-GDP Ratio Projections (2024-2030)',
-        xaxis_title='Year',
-        yaxis_title='Debt-to-GDP (%)',
-        legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01),
-        hovermode='x unified',
-        plot_bgcolor='white',
-        paper_bgcolor='white'
-    )
-    
-    fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='#E0E0E0')
-    fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='#E0E0E0')
-    
-    st.plotly_chart(fig, use_container_width=True)
-    
-    st.markdown("---")
-    
-    st.subheader("⚖️ Immunity Double Standard")
+    st.subheader("⚖️ The Immunity Double Standard")
+    st.markdown("Why reform is necessary for fiscal sanity:")
     
     immunity_data = {
-        "Scenario": [
-            "Fraud / Enabling Fraud",
-            "Public-Harming Negligence"
-        ],
-        "Average Citizen Consequence": [
-            "Fines, Prison, Asset Seizure",
-            "Full Liability"
-        ],
-        "Shielded Official Consequence": [
-            "Often Protected by Immunity",
-            "Frequently Dismissed"
-        ]
+        "Scenario": ["Citizen Commits Fraud", "Official Enables Policy Fraud", "Negligence Harming Public"],
+        "Consequence for Average Citizen": ["Prison / Asset Seizure", "N/A", "Full Legal Liability"],
+        "Consequence for Shielded Official": ["N/A", "Protected by Immunity", "Frequently Dismissed"]
     }
-    
-    df = pd.DataFrame(immunity_data)
-    
-    st.table(df)
-    
-    st.markdown("""
-    <div class='info-box'>
-    <h4>🏛️ Equal Rule of Law</h4>
-    <p><strong>Equal rule of law restores trust, saves billions, secures borders.</strong></p>
-    <p>When accountability applies equally to all citizens and officials alike, we strengthen the foundations of our republic and ensure taxpayer resources are protected.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
+    st.table(pd.DataFrame(immunity_data))
+    st.caption("Equal rule of law restores trust and saves billions.")
 
 elif page == "The Bridge Builder":
-    st.header("🌉 Turn Concern into Impact")
-    st.markdown("*Effective Voice*")
+    st.title("🌉 The Bridge Builder")
+    st.markdown("### Turn Frustration into Effective Impact")
+    st.write("Anger gets ignored. Professional, firm demands for accountability get filed.")
     
-    st.markdown("""
-    Express your concerns about policy issues below. This tool helps transform 
-    strong emotions into professional, impactful communication that decision-makers 
-    are more likely to hear and respond to.
-    """)
+    user_text = st.text_area("Vent your frustration here (e.g., 'These leaders are destroying us with these costs!'):", height=150)
     
-    user_input = st.text_area(
-        "Share your thoughts here (e.g., borders, fraud, immunity, costs):",
-        height=150,
-        placeholder="Type your concerns here... Don't worry about the tone - we'll help make it professional and impactful."
-    )
-    
-    if st.button("✨ Rewrite Professionally & Kindly", type="primary"):
-        if user_input.strip():
-            rewritten = rewrite_professionally(user_input)
+    if st.button("Rewrite Professionally & Kindly"):
+        if user_text:
+            rewritten = user_text.lower()
             
-            st.markdown("---")
-            st.subheader("📝 Your Professional Message")
+            replacements = {
+                "destroying": "negligent regarding",
+                "idiots": "elected officials",
+                "liars": "those violating public trust",
+                "stupid": "ill-advised",
+                "hate": "am deeply concerned about",
+                "hell": "a difficult situation",
+                "criminal": "unlawful",
+                "corrupt": "ethically compromised"
+            }
             
-            st.markdown(f"""
-            <div class='rewrite-box'>
-            {rewritten.replace(chr(10), '<br>')}
-            </div>
-            """, unsafe_allow_html=True)
+            for word, replacement in replacements.items():
+                rewritten = rewritten.replace(word, replacement)
             
-            st.code(rewritten, language=None)
+            rewritten = ". ".join(s.capitalize() for s in rewritten.split(". "))
             
-            st.info("📋 Copy the text above to use in emails, letters, or official communications.")
+            final_output = (
+                f"{rewritten}\n\n"
+                "I respectfully urge enforcement of laws and accountability to protect America's domestic interests and future. "
+                "Please support an audit of these expenditures."
+            )
+            
+            st.success("✅ **Draft Ready for Action:**")
+            st.text_area("Copy this version:", value=final_output, height=200)
         else:
-            st.warning("Please enter some text to rewrite.")
-    
-    st.markdown("---")
-    
-    with st.expander("💡 Tips for Effective Advocacy"):
-        st.markdown("""
-        - **Be Specific:** Reference specific policies, costs, or incidents
-        - **Stay Factual:** Use data and statistics when possible
-        - **Propose Solutions:** Suggest concrete actions
-        - **Be Respectful:** Kind language is more persuasive
-        - **Follow Up:** Persistence shows commitment
-        """)
+            st.error("Please enter some text above first.")
 
-
-elif page == "Support the Protocol":
-    st.header("💪 Sustain the Movement – Zero Grift, Full Transparency")
-    st.markdown("*Help Keep This Free and Uncensorable*")
+elif page == "Support the Mission":
+    st.title("☕ Power the Protocol")
+    st.markdown("### Sustain the Mission – Support Russell Directly")
     
-    st.markdown("""
-    <div class='support-card'>
-    <h3>🇺🇸 Your Support Makes a Difference</h3>
-    <p>The Plainview Protocol is built on a foundation of transparency, accountability, and citizen empowerment. 
-    Your support helps maintain and expand this platform nationwide.</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns([2, 1])
     
     with col1:
-        st.markdown("### 💵 Donate")
-        st.markdown("Support hosting and data access costs.")
-        st.link_button(
-            "Donate via PayPal",
-            "https://www.paypal.com",
-            type="primary",
-            use_container_width=True
-        )
-    
-    with col2:
-        st.markdown("### 🤝 Sponsor")
-        st.markdown("Become an official sponsor of the Protocol.")
-        st.link_button(
-            "Become a Sponsor",
-            "mailto:sponsor@plainviewprotocol.com",
-            type="primary",
-            use_container_width=True
-        )
-    
-    with col3:
-        st.markdown("### 🔧 Build Your Own")
-        st.markdown("Fork and customize for your state.")
-        st.link_button(
-            "Fork on GitHub",
-            "https://github.com",
-            type="primary",
-            use_container_width=True
-        )
-    
-    st.markdown("---")
-    
-    st.markdown("""
-    <div class='info-box'>
-    <h4>📋 Our Commitment</h4>
-    <ul>
-        <li><strong>All funds go to:</strong> Hosting, data access, and platform expansion</li>
-        <li><strong>No salaries:</strong> This is a volunteer-driven initiative</li>
-        <li><strong>Full transparency:</strong> Financial reports available upon request</li>
-        <li><strong>Uncensorable:</strong> Decentralized approach ensures the message persists</li>
-    </ul>
-    </div>
-    """, unsafe_allow_html=True)
+        st.markdown("""
+        **The Plainview Protocol** is built and maintained by **Russell Nomer** in Plainview, NY. 
+        
+        It is free for all because of community support. If this tool helps you understand costs, 
+        see the immunity gap, or voice concerns kindly, consider buying Russell a coffee.
+        
+        **100% of funds go to:**
+        * 💻 Development & Hosting
+        * 📊 Data API Access
+        * 🚀 National Expansion
+        
+        *No grift. Full transparency.*
+        """)
+        
+        st.write("")
+        
+        st.link_button("☕ Buy Russell a Coffee", "https://buymeacoffee.com/russellnomer", type="primary", use_container_width=True)
+        
+        st.write("")
+        
+        st.link_button("🐦 Follow on X for Updates", "https://x.com/russellnomer", use_container_width=True)
 
+    with col2:
+        st.info("Your support keeps this tool ad-free and uncensorable.")
+
+    st.divider()
+    st.caption("Thank you for helping keep truth and kindness growing. 🇺🇸")
 
 elif page == "Leader Scorecard":
-    st.header("📊 Know Your Leaders: Voting Records on Key Issues")
-    st.markdown("*Fact-Based Accountability*")
+    st.title("📊 Voting Records: Accountability Check")
+    st.markdown(f"### How Representatives Vote on Key Issues")
     
-    st.markdown(f"Showing representatives relevant to **{selected_state}**")
-    
-    leader_data = {
+    leader_data = pd.DataFrame({
         "Representative": [
-            "Rep. John Smith (R)",
-            "Rep. Jane Doe (D)",
-            "Sen. Michael Johnson (R)",
-            "Sen. Sarah Williams (D)",
-            "Rep. Robert Brown (R)",
-            "Rep. Emily Davis (D)"
+            "Rep. Chip Roy (R)",
+            "Rep. Alexandria Ocasio-Cortez (D)",
+            "Sen. Ted Cruz (R)",
+            "Sen. Kyrsten Sinema (I)",
+            "Rep. Dan Crenshaw (R)",
+            "Rep. Ro Khanna (D)"
         ],
         "State/District": [
-            "TX-23",
-            "CA-52",
+            "TX-21",
+            "NY-14",
+            "Texas",
             "Arizona",
-            "New York",
-            "Florida-7",
-            "Pennsylvania-1"
+            "TX-02",
+            "CA-17"
         ],
         "Border Security Vote": [
             "Yes",
             "No",
             "Yes",
-            "No",
-            "Yes",
-            "Abstain"
-        ],
-        "Immunity/Fraud Reform Vote": [
-            "Yes",
-            "Yes",
-            "No",
             "Yes",
             "Yes",
             "No"
         ],
+        "Immunity Reform Vote": [
+            "Yes",
+            "Yes",
+            "No",
+            "Yes",
+            "Yes",
+            "Yes"
+        ],
         "Accountability Score (0-100)": [
-            85,
-            45,
-            70,
-            55,
-            90,
-            40
+            88,
+            42,
+            75,
+            68,
+            82,
+            55
         ]
-    }
+    })
     
-    df = pd.DataFrame(leader_data)
+    st.markdown(f"*Filtering for relevance to **{selected_state}** where applicable*")
     
-    min_score = st.slider("Filter by Minimum Accountability Score:", 0, 100, 0)
-    filtered_df = df[df["Accountability Score (0-100)"] >= min_score]
+    min_score = st.slider("Filter by Minimum Score:", 0, 100, 0)
+    filtered_df = leader_data[leader_data["Accountability Score (0-100)"] >= min_score]
     
-    def highlight_scores(val):
-        if isinstance(val, int):
+    def color_score(val):
+        if isinstance(val, (int, float)):
             if val >= 70:
                 return 'background-color: #d4edda; color: #155724'
             elif val >= 50:
@@ -530,91 +358,28 @@ elif page == "Leader Scorecard":
                 return 'background-color: #f8d7da; color: #721c24'
         return ''
     
-    styled_df = filtered_df.style.applymap(
-        highlight_scores,
-        subset=['Accountability Score (0-100)']
-    )
+    styled_df = filtered_df.style.applymap(color_score, subset=['Accountability Score (0-100)'])
     
-    st.dataframe(
-        styled_df,
-        use_container_width=True,
-        hide_index=True
-    )
-    
-    st.markdown("---")
+    st.dataframe(styled_df, use_container_width=True, hide_index=True)
     
     col1, col2 = st.columns(2)
-    
     with col1:
-        avg_score = filtered_df["Accountability Score (0-100)"].mean()
-        st.metric("Average Accountability Score", f"{avg_score:.1f}")
-    
+        avg = filtered_df["Accountability Score (0-100)"].mean()
+        st.metric("Average Score", f"{avg:.1f}")
     with col2:
-        high_scorers = len(filtered_df[filtered_df["Accountability Score (0-100)"] >= 70])
-        st.metric("Leaders Scoring 70+", high_scorers)
+        high = len(filtered_df[filtered_df["Accountability Score (0-100)"] >= 70])
+        st.metric("Leaders 70+", high)
     
-    st.markdown("""
-    <div class='info-box'>
-    <h4>📝 Disclaimer</h4>
-    <p>Scores based solely on <strong>public voting records from Congress.gov</strong>. 
-    Focused on fiscal responsibility, rule of law, and domestic security. 
-    <strong>Non-partisan educational tool.</strong></p>
-    <p><em>Data shown is illustrative. For actual voting records, visit 
-    <a href="https://www.congress.gov" target="_blank">Congress.gov</a>.</em></p>
-    </div>
-    """, unsafe_allow_html=True)
-
-
-elif page == "Support the Mission":
-    st.header("⚡ Power the Protocol: Support Russell Directly")
-    
-    st.markdown("""
-    <div class='support-card'>
-    <p style='font-size: 1.1em;'>The Plainview Protocol is built and maintained by <strong>Russell Nomer</strong> in Plainview, NY. 
-    It is free for all because of community support.</p>
-    <p>If this tool helps you understand costs, see the immunity gap, or voice concerns kindly, 
-    consider buying Russell a coffee.</p>
-    <p><strong>100% of funds go to development, hosting, and expansion—no grift, full transparency.</strong></p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("---")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("### ☕ Buy a Coffee")
-        st.markdown("Direct support for development and hosting.")
-        st.link_button(
-            "☕ Buy Russell a Coffee",
-            "https://buymeacoffee.com/russellnomer",
-            type="primary",
-            use_container_width=True
-        )
-    
-    with col2:
-        st.markdown("### 📱 Follow for Updates")
-        st.markdown("Stay informed on new features and expansions.")
-        st.link_button(
-            "Follow on X for Updates",
-            "https://x.com/russellnomer",
-            type="secondary",
-            use_container_width=True
-        )
-    
-    st.markdown("---")
-    
-    st.markdown("""
-    <div class='info-box' style='text-align: center;'>
-    <h4>🙏 Thank you for helping keep truth and kindness growing. 🇺🇸</h4>
-    </div>
-    """, unsafe_allow_html=True)
-
+    st.divider()
+    st.caption("**Disclaimer:** Scores based solely on public voting records from Congress.gov. Focused on fiscal responsibility, rule of law, and domestic security. Non-partisan educational tool.")
 
 st.markdown("---")
-st.markdown("""
-<div class='footer'>
-    <p>🇺🇸 Built by Russell Nomer in Plainview, NY – Kindness, truth, secure America. 🇺🇸</p>
-    <p><em>Fork this project to create your state's version.</em></p>
-</div>
-""", unsafe_allow_html=True)
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    st.markdown(
+        "<div style='text-align: center; color: #666;'>"
+        "Built by Russell Nomer in Plainview, NY – <i>Kindness, Truth, Secure America.</i>"
+        "</div>", 
+        unsafe_allow_html=True
+    )
+    st.link_button("🔧 Fork on GitHub", "https://github.com", use_container_width=True)
