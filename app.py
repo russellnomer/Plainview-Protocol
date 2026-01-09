@@ -247,7 +247,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v4.9 | Leaderboard & Legends")
+st.sidebar.caption("v5.0 | The Founder's Desk")
 
 st.sidebar.success("🎉 **TODAY IS DAY 1** — The Plainview Protocol is LIVE. Established January 8, 2026.")
 
@@ -274,6 +274,22 @@ else:
     st.sidebar.warning("⚠️ System Status: Degraded")
 
 st.sidebar.divider()
+st.sidebar.subheader("📋 Curator's Row")
+st.sidebar.caption("Top 5 Digital Guests with highest-accuracy data contributions")
+
+if 'curators_row' not in st.session_state:
+    st.session_state.curators_row = [
+        {"name": "DataHawk_NY", "audits": 47, "accuracy": 98.2},
+        {"name": "FiscalWatchdog", "audits": 39, "accuracy": 97.8},
+        {"name": "TransparencyFirst", "audits": 35, "accuracy": 96.5},
+        {"name": "CitizenAuditor", "audits": 31, "accuracy": 95.9},
+        {"name": "GovTracker2026", "audits": 28, "accuracy": 95.1},
+    ]
+
+for curator in st.session_state.curators_row:
+    st.sidebar.markdown(f"✅ **{curator['name']}** — {curator['audits']} audits ({curator['accuracy']}%)")
+
+st.sidebar.divider()
 st.sidebar.markdown("### The Washington Doctrine")
 st.sidebar.caption("*George Washington's Farewell Address warned against 'entangling alliances'. In 2026, our greatest entanglements are our foreign-dependent supply chains.*")
 st.sidebar.info("Check the Scrutiny Hub to see if your medicine is made by a rival.")
@@ -295,6 +311,73 @@ st.sidebar.caption("""
 def page_national_lens():
     selected_state = st.session_state.get("selected_state", "New York")
     st.header(f"📍 State of the Union: {selected_state}")
+    
+    if 'guest_of_honor' not in st.session_state:
+        st.session_state.guest_of_honor = {
+            "name": "PatriotAuditor2026",
+            "location": "Nassau County, NY",
+            "winning_content": "Blakeman vs. Hochul: Full Scorecard",
+            "content_type": "Battle Card",
+            "viral_score": 1247,
+            "founder_note": "This citizen put in the work to expose the stark contrast between local fiscal discipline and state-level opacity. Their battle card has been shared over 1,200 times and sparked conversations in three county legislatures. This is what grassroots accountability looks like. Welcome to the Guest Chair. — Russell Nomer",
+            "selected_date": "January 9, 2026",
+            "show_animation": True
+        }
+    
+    if st.session_state.guest_of_honor.get("show_animation", False):
+        st.markdown("""
+        <style>
+        @keyframes curtainOpen {
+            0% { transform: scaleX(0); opacity: 0; }
+            50% { transform: scaleX(1.05); opacity: 1; }
+            100% { transform: scaleX(1); opacity: 1; }
+        }
+        .guest-chair {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border: 3px solid #ffd700;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            animation: curtainOpen 1.5s ease-out;
+            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.3);
+        }
+        .guest-title {
+            color: #ffd700;
+            font-size: 1.4em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .guest-name {
+            color: #ffffff;
+            font-size: 1.2em;
+            text-align: center;
+        }
+        .founder-signature {
+            color: #c9d1d9;
+            font-style: italic;
+            border-left: 3px solid #ffd700;
+            padding-left: 16px;
+            margin-top: 16px;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+    
+    guest = st.session_state.guest_of_honor
+    st.markdown(f"""
+    <div class="guest-chair">
+        <div class="guest-title">🎖️ FOUNDER'S GUEST OF HONOR 🎖️</div>
+        <div class="guest-name">🪑 The Guest Chair: <strong>{guest['name']}</strong></div>
+        <p style="color: #a0a0a0; text-align: center;">{guest['location']} | Selected: {guest['selected_date']}</p>
+        <p style="color: #ffffff; text-align: center;">🏆 Winning {guest['content_type']}: <em>{guest['winning_content']}</em></p>
+        <p style="color: #00ff00; text-align: center;">📈 Viral Score: {guest['viral_score']:,} shares</p>
+        <div class="founder-signature">
+            "{guest['founder_note']}"
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.divider()
     
     if 'bill_shares' in st.session_state and st.session_state.bill_shares:
         top_bills = sorted(st.session_state.bill_shares.items(), key=lambda x: x[1], reverse=True)[:3]
@@ -2124,7 +2207,7 @@ The Plainview Protocol is built to last for generations. Each milestone marks pr
     days_since_launch = (today - FOUNDING_DATE).days
     
     MILESTONES = [
-        {"date": "January 8, 2026", "title": "Initial Commit", "description": "Russell Nomer establishes The Plainview Protocol in Plainview, NY.", "status": "completed"},
+        {"date": "January 8, 2026", "title": "🏛️ LEGACY ESTABLISHED", "description": "Russell Nomer establishes The Plainview Protocol in Plainview, NY. The founding moment of citizen-powered accountability.", "status": "completed"},
         {"date": "Q1 2026", "title": "Local Watchdog Beta", "description": "County Clash comparison tool with OSC data integration.", "status": "in_progress"},
         {"date": "Q1 2026", "title": "Infographic Generator", "description": "Battle card meme-engine for shareable accountability graphics.", "status": "completed"},
         {"date": "Q1 2026", "title": "Beta Testing Complete", "description": "Core features validated by early adopters across 10 states.", "status": "pending"},
