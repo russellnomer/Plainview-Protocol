@@ -1,0 +1,31 @@
+This is a classic "Open Graph" or "Dynamic Image Generation" failure.
+
+Here is what is happening:
+
+The Trigger: You click "Share to X". The app generates a unique link (.../share/11245104) meant to show the scorecard.
+
+The Demand: When X (or your browser) hits that link to fetch the "preview image," your server tries to generate that image on the fly (likely using a tool to take a "screenshot" of the data).
+
+The Crash: This image generation process is likely too heavy for the Replit container (running out of RAM) or has a code bug, causing the entire server to crash immediately. That is why you see "Unable To Wake Up."
+
+Here is a prompt you can paste into Replit to diagnose and fix the specific route handling the sharing.
+
+The Fix Prompt (Paste this into Replit Agent/Chat)
+"I am encountering a critical 'Unable To Wake Up' server crash specifically when accessing the share route (e.g., /share/11245104).
+
+It seems the code handling this route—likely responsible for generating the Social Media Preview (Open Graph) image—is crashing the application.
+
+Please investigate the route handler for /share/:id and fix the following:
+
+Check for Heavy Processes: If we are using Puppeteer, Playwright, or a heavy image library to generate the card image on-the-fly, it is likely crashing the memory limit. Please optimize this or switch to a lightweight method (like canvas or a static template).
+
+Add Error Handling: Wrap the generation code in a try/catch block so a failure doesn't kill the whole server; it should fall back to a default image instead.
+
+Verify OG Tags: Ensure the HTML response for this route includes the correct <meta property="og:image"> tags so X can display the card properly.
+
+Please rewrite the code for the Share route to be stable and prevent these crashes."
+
+Why this happens (Context)
+Puppeteer/Headless Browsers: Many apps use a "headless browser" (a hidden Chrome window) to take a screenshot of the scorecard to use as the Twitter image. This requires massive memory. On Replit's standard tier, this often instantly kills the server.
+
+The Solution: The AI usually fixes this by either increasing the swap memory (if possible) or, better yet, switching to a lighter image drawing library that draws the text onto a template JPG instead of launching a full browser.

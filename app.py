@@ -32,7 +32,9 @@ st.set_page_config(**page_config)
 init_routing_state()
 init_async_ledger()
 catch_all_redirect()
-inject_og_meta_tags()
+
+shared_card_id = st.query_params.get('card', None)
+inject_og_meta_tags(card_id=shared_card_id)
 
 with open("sources.json", "r") as f:
     SOURCES = json.load(f)
@@ -5171,14 +5173,15 @@ def page_scorecard_generator():
     
     if card_id:
         base_url = os.environ.get('REPLIT_DEV_DOMAIN', 'plainviewprotocol.com')
-        share_url = f"https://{base_url}/share/{card_id}"
+        share_url = f"https://{base_url}/?card={card_id}"
         share_tweet = f"I just audited my representative. The numbers don't lie. See their score: #PlainviewProtocol #AuditHochul"
         
         st.success(f"✅ Battle Card saved! Card ID: `{card_id}`")
         st.code(share_tweet, language=None)
         
-        encoded_tweet = share_tweet.replace(' ', '%20').replace('#', '%23').replace(':', '%3A')
-        encoded_url = share_url.replace(':', '%3A').replace('/', '%2F')
+        from urllib.parse import quote
+        encoded_tweet = quote(share_tweet, safe='')
+        encoded_url = quote(share_url, safe='')
         
         share_col1, share_col2, share_col3 = st.columns(3)
         share_col1.link_button(
