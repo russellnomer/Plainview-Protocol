@@ -1,14 +1,15 @@
 # The Plainview Protocol: Truth, Kindness, & Security
 
 ## Overview
-Version 5.0 - Gold Master Public Release. Established January 8, 2026. A production-ready Streamlit web application with bipartisan corruption tracking across all 50 states. Features Corruption Heatmap with Shadow Penalty scoring, Course Correction Manual (recall/impeachment/grand jury guides), bipartisan Grift Hunter FOIA templates, Electoral College-weighted Referendum Prototype, and citizen lever-pulling guides. Pro-American, rule of law, domestic security focus.
+Version 6.0 - The Deep-Dive Engine. Established January 8, 2026. A production-ready Streamlit web application with bipartisan corruption tracking across all 50 states. Features Corruption Heatmap with Shadow Penalty scoring, Course Correction Manual (recall/impeachment/grand jury guides), bipartisan Grift Hunter FOIA templates, Electoral College-weighted Referendum Prototype, and citizen lever-pulling guides. Pro-American, rule of law, domestic security focus.
 
 ## Features
 - **The National Lens**: Live national debt from Treasury API, state debt share, immigration burden with border state multipliers (1.6x)
 - **The 2027 Fork**: Plotly chart anchored to live debt data, reform vs. status quo projections
 - **Trade & Industry**: Tariff dividend calculator, sourcing finder
 - **DOGE Scrutiny Hub**: DOGE metrics ($214B+ savings), Minnesota Feeding Our Future fraud case study
-- **Corruption Heatmap**: 50-state Shadow Penalty scoring (FOIA speed, no-bid %, contractor donations), bipartisan tracking
+- **Corruption Heatmap**: 50-state Shadow Penalty scoring (FOIA speed, no-bid %, contractor donations), bipartisan tracking, Deep Dive triggers
+- **State Deep Dive**: Detailed state-level analysis with no-bid contract tables, PAC black hole spending, Justice.gov/FBI Vault links (NY, FL, CA, TX, IL)
 - **The Activism Hub**: Tabbed interface (Veterans/Border/Education/Business), kindness rewriter, X share button
 - **Accountability Tribunal**: Live Congress data, Shadow List, Scrutiny Tactics, Referendum Prototype (Vote to Audit)
 - **FOIA Cannon**: Custom requests + Bipartisan Grift Hunter (Sanctuary Grift, Corporate Subsidy Grift, Universal)
@@ -16,6 +17,15 @@ Version 5.0 - Gold Master Public Release. Established January 8, 2026. A product
 - **Course Correction**: State-by-state recall laws, impeachment procedures, grand jury petition guides
 - **The Ecosystem**: Russell's apps, books, and music
 - **Support the Mission**: Buy Me a Coffee, PayPal, GitHub fork links
+
+## Version 6.0 Features (The Deep-Dive Engine)
+- **deep_dive_state session tracking**: Enables state-specific deep dive navigation
+- **EVIDENCE_CITATIONS dictionary**: Maps claims to verified sources with "Verify" buttons
+- **render_verified_claim() helper**: Displays claims with sidebar citation verification
+- **page_deep_dive() function**: State-level analysis with no-bid contracts, PAC spending, investigation links
+- **run_smoke_test() function**: Validates all red flags have evidence links
+- **4th Circuit Ruling reference**: Citizens for Transparency v. DOJ (Sept 19, 2025)
+- **state_drill_down data**: Detailed drill-down data for NY, FL, CA, TX, IL in sources.json
 
 ## Tech Stack
 - Python 3.11

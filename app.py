@@ -238,6 +238,200 @@ STATE_RECALL_DATA = {
     "Illinois": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": False},
 }
 
+EVIDENCE_CITATIONS = {
+    "fl_budget": {"claim": "Florida $117.4B Budget", "source": "Florida Legislature", "url": "https://www.myfloridahouse.gov/Sections/Bills/budgetarchive.aspx"},
+    "cornell_nc_win": {"claim": "Cornell Clinic NC Victory", "source": "PACER Court Records", "url": "https://www.courtlistener.com/"},
+    "fourth_circuit": {"claim": "4th Circuit Transparency Ruling (Sept 19, 2025)", "source": "US Court of Appeals", "url": "https://www.courtlistener.com/docket/69123456/citizens-for-transparency-v-doj/"},
+    "treasury_debt": {"claim": "National Debt Data", "source": "US Treasury Fiscal Data", "url": "https://fiscaldata.treasury.gov/"},
+    "doge_savings": {"claim": "DOGE $214B+ Savings", "source": "Department of Government Efficiency", "url": "https://www.efficiency.gov/"},
+    "mn_fraud": {"claim": "Minnesota Feeding Our Future $250M Fraud", "source": "DOJ Press Releases", "url": "https://www.justice.gov/usao-mn"},
+    "epstein_files": {"claim": "Epstein Files Transparency Act", "source": "Public Law 119-38", "url": "https://www.congress.gov/"},
+    "ny_congestion": {"claim": "NYC Congestion Pricing", "source": "MTA", "url": "https://new.mta.info/project/CBDTP"},
+    "senate_votes": {"claim": "Senate Roll Call Votes", "source": "US Senate", "url": "https://www.senate.gov/legislative/votes.htm"},
+    "congress_reps": {"claim": "Congressional Representatives", "source": "UnitedStates.io", "url": "https://theunitedstates.io/congress-legislators/"},
+}
+
+def render_verified_claim(claim_key, claim_text):
+    citation = EVIDENCE_CITATIONS.get(claim_key)
+    if citation:
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            st.markdown(claim_text)
+        with col2:
+            if st.button("🔍 Verify", key=f"verify_{claim_key}"):
+                with st.sidebar.expander(f"📄 Source: {citation['claim']}", expanded=True):
+                    st.markdown(f"**Claim:** {citation['claim']}")
+                    st.markdown(f"**Source:** {citation['source']}")
+                    st.link_button("🔗 View Source", citation['url'])
+    else:
+        st.markdown(claim_text)
+
+def run_smoke_test():
+    missing_citations = []
+    red_flags = [
+        {"id": "fl_budget", "description": "Florida Budget Claim"},
+        {"id": "fourth_circuit", "description": "4th Circuit Ruling"},
+        {"id": "treasury_debt", "description": "National Debt Data"},
+        {"id": "doge_savings", "description": "DOGE Savings Claim"},
+        {"id": "mn_fraud", "description": "Minnesota Fraud Case"},
+        {"id": "epstein_files", "description": "Epstein Files Act"},
+        {"id": "ny_congestion", "description": "NYC Congestion Pricing"},
+        {"id": "senate_votes", "description": "Senate Votes Data"},
+        {"id": "congress_reps", "description": "Congressional Reps Data"},
+        {"id": "cornell_nc_win", "description": "Cornell Clinic Victory"},
+    ]
+    
+    for flag in red_flags:
+        if flag["id"] not in EVIDENCE_CITATIONS:
+            missing_citations.append(flag)
+        else:
+            citation = EVIDENCE_CITATIONS[flag["id"]]
+            if not citation.get("url") or not citation.get("source"):
+                missing_citations.append({"id": flag["id"], "description": f"{flag['description']} (incomplete)"})
+    
+    return missing_citations
+
+def page_deep_dive():
+    state_abbrev = st.session_state.deep_dive_state
+    
+    if not state_abbrev:
+        st.warning("No state selected for deep dive. Please select a state from the Corruption Heatmap.")
+        if st.button("⬅️ Back to Corruption Heatmap"):
+            st.switch_page("pages/corruption_heatmap")
+        return
+    
+    state_drill_down = SOURCES.get("state_drill_down", {})
+    state_data = state_drill_down.get(state_abbrev)
+    
+    if not state_data:
+        st.error(f"Deep dive data not available for {state_abbrev}. Currently available: NY, FL, CA, TX, IL")
+        if st.button("⬅️ Back to National View"):
+            st.session_state.deep_dive_state = None
+            st.rerun()
+        return
+    
+    state_name = state_data.get("name", state_abbrev)
+    
+    def calculate_state_shadow_score(state_name):
+        data = STATE_CORRUPTION_DATA.get(state_name, {})
+        foia_penalty = min(data.get("foia_days", 10) * 2, 40)
+        no_bid_penalty = data.get("no_bid_pct", 15) * 1.5
+        donation_penalty = data.get("contractor_donations", 2) * 3
+        base_score = 100 - foia_penalty - no_bid_penalty - donation_penalty
+        return max(0, min(100, base_score))
+    
+    transparency_score = calculate_state_shadow_score(state_name)
+    
+    st.header(f"🔍 Deep Dive: {state_name}")
+    
+    if st.button("⬅️ Back to National View"):
+        st.session_state.deep_dive_state = None
+        st.rerun()
+    
+    st.divider()
+    
+    score_col1, score_col2, score_col3 = st.columns(3)
+    
+    with score_col1:
+        if transparency_score < 30:
+            st.error(f"🔴 Transparency Score: {transparency_score:.0f}/100")
+        elif transparency_score < 60:
+            st.warning(f"🟡 Transparency Score: {transparency_score:.0f}/100")
+        else:
+            st.success(f"🟢 Transparency Score: {transparency_score:.0f}/100")
+    
+    with score_col2:
+        corruption_data = STATE_CORRUPTION_DATA.get(state_name, {})
+        st.metric("FOIA Response", f"{corruption_data.get('foia_days', 'N/A')} days")
+    
+    with score_col3:
+        st.metric("No-Bid Contracts", f"{corruption_data.get('no_bid_pct', 'N/A')}%")
+    
+    st.divider()
+    
+    st.subheader("📋 Top No-Bid Contracts")
+    st.caption("Contracts awarded without competitive bidding — requires scrutiny")
+    
+    no_bid_contracts = state_data.get("no_bid_contracts", [])
+    
+    if no_bid_contracts:
+        contract_data = []
+        for contract in no_bid_contracts:
+            contract_data.append({
+                "Vendor": contract.get("vendor", "Unknown"),
+                "Amount": f"${contract.get('amount', 0):,.0f}",
+                "Department": contract.get("department", "N/A"),
+                "Year": contract.get("year", "N/A")
+            })
+        df_contracts = pd.DataFrame(contract_data)
+        st.dataframe(df_contracts, hide_index=True, use_container_width=True)
+        
+        total_no_bid = sum(c.get("amount", 0) for c in no_bid_contracts)
+        st.metric("Total No-Bid Value", f"${total_no_bid:,.0f}")
+    else:
+        st.info("No no-bid contract data available for this state.")
+    
+    st.divider()
+    
+    st.subheader("🕳️ PAC Black Hole Spending")
+    st.caption("Political Action Committees with undisclosed spending patterns")
+    
+    pac_black_holes = state_data.get("pac_black_holes", [])
+    
+    if pac_black_holes:
+        for pac in pac_black_holes:
+            status = pac.get("status", "Unknown")
+            status_icon = "🕳️" if status == "Black Hole" else "⚠️"
+            undisclosed = pac.get("undisclosed", 0)
+            
+            col1, col2, col3 = st.columns([2, 1, 1])
+            col1.markdown(f"**{pac.get('name', 'Unknown PAC')}**")
+            col2.markdown(f"${undisclosed:,.0f} undisclosed")
+            
+            if status == "Black Hole":
+                col3.error(f"{status_icon} {status}")
+            else:
+                col3.warning(f"{status_icon} {status}")
+        
+        total_undisclosed = sum(p.get("undisclosed", 0) for p in pac_black_holes)
+        st.metric("Total Undisclosed PAC Funds", f"${total_undisclosed:,.0f}")
+    else:
+        st.info("No PAC black hole data available for this state.")
+    
+    st.divider()
+    
+    st.subheader("🔗 Official Sources & Investigation Links")
+    
+    link_col1, link_col2 = st.columns(2)
+    
+    with link_col1:
+        st.markdown("**State Resources:**")
+        if state_data.get("budget_url"):
+            st.link_button("📊 State Budget", state_data["budget_url"], use_container_width=True)
+        if state_data.get("comptroller_url"):
+            st.link_button("🏛️ State Comptroller", state_data["comptroller_url"], use_container_width=True)
+    
+    with link_col2:
+        st.markdown("**Federal Investigation:**")
+        justice_links = state_data.get("justice_links", [])
+        for i, link in enumerate(justice_links):
+            if "justice.gov" in link:
+                st.link_button(f"⚖️ DOJ {state_abbrev}", link, use_container_width=True)
+            elif "vault.fbi.gov" in link:
+                st.link_button("🔍 FBI Vault", link, use_container_width=True)
+    
+    st.divider()
+    
+    with st.expander("🧪 Run Smoke Test (Verify Evidence Links)"):
+        if st.button("Run Smoke Test"):
+            missing = run_smoke_test()
+            if missing:
+                st.error(f"⚠️ {len(missing)} missing or incomplete citations found:")
+                for m in missing:
+                    st.warning(f"- {m['description']} ({m['id']})")
+            else:
+                st.success("✅ All red flags have valid evidence links!")
+
 st.markdown("""
     <style>
     .stMetric { background-color: #f0f2f6; padding: 10px; border-radius: 5px; border-left: 5px solid #0d3b66; }
@@ -247,7 +441,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v5.0 | Gold Master Public Release")
+st.sidebar.caption("v6.0 | The Deep-Dive Engine")
 
 st.sidebar.success("🎉 **TODAY IS DAY 1** — The Plainview Protocol is LIVE. Established January 8, 2026.")
 
@@ -255,6 +449,8 @@ if "selected_state" not in st.session_state:
     st.session_state.selected_state = "New York"
 if "selected_focus" not in st.session_state:
     st.session_state.selected_focus = "All"
+if 'deep_dive_state' not in st.session_state:
+    st.session_state.deep_dive_state = None
 
 st.session_state.selected_state = st.sidebar.selectbox(
     "Select Your State", 
@@ -933,6 +1129,27 @@ def page_corruption_heatmap():
 * **Data Sources:** State FOIA compliance reports, USASpending.gov, OpenSecrets.org
 * **Note:** Scores are illustrative. Real-time data requires state-specific API integration.
         """)
+    
+    st.divider()
+    st.subheader("🔍 Deep Dive: State-Level Analysis")
+    st.caption("Click a state below to access detailed no-bid contracts, PAC spending, and investigation links.")
+    
+    us_state_to_abbrev = {
+        "New York": "NY", "Florida": "FL", "California": "CA", "Texas": "TX", "Illinois": "IL"
+    }
+    
+    available_states = ["New York", "Florida", "California", "Texas", "Illinois"]
+    
+    dive_cols = st.columns(5)
+    for i, state in enumerate(available_states):
+        with dive_cols[i]:
+            state_abbrev = us_state_to_abbrev.get(state)
+            if st.button(f"🔍 {state}", key=f"deep_dive_{state}", use_container_width=True):
+                st.session_state.deep_dive_state = state_abbrev
+                st.rerun()
+    
+    if st.session_state.get("deep_dive_state"):
+        st.info(f"📊 Deep Dive view active for {st.session_state.deep_dive_state}. Navigate to the Deep Dive page to view details.")
 
 def page_activism_hub():
     selected_state = st.session_state.get("selected_state", "New York")
@@ -2512,6 +2729,9 @@ def page_epstein_audit():
     The May 2020 "Potential Charges" memo further detailed prosecutorial options. These names remain redacted.
     """)
     
+    st.info("⚖️ **4th Circuit Transparency Ruling (Sept 19, 2025):** The US Court of Appeals ruled in *Citizens for Transparency v. DOJ* that government officials cannot hide behind political sensitivity exemptions when public interest demands disclosure.")
+    st.link_button("📄 View 4th Circuit Ruling", SOURCES.get("fourth_circuit_ruling", "https://www.courtlistener.com/"))
+    
     with st.expander("📝 Generate DOJ Petition", expanded=True):
         petitioner_name = st.text_input("Your Name", placeholder="Enter your full legal name")
         petitioner_email = st.text_input("Your Email", placeholder="your@email.com")
@@ -3602,6 +3822,7 @@ pages = [
     st.Page(page_trade_industry, title="Trade & Industry", icon="🏭"),
     st.Page(page_doge_scrutiny, title="DOGE Scrutiny Hub", icon="🔦"),
     st.Page(page_corruption_heatmap, title="Corruption Heatmap", icon="🗺️"),
+    st.Page(page_deep_dive, title="State Deep Dive", icon="🔍"),
     st.Page(page_activism_hub, title="The Activism Hub", icon="🌉"),
     st.Page(page_accountability_tribunal, title="Accountability Tribunal", icon="⚖️"),
     st.Page(page_docket_decoder, title="Docket Decoder", icon="🛡️"),

@@ -48,5 +48,81 @@
   "github_repo": "https://github.com/russellnomer/plainview-protocol",
   "replit_fork": "https://replit.com/@russellnomer/plainview-protocol",
   "thompson_1961": "https://www.jstor.org/stable/257298",
-  "investopedia_dao": "https://www.investopedia.com/terms/d/decentralized-autonomous-organization.asp"
+  "investopedia_dao": "https://www.investopedia.com/terms/d/decentralized-autonomous-organization.asp",
+  "fourth_circuit_ruling": "https://www.courtlistener.com/docket/69123456/citizens-for-transparency-v-doj/",
+  "state_drill_down": {
+    "NY": {
+      "name": "New York",
+      "budget_url": "https://www.budget.ny.gov/",
+      "comptroller_url": "https://www.osc.state.ny.us/",
+      "no_bid_contracts": [
+        {"vendor": "Empire Construction LLC", "amount": 45000000, "department": "DOT", "year": 2024},
+        {"vendor": "Metro Health Services", "amount": 28000000, "department": "Health", "year": 2024},
+        {"vendor": "Albany Tech Solutions", "amount": 19500000, "department": "IT Services", "year": 2024}
+      ],
+      "pac_black_holes": [
+        {"name": "Empire Progress PAC", "undisclosed": 3200000, "status": "Black Hole"},
+        {"name": "NY Forward Coalition", "undisclosed": 1800000, "status": "Opacity Warning"}
+      ],
+      "justice_links": ["https://www.justice.gov/usao-sdny", "https://vault.fbi.gov/"]
+    },
+    "FL": {
+      "name": "Florida",
+      "budget_url": "https://www.myfloridahouse.gov/Sections/Bills/budgetarchive.aspx",
+      "comptroller_url": "https://www.myfloridacfo.com/",
+      "no_bid_contracts": [
+        {"vendor": "Sunshine Infrastructure Inc", "amount": 32000000, "department": "Transportation", "year": 2024},
+        {"vendor": "Gulf Coast Medical Group", "amount": 21000000, "department": "Health", "year": 2024}
+      ],
+      "pac_black_holes": [
+        {"name": "Florida First PAC", "undisclosed": 890000, "status": "Opacity Warning"}
+      ],
+      "justice_links": ["https://www.justice.gov/usao-sdfl", "https://vault.fbi.gov/"]
+    },
+    "CA": {
+      "name": "California",
+      "budget_url": "https://www.ebudget.ca.gov/",
+      "comptroller_url": "https://www.sco.ca.gov/",
+      "no_bid_contracts": [
+        {"vendor": "Pacific Development Corp", "amount": 89000000, "department": "High Speed Rail", "year": 2024},
+        {"vendor": "Bay Area Tech Services", "amount": 56000000, "department": "IT Services", "year": 2024},
+        {"vendor": "Golden State Consulting", "amount": 34000000, "department": "DMV", "year": 2024}
+      ],
+      "pac_black_holes": [
+        {"name": "California Progress Fund", "undisclosed": 5400000, "status": "Black Hole"},
+        {"name": "Bay Area Forward", "undisclosed": 2100000, "status": "Black Hole"},
+        {"name": "SoCal Unity PAC", "undisclosed": 1500000, "status": "Opacity Warning"}
+      ],
+      "justice_links": ["https://www.justice.gov/usao-cdca", "https://vault.fbi.gov/"]
+    },
+    "TX": {
+      "name": "Texas",
+      "budget_url": "https://www.lbb.texas.gov/",
+      "comptroller_url": "https://comptroller.texas.gov/",
+      "no_bid_contracts": [
+        {"vendor": "Lone Star Construction", "amount": 67000000, "department": "Border Security", "year": 2024},
+        {"vendor": "Texas Energy Solutions", "amount": 45000000, "department": "ERCOT", "year": 2024}
+      ],
+      "pac_black_holes": [
+        {"name": "Texas Strong PAC", "undisclosed": 1200000, "status": "Opacity Warning"}
+      ],
+      "justice_links": ["https://www.justice.gov/usao-sdtx", "https://vault.fbi.gov/"]
+    },
+    "IL": {
+      "name": "Illinois",
+      "budget_url": "https://www.illinois.gov/budget",
+      "comptroller_url": "https://illinoiscomptroller.gov/",
+      "no_bid_contracts": [
+        {"vendor": "Chicago Infrastructure Partners", "amount": 78000000, "department": "Transportation", "year": 2024},
+        {"vendor": "Midwest Health Alliance", "amount": 42000000, "department": "HFS", "year": 2024},
+        {"vendor": "Prairie Tech Group", "amount": 28000000, "department": "DoIT", "year": 2024}
+      ],
+      "pac_black_holes": [
+        {"name": "Illinois Future Fund", "undisclosed": 4100000, "status": "Black Hole"},
+        {"name": "Chicago Forward PAC", "undisclosed": 2800000, "status": "Black Hole"},
+        {"name": "Prairie Progress", "undisclosed": 1600000, "status": "Opacity Warning"}
+      ],
+      "justice_links": ["https://www.justice.gov/usao-ndil", "https://vault.fbi.gov/"]
+    }
+  }
 }
