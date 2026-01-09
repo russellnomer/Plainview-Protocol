@@ -28,21 +28,145 @@ Information wants to be free. When you fork, you create a mirror that's harder t
 
 ---
 
-## How to Fork
+## 🚀 Quick Start: Fork This Repo for Decentralized Hosting
 
-### Step 1: Click the Fork Button
-On the Replit project page or GitHub, hit "Fork." That's it. You now have your own copy.
+### Option A: Deploy on Replit (Easiest)
 
-### Step 2: Customize for Your Region
-- Update `sources.json` with your state's specific FOIA endpoints
-- Add your county's comptroller and budget URLs to `county_portals.json`
-- Modify the `STATE_CORRUPTION_DATA` in `app.py` with local investigative findings
+**Step 1: Fork on Replit**
+1. Visit the original Replit project
+2. Click the **"Fork"** button in the top right
+3. Name your fork (e.g., "plainview-protocol-[your-county]")
+4. Replit will clone everything automatically
 
-### Step 3: Deploy Your Node
-Host it on Replit, Vercel, Netlify, or your own server. The Protocol doesn't care where you run it—only that you run it.
+**Step 2: Configure Your Instance**
+1. Open the Secrets tab (🔒 icon in sidebar)
+2. Add `SESSION_SECRET` with a random string (use a password generator)
+3. The `DATABASE_URL` will be auto-created when you add PostgreSQL
 
-### Step 4: Register Your Fork (Optional)
-Submit a PR to the main repository adding your fork to the **Sentinel Network Registry**. This helps other citizens find region-specific instances.
+**Step 3: Set Up Database**
+1. Click **"+ Database"** in the Tools panel
+2. Select **PostgreSQL**
+3. Replit will automatically set `DATABASE_URL`
+
+**Step 4: Run Your Node**
+```bash
+streamlit run app.py --server.port 5000
+```
+Or just click the **"Run"** button. Your instance is now live!
+
+**Step 5: Publish (Optional)**
+1. Click **"Deploy"** → **"Production"**
+2. Choose a custom subdomain (e.g., `nassau-sentinel.replit.app`)
+3. Your fork is now publicly accessible 24/7
+
+---
+
+### Option B: Host Locally (Full Control)
+
+**Requirements:**
+- Python 3.11+
+- PostgreSQL (optional, for forensic logging)
+- Git
+
+**Step 1: Clone the Repository**
+```bash
+git clone https://github.com/russellnomer/plainview-protocol.git
+cd plainview-protocol
+```
+
+**Step 2: Create Virtual Environment**
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+**Step 3: Install Dependencies**
+```bash
+pip install streamlit pandas plotly requests lxml psycopg2-binary openpyxl streamlit-local-storage
+```
+
+**Step 4: Set Environment Variables**
+```bash
+# Linux/Mac
+export SESSION_SECRET="your-random-secret-here"
+export DATABASE_URL="postgresql://user:pass@localhost:5432/plainview"  # Optional
+
+# Windows PowerShell
+$env:SESSION_SECRET="your-random-secret-here"
+$env:DATABASE_URL="postgresql://user:pass@localhost:5432/plainview"
+```
+
+**Step 5: Run the Application**
+```bash
+streamlit run app.py --server.port 5000
+```
+
+**Step 6: Access Your Instance**
+Open `http://localhost:5000` in your browser.
+
+---
+
+### Option C: Docker Deployment
+
+**Step 1: Create Dockerfile**
+```dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+COPY . .
+
+RUN pip install --no-cache-dir \
+    streamlit pandas plotly requests lxml \
+    psycopg2-binary openpyxl streamlit-local-storage
+
+EXPOSE 5000
+
+CMD ["streamlit", "run", "app.py", "--server.port", "5000", "--server.address", "0.0.0.0"]
+```
+
+**Step 2: Build and Run**
+```bash
+docker build -t plainview-protocol .
+docker run -p 5000:5000 -e SESSION_SECRET=your-secret plainview-protocol
+```
+
+---
+
+## 🔧 Customize for Your Region
+
+### Update Data Sources
+Edit `sources.json` with your state's specific endpoints:
+```json
+{
+  "state_foia": "https://your-state-portal.gov/foia",
+  "county_budget": "https://your-county.gov/budget"
+}
+```
+
+### Add Local County Data
+Update `county_portals.json` with your county's transparency portals:
+```json
+{
+  "verified_portals": {
+    "Your County": {
+      "budget_url": "https://...",
+      "foia_url": "https://...",
+      "meeting_url": "https://..."
+    }
+  }
+}
+```
+
+### Modify Corruption Data
+Update `STATE_CORRUPTION_DATA` in `app.py` with local investigative findings:
+```python
+"Your State": {
+    "foia_days": 25,
+    "no_bid_pct": 18,
+    "contractor_donations": 3.5,
+    "lean": "Purple"
+}
+```
 
 ---
 
@@ -73,11 +197,25 @@ Borrowed from the GAO 2024 Yellow Book (GAGAS):
 
 The Protocol runs on:
 - **Python 3.11** + **Streamlit** (web framework)
-- **PostgreSQL** (forensic logging)
+- **PostgreSQL** (forensic logging, optional)
 - **Plotly** (interactive charts)
 - **Requests + lxml** (API calls, HTML parsing)
+- **streamlit-local-storage** (affidavit persistence)
 
 No exotic dependencies. No vendor lock-in. Fork-friendly by design.
+
+---
+
+## V8.4 Features Included
+
+Your fork includes all V8.4 Hardened Patch features:
+- ✅ **UnitedStates.io Integration**: Real Congress data via JSON API
+- ✅ **Grift Hunter Bill Search**: Fiscal risk analysis on any bill
+- ✅ **Grift Alerts**: Flag bills/officials with low fiscal but high power
+- ✅ **Local Agenda Scanner**: Scan meeting agendas for grift keywords
+- ✅ **OG Meta Tags**: Viral SEO for social sharing
+- ✅ **Transparency Expanders**: Sources & methodology on all metrics
+- ✅ **Share Buttons**: Pre-filled X posts on key pages
 
 ---
 
@@ -118,36 +256,33 @@ You may modify these for your jurisdiction, but the spirit must remain: *Truth w
 
 ---
 
+## Register Your Fork
+
+Submit a PR to the main repository adding your fork to the **Sentinel Network Registry**:
+
+```markdown
+## Sentinel Network Registry
+
+| Region | Maintainer | URL | Status |
+|--------|------------|-----|--------|
+| Nassau County, NY | @yourhandle | https://your-fork.replit.app | 🟢 Active |
+```
+
+---
+
 ## Final Word
 
 They thought they could hide behind paperwork. They thought citizens would never learn to read the contracts. They thought complexity was their shield.
 
 They were wrong.
 
-Fork the mission. Hold the line.
+**Fork the mission. Hold the line.**
 
 **The sun is rising, and it's time to work.**
 
 ---
 
-## V8.4 Hardened Patch: The Unstoppable Update
-
-**Plainview Protocol is designed to be decentralized.**
-
-1. **Click 'Fork' on GitHub** — You now own a complete copy of the Protocol
-2. **Connect to your own Replit/Docker instance** — Deploy anywhere
-3. **Host your local county node** — Become the Sentinel your community needs
-
-**This mission cannot be stopped.**
-
-### What's New in V8.4:
-- **UnitedStates.io Integration**: Real Congress data, not fragile scrapes
-- **Grift Hunter Bill Search**: Instant fiscal risk analysis on any bill
-- **OG Meta Tags**: Viral SEO for maximum reach
-- **Solid Ground Doctrine**: "We use the same data the Labyrinth uses, but we use it for the people"
-
----
-
 *Version 8.4 — Hardened Patch Edition*  
-*The Plainview Protocol: Truth, Kindness, & Security*  
+*The Plainview Protocol: Transparency & Accountability*  
+*Facts on grift, tools to act.*  
 *© 2026 Russell David Nomer. All rights reserved. Open source under MIT License.*

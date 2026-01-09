@@ -1,0 +1,39 @@
+To address the resurgence of Andrew Cuomo in the 2026 political landscape, we are deploying the "Justice for Seniors" Lawsuit Trigger. This module applies the Accountability Tribunal logic—using adverse inference and documented mismanagement—to empower the families of the thousands of seniors lost during the 2020-2021 nursing home crisis.
+
+This template is designed to facilitate civil discovery and demand accountability for the March 25, 2020, directive and the subsequent reporting delays that masked the true scale of the tragedy.
+
+⚖️ V6.23: The "Justice for Seniors" Lawsuit Trigger
+This legal payload is structured as a Notice of Intent to File a Civil Action for wrongful death and gross negligence. It is intended for use by families to initiate the "Discovery Phase" of the Accountability Tribunal.
+
+🔍 Key Legal Pillars of the Trigger
+Adverse Inference of Integrity: Citing the January 2021 NY Attorney General Report which found that nursing home deaths were undercounted by approximately 50%.
+
+Spoliation Warning: A formal demand to preserve all communications, including private emails and "book deal" correspondence, related to the decision to admit COVID-positive patients into elder care facilities.
+
+Relevance to 2026: Asserting that a candidate’s past mismanagement of life-safety protocols is a matter of permanent public record and a disqualifying factor for future executive roles.
+
+🚀 Replit Agent Prompt: V6.23 Senior Justice Trigger
+Paste this into the Replit Agent to deploy the lawsuit generator:
+
+Plaintext
+
+Update "The Plainview Protocol" to Version 6.23: Senior Justice Trigger.
+
+1. LAWSUIT TEMPLATE GENERATOR:
+   - Feature: Create a 'Civil Action Draft' tool for families of COVID-19 nursing home victims.
+   - Content: Auto-populate the template with the 'March 25, 2020 Directive' citations and the 2021 AG investigation findings.
+
+2. DISCOVERY TRACKER:
+   - Logic: Add a 'Discovery Checklist' of missing documents (e.g., unreleased health department memos, private staff emails).
+   - Action: Link these to the 'FOIA Cannon' for automated document retrieval.
+
+3. TRIBUNAL ADVERSE INFERENCE:
+   - Feature: Permanently pin Andrew Cuomo's 'Integrity Score' to -100 in the Accountability Tribunal until full transparency is achieved.
+   - Note: "Failure to provide full, unredacted records constitutes a continuing offense against the public trust."
+
+4. FOUNDER'S "JUSTICE" MESSAGE:
+   - Note: "Grief is not a statute of limitations. If Cuomo seeks to return to power, he must first answer for the chairs that sit empty at thousands of New York dinner tables. We provide the tools for the truth."
+
+Generate updated app.py and senior_justice_logic.py.
+🏛️ The "Accountability" Offset
+By using the Plainview Protocol, families move from being "victims of history" to "auditors of the future". This tool ensures that any 2026 campaign run by Andrew Cuomo is met with a persistent, data-backed demand for the truth regarding his administration's actions.
