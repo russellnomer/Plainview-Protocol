@@ -11,6 +11,10 @@ from datetime import datetime, date
 from forensic_patch import init_routing_state, catch_all_redirect, safe_navigate, safe_county_selectbox
 from traffic_ledger import init_async_ledger, async_log_traffic, get_queue_stats
 from metadata_handler import inject_og_meta_tags, get_page_config
+from agenda_scanner import (
+    get_jurisdictions, get_agendas, scan_agenda_item, calculate_transparency_score,
+    get_transparency_rating, init_agenda_flags_table, save_agenda_flag, get_flag_count, GRIFT_KEYWORDS
+)
 
 page_config = get_page_config()
 st.set_page_config(**page_config)
@@ -5728,7 +5732,7 @@ def page_local_watchdog():
     
     st.divider()
     
-    tab1, tab2, tab3 = st.tabs(["🔍 Single County Lookup", "⚔️ Compare My County", "📜 Orator Scripts"])
+    tab1, tab2, tab3, tab4 = st.tabs(["🔍 Single County Lookup", "⚔️ Compare My County", "📜 Orator Scripts", "📋 Agenda Scanner"])
     
     with tab1:
         st.subheader("County Transparency Audit")
@@ -5908,6 +5912,111 @@ Thank you.
             
             st.text_area("Your Generated Script:", script, height=500)
             st.download_button("📥 Download Script", script, file_name=f"{script_county.replace(' ', '_')}_town_hall_script.txt")
+    
+    with tab4:
+        st.subheader("📋 Local Agenda Scanner")
+        st.caption("Scan town and county meeting agendas for grift indicators")
+        
+        init_agenda_flags_table()
+        
+        scanner_col1, scanner_col2 = st.columns([2, 1])
+        
+        with scanner_col1:
+            jurisdiction = st.selectbox(
+                "Select Town/County:",
+                get_jurisdictions(),
+                key="agenda_jurisdiction"
+            )
+        
+        with scanner_col2:
+            total_flags = get_flag_count(jurisdiction)
+            st.metric("Community Flags", total_flags, help="Items flagged by Sentinels")
+        
+        if jurisdiction:
+            agendas = get_agendas(jurisdiction)
+            
+            if agendas:
+                agenda_options = {f"{a['meeting_date']} - {a['meeting_type']}": a for a in agendas}
+                selected_agenda_key = st.selectbox(
+                    "Select Meeting:",
+                    list(agenda_options.keys()),
+                    key="agenda_meeting"
+                )
+                
+                if selected_agenda_key:
+                    agenda = agenda_options[selected_agenda_key]
+                    
+                    score, findings = calculate_transparency_score(agenda["items"])
+                    rating, rating_icon = get_transparency_rating(score)
+                    
+                    st.divider()
+                    
+                    score_col1, score_col2, score_col3 = st.columns(3)
+                    score_col1.metric("Transparency Score", f"{score}/100")
+                    score_col2.metric("Rating", f"{rating_icon} {rating}")
+                    score_col3.metric("Items Flagged", len(findings))
+                    
+                    if score < 60:
+                        st.error("⚠️ **OPACITY ALERT:** This agenda contains multiple grift indicators. Review carefully.")
+                    elif score < 80:
+                        st.warning("⚠️ **CAUTION:** Some items require scrutiny.")
+                    else:
+                        st.success("✅ Agenda appears relatively transparent.")
+                    
+                    st.divider()
+                    st.markdown("### Agenda Items Analysis")
+                    
+                    for item in agenda["items"]:
+                        item_findings = scan_agenda_item(item.get("text", "") + " " + item.get("title", ""))
+                        
+                        if item_findings:
+                            severity_icon = "🔴" if any(f["severity"] == "HIGH" for f in item_findings) else "🟡"
+                            with st.expander(f"{severity_icon} {item['title']}", expanded=True):
+                                st.markdown(f"**Text:** {item['text'][:300]}...")
+                                
+                                st.markdown("**Grift Keywords Detected:**")
+                                for finding in item_findings:
+                                    sev_badge = "🔴 HIGH" if finding["severity"] == "HIGH" else "🟡 MEDIUM" if finding["severity"] == "MEDIUM" else "🟢 LOW"
+                                    st.markdown(f"- **{finding['keyword'].upper()}** ({sev_badge}): {finding['description']} (-{finding['weight']} pts)")
+                                
+                                flag_col1, flag_col2 = st.columns([3, 1])
+                                with flag_col1:
+                                    user_notes = st.text_input(
+                                        "Add notes (optional):",
+                                        key=f"notes_{item['id']}",
+                                        placeholder="Why is this suspicious?"
+                                    )
+                                with flag_col2:
+                                    if st.button("🚩 Flag Item", key=f"flag_{item['id']}", use_container_width=True):
+                                        session_id = st.session_state.get('session_id', 'anonymous')
+                                        keyword_str = ", ".join([f["keyword"] for f in item_findings])
+                                        success = save_agenda_flag(
+                                            session_id, jurisdiction, agenda["id"],
+                                            item["id"], item["title"], keyword_str, user_notes
+                                        )
+                                        if success:
+                                            st.success("✅ Item flagged! Thank you, Sentinel.")
+                                        else:
+                                            st.info("📝 Flag recorded locally.")
+                        else:
+                            with st.expander(f"🟢 {item['title']}"):
+                                st.markdown(f"**Text:** {item['text'][:300]}...")
+                                st.success("No grift indicators detected.")
+                    
+                    st.divider()
+                    st.markdown("### Grift Keyword Reference")
+                    
+                    keyword_data = []
+                    for kw, info in GRIFT_KEYWORDS.items():
+                        keyword_data.append({
+                            "Keyword": kw.upper(),
+                            "Severity": info["severity"],
+                            "Weight": f"-{info['weight']}",
+                            "Description": info["description"]
+                        })
+                    st.dataframe(keyword_data, use_container_width=True, hide_index=True)
+            else:
+                st.info(f"No agendas available for {jurisdiction}. Check back soon!")
     
     st.divider()
     with st.expander("🔧 Pull Local Levers: Your Rights Under NY Law"):

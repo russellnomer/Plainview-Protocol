@@ -7,6 +7,7 @@ Version 8.4 - Hardened Patch. Established January 8, 2026. A production-ready St
 - **UnitedStates.io Integration**: JSON API for reliable Congress legislator data with bioguide links
 - **OG Meta Tags**: Viral SEO with og:title, og:description via metadata_handler.py
 - **Grift Hunter Bill Search**: Mock AI fiscal risk analysis for bill numbers (HR 2617, S 1234)
+- **Local Agenda Scanner**: Scan town/county agendas for grift keywords with user flagging
 - **FORK_ME.md**: Updated decentralization guide with V8.4 features
 - **Solid Ground Doctrine**: "We use the same data the Labyrinth uses, but we use it for the people"
 
