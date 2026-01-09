@@ -187,6 +187,33 @@ def render_force_continuum():
         st.subheader("💰 Cost of Open Borders — Live Ticker")
         st.caption(f"Source: {FAIR_2024_DATA['source']}")
         
+        st.markdown("""
+        <style>
+        .cost-ticker-wrap {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .cost-ticker-wrap h3, .cost-ticker-wrap .big-number {
+            white-space: nowrap;
+            font-size: 1.5rem;
+        }
+        .cost-headline {
+            white-space: nowrap;
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+        @media (max-width: 400px) {
+            .cost-ticker-wrap h3, .cost-ticker-wrap .big-number {
+                font-size: 1.1rem;
+            }
+            .cost-headline {
+                font-size: 1rem;
+            }
+        }
+        </style>
+        """, unsafe_allow_html=True)
+        
         cost_placeholder = st.empty()
         
         base_time = datetime(2026, 1, 1, 0, 0, 0)
@@ -195,11 +222,12 @@ def render_force_continuum():
         accumulated_cost = seconds_elapsed * FAIR_2024_DATA["cost_per_second"]
         
         with cost_placeholder.container():
-            st.error(f"""
-            ### 💸 2026 Running Total: ${accumulated_cost:,.0f}
-            
-            *Adding ${FAIR_2024_DATA['cost_per_second']:,.0f} every second...*
-            """)
+            st.markdown(f"""
+            <div class="cost-ticker-wrap" style="background: #ffcccc; padding: 15px; border-radius: 8px; border-left: 4px solid #b22222;">
+                <span class="cost-headline">💸 2026 Running Total: ${accumulated_cost:,.0f}</span><br>
+                <span style="font-style: italic; white-space: nowrap;">Adding ${FAIR_2024_DATA['cost_per_second']:,} every second...</span>
+            </div>
+            """, unsafe_allow_html=True)
         
         col1, col2, col3 = st.columns(3)
         col1.metric("Annual Cost", f"${FAIR_2024_DATA['total_annual_cost']/1e9:.1f}B")
@@ -218,8 +246,12 @@ def render_force_continuum():
         )])
         
         breakdown_fig.update_layout(
-            title="Annual Cost Distribution ($150.7B Total)",
-            height=350
+            title=dict(
+                text="Annual Cost Distribution ($150.7B Total)",
+                font=dict(size=14)
+            ),
+            height=350,
+            margin=dict(t=40, b=20)
         )
         
         st.plotly_chart(breakdown_fig, use_container_width=True)
