@@ -13,6 +13,7 @@ import streamlit as st
 import plotly.graph_objects as go
 from datetime import datetime
 import time
+from fact_check_builder import get_fact_check_card, get_hashtags
 
 CFR_287_8_TEXT = """
 **8 CFR 287.8 — Use of Force Standards**
@@ -88,7 +89,7 @@ def render_force_continuum():
     
     st.divider()
     
-    tabs = st.tabs(["⚡ Impact Calculator", "📜 Legal Framework", "💰 Cost Ticker", "📊 Analysis"])
+    tabs = st.tabs(["⚡ Impact Calculator", "📜 Legal Framework", "💰 Cost Ticker", "📊 Analysis", "🛡️ Narrative Shield"])
     
     with tabs[0]:
         st.subheader("⚡ Vehicle Impact Energy Calculator")
@@ -303,6 +304,84 @@ def render_force_continuum():
             - Graham v. Connor, 490 U.S. 386 (1989)
             - FAIR Fiscal Burden Study: https://www.fairus.org/issue/publications-resources/fiscal-burden-illegal-immigration-united-states-taxpayers
             - ICE Budget: https://www.dhs.gov/immigration-statistics
+            """)
+    
+    with tabs[4]:
+        st.subheader("🛡️ Narrative Shield Generator")
+        st.caption("V6.28 — The Ammo Box")
+        
+        st.success("""
+        *"The lie travels halfway around the world while the truth is putting on its shoes. 
+        We gave the truth a Ferrari. Download the card. Post it. Kill the narrative."*
+        
+        — Russell David Nomer, Founder
+        """)
+        
+        st.divider()
+        
+        st.markdown("**Generate a shareable Fact Check graphic:**")
+        
+        if st.button("🛡️ Generate Truth Card", use_container_width=True, type="primary"):
+            st.session_state.truth_card_generated = True
+        
+        if st.session_state.get("truth_card_generated", False):
+            try:
+                card_bytes = get_fact_check_card()
+                
+                st.image(card_bytes, caption="Narrative Shield — Fact Check Card", use_container_width=True)
+                
+                st.download_button(
+                    "📥 Download High-Res PNG",
+                    data=card_bytes,
+                    file_name="plainview_fact_check.png",
+                    mime="image/png",
+                    use_container_width=True
+                )
+                
+            except Exception as e:
+                st.warning("Card generation loading. Please try again.")
+        
+        st.divider()
+        
+        st.markdown("**📋 Copy & Fire Social Pack:**")
+        
+        hashtags = get_hashtags()
+        st.code(hashtags, language=None)
+        
+        st.markdown("""
+        <script>
+        function copyHashtags() {
+            navigator.clipboard.writeText('%s');
+        }
+        </script>
+        """ % hashtags, unsafe_allow_html=True)
+        
+        st.info("""
+        **How to use:**
+        1. Click "Generate Truth Card" above
+        2. Download the high-res PNG
+        3. Copy the hashtags above
+        4. Post to X/Twitter or Facebook with the image and hashtags
+        
+        *Every share is a counter-strike against misinformation.*
+        """)
+        
+        with st.expander("ℹ️ Card Contents"):
+            st.markdown("""
+            **Header:** FACT CHECK: "SHE WAS JUST DRIVING AWAY"
+            
+            **Panel A (Visual):**
+            - Honda Pilot silhouette (~4,300 lbs)
+            - Force multiplier arrow showing acceleration
+            
+            **Panel B (Data):**
+            - THE CLAIM: Peaceful exit
+            - THE REALITY: Vehicle = Deadly Weapon
+            - THE LAW: 8 CFR 287.8 authorizes response
+            
+            **Verdict:** FALSE (Stamped)
+            
+            **Sources cited:** CFR, Graham v. Connor, Physics
             """)
     
     st.divider()
