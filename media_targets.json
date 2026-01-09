@@ -1,0 +1,134 @@
+{
+  "mainstream_networks": [
+    {
+      "name": "NBC 4 New York (I-Team)",
+      "emails": ["tips@nbcnewyork.com"],
+      "type": "TV Network",
+      "coverage": "NYC Metro",
+      "notes": "Investigative unit"
+    },
+    {
+      "name": "ABC 7 New York (7 On Your Side)",
+      "emails": ["abc7ny@abc.com"],
+      "type": "TV Network",
+      "coverage": "NYC Metro",
+      "notes": "Consumer investigative"
+    },
+    {
+      "name": "CBS 2 New York",
+      "emails": ["desk@cbs2ny.com"],
+      "type": "TV Network",
+      "coverage": "NYC Metro",
+      "notes": "Assignment desk"
+    },
+    {
+      "name": "FOX 5 New York",
+      "emails": ["viewer.services@fox.com"],
+      "type": "TV Network",
+      "coverage": "NYC Metro",
+      "notes": "Viewer services"
+    }
+  ],
+  "independent_media": [
+    {
+      "name": "The Capitol Pressroom (WCNY)",
+      "type": "Podcast/Radio",
+      "focus": "Upstate NY policy deep dives",
+      "contact": "info@wcny.org",
+      "platform": "Public Radio",
+      "friendly": true
+    },
+    {
+      "name": "Empire Center for Public Policy",
+      "type": "Think Tank",
+      "focus": "NY government transparency, nursing home data FOIA battles",
+      "contact": "info@empirecenter.org",
+      "platform": "Research/Blog",
+      "friendly": true
+    },
+    {
+      "name": "NY Focus",
+      "type": "Investigative Outlet",
+      "focus": "Albany accountability journalism",
+      "contact": "tips@nyfocus.org",
+      "platform": "Digital News",
+      "friendly": true
+    },
+    {
+      "name": "The City",
+      "type": "Nonprofit News",
+      "focus": "NYC government accountability",
+      "contact": "tips@thecity.nyc",
+      "platform": "Digital News",
+      "friendly": true
+    },
+    {
+      "name": "Gothamist",
+      "type": "Digital News",
+      "focus": "NYC local news and investigations",
+      "contact": "tips@gothamist.com",
+      "platform": "Digital News",
+      "friendly": true
+    },
+    {
+      "name": "ProPublica Local",
+      "type": "Investigative",
+      "focus": "Long-form investigations",
+      "contact": "tips@propublica.org",
+      "platform": "Nonprofit News",
+      "friendly": true
+    },
+    {
+      "name": "City Limits",
+      "type": "Policy Journalism",
+      "focus": "NYC policy and budget",
+      "contact": "editor@citylimits.org",
+      "platform": "Digital News",
+      "friendly": true
+    },
+    {
+      "name": "Times Union Investigations",
+      "type": "Newspaper",
+      "focus": "Capital Region investigations",
+      "contact": "news@timesunion.com",
+      "platform": "Print/Digital",
+      "friendly": true
+    },
+    {
+      "name": "Common Sense with Bari Weiss",
+      "type": "Substack",
+      "focus": "National politics, institutional critique",
+      "contact": "submissions via Substack",
+      "platform": "Substack",
+      "friendly": true
+    },
+    {
+      "name": "Taibbi Reports",
+      "type": "Substack",
+      "focus": "Media criticism, government accountability",
+      "contact": "submissions via Substack",
+      "platform": "Substack",
+      "friendly": true
+    },
+    {
+      "name": "Tablet Magazine",
+      "type": "Digital Magazine",
+      "focus": "Jewish affairs, political analysis",
+      "contact": "submissions@tabletmag.com",
+      "platform": "Digital Magazine",
+      "friendly": true
+    },
+    {
+      "name": "Jewish Currents",
+      "type": "Digital Magazine",
+      "focus": "Progressive Jewish politics",
+      "contact": "info@jewishcurrents.org",
+      "platform": "Digital Magazine",
+      "friendly": true
+    }
+  ],
+  "email_template": {
+    "subject": "[URGENT] New Evidence: Families of COVID Victims Demand Audit of Cuomo 2026 Campaign",
+    "body_template": "ATTN: Investigative Producer / Assignment Desk,\n\nMy name is {name}, and I am a resident of {location}.\n\nIn 2020, I lost my {relationship}, {deceased_name}, at {facility_name} following the state's March 25th directive. For years, my family has been a statistic—a number hidden by an administration that prioritized book deals over transparency.\n\nToday, as Andrew Cuomo launches his 2026 comeback, I am not just grieving; I am auditing.\n\nI have registered my loved one on the Plainview Protocol Victim's Memorial Registry, a forensic database of those lost to mismanagement. We are demanding a full audit of the 2026 Campaign Funds to ensure no resources from the 2020-21 'cover-up' era are being used to fuel this political resurgence.\n\nKey Facts:\n• The March 25, 2020 DOH Directive required nursing homes to admit COVID+ patients\n• The Jan 2021 AG Report found deaths were undercounted by approximately 50%\n• Thousands of internal communications remain unreleased\n\nWe are ready to go on record. We have the receipts, and we have the numbers. Will you help us ask the question?\n\nRespectfully,\n{name}\nMember, The 3,143 County Sentinels\nplainviewprotocol.com"
+  }
+}
