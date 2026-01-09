@@ -33,8 +33,32 @@ init_routing_state()
 init_async_ledger()
 catch_all_redirect()
 
-shared_card_id = st.query_params.get('card', None)
+query_params = st.query_params
+page_param = query_params.get("page", None)
+shared_card_id = query_params.get("id", None) or query_params.get("card", None)
+
 inject_og_meta_tags(card_id=shared_card_id)
+
+if page_param == "share" and shared_card_id:
+    st.title("🎴 Battle Card Shared")
+    st.markdown(f"**Card ID:** `{shared_card_id}`")
+    
+    card_path = os.path.join('static', 'battlecards', f"battlecard_{shared_card_id}.png")
+    if os.path.exists(card_path):
+        st.image(card_path, caption="Plainview Protocol Battle Card", use_container_width=True)
+    else:
+        st.warning("Battle Card not found. It may have expired or the ID is incorrect.")
+        default_path = os.path.join('static', 'battlecards', 'default_battlecard.png')
+        if os.path.exists(default_path):
+            st.image(default_path, caption="Default Battle Card", use_container_width=True)
+    
+    st.divider()
+    st.markdown("### Create Your Own Battle Card")
+    st.markdown("Generate your own transparency scorecard and share it on social media.")
+    if st.button("🎨 Go to Scorecard Generator", type="primary"):
+        st.switch_page("pages/Scorecard_Generator.py")
+    
+    st.stop()
 
 with open("sources.json", "r") as f:
     SOURCES = json.load(f)
@@ -5173,7 +5197,7 @@ def page_scorecard_generator():
     
     if card_id:
         base_url = os.environ.get('REPLIT_DEV_DOMAIN', 'plainviewprotocol.com')
-        share_url = f"https://{base_url}/?card={card_id}"
+        share_url = f"https://{base_url}/?page=share&id={card_id}"
         share_tweet = f"I just audited my representative. The numbers don't lie. See their score: #PlainviewProtocol #AuditHochul"
         
         st.success(f"✅ Battle Card saved! Card ID: `{card_id}`")

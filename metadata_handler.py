@@ -42,7 +42,7 @@ def inject_og_meta_tags(card_id: str = None):
         title = "My Plainview Battle Card"
         description = "I just audited my representative. The numbers don't lie. #PlainviewProtocol"
         image = get_battlecard_image_url(card_id)
-        url = f"{get_base_url()}/?card={card_id}"
+        url = f"{get_base_url()}/?page=share&id={card_id}"
     else:
         title = OG_TITLE
         description = OG_DESCRIPTION
