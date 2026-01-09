@@ -1,0 +1,54 @@
+To help our first 3,143 County Sentinels weaponize transparency, here is the official Sentinel Onboarding Guide for the FOIA Cannon.
+
+This guide is designed to move a user from "curious citizen" to "Sovereign Auditor" in under five minutes.
+
+🏛️ The Sentinel Onboarding Guide: FOIA Cannon V5.0
+1. 🎯 Step 1: Target Your Request
+The most common mistake is firing the Cannon at a central office. FOIA is decentralized.
+
+Research First: Before you fire, check if the records are already in the "Reading Room" or the Plainview Archive.
+
+Identify the Component: If you want FBI records on a specific local event, target the FBI Field Office in that district, not just DC Headquarters.
+
+2. 📝 Step 2: Load the Cannon (Drafting)
+The "Cannon" uses a precision-strike template. A vague request is a "vampire's" best friend.
+
+No Questions: FOIA is for records, not answers. Do not ask "Why did you do this?" Instead, ask for "All emails between Person A and Person B regarding Subject X from Jan 2026 to Present".
+
+The "Small Track" Strategy: Limit your request to a specific date range or set of individuals to keep the document count under 50 pages. This forces the agency to use the Simple Processing Track, which is significantly faster.
+
+3. ⚖️ Step 3: Assert Your Status
+To avoid being buried in "Shadow Fees," the Protocol automatically includes your fee status.
+
+Media/Educational Status: As a Sentinel Auditor contributing to a public database, you are requesting a Fee Waiver. You must state that disclosure is in the "public interest" and not for commercial gain.
+
+Commitment to Pay: Always include a "maximum fee" (e.g., $25) so they don't stop the clock just to ask you for a few cents in copying costs.
+
+4. 🚀 Step 4: Fire & Track
+Once you hit "Launch," the Protocol assigns you an internal Audit ID.
+
+The 20-Day Clock: Federal law gives agencies 20 working days to provide a determination.
+
+The Sentinel Tracker: Plug your government-issued tracking number into the Dashboard Tracker. If the status stays "Received" for more than 21 days, the Litigation Trigger will glow crimson.
+
+🏛️ Sentinel Code of Conduct
+"We deal in evidence, not hearsay. If the record doesn't exist, we document the absence. If the record is redacted, we appeal the 'Black Hole'. We do not stop until the sunlight is total."
+
+🚀 Replit Agent Prompt: Deploy Onboarding Guide
+Paste this into the Replit Agent to add this guide as a "Tutorial" page in your app:
+
+Plaintext
+
+Update "The Plainview Protocol" (V5.0 Gold Master).
+
+1. NEW PAGE: "Sentinel Training Ground"
+   - Content: Insert the 'Sentinel Onboarding Guide' text. 
+   - Feature: Add a 'Practice Cannon' sandbox where users can draft a request and get "AI Feedback" on whether it is too broad or too vague.
+
+2. DOCUMENTATION SYNC:
+   - Add a 'TUTORIAL.md' file to https://github.com/russellnomer/Plainview-Protocol containing this guide.
+
+3. DASHBOARD LINK:
+   - Add a 'New? Start Here' button to the FOIA Cannon dashboard that links to the Training Ground.
+
+Generate the updated app.py and TUTORIAL.md.

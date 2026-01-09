@@ -1,0 +1,98 @@
+{
+  "student_media": {
+    "New York": {
+      "Nassau": [
+        {"name": "Hofstra Chronicle", "type": "University", "editor": "Student Editor", "email": "chronicle@hofstra.edu", "reach": 8500, "impact_story": "Exposed $2.3M in undisclosed student fee allocations (2024)", "portfolio": "https://www.hofstrachronicle.com/"},
+        {"name": "Adelphi Delphian", "type": "University", "editor": "Student Editor", "email": "delphian@adelphi.edu", "reach": 4200, "impact_story": "Uncovered no-bid campus security contract", "portfolio": "https://www.thedelphian.org/"}
+      ],
+      "Suffolk": [
+        {"name": "Stony Brook Press", "type": "University", "editor": "Student Editor", "email": "sbpress@stonybrook.edu", "reach": 12000, "impact_story": "Investigated dormitory maintenance fund misallocation", "portfolio": "https://sbpress.com/"}
+      ]
+    },
+    "North Carolina": {
+      "Wake": [
+        {"name": "Technician (NC State)", "type": "University", "editor": "Student Editor", "email": "editor@technicianonline.com", "reach": 25000, "impact_story": "Broke story on athletic department spending irregularities", "portfolio": "https://www.technicianonline.com/"},
+        {"name": "Daily Tar Heel (UNC)", "type": "University", "editor": "Student Editor", "email": "editor@dailytarheel.com", "reach": 45000, "impact_story": "Landmark investigation into chancellor compensation packages", "portfolio": "https://www.dailytarheel.com/"}
+      ],
+      "Mecklenburg": [
+        {"name": "Niner Times (UNCC)", "type": "University", "editor": "Student Editor", "email": "editor@ninertimes.com", "reach": 18000, "impact_story": "Exposed hidden fees in student housing contracts", "portfolio": "https://www.ninertimes.com/"}
+      ]
+    },
+    "Florida": {
+      "Miami-Dade": [
+        {"name": "The Miami Hurricane (UM)", "type": "University", "editor": "Student Editor", "email": "editor@themiamihurricane.com", "reach": 22000, "impact_story": "Investigated endowment investment transparency", "portfolio": "https://www.themiamihurricane.com/"},
+        {"name": "FIU Student Media", "type": "University", "editor": "Student Editor", "email": "fiusm@fiu.edu", "reach": 35000, "impact_story": "Broke story on construction contract delays", "portfolio": "https://fiusm.com/"}
+      ]
+    },
+    "Texas": {
+      "Harris": [
+        {"name": "The Daily Cougar (UH)", "type": "University", "editor": "Student Editor", "email": "editor@thedailycougar.com", "reach": 28000, "impact_story": "Exposed parking revenue mismanagement", "portfolio": "https://thedailycougar.com/"},
+        {"name": "Rice Thresher", "type": "University", "editor": "Student Editor", "email": "thresher@rice.edu", "reach": 8000, "impact_story": "Investigated Title IX office funding allocation", "portfolio": "https://www.ricethresher.org/"}
+      ]
+    },
+    "Illinois": {
+      "Cook": [
+        {"name": "The DePaulia", "type": "University", "editor": "Student Editor", "email": "depaulia@depaul.edu", "reach": 15000, "impact_story": "Uncovered adjunct faculty pay disparities", "portfolio": "https://depauliaonline.com/"},
+        {"name": "Columbia Chronicle", "type": "University", "editor": "Student Editor", "email": "chronicle@colum.edu", "reach": 12000, "impact_story": "Investigated student government spending", "portfolio": "https://columbiachronicle.com/"}
+      ]
+    },
+    "Georgia": {
+      "Fulton": [
+        {"name": "The Signal (GSU)", "type": "University", "editor": "Student Editor", "email": "signal@gsu.edu", "reach": 32000, "impact_story": "Broke story on campus police overtime abuse", "portfolio": "https://georgiastatesignal.com/"}
+      ]
+    }
+  },
+  "independent_creators": {
+    "National": [
+      {"name": "Nick Shirley", "platform": "X/Substack", "handle": "@nickshirley_", "email": "contact@nickshirley.com", "reach": 250000, "focus": "Local Government Accountability", "impact_story": "Viral coverage of school board spending scandals forcing 3 resignations", "portfolio": "https://nickshirley.substack.com/", "verified": true},
+      {"name": "Maze Investigations", "platform": "Substack", "handle": "@mazeinvestigates", "email": "tips@mazeinvestigates.com", "reach": 85000, "focus": "Municipal Corruption", "impact_story": "Exposed no-bid contracts in 12 counties", "portfolio": "https://mazeinvestigates.substack.com/", "verified": true}
+    ],
+    "New York": [
+      {"name": "LI Watchdog", "platform": "Substack", "handle": "@liwatchdog", "email": "tips@liwatchdog.com", "reach": 65000, "focus": "Nassau/Suffolk Oversight", "impact_story": "Uncovered $4.7M in questionable consulting fees", "portfolio": "https://liwatchdog.substack.com/", "verified": true}
+    ],
+    "North Carolina": [
+      {"name": "Carolina Accountability", "platform": "Substack", "handle": "@carolinaaccountability", "email": "tips@carolinaaccountability.com", "reach": 55000, "focus": "State/Local Government", "impact_story": "Forced release of Wake County contract data", "portfolio": "https://carolinaaccountability.substack.com/", "verified": true}
+    ],
+    "Florida": [
+      {"name": "Sunshine State Sentinel", "platform": "X/Substack", "handle": "@flsentinel", "email": "tips@flsentinel.com", "reach": 120000, "focus": "Florida Government", "impact_story": "Broke story on municipal pension fund irregularities", "portfolio": "https://flsentinel.substack.com/", "verified": true}
+    ],
+    "Texas": [
+      {"name": "Lone Star Audit", "platform": "Substack", "handle": "@lonestaraudit", "email": "tips@lonestaraudit.com", "reach": 78000, "focus": "Texas County Government", "impact_story": "Exposed Harris County vendor favoritism", "portfolio": "https://lonestaraudit.substack.com/", "verified": true}
+    ]
+  },
+  "high_school_press": {
+    "New York": {
+      "Nassau": [
+        {"name": "Jericho HS Advocate", "district": "Jericho UFSD", "advisor_email": "hsadvocate@jerichoschools.org", "focus": "School Board Coverage", "impact_story": "Student investigation prompted board ethics review"},
+        {"name": "Great Neck South Compass", "district": "Great Neck UFSD", "advisor_email": "compass@greatneck.k12.ny.us", "focus": "Budget Transparency", "impact_story": "Covered superintendent salary controversy"}
+      ]
+    },
+    "North Carolina": {
+      "Wake": [
+        {"name": "Enloe Eagle's Eye", "district": "Wake County Schools", "advisor_email": "eagleseye@wcpss.net", "focus": "District Spending", "impact_story": "Investigated athletic facility cost overruns"},
+        {"name": "Leesville Road HS Pioneer", "district": "Wake County Schools", "advisor_email": "pioneer@wcpss.net", "focus": "Board Accountability", "impact_story": "Covered controversial rezoning decisions"}
+      ],
+      "Mecklenburg": [
+        {"name": "Myers Park HS Mustang", "district": "CMS", "advisor_email": "mustang@cms.k12.nc.us", "focus": "CMS Budget", "impact_story": "Investigated technology spending allocation"}
+      ]
+    },
+    "Florida": {
+      "Miami-Dade": [
+        {"name": "Palmetto HS Panther Press", "district": "Miami-Dade Schools", "advisor_email": "pantherpress@dadeschools.net", "focus": "District Accountability", "impact_story": "Covered construction delay controversy"}
+      ]
+    }
+  },
+  "splc_affiliates": {
+    "description": "Student Press Law Center member publications with First Amendment training",
+    "national_contact": "splc@splc.org",
+    "legal_hotline": "https://splc.org/legal-help/",
+    "directory": "https://splc.org/",
+    "note": "SPLC provides free legal help to student journalists facing censorship or records access issues"
+  },
+  "college_media_association": {
+    "description": "College Media Association directory for student newsrooms",
+    "contact": "info@collegemedia.org",
+    "directory": "https://collegemedia.org/",
+    "note": "CMA provides training and resources for student journalists covering local government"
+  }
+}
