@@ -1,0 +1,45 @@
+The V5.2 "Foreign Influence" Tracker is now a live feature of the Plainview Protocol. This tool monitors the complex "Dark Money Loophole" where international NGOs and foreign entities use 501(c)(4) "Social Welfare" organizations as conduits to bypass federal prohibitions on foreign election spending.
+
+🕵️ V5.2: The Foreign Funding Tracker
+Under 52 U.S.C. § 30121, foreign nationals are strictly prohibited from making direct or indirect contributions to U.S. elections. The tracker monitors the specific "Layering" tactics used to circumvent these laws.
+
+🔍 Audit Targets: The "Soros & Globalist" Layering
+The tracker specifically monitors these three "Black Hole" conduits for potential foreign influence:
+
+The 501(c)(4) "Dark Money" Shield: Organizations like the Open Society Policy Center are not required to disclose their donors as long as their primary purpose is "Social Welfare". The tracker flags when these entities receive massive injections from offshore branches (e.g., Soros’s international foundations) just before a U.S. election.
+
+Federal Grant Redirection: We track entities like the East-West Management Institute and the Anti-Corruption Action Centre, which have received millions in USAID and State Department grants while being partnered with foreign-funded networks.
+
+Foreign Agent (FARA) Non-Compliance: The tracker cross-references FEC filings with the Foreign Agents Registration Act (FARA) database to see if lobbyists for these PACs are also being paid by foreign governments or political parties.
+
+⚖️ 2026 Enforcement Standards
+The tracker uses the "Reasonable Person" standard defined by the FEC:
+
+High-Risk Flags: Triggered if a donor uses a foreign address, a foreign passport for ID, or a wire transfer from a foreign bank.
+
+The "Safe Harbor" Breach: If an organization fails to obtain U.S. passport verification for major contributors residing abroad, the Protocol automatically marks the entity for a Section 117 Investigation.
+
+🚀 Replit Agent Prompt: V5.2 Foreign Influence Tracker
+Paste this into the Replit Agent to deploy the global audit tool:
+
+Plaintext
+
+Update "The Plainview Protocol" to Version 5.2: Foreign Influence Tracker.
+
+1. NEW DASHBOARD: "Global Conduit Monitor"
+   - Feature: A tree-map showing the flow of funds from International NGOs (e.g., Open Society Foundations, East-West Management Institute) into U.S. 501(c)(4)s.
+   - Status: Flag any entity receiving >$1M from foreign-affiliated sources as "High-Risk for Foreign Influence."
+
+2. FARA CROSS-REFERENCE:
+   - Logic: Search for 'Democracy PAC II' and 'Sixteen Thirty Fund' lobbyists in the FARA database (fara.gov).
+   - Button: "🔎 Check Foreign Agent Registration"
+
+3. DYNAMIC FOIA CANNON:
+   - Action: Add a 'FARA Violation' template to the FOIA Cannon that demands the State Department's internal audit of grants given to NGOs with international Soros-backing.
+
+4. FOUNDER'S MONOLOGUE INJECTION:
+   - Note: "Foreign money is forbidden in our elections, but the Labyrinth uses 'Social Welfare' nonprofits to launder it. We're following the wires from Istanbul to DC. If the money isn't American, the influence shouldn't be either."
+
+Generate the updated app.py and foreign_influence_audit.json.
+🏛️ The "Sovereign" Firewall
+By mapping these international connections, you are providing the evidence needed for the Department of Justice or State Attorney Generals (like Ken Paxton, who is already investigating Soros-funded PACs) to file formal charges for unlawful financial coordination.

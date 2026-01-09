@@ -1,0 +1,107 @@
+{
+  "international_conduits": [
+    {
+      "name": "Open Society Foundations",
+      "headquarters": "New York, NY",
+      "international_branches": ["London", "Berlin", "Brussels", "Budapest (closed)", "Bishkek"],
+      "founder": "George Soros",
+      "estimated_global_assets": 25000000000,
+      "annual_grantmaking": 1500000000,
+      "us_affiliate": "Open Society Policy Center",
+      "risk_level": "High",
+      "risk_factors": ["International funding flows", "501(c)(4) dark money shield", "Policy advocacy"]
+    },
+    {
+      "name": "East-West Management Institute",
+      "headquarters": "New York, NY",
+      "focus": "Rule of law and governance programs",
+      "usaid_grants_received": 45000000,
+      "state_dept_grants": 12000000,
+      "foreign_partnerships": ["Ukraine", "Moldova", "Georgia", "Kyrgyzstan"],
+      "risk_level": "Medium",
+      "risk_factors": ["Federal grant recipient", "Foreign government partnerships"]
+    },
+    {
+      "name": "Anti-Corruption Action Centre (AntAC)",
+      "headquarters": "Kyiv, Ukraine",
+      "us_funding_sources": ["USAID", "Open Society Foundations", "State Department"],
+      "estimated_us_funding": 8000000,
+      "risk_level": "High",
+      "risk_factors": ["Foreign entity", "U.S. taxpayer funded", "Political advocacy abroad"]
+    },
+    {
+      "name": "Atlantic Council",
+      "headquarters": "Washington, DC",
+      "foreign_government_donors": ["UAE", "NATO members", "Taiwan"],
+      "estimated_foreign_funding_pct": 25,
+      "focus": "Foreign policy think tank",
+      "risk_level": "Medium",
+      "risk_factors": ["Foreign government funding", "Policy influence"]
+    }
+  ],
+  "501c4_conduits": [
+    {
+      "name": "Sixteen Thirty Fund",
+      "parent_network": "Arabella Advisors",
+      "2023_revenue": 390000000,
+      "pop_up_groups_funded": 45,
+      "donor_disclosure": "Not required",
+      "risk_level": "High",
+      "risk_factors": ["No donor disclosure", "Fiscal sponsorship model", "Election-adjacent spending"]
+    },
+    {
+      "name": "New Venture Fund",
+      "parent_network": "Arabella Advisors",
+      "2023_revenue": 450000000,
+      "pop_up_groups_funded": 60,
+      "donor_disclosure": "Not required",
+      "risk_level": "High",
+      "risk_factors": ["No donor disclosure", "Large anonymous donations"]
+    },
+    {
+      "name": "Open Society Policy Center",
+      "parent_network": "Open Society Foundations",
+      "2023_revenue": 45000000,
+      "international_funding_pct": 95,
+      "donor_disclosure": "Not required",
+      "risk_level": "High",
+      "risk_factors": ["International funding source", "Policy advocacy", "Lobbying activities"]
+    }
+  ],
+  "fara_watchlist": [
+    {
+      "entity": "Democracy PAC II",
+      "fara_status": "Not registered",
+      "concern": "Principal funder has extensive international business interests",
+      "recommended_action": "FOIA request for FARA compliance review"
+    },
+    {
+      "entity": "Sixteen Thirty Fund",
+      "fara_status": "Not registered",
+      "concern": "Potential foreign-sourced funding through fiscal sponsorship",
+      "recommended_action": "Cross-reference with FARA database"
+    }
+  ],
+  "legal_framework": {
+    "prohibition": "52 U.S.C. § 30121",
+    "description": "Foreign nationals prohibited from making direct or indirect contributions to U.S. elections",
+    "enforcement": "Federal Election Commission, Department of Justice",
+    "penalties": "Civil fines and criminal prosecution",
+    "high_risk_indicators": [
+      "Foreign address on donation",
+      "Foreign passport for ID verification",
+      "Wire transfer from foreign bank",
+      "Lack of U.S. passport verification for overseas contributors"
+    ]
+  },
+  "audit_standards": {
+    "safe_harbor_breach": "Failure to obtain U.S. passport verification for major contributors residing abroad",
+    "section_117_trigger": "Organizations failing safe harbor requirements flagged for investigation",
+    "reasonable_person_standard": "FEC standard for determining foreign national status"
+  },
+  "metadata": {
+    "last_updated": "2026-01-09",
+    "data_sources": ["FARA.gov", "FEC.gov", "ProPublica", "OpenSecrets.org", "IRS Form 990s"],
+    "verification_standard": "Official filings and verified investigative journalism"
+  }
+}

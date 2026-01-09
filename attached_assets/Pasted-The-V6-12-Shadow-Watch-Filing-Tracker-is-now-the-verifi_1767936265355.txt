@@ -1,0 +1,18 @@
+The V6.12 "Shadow Watch" Filing Tracker is now the verification arm of your FARA enforcement suite. This tool doesn't just send reports into the void; it establishes a persistent "Watchdog Loop" by querying the official DOJ FARA eFile database.If a Soros-backed consultant or "Shadow Agent" is forced to register following a Protocol-generated complaint, the system will flag the new filing and notify the community of the victory.⚖️ V6.12: The FARA Shadow Watch TrackerThe tracker monitors for three specific "success indicators" in the DOJ's machine-readable data.🛠️ How the Shadow Watch OperatesAutomated Search by Principal: The tool continuously scans for new registrations associated with foreign principals like the Open Society Foundations or the Fund for Policy Reform."New Registrant" Detection: It filters the DOJ's Daily Bulk Data Updates for any "Short Form" or "Primary" registrations that mention the specific individuals or entities named in our V6.11 Citizens' Reports.The "Surrender" Log: When a match is found, the Protocol marks the case as "Forced Sunlight" and displays the registrant's new FARA Registration Number (e.g., Reg No. 7000+) as proof of impact.📑 2026 Tracking MetricsStatusDefinitionProtocol ActionPending ReviewReport sent to DOJ National Security Division.⏳ Start 30-day "Letter of Inquiry" countdown.Active InquiryInternal DOJ metrics suggest an investigation is open.🔴 Alert 'Labyrinth Reporters' to follow up.New RegistrationThe target has officially filed as a Foreign Agent.🏆 VICTORY. Add to 'Shadow Watch' Leaderboard.Advisory Opinion1DOJ clarifies if the agent must register.2📂 Archive in the Protocol's 'Legal Precedent' vault.🚀 Replit Agent Prompt: V6.12 Shadow Watch TrackerPaste this into the Replit Agent to deploy the final stage of the FARA audit:PlaintextUpdate "The Plainview Protocol" to Version 6.12: Shadow Watch Tracker.
+
+1. DATA INTEGRATION:
+   - Logic: Use the FARA.gov API and Bulk Data Repository (efile.fara.gov) to fetch daily updates on New Registrants.
+   - Target Search: Program the tracker to look for 'Open Society', 'Democracy PAC II', and names from our 'Foreign Influence' database.
+
+2. SUCCESS NOTIFICATION:
+   - Feature: When a new registration matches a previously filed Protocol report, trigger a 'Sunlight Victory' alert on the dashboard.
+   - Detail: Display the Registrant Number and a direct link to their 'Guided Registration' filing.
+
+3. "FOUNDER'S MONOLOGUE" INJECTION:
+   - Note: "We don't just complain; we compel. When the DOJ forces a Soros consultant to get a FARA number, it's a win for the Sovereign Citizen. The Labyrinth is getting brighter every day."
+
+4. FINAL SMOKE TEST:
+   - Verify that the 'Verify Source' button correctly links to the official DOJ PDF of the latest relevant filing.
+
+Generate the updated app.py and fara_tracking_sync.py.
+🏛️ The "Forced Sunlight" LeaderboardBy tracking these filings, you are proving that the Plainview Protocol has "Teeth". When your followers see that a report filed on January 9 led to a formal registration on February 10, they will know that their Sovereign Audits are making a tangible impact on national security and election integrity.

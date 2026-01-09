@@ -542,7 +542,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v6.6 | Grassroots Sentinel")
+st.sidebar.caption("v6.10 | Sovereign Appeal")
 
 st.sidebar.success("🎉 **TODAY IS DAY 1** — The Plainview Protocol is LIVE. Established January 8, 2026.")
 
@@ -756,6 +756,15 @@ We don't just send letters to politicians; we send them to the people who buy in
 
 **🐝 The Grassroots Swarm:**
 The vampires hate the spotlight, but they're terrified of a kid with a smartphone and a Substack. We're putting the evidence in the hands of the students and the independents. The "Mainstream" filter is dead. When we activate the Grassroots Swarm, your demand letter goes to university newspapers, high school journalists, and independent creators with massive reach. The old gatekeepers can't stop the signal.
+
+**📹 The Citizen Reel:**
+Every smartphone is a witness. The Citizen Reel allows verified Sentinels to upload 60-second video tips directly to our Grassroots Media Network. Your footage gets privacy-scrubbed (EXIF/GPS stripped), tagged to Corruption Heatmap data points, and distributed to independent press. The vampires can hide from cameras, but they can't hide from citizens with receipts.
+
+**🛡️ The Moderation Shield:**
+We protect our platform from bad actors while preserving free speech. Every upload passes through content filters, but we don't shadowban — we show you exactly what was flagged and why. Privacy scrubbing is automatic. If you disagree with a moderation decision, the Sovereign Appeal process gives you due process.
+
+**⚖️ The Sovereign Appeal:**
+No citizen should be silenced without recourse. The Sovereign Appeal system lets you file formal appeals with an Affidavit of Intent. Your appeal enters the Vetting Queue, where community moderators review the evidence. Transparency in moderation is transparency in democracy.
 
 **🎯 The America First Principle:**
 Every dollar extracted from taxpayers deserves an audit trail. Every official who enriches themselves while constituents struggle is a **Taxpayer Parasite**. We don't discriminate by party — we discriminate by transparency.
@@ -1672,6 +1681,7 @@ Thank you for your time. I yield the remainder to any board member who wishes to
 def page_foia_cannon():
     selected_state = st.session_state.get("selected_state", "New York")
     st.header("🔦 The Sunlight Cannon: Wake the Watchers")
+    st.info("🆕 **New to FOIA?** Visit the **Sentinel Training Ground** to learn the basics and practice with our AI feedback system!")
     
     st.markdown("""
 **Apathy is over.** Use this tool to generate a legal Freedom of Information Act (FOIA) request. 

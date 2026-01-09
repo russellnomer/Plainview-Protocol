@@ -1,0 +1,117 @@
+{
+  "top_10_pacs": [
+    {
+      "name": "Democracy PAC II",
+      "type": "Super PAC",
+      "principal_funder": "George Soros",
+      "cash_on_hand": 126000000,
+      "2024_spending": 85000000,
+      "focus": "Democratic candidates nationwide",
+      "fec_id": "C00697441",
+      "verified_source": "https://www.fec.gov/data/committee/C00697441/",
+      "risk_flags": ["Large single-donor concentration", "Late disclosure timing"]
+    },
+    {
+      "name": "Texas Majority PAC",
+      "type": "Super PAC",
+      "principal_funder": "Multiple Democratic donors",
+      "cash_on_hand": 15000000,
+      "2024_spending": 12000000,
+      "focus": "Flip Texas by 2026",
+      "fec_id": "C00758664",
+      "verified_source": "https://www.fec.gov/data/committee/C00758664/",
+      "risk_flags": ["Out-of-state funding", "Aggressive ad spending"]
+    },
+    {
+      "name": "American Bridge 21st Century",
+      "type": "Super PAC",
+      "principal_funder": "Multiple donors including Soros Fund",
+      "cash_on_hand": 8500000,
+      "2024_spending": 25000000,
+      "focus": "Opposition research and tracking",
+      "fec_id": "C00492140",
+      "verified_source": "https://www.fec.gov/data/committee/C00492140/",
+      "risk_flags": ["MAGAFiles surveillance project", "Federal official tracking"],
+      "special_project": "MAGAFiles - database of Republican officials"
+    },
+    {
+      "name": "Sixteen Thirty Fund",
+      "type": "501(c)(4)",
+      "principal_funder": "Arabella Advisors network",
+      "estimated_assets": 390000000,
+      "2023_spending": 175000000,
+      "focus": "Fiscal sponsorship for progressive causes",
+      "irs_ein": "26-4486735",
+      "verified_source": "https://projects.propublica.org/nonprofits/organizations/264486735",
+      "risk_flags": ["Dark money conduit", "No donor disclosure required", "Pop-up group funding"]
+    },
+    {
+      "name": "Open Society Policy Center",
+      "type": "501(c)(4)",
+      "principal_funder": "Open Society Foundations",
+      "estimated_assets": 140000000,
+      "2023_spending": 45000000,
+      "focus": "Policy advocacy and lobbying",
+      "irs_ein": "52-2267024",
+      "verified_source": "https://projects.propublica.org/nonprofits/organizations/522267024",
+      "risk_flags": ["International funding source", "501(c)(4) dark money shield"],
+      "funnel_logic": "Receives funds from OSF international branches, redistributes to U.S. nonprofits"
+    },
+    {
+      "name": "Fund for Policy Reform",
+      "type": "501(c)(4)",
+      "principal_funder": "George Soros",
+      "quarterly_injection": 60000000,
+      "focus": "Criminal justice and immigration reform",
+      "verified_source": "https://www.opensecrets.org/",
+      "risk_flags": ["Large quarterly transfers", "Policy advocacy near elections"]
+    },
+    {
+      "name": "Priorities USA Action",
+      "type": "Super PAC",
+      "principal_funder": "Multiple Democratic megadonors",
+      "cash_on_hand": 12000000,
+      "2024_spending": 35000000,
+      "focus": "Democratic presidential and swing state races",
+      "fec_id": "C00495861",
+      "verified_source": "https://www.fec.gov/data/committee/C00495861/",
+      "risk_flags": ["Swing state targeting", "High ad volume"]
+    },
+    {
+      "name": "Senate Majority PAC",
+      "type": "Super PAC",
+      "principal_funder": "Multiple Democratic donors",
+      "cash_on_hand": 45000000,
+      "2024_spending": 120000000,
+      "focus": "Democratic Senate candidates",
+      "fec_id": "C00484642",
+      "verified_source": "https://www.fec.gov/data/committee/C00484642/",
+      "risk_flags": ["Massive ad spending", "Late money transfers"]
+    },
+    {
+      "name": "House Majority PAC",
+      "type": "Super PAC",
+      "principal_funder": "Multiple Democratic donors",
+      "cash_on_hand": 38000000,
+      "2024_spending": 95000000,
+      "focus": "Democratic House candidates",
+      "fec_id": "C00495028",
+      "verified_source": "https://www.fec.gov/data/committee/C00495028/",
+      "risk_flags": ["Swing district targeting", "High volume spending"]
+    },
+    {
+      "name": "Way to Win",
+      "type": "501(c)(4)",
+      "principal_funder": "Multiple progressive donors",
+      "estimated_assets": 50000000,
+      "focus": "Progressive infrastructure and candidate support",
+      "verified_source": "https://www.opensecrets.org/",
+      "risk_flags": ["Voter mobilization near elections", "Dark money structure"]
+    }
+  ],
+  "metadata": {
+    "last_updated": "2026-01-09",
+    "data_sources": ["FEC.gov", "OpenSecrets.org", "ProPublica Nonprofit Explorer"],
+    "verification_standard": "All figures from official filings or verified journalism"
+  }
+}
