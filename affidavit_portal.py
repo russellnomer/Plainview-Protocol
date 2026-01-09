@@ -1,5 +1,5 @@
 """
-Sovereign Affidavit Portal for The Plainview Protocol V6.18
+Sovereign Affidavit Portal for The Plainview Protocol V8.3
 
 This module provides the access control gate for sensitive pages
 (Foreign Influence Tracker, FARA Reporter) requiring users to
@@ -7,14 +7,25 @@ digitally sign an Affidavit of Integrity before accessing data.
 
 Features:
 - SHA-256 signature binding to CODE_OF_CONDUCT.md version
-- Session-based oath storage
+- Session-based oath storage with localStorage persistence
 - Reusable guard for protected pages
 """
 
 import hashlib
+import json
 import streamlit as st
 from datetime import datetime
 from typing import Optional, Dict, Any
+
+try:
+    from streamlit_local_storage import LocalStorage
+    localS = LocalStorage()
+    LOCAL_STORAGE_AVAILABLE = True
+except ImportError:
+    localS = None
+    LOCAL_STORAGE_AVAILABLE = False
+
+LOCAL_STORAGE_KEY = "plainview_affidavit_v1"
 
 
 AFFIDAVIT_CLAUSES = [
@@ -76,6 +87,41 @@ def get_signature_details() -> Optional[Dict[str, Any]]:
     return None
 
 
+def load_persisted_affidavit():
+    """Check localStorage for existing valid signature and restore it to session_state."""
+    if not LOCAL_STORAGE_AVAILABLE or localS is None:
+        return False
+    
+    if not st.session_state.get('affidavit_signed', False):
+        try:
+            raw_data = localS.getItem(LOCAL_STORAGE_KEY)
+            if raw_data is None:
+                return False
+            
+            if isinstance(raw_data, str):
+                try:
+                    saved_data = json.loads(raw_data)
+                except json.JSONDecodeError:
+                    return False
+            elif isinstance(raw_data, dict):
+                saved_data = raw_data
+            else:
+                return False
+            
+            required_keys = ['signature_hash', 'timestamp', 'display_name', 'coc_hash']
+            if all(k in saved_data for k in required_keys):
+                st.session_state['affidavit_signed'] = True
+                st.session_state['affidavit_signer_name'] = saved_data['display_name']
+                st.session_state['affidavit_timestamp'] = saved_data['timestamp']
+                st.session_state['affidavit_signature_hash'] = saved_data['signature_hash']
+                st.session_state['affidavit_coc_hash'] = saved_data['coc_hash']
+                st.session_state['affidavit_restored'] = True
+                return True
+        except Exception:
+            pass
+    return False
+
+
 def render_affidavit_gate() -> bool:
     """
     Render the affidavit gate UI and return True if signed.
@@ -84,6 +130,10 @@ def render_affidavit_gate() -> bool:
     Returns True if the user has signed and can access the page.
     Returns False if the user needs to sign first.
     """
+    # Check local storage for existing signature
+    if load_persisted_affidavit():
+        return True
+
     if is_affidavit_signed():
         return True
     
@@ -131,6 +181,23 @@ def render_affidavit_gate() -> bool:
             st.session_state['affidavit_timestamp'] = timestamp
             st.session_state['affidavit_signature_hash'] = signature_hash
             st.session_state['affidavit_coc_hash'] = coc_hash
+            
+            if LOCAL_STORAGE_AVAILABLE and localS is not None:
+                display_name = f"{signer_name[:2]}***{signer_name[-2:]}" if len(signer_name) > 4 else "***"
+                name_hash = hashlib.sha256(signer_name.encode()).hexdigest()
+                
+                local_data = {
+                    "signature_hash": signature_hash,
+                    "timestamp": timestamp,
+                    "display_name": display_name,
+                    "name_hash": name_hash,
+                    "coc_hash": coc_hash
+                }
+                
+                try:
+                    localS.setItem(LOCAL_STORAGE_KEY, json.dumps(local_data))
+                except Exception:
+                    pass
             
             st.success(f"✅ Affidavit signed successfully!")
             st.info(f"**Signature Hash:** `{signature_hash[:16]}...`")

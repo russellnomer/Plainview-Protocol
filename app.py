@@ -8,11 +8,18 @@ import os
 import time
 from datetime import datetime, date
 
+from forensic_patch import init_routing_state, catch_all_redirect, safe_navigate, safe_county_selectbox
+from traffic_ledger import init_async_ledger, async_log_traffic, get_queue_stats
+
 st.set_page_config(
     page_title="The Plainview Protocol",
     page_icon="🇺🇸",
     layout="wide"
 )
+
+init_routing_state()
+init_async_ledger()
+catch_all_redirect()
 
 with open("sources.json", "r") as f:
     SOURCES = json.load(f)

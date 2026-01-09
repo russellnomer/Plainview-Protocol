@@ -1,7 +1,25 @@
 # The Plainview Protocol: Truth, Kindness, & Security
 
 ## Overview
-Version 8.2 - Traffic Audit & Adoption Ledger. Established January 8, 2026. A production-ready Streamlit web application with bipartisan corruption tracking across all 50 states and 3,143 counties. Features Corruption Heatmap with Shadow Penalty scoring, Foreign Influence Tracker with Affidavit Gate, Revolving Door Tracker for lobbyist cooling-off violations, Ethics Complaint Trigger for OCC/Senate submissions, Agency Collaboration Portal with 72-hour correction window, and comprehensive FOIA/FARA tools. Pro-American, rule of law, domestic security focus.
+Version 8.3 - Forensic Patch. Established January 8, 2026. A production-ready Streamlit web application with bipartisan corruption tracking across all 50 states and 3,143 counties. Features Corruption Heatmap with Shadow Penalty scoring, Foreign Influence Tracker with Affidavit Gate (now with localStorage persistence), Revolving Door Tracker for lobbyist cooling-off violations, Ethics Complaint Trigger for OCC/Senate submissions, Agency Collaboration Portal with 72-hour correction window, and comprehensive FOIA/FARA tools. Pro-American, rule of law, domestic security focus.
+
+## Version 8.3 Features (Forensic Patch)
+- **Routing Ghost Fix**: st.session_state exclusive navigation with catch-all redirect to Mission Control
+- **Async Traffic Ledger**: Queue/Thread non-blocking database writes for high-performance logging
+- **Affidavit Persistence**: LocalStorage-backed signature persistence (streamlit-local-storage)
+- **FORK_ME.md**: Decentralized Sentinel Network mission for GitHub forking
+- **All 62 NY Counties**: Complete county dataset including Chemung (FIPS 36015)
+
+## Version 8.2 Features (Traffic Audit)
+- **Traffic Ledger**: PostgreSQL-backed session tracking
+- **Rate Limiting**: >10 FOIA/60s triggers nefarious activity flag
+- **Protocol Pulse**: Founder dashboard with Plotly adoption charts
+- **Forensic Error Tracking**: sentinel_logs table with incident IDs
+
+## Version 8.1 Features (Forensic Error Tracking)
+- **Error Logging**: Database-backed exception tracking with stack traces
+- **Audit Logs Dashboard**: Admin-only (SUNLIGHT2026) error browser
+- **Incident IDs**: SHA-256 based unique identifiers for errors
 
 ## Version 6.18 Features (Sovereign Affidavit Portal)
 - **Affidavit of Integrity**: SHA-256 signature binding for Foreign Influence/FARA access
@@ -9,8 +27,6 @@ Version 8.2 - Traffic Audit & Adoption Ledger. Established January 8, 2026. A pr
 - **Ethics Complaint Trigger**: OCC/Senate Ethics formal complaint generator
 - **Agency Collaboration Portal**: .gov/.mil email gate, 72-hour correction workflow
 - **Legal Shield**: TERMS.md, PRIVACY.md, SAFE_HARBOR.md with footer modal
-- **AI Regulation Drill-Down**: Leading the Future, Think Big PAC, Meta tracking
-- **Soros Network Forensics**: $140M flow mapping from Open Society Policy Center
 
 ## Core Features
 - **The National Lens**: Live national debt from Treasury API, state debt share, immigration burden with border state multipliers (1.6x)
@@ -19,6 +35,7 @@ Version 8.2 - Traffic Audit & Adoption Ledger. Established January 8, 2026. A pr
 - **DOGE Scrutiny Hub**: DOGE metrics ($214B+ savings), Minnesota Feeding Our Future fraud case study
 - **Corruption Heatmap**: 50-state Shadow Penalty scoring (FOIA speed, no-bid %, contractor donations), bipartisan tracking, Deep Dive triggers
 - **State Deep Dive**: Detailed state-level analysis with no-bid contract tables, PAC black hole spending, Justice.gov/FBI Vault links (NY, FL, CA, TX, IL)
+- **Local Watchdog**: All 62 NY counties with transparency scoring and Compare My County feature
 - **The Activism Hub**: Tabbed interface (Veterans/Border/Education/Business), kindness rewriter, X share button
 - **Accountability Tribunal**: Live Congress data, Shadow List, Scrutiny Tactics, Referendum Prototype (Vote to Audit)
 - **FOIA Cannon**: Custom requests + Bipartisan Grift Hunter (Sanctuary Grift, Corporate Subsidy Grift, Universal)
@@ -35,15 +52,21 @@ Version 8.2 - Traffic Audit & Adoption Ledger. Established January 8, 2026. A pr
 ## Tech Stack
 - Python 3.11
 - Streamlit (web framework)
+- streamlit-local-storage (affidavit persistence)
 - Pandas (data handling)
 - Plotly (interactive charts)
 - Requests (API calls)
 - lxml (XML/HTML parsing)
+- psycopg2 (PostgreSQL)
 - hashlib (SHA-256 signature binding)
+- threading/queue (async logging)
 
 ## Project Structure
-- `app.py` - Main Streamlit application with 25+ pages
-- `affidavit_portal.py` - Sovereign Affidavit signing module
+- `app.py` - Main Streamlit application with 30+ pages
+- `affidavit_portal.py` - Sovereign Affidavit signing with localStorage persistence
+- `forensic_patch.py` - V8.3 routing fixes and session state management
+- `traffic_ledger.py` - Async Queue/Thread non-blocking database writes
+- `forensic_logger.py` - Error and traffic logging with rate limiting
 - `ethics_filing_logic.py` - OCC/Senate complaint generator
 - `vampire_tax_calculator.py` - FARA penalty calculations
 - `flare_animation_logic.py` - Sunlight Flare animations
@@ -53,19 +76,26 @@ Version 8.2 - Traffic Audit & Adoption Ledger. Established January 8, 2026. A pr
 - `leftist_target_list.json` - Updated PAC target list with AI regulation focus
 - `foreign_influence_audit.json` - International conduits and 501(c)(4) tracking
 - `grassroots_media.json` - Student press and indie creator contacts
-- `county_portals.json` - 3,143 county portal data
+- `county_portals.json` - 3,143 county portal data (all 62 NY counties with FIPS)
 - `test_findings_v8.json` - Zero-Day Forensic Audit results
 - `CODE_OF_CONDUCT.md` - Sentinel's 5 Pillars of Evidentiary Integrity
 - `TERMS.md` - Terms of Service (AS-IS warranty)
 - `PRIVACY.md` - Privacy Policy (AI disclosure)
 - `SAFE_HARBOR.md` - Agency Collaboration Safe Harbor
 - `TUTORIAL.md` - Sentinel onboarding guide
+- `FORK_ME.md` - Decentralized Sentinel Network mission
 - `.streamlit/config.toml` - Streamlit server configuration
 
 ## Running the App
 ```
 streamlit run app.py --server.port 5000
 ```
+
+## Database Tables (PostgreSQL)
+- `sentinel_logs` - Error tracking with incident IDs
+- `traffic_ledger` - Session and page view tracking
+- `nefarious_activity` - Rate limit violations
+- `sentinel_signups` - Affidavit signing adoption
 
 ## Data Sources
 - **Treasury Debt**: https://api.fiscaldata.treasury.gov (live, cached 1 hour)
@@ -90,6 +120,7 @@ streamlit run app.py --server.port 5000
 - Persistent "Support Russell" coffee button
 
 ## Key Data
+- NY counties: 62 (all verified with FIPS codes)
 - Border states: Texas, Arizona, California, New Mexico (1.6x multiplier)
 - State populations for debt share calculations
 - Base immigration cost: $150.7B (FAIR 2023-2024)
@@ -102,11 +133,16 @@ streamlit run app.py --server.port 5000
 - Live data with caching (TTL 3600 seconds)
 - Graceful fallbacks for all data sources
 - System health monitoring
-- Session-based SHA-256 signature binding
+- Session-based SHA-256 signature binding with localStorage persistence
 - Legal footer with Terms/Privacy/Safe Harbor links
+- Async non-blocking traffic logging
 
 ## User Preferences
 - Equal scrutiny for Red and Blue jurisdictions (bipartisan)
 - Evidence-based claims only (Documentary Primacy)
 - Free access (no paywalls)
-- Open source (GitHub fork available)
+- Open source (GitHub fork available via FORK_ME.md)
+
+## Founder Access Keys
+- Audit Logs: SUNLIGHT2026
+- Protocol Pulse: SUNLIGHT2026
