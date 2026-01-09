@@ -247,7 +247,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v5.2 | The National Sentinel")
+st.sidebar.caption("v5.5 | The FOIA Cannon")
 
 st.sidebar.success("🎉 **TODAY IS DAY 1** — The Plainview Protocol is LIVE. Established January 8, 2026.")
 
@@ -432,6 +432,12 @@ Our scanners have flagged {len(wealth_findings)} officials with wealth accumulat
 
 **🕳️ Black Hole PAC Alert:**
 We've identified {len(black_hole_pacs)} PACs operating as **Black Holes** — money flows in, influence flows out, but transparency? Nowhere to be found. These entities represent ${sum(float(p['undisclosed'].replace('$','').replace('M','000000').replace('K','000')) for p in black_hole_pacs)/1e6:.1f}M in undisclosed funds.
+
+**⚖️ The 2008 Plea Deal Black Hole:**
+Career politicians like Acosta used taxpayer resources to shield a predator. We don't care about the name-dropping; we care about the lack of prosecution. The 2008 non-prosecution agreement remains a **Black Hole** in American justice — victims were silenced while power was protected.
+
+**🚨 DOJ Deadline Crisis:**
+Bondi and Blanche are missing deadlines. 400 lawyers at the DOJ are reviewing 2 million records, but we still don't have names. Is this due process or a delay tactic? The DOJ claims they are "working around the clock," but they are defying the Dec 19 deadline. If 400 lawyers can't unmask 10 names, the system is broken.
 
 **🎯 The America First Principle:**
 Every dollar extracted from taxpayers deserves an audit trail. Every official who enriches themselves while constituents struggle is a **Taxpayer Parasite**. We don't discriminate by party — we discriminate by transparency.
@@ -2355,6 +2361,9 @@ The Plainview Protocol is built to last for generations. Each milestone marks pr
     MILESTONES = [
         {"date": "January 8, 2026", "title": "🏛️ LEGACY ESTABLISHED", "description": "Russell Nomer establishes The Plainview Protocol in Plainview, NY. The founding moment of citizen-powered accountability.", "status": "completed"},
         {"date": "January 8, 2026", "title": "🎙️ Founder's Monologue Launched", "description": "Voice of the Citizen Activated — Daily briefings on Career Politician Wealth, PAC Transparency, and Black Hole Spending.", "status": "completed"},
+        {"date": "January 8, 2026", "title": "🔍 Epstein Audit Activated", "description": "Evidence over Noise — Tiered verification system for unsealed court documents with direct links to official sources.", "status": "completed"},
+        {"date": "January 8, 2026", "title": "⚖️ Prosecutorial Pressure Button LIVE", "description": "Demanding names, not black boxes — Pre-filled DOJ petitions for the 10 co-conspirators.", "status": "completed"},
+        {"date": "January 8, 2026", "title": "🎯 FOIA Cannon 2.0 LIVE", "description": "Targeted for the 10 Co-conspirators — One-click FOIA requests to FBI and DOJ.", "status": "completed"},
         {"date": "Q1 2026", "title": "Local Watchdog Beta", "description": "County Clash comparison tool with OSC data integration.", "status": "in_progress"},
         {"date": "Q1 2026", "title": "Infographic Generator", "description": "Battle card meme-engine for shareable accountability graphics.", "status": "completed"},
         {"date": "Q1 2026", "title": "Beta Testing Complete", "description": "Core features validated by early adopters across 10 states.", "status": "pending"},
@@ -2398,6 +2407,179 @@ The Plainview Protocol is built to last for generations. Each milestone marks pr
     """)
     
     st.info(f"📆 **Days Since Initial Commit:** {days_since_launch}")
+
+def page_epstein_audit():
+    st.header("🔍 Epstein Archive Audit")
+    st.caption("Evidence over Noise — Tiered verification linked to justice.gov and vault.fbi.gov")
+    
+    st.subheader("📊 Redaction Watchdog")
+    total_pages = 5200000
+    released_pages = 52000
+    release_pct = (released_pages / total_pages) * 100
+    
+    watchdog_col1, watchdog_col2, watchdog_col3 = st.columns(3)
+    watchdog_col1.metric("Total Epstein Files", f"{total_pages/1e6:.1f}M pages")
+    watchdog_col2.metric("Pages Released", f"{released_pages/1e3:.0f}K", delta=f"{release_pct:.1f}%")
+    watchdog_col3.metric("Transparency Rate", f"<1%", delta="Critical", delta_color="inverse")
+    
+    st.warning("⚠️ **Transparency Failure Detected:** DOJ has released less than 1% of 5.2 million pages. Initials like 'LG' (Lesley Groff) visible but names redacted.")
+    
+    st.divider()
+    
+    st.subheader("🗂️ Tiered Verification Database")
+    st.caption("Names categorized by evidence level from unsealed court documents")
+    
+    show_unvetted = st.checkbox("⚠️ Show Unvetted Claims (Tier 3)", value=False, help="Enable to see unsubstantiated claims that have not been verified")
+    
+    search_query = st.text_input("🔍 Search Archive", placeholder="Search names, locations, or document IDs...")
+    
+    ARCHIVE_DATA = [
+        {"name": "Jeffrey Epstein", "tier": 1, "status": "Substantiated", "source": "Court Documents", "source_url": "https://www.justice.gov/usao-sdny/pr/jeffrey-epstein-charged-sex-trafficking-minors", "notes": "Primary defendant, deceased Aug 2019"},
+        {"name": "Ghislaine Maxwell", "tier": 1, "status": "Substantiated", "source": "Conviction Dec 2021", "source_url": "https://www.justice.gov/usao-sdny/pr/ghislaine-maxwell-sentenced-20-years-prison-sex-trafficking-conspiracy", "notes": "Convicted, sentenced 20 years"},
+        {"name": "Bill Richardson", "tier": 1, "status": "Substantiated", "source": "Unsealed 2024 Documents", "source_url": "https://www.courtlistener.com/docket/4355835/giuffre-v-maxwell/", "notes": "Named in victim testimony, deceased Sept 2023"},
+        {"name": "Prince Andrew", "tier": 1, "status": "Substantiated", "source": "Civil Settlement 2022", "source_url": "https://www.courtlistener.com/docket/17318376/giuffre-v-prince-andrew/", "notes": "Civil case settled, no criminal charges"},
+        {"name": "Jean-Luc Brunel", "tier": 1, "status": "Substantiated", "source": "French Investigation", "source_url": "https://www.justice.gov/", "notes": "Modeling agent, deceased Feb 2022"},
+        {"name": "Alan Dershowitz", "tier": 2, "status": "Association", "source": "Flight Logs", "source_url": "https://vault.fbi.gov/", "notes": "Denied allegations, documented flights"},
+        {"name": "Les Wexner", "tier": 2, "status": "Association", "source": "Financial Records", "source_url": "https://www.justice.gov/", "notes": "Former financial relationship, no charges"},
+        {"name": "[REDACTED - LG]", "tier": 2, "status": "Association", "source": "Unsealed Docs", "source_url": "https://vault.fbi.gov/", "notes": "🚨 Transparency Failure: Initials visible, name redacted"},
+    ]
+    
+    UNVETTED_DATA = [
+        {"name": "[Unverified Claim A]", "tier": 3, "status": "False Claim", "source": "Social Media", "source_url": "", "notes": "No documentary evidence"},
+        {"name": "[Unverified Claim B]", "tier": 3, "status": "False Claim", "source": "Anonymous Post", "source_url": "", "notes": "Debunked by court records"},
+    ]
+    
+    display_data = ARCHIVE_DATA.copy()
+    if show_unvetted:
+        display_data.extend(UNVETTED_DATA)
+    
+    if search_query:
+        display_data = [d for d in display_data if search_query.lower() in d["name"].lower() or search_query.lower() in d["notes"].lower()]
+    
+    for entry in display_data:
+        tier_color = "🟢" if entry["tier"] == 1 else "🟡" if entry["tier"] == 2 else "🔴"
+        tier_label = "Tier 1: Substantiated" if entry["tier"] == 1 else "Tier 2: Association" if entry["tier"] == 2 else "Tier 3: Unvetted"
+        
+        with st.expander(f"{tier_color} {entry['name']} — {tier_label}"):
+            st.markdown(f"**Status:** {entry['status']}")
+            st.markdown(f"**Source:** {entry['source']}")
+            st.markdown(f"**Notes:** {entry['notes']}")
+            if entry["source_url"]:
+                st.link_button("📄 View Official Source", entry["source_url"])
+    
+    st.divider()
+    
+    st.subheader("🗺️ Immortal Corruption Heatmap")
+    st.caption("Elected officials and public figures named in unsealed files")
+    
+    HEATMAP_DATA = [
+        {"name": "Bill Richardson", "role": "Former NM Governor (D)", "location": "New Mexico", "source_pdf": "https://www.courtlistener.com/docket/4355835/giuffre-v-maxwell/"},
+        {"name": "George Mitchell", "role": "Former Senate Majority Leader (D)", "location": "Maine", "source_pdf": "https://www.courtlistener.com/docket/4355835/giuffre-v-maxwell/"},
+        {"name": "Bill Clinton", "role": "Former President (D)", "location": "Arkansas/NY", "source_pdf": "https://vault.fbi.gov/"},
+        {"name": "Donald Trump", "role": "Former President (R)", "location": "Florida/NY", "source_pdf": "https://www.courtlistener.com/docket/4355835/giuffre-v-maxwell/"},
+        {"name": "Prince Andrew", "role": "UK Royal", "location": "International", "source_pdf": "https://www.courtlistener.com/docket/17318376/giuffre-v-prince-andrew/"},
+    ]
+    
+    for official in HEATMAP_DATA:
+        col1, col2, col3 = st.columns([2, 2, 1])
+        col1.markdown(f"**{official['name']}**")
+        col1.caption(official['role'])
+        col2.markdown(f"📍 {official['location']}")
+        col3.link_button("📄 Source", official['source_pdf'], use_container_width=True)
+    
+    st.divider()
+    
+    st.subheader("⚖️ Prosecutorial Pressure")
+    st.caption("Demand transparency from the Department of Justice")
+    
+    st.markdown("""
+    **The 10 Co-Conspirators:** In July 2019, FBI emails identified 10 individuals as potential co-conspirators. 
+    The May 2020 "Potential Charges" memo further detailed prosecutorial options. These names remain redacted.
+    """)
+    
+    with st.expander("📝 Generate DOJ Petition", expanded=True):
+        petitioner_name = st.text_input("Your Name", placeholder="Enter your full legal name")
+        petitioner_email = st.text_input("Your Email", placeholder="your@email.com")
+        
+        petition_text = f"""
+PETITION TO THE DEPARTMENT OF JUSTICE
+Office of the Attorney General
+950 Pennsylvania Avenue, NW
+Washington, DC 20530-0001
+
+RE: Request for Unredacted Release of Epstein Co-Conspirator Documents
+
+Dear Attorney General,
+
+Pursuant to Public Law 119-38 (Epstein Files Transparency Act), I hereby demand:
+
+1. The unredacted status of the 10 co-conspirators identified in July 2019 FBI emails (Document EFTA00037362)
+2. All records from the May 2020 "Potential Charges" memo
+3. Complete disclosure of Ohio, Florida, and NYC subpoena records
+
+The American people deserve transparency. No redactions are permitted for government officials or public figures based on political sensitivity.
+
+Respectfully submitted,
+{petitioner_name or "[YOUR NAME]"}
+{petitioner_email or "[YOUR EMAIL]"}
+
+Date: {date.today().strftime("%B %d, %Y")}
+        """
+        
+        st.code(petition_text, language=None)
+        
+        if st.button("📋 Copy Petition", use_container_width=True):
+            st.success("Petition text ready to copy! Use Ctrl+C or Cmd+C on the text above.")
+        
+        st.link_button("📧 Email DOJ", "mailto:AskDOJ@usdoj.gov?subject=Epstein%20Co-Conspirator%20Transparency%20Request", use_container_width=True)
+    
+    st.divider()
+    
+    st.subheader("🎯 FOIA Cannon: Co-Conspirator Edition")
+    st.caption("One-click FOIA requests targeting the 10 co-conspirators")
+    
+    with st.expander("📄 Generate FBI FOIA Request", expanded=True):
+        foia_name = st.text_input("Your Full Legal Name (for FOIA)", placeholder="Required for FOIA processing", key="foia_name")
+        
+        foia_request = f"""
+FREEDOM OF INFORMATION ACT REQUEST
+FBI Records Management Division
+170 Marcel Drive
+Winchester, VA 22602
+
+Via: https://vault.fbi.gov/fdps-1/efoia-portal
+
+RE: FOIA Request — Epstein Investigation Co-Conspirator Documents
+
+Dear FOIA Officer,
+
+Pursuant to the Freedom of Information Act (5 U.S.C. § 552) and Public Law 119-38 (Epstein Files Transparency Act), I request copies of:
+
+1. Document EFTA00037362 (July 2019 email identifying 10 co-conspirators) — UNREDACTED
+2. All records regarding Ohio, Florida, and NYC grand jury subpoenas related to Case No. 19-CR-490
+3. The May 2020 "Potential Charges" memorandum in its entirety
+4. Any records identifying individuals granted immunity or non-prosecution agreements
+
+LEGAL SHIELD NOTICE:
+Pursuant to Public Law 119-38, no redactions are permitted for government officials or public figures based on political sensitivity.
+
+PENALTY OF PERJURY STATEMENT:
+I declare under penalty of perjury that I am a United States citizen seeking these records for purposes of government accountability and public interest.
+
+Requestor: {foia_name or "[YOUR FULL LEGAL NAME]"}
+Date: {date.today().strftime("%B %d, %Y")}
+
+I am willing to pay reasonable fees up to $25. Please contact me if fees exceed this amount.
+        """
+        
+        st.code(foia_request, language=None)
+        
+        foia_col1, foia_col2 = st.columns(2)
+        foia_col1.link_button("🔗 FBI eFOIPA Portal", "https://vault.fbi.gov/fdps-1/efoia-portal", use_container_width=True)
+        foia_col2.link_button("🔗 DOJ FOIA Portal", "https://www.justice.gov/oip/submit-and-track-request-or-appeal", use_container_width=True)
+    
+    st.divider()
+    st.info("**Disclaimer:** This audit relies exclusively on official government sources (justice.gov, vault.fbi.gov, courtlistener.com). The Plainview Protocol does not make accusations — we document what courts and federal agencies have released.")
 
 def page_community_leaderboard():
     st.header("🏆 Meme of the Week: The Top Roasts")
@@ -3168,6 +3350,7 @@ pages = [
     st.Page(page_local_watchdog, title="Local Watchdog", icon="🏘️"),
     st.Page(page_scorecard_generator, title="Scorecard Generator", icon="🎯"),
     st.Page(page_community_leaderboard, title="Community Leaderboard", icon="🏆"),
+    st.Page(page_epstein_audit, title="Epstein Archive Audit", icon="🔍"),
     st.Page(page_mission_milestones, title="Mission Milestones", icon="🏛️"),
     st.Page(page_ecosystem, title="The Ecosystem", icon="🌳"),
     st.Page(page_support, title="Support", icon="☕"),
