@@ -14,6 +14,7 @@ import plotly.graph_objects as go
 from datetime import datetime
 import time
 from fact_check_builder import get_fact_check_card, get_hashtags
+from social_ammo import render_ammo_box
 
 CFR_287_8_TEXT = """
 **8 CFR 287.8 — Use of Force Standards**
@@ -383,6 +384,10 @@ def render_force_continuum():
             
             **Sources cited:** CFR, Graham v. Connor, Physics
             """)
+        
+        st.divider()
+        
+        render_ammo_box()
     
     st.divider()
     
