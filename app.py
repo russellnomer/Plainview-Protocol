@@ -88,38 +88,55 @@ def get_reps(state_full_name):
     
     code = us_state_to_abbrev.get(state_full_name)
     if not code:
-        return pd.DataFrame([{"Status": "Invalid State"}]), False
+        return pd.DataFrame([{"Name": "Invalid State", "Role": "-", "Party": "-"}]), False
 
     try:
-        url = SOURCES.get("congress_legislators", "https://theunitedstates.io/congress-legislators/legislators-current.json")
-        response = requests.get(url, timeout=5, stream=True)
+        url = "https://theunitedstates.io/congress-legislators/legislators-current.json"
+        response = requests.get(url, timeout=10, headers={"User-Agent": "PlainviewProtocol/8.4"})
         response.raise_for_status()
         data = response.json()
         
         reps = []
         for p in data:
-            current = p['terms'][-1]
-            if current['state'] == code:
-                role = "Senator" if current['type'] == 'sen' else f"Rep (Dist {current.get('district', 'At-Large')})"
-                bioguide = p.get('id', {}).get('bioguide', '')
-                bioguide_link = f"https://bioguide.congress.gov/search/bio/{bioguide}" if bioguide else ""
-                reps.append({
-                    "Name": f"{p['name']['first']} {p['name']['last']}",
-                    "Role": role,
-                    "Party": current['party'],
-                    "Bioguide": bioguide_link
-                })
+            try:
+                terms = p.get('terms', [])
+                if not terms:
+                    continue
+                current = terms[-1]
+                if current.get('state') == code:
+                    term_type = current.get('type', '')
+                    if term_type == 'sen':
+                        role = "Senator"
+                    else:
+                        district = current.get('district', 'At-Large')
+                        role = f"Rep (Dist {district})"
+                    
+                    name_data = p.get('name', {})
+                    first_name = name_data.get('first', '')
+                    last_name = name_data.get('last', '')
+                    full_name = f"{first_name} {last_name}".strip() or "Unknown"
+                    
+                    party = current.get('party', 'Unknown')
+                    
+                    reps.append({
+                        "Name": full_name,
+                        "Role": role,
+                        "Party": party
+                    })
+            except (KeyError, IndexError, TypeError):
+                continue
         
         if reps:
             return pd.DataFrame(reps), True
         else:
-            return pd.DataFrame([{"Status": f"No representatives found for {state_full_name}"}]), True
+            return pd.DataFrame([{"Name": f"No reps found for {state_full_name}", "Role": "-", "Party": "-"}]), True
+            
     except requests.exceptions.Timeout:
-        return pd.DataFrame([{"Status": "Live Feed Temporarily Offline. Search Congress.gov manually."}]), False
-    except requests.exceptions.RequestException:
-        return pd.DataFrame([{"Status": "Live Feed Temporarily Offline. Search Congress.gov manually."}]), False
-    except Exception:
-        return pd.DataFrame([{"Status": "Live Feed Temporarily Offline. Search Congress.gov manually."}]), False
+        return pd.DataFrame([{"Name": "API Timeout - Try Congress.gov", "Role": "-", "Party": "-"}]), False
+    except requests.exceptions.RequestException as e:
+        return pd.DataFrame([{"Name": "API Unavailable - Try Congress.gov", "Role": "-", "Party": "-"}]), False
+    except Exception as e:
+        return pd.DataFrame([{"Name": "Data Error - Try Congress.gov", "Role": "-", "Party": "-"}]), False
 
 @st.cache_data(ttl=3600)
 def get_tariff_revenue():
