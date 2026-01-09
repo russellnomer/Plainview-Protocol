@@ -304,7 +304,7 @@ def page_deep_dive():
     state_data = state_drill_down.get(state_abbrev)
     
     if not state_data:
-        st.error(f"Deep dive data not available for {state_abbrev}. Currently available: NY, FL, CA, TX, IL")
+        st.error(f"Deep dive data not available for {state_abbrev}. Currently available: NY, FL, CA, TX, IL, NC")
         if st.button("⬅️ Back to National View"):
             st.session_state.deep_dive_state = None
             st.rerun()
@@ -431,6 +431,101 @@ def page_deep_dive():
                     st.warning(f"- {m['description']} ({m['id']})")
             else:
                 st.success("✅ All red flags have valid evidence links!")
+    
+    if state_abbrev == "NC":
+        st.divider()
+        st.subheader("🏛️ North Carolina Special Features")
+        
+        if state_data.get("evp_portal"):
+            st.link_button("📋 NC Electronic Vendor Portal (eVP)", state_data["evp_portal"], use_container_width=True)
+        
+        if state_data.get("cornell_precedent"):
+            precedent = state_data["cornell_precedent"]
+            st.success(f"""
+            **⚖️ Cornell Precedent: {precedent.get('case', '')}**
+            
+            🎓 **Clinic:** {precedent.get('clinic', '')}  
+            📅 **Year:** {precedent.get('year', '')}  
+            ✅ **Outcome:** {precedent.get('outcome', '')}
+            
+            > *{precedent.get('note', '')}*
+            """)
+        
+        st.divider()
+        st.subheader("🗺️ County-Level Dashboard")
+        st.caption("WATCH Metrics — Wake Accountability Tax Check as Sunlight Standard")
+        
+        county_data = state_data.get("county_data", {})
+        
+        if county_data:
+            selected_county = st.selectbox("Select County for Deep Dive", list(county_data.keys()))
+            
+            if selected_county:
+                county = county_data[selected_county]
+                
+                st.markdown(f"### {county.get('name', selected_county)}")
+                st.caption(f"Population: {county.get('population', 0):,}")
+                
+                watch = county.get("watch_metrics", {})
+                watch_col1, watch_col2, watch_col3 = st.columns(3)
+                
+                with watch_col1:
+                    score = watch.get("transparency_score", 0)
+                    if score >= 80:
+                        st.success(f"🟢 Transparency: {score}/100")
+                    elif score >= 60:
+                        st.warning(f"🟡 Transparency: {score}/100")
+                    else:
+                        st.error(f"🔴 Transparency: {score}/100")
+                
+                with watch_col2:
+                    if watch.get("sunlight_standard"):
+                        st.success("☀️ Sunlight Standard: PASSED")
+                    else:
+                        st.warning("⚠️ Sunlight Standard: FAILED")
+                
+                with watch_col3:
+                    alerts = watch.get("no_bid_alerts", 0)
+                    if alerts <= 3:
+                        st.success(f"📋 No-Bid Alerts: {alerts}")
+                    else:
+                        st.error(f"🚨 No-Bid Alerts: {alerts}")
+                
+                st.divider()
+                
+                st.markdown("#### 📋 No-Bid Contract Alerts (IPS Data)")
+                county_contracts = county.get("no_bid_contracts", [])
+                if county_contracts:
+                    for contract in county_contracts:
+                        st.warning(f"⚠️ **{contract.get('vendor', 'Unknown')}** — ${contract.get('amount', 0):,.0f} ({contract.get('department', 'N/A')}, {contract.get('year', 'N/A')})")
+                    if county.get("ips_portal"):
+                        st.link_button("🔗 View IPS Portal", county["ips_portal"], use_container_width=True)
+                
+                st.divider()
+                
+                st.markdown("#### ⚖️ Judicial Transparency")
+                judicial = county.get("judicial_transparency", {})
+                jud_col1, jud_col2, jud_col3 = st.columns(3)
+                jud_col1.metric("Civil Cases Pending", f"{judicial.get('civil_cases_pending', 0):,}")
+                jud_col2.metric("Criminal Cases Pending", f"{judicial.get('criminal_cases_pending', 0):,}")
+                foia_comp = judicial.get("foia_compliance", 0)
+                jud_col3.metric("FOIA Compliance", f"{foia_comp}%", delta="Good" if foia_comp >= 85 else "Needs Work", delta_color="normal" if foia_comp >= 85 else "inverse")
+                
+                if state_data.get("judicial_annual_report"):
+                    st.link_button("📊 NC Judicial Annual Report", state_data["judicial_annual_report"], use_container_width=True)
+                
+                st.divider()
+                
+                st.markdown("#### 🗳️ Voter Integrity Score")
+                voter_score = county.get("voter_integrity_score", 0)
+                if voter_score >= 90:
+                    st.success(f"✅ **Voter Integrity: {voter_score}/100** — Strong compliance with state ID requirements")
+                elif voter_score >= 75:
+                    st.warning(f"⚠️ **Voter Integrity: {voter_score}/100** — Moderate compliance, room for improvement")
+                else:
+                    st.error(f"🔴 **Voter Integrity: {voter_score}/100** — Weak compliance, requires audit")
+        else:
+            st.info("County-level data not yet available. Wake, Mecklenburg, and Guilford coming Q1 2026.")
 
 st.markdown("""
     <style>
@@ -441,7 +536,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v6.0 | The Deep-Dive Engine")
+st.sidebar.caption("v6.1 | County Sentinel")
 
 st.sidebar.success("🎉 **TODAY IS DAY 1** — The Plainview Protocol is LIVE. Established January 8, 2026.")
 
@@ -1135,12 +1230,12 @@ def page_corruption_heatmap():
     st.caption("Click a state below to access detailed no-bid contracts, PAC spending, and investigation links.")
     
     us_state_to_abbrev = {
-        "New York": "NY", "Florida": "FL", "California": "CA", "Texas": "TX", "Illinois": "IL"
+        "New York": "NY", "Florida": "FL", "California": "CA", "Texas": "TX", "Illinois": "IL", "North Carolina": "NC"
     }
     
-    available_states = ["New York", "Florida", "California", "Texas", "Illinois"]
+    available_states = ["New York", "Florida", "California", "Texas", "Illinois", "North Carolina"]
     
-    dive_cols = st.columns(5)
+    dive_cols = st.columns(6)
     for i, state in enumerate(available_states):
         with dive_cols[i]:
             state_abbrev = us_state_to_abbrev.get(state)

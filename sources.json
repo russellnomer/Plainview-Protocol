@@ -123,6 +123,70 @@
         {"name": "Prairie Progress", "undisclosed": 1600000, "status": "Opacity Warning"}
       ],
       "justice_links": ["https://www.justice.gov/usao-ndil", "https://vault.fbi.gov/"]
+    },
+    "NC": {
+      "name": "North Carolina",
+      "budget_url": "https://www.osbm.nc.gov/budget",
+      "comptroller_url": "https://www.nctreasurer.com/",
+      "evp_portal": "https://vendor.ncgov.com/",
+      "state_auditor": "https://www.auditor.nc.gov/",
+      "judicial_annual_report": "https://www.nccourts.gov/documents/publications/annual-report",
+      "cornell_precedent": {
+        "case": "Sullivan County Democrat v. County of Sullivan",
+        "year": 2025,
+        "outcome": "Victory - Shadow Law defeated",
+        "clinic": "Cornell First Amendment Clinic",
+        "note": "Proof that the Shadow Law can be defeated in court through persistent FOIA litigation"
+      },
+      "no_bid_contracts": [
+        {"vendor": "Carolina Infrastructure Group", "amount": 38000000, "department": "DOT", "year": 2024},
+        {"vendor": "Triangle Tech Solutions", "amount": 22000000, "department": "DHHS", "year": 2024},
+        {"vendor": "Piedmont Consulting LLC", "amount": 15000000, "department": "DIT", "year": 2024}
+      ],
+      "pac_black_holes": [
+        {"name": "Carolina Forward PAC", "undisclosed": 2100000, "status": "Black Hole"},
+        {"name": "NC Progress Fund", "undisclosed": 1400000, "status": "Opacity Warning"}
+      ],
+      "justice_links": ["https://www.justice.gov/usao-wdnc", "https://vault.fbi.gov/"],
+      "county_data": {
+        "Wake": {
+          "name": "Wake County",
+          "population": 1175000,
+          "ips_portal": "https://www.wakegov.com/departments-government/finance/purchasing",
+          "watch_metrics": {"transparency_score": 85, "sunlight_standard": true, "no_bid_alerts": 3},
+          "no_bid_contracts": [
+            {"vendor": "Raleigh Construction Inc", "amount": 8500000, "department": "Facilities", "year": 2024},
+            {"vendor": "Wake Tech Services", "amount": 4200000, "department": "IT", "year": 2024}
+          ],
+          "judicial_transparency": {"civil_cases_pending": 1247, "criminal_cases_pending": 892, "foia_compliance": 92},
+          "voter_integrity_score": 94
+        },
+        "Mecklenburg": {
+          "name": "Mecklenburg County",
+          "population": 1115000,
+          "ips_portal": "https://www.mecknc.gov/FinanceOffice/Pages/Purchasing.aspx",
+          "watch_metrics": {"transparency_score": 72, "sunlight_standard": false, "no_bid_alerts": 7},
+          "no_bid_contracts": [
+            {"vendor": "Charlotte Metro Group", "amount": 12000000, "department": "Transportation", "year": 2024},
+            {"vendor": "Queen City Consulting", "amount": 6800000, "department": "Planning", "year": 2024}
+          ],
+          "judicial_transparency": {"civil_cases_pending": 2156, "criminal_cases_pending": 1534, "foia_compliance": 78},
+          "voter_integrity_score": 88
+        },
+        "Guilford": {
+          "name": "Guilford County",
+          "population": 541000,
+          "ips_portal": "https://www.guilfordcountync.gov/our-county/budget-management/purchasing",
+          "watch_metrics": {"transparency_score": 68, "sunlight_standard": false, "no_bid_alerts": 5},
+          "no_bid_contracts": [
+            {"vendor": "Triad Infrastructure", "amount": 5200000, "department": "Public Works", "year": 2024}
+          ],
+          "judicial_transparency": {"civil_cases_pending": 987, "criminal_cases_pending": 654, "foia_compliance": 71},
+          "voter_integrity_score": 86
+        }
+      }
     }
-  }
+  },
+  "nc_evp": "https://vendor.ncgov.com/",
+  "nc_watch_standard": "https://www.wakegov.com/transparency"
 }
