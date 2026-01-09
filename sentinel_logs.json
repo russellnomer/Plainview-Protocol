@@ -1,0 +1,14 @@
+{
+  "errors": [
+    {
+      "timestamp": "2026-01-09T14:25:08.867923Z",
+      "error_type": "REQUEST_ERROR",
+      "message": "Request failed fetching legislators for New York",
+      "details": {
+        "state": "New York",
+        "error": "HTTPSConnectionPool(host='theunitedstates.io', port=443): Max retries exceeded with url: /congress-legislators/legislators-current.json (Caused by NameResolutionError(\"HTTPSConnection(host='theunitedstates.io', port=443): Failed to resolve 'theunitedstates.io' ([Errno -2] Name or service not known)\"))"
+      },
+      "source": "reps_fetcher.py"
+    }
+  ]
+}
