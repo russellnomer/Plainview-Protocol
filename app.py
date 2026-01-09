@@ -14,6 +14,7 @@ from metadata_handler import inject_og_meta_tags, get_page_config, get_share_url
 from mamdani_watchdog import render_mamdani_watchdog, get_mamdani_profile, render_mamdani_sidebar_status
 from bds_audit_logic import render_bds_clawback_tracker, get_total_discretionary_funding, get_grift_alerts as get_bds_grift_alerts
 from safety_shield_logic import render_safety_shield, get_proximity_alerts
+from senior_justice_logic import render_senior_justice, get_cuomo_profile
 from agenda_scanner import (
     get_jurisdictions, get_agendas, scan_agenda_item, calculate_transparency_score,
     get_transparency_rating, init_agenda_flags_table, save_agenda_flag, get_flag_count, GRIFT_KEYWORDS
@@ -4063,6 +4064,10 @@ def page_safety_shield():
     """Safety Shield - V6.22 public safety alert for communal protection."""
     render_safety_shield()
 
+def page_senior_justice():
+    """Senior Justice Trigger - V6.23 accountability for nursing home crisis."""
+    render_senior_justice()
+
 def page_support():
     st.header("☕ Sustain the Mission")
     st.write("This tool is free, ad-free, and uncensorable thanks to supporters like you.")
@@ -6771,6 +6776,7 @@ pages = [
     st.Page(page_mamdani_watchdog, title="Mamdani Watchdog", icon="🏛️"),
     st.Page(page_bds_clawback, title="BDS Clawback Tracker", icon="💰"),
     st.Page(page_safety_shield, title="Safety Shield", icon="🛡️"),
+    st.Page(page_senior_justice, title="Senior Justice", icon="⚖️"),
 ]
 
 nav = st.navigation(pages)

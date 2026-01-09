@@ -1,0 +1,45 @@
+To empower families and ensure journalists have the verified data they need to hold the "Labyrinth" accountable, I’ve generated a V8.7 Fact Sheet for Journalists. This document is designed to be attached to emails sent to news producers, providing a forensic baseline for any interview or call-in segment.
+
+📄 FACT SHEET: Accountability Audit of the Cuomo Administration
+Subject: Evidence of Senior Life-Safety Mismanagement and 2026 Campaign Transparency Source: Plainview Protocol Forensic Audit (V8.7)
+
+1. The March 25, 2020 Directive
+The Order: The NY Department of Health issued an advisory stating that nursing homes "must admit" or "readmit" residents even if they tested positive for COVID-19.
+
+The Restriction: The order explicitly prohibited facilities from requiring a hospitalized resident, who was determined to be medically stable, to be tested for COVID-19 prior to admission.
+
+The Impact: Between March 25 and May 8, 2020 (when the order was rescinded), approximately 6,326 COVID-positive patients were admitted to nursing homes under this directive.
+
+2. Undercounting and Data Manipulation
+The AG Finding: A January 2021 report by the NY Attorney General found that nursing home deaths were undercounted by approximately 50% because the administration excluded residents who died after being transferred to a hospital.
+
+The "Frozen" Data: Top aides to the Governor reportedly "froze" or altered a July 2020 health department report to hide the true death toll from state legislators and the public.
+
+The Book Deal: During the height of the crisis, the Governor secured a $5.1 million book deal for a memoir on "leadership," while his staff worked to suppress the actual casualty figures.
+
+3. The 2026 Audit Demand
+Financial Scrutiny: Current demands for a Forensic Audit focus on whether any resources or personnel involved in the 2020-21 data suppression are now connected to the current 2026 political resurgence.
+
+Legislative Record: The Plainview Protocol identifies a "Spoliation Gap" in public records—thousands of emails and private memos regarding the March 25 directive remain unreleased to the public.
+
+🚀 Replit Agent Prompt: V8.7 Press Kit Generator
+Paste this into the Replit Agent to automate your media outreach:
+
+Plaintext
+
+Update "The Plainview Protocol" to Version 8.7: Press Kit Generator.
+
+1. ONE-CLICK PRESS PDF:
+   - Feature: Add a button to the 'Senior Justice' page: "📄 Download Journalist Fact Sheet".
+   - Logic: Generate a formatted PDF containing the March 25 timeline, the AG report summary, and the 2026 audit demands.
+
+2. PRODUCER OUTREACH LOG:
+   - Feature: Create a tracking tool so Sentinels can log which news stations have received the Fact Sheet.
+   - Dashboard: Show a 'Media Pressure Map' of New York showing which outlets are covering the audit demand.
+
+3. FOUNDER'S "EVIDENTIARY" INJECTION:
+   - Note: "Journalists need facts, not just feelings. By providing the specific orders and report dates, you turn a 'sad story' into a 'breaking investigation.' Use the Fact Sheet to back them into a corner of truth."
+
+Generate the updated app.py and press_kit_handler.py.
+🏛️ Weaponizing the Truth
+By attaching this Fact Sheet to your email, you are doing the journalist's work for them, making it nearly impossible for a producer to ignore the story. You are providing the evidentiary integrity that defines the Plainview Protocol.
