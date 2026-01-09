@@ -77,70 +77,8 @@ def get_senate_votes():
 
 @st.cache_data(ttl=86400)
 def get_reps(state_full_name):
-    us_state_to_abbrev = {
-        "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR", "California": "CA",
-        "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE", "Florida": "FL", "Georgia": "GA",
-        "Hawaii": "HI", "Idaho": "ID", "Illinois": "IL", "Indiana": "IN", "Iowa": "IA",
-        "Kansas": "KS", "Kentucky": "KY", "Louisiana": "LA", "Maine": "ME", "Maryland": "MD",
-        "Massachusetts": "MA", "Michigan": "MI", "Minnesota": "MN", "Mississippi": "MS", "Missouri": "MO",
-        "Montana": "MT", "Nebraska": "NE", "Nevada": "NV", "New Hampshire": "NH", "New Jersey": "NJ",
-        "New Mexico": "NM", "New York": "NY", "North Carolina": "NC", "North Dakota": "ND", "Ohio": "OH",
-        "Oklahoma": "OK", "Oregon": "OR", "Pennsylvania": "PA", "Rhode Island": "RI", "South Carolina": "SC",
-        "South Dakota": "SD", "Tennessee": "TN", "Texas": "TX", "Utah": "UT", "Vermont": "VT",
-        "Virginia": "VA", "Washington": "WA", "West Virginia": "WV", "Wisconsin": "WI", "Wyoming": "WY"
-    }
-    
-    code = us_state_to_abbrev.get(state_full_name)
-    if not code:
-        return pd.DataFrame([{"Name": "Invalid State", "Role": "-", "Party": "-"}]), False
-
-    try:
-        url = "https://theunitedstates.io/congress-legislators/legislators-current.json"
-        response = requests.get(url, timeout=10, headers={"User-Agent": "PlainviewProtocol/8.4"})
-        response.raise_for_status()
-        data = response.json()
-        
-        reps = []
-        for p in data:
-            try:
-                terms = p.get('terms', [])
-                if not terms:
-                    continue
-                current = terms[-1]
-                if current.get('state') == code:
-                    term_type = current.get('type', '')
-                    if term_type == 'sen':
-                        role = "Senator"
-                    else:
-                        district = current.get('district', 'At-Large')
-                        role = f"Rep (Dist {district})"
-                    
-                    name_data = p.get('name', {})
-                    first_name = name_data.get('first', '')
-                    last_name = name_data.get('last', '')
-                    full_name = f"{first_name} {last_name}".strip() or "Unknown"
-                    
-                    party = current.get('party', 'Unknown')
-                    
-                    reps.append({
-                        "Name": full_name,
-                        "Role": role,
-                        "Party": party
-                    })
-            except (KeyError, IndexError, TypeError):
-                continue
-        
-        if reps:
-            return pd.DataFrame(reps), True
-        else:
-            return pd.DataFrame([{"Name": f"No reps found for {state_full_name}", "Role": "-", "Party": "-"}]), True
-            
-    except requests.exceptions.Timeout:
-        return pd.DataFrame([{"Name": "API Timeout - Try Congress.gov", "Role": "-", "Party": "-"}]), False
-    except requests.exceptions.RequestException as e:
-        return pd.DataFrame([{"Name": "API Unavailable - Try Congress.gov", "Role": "-", "Party": "-"}]), False
-    except Exception as e:
-        return pd.DataFrame([{"Name": "Data Error - Try Congress.gov", "Role": "-", "Party": "-"}]), False
+    from reps_fetcher import fetch_reps_by_state
+    return fetch_reps_by_state(state_full_name)
 
 @st.cache_data(ttl=3600)
 def get_tariff_revenue():
