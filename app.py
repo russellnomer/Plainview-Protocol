@@ -99,11 +99,11 @@ def get_reps(state_full_name):
         else:
             return pd.DataFrame([{"Status": f"No representatives found for {state_full_name}"}]), True
     except requests.exceptions.Timeout:
-        return pd.DataFrame([{"Status": "Live Feed Temporarily Unavailable"}]), False
+        return pd.DataFrame([{"Status": "Live Feed Temporarily Offline. Search Congress.gov manually."}]), False
     except requests.exceptions.RequestException:
-        return pd.DataFrame([{"Status": "Live Feed Temporarily Unavailable"}]), False
+        return pd.DataFrame([{"Status": "Live Feed Temporarily Offline. Search Congress.gov manually."}]), False
     except Exception:
-        return pd.DataFrame([{"Status": "Live Feed Temporarily Unavailable"}]), False
+        return pd.DataFrame([{"Status": "Live Feed Temporarily Offline. Search Congress.gov manually."}]), False
 
 @st.cache_data(ttl=3600)
 def get_tariff_revenue():
@@ -246,7 +246,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v4.0 | National Referendum Engine")
+st.sidebar.caption("v4.1 | Resilient Referendum")
 
 if "selected_state" not in st.session_state:
     st.session_state.selected_state = "New York"
@@ -687,11 +687,31 @@ def page_accountability_tribunal():
     with type_tab2:
         st.subheader("🔦 The Shadow List (Governors & Local Officials)")
         st.caption("Leaders are rated on transparency. Missing data = -50 Point 'Shadow Penalty'.")
+        
+        with st.expander("ℹ️ Bipartisan Methodology"):
+            st.markdown("""
+**We apply the same scrutiny to Red and Blue jurisdictions.** Transparency is a fiduciary duty, not a partisan choice.
 
+**Scoring Formula:**
+- Base Score: 100 points
+- FOIA Response > 20 days: -20 points
+- No-Bid Contracts > 15%: -30 points  
+- Contractor Donations to Officials: -20 points
+- Visible Records < 50%: **-50 Shadow Penalty** (Adverse Inference)
+            """)
+
+        state_data = STATE_CORRUPTION_DATA.get(selected_state, {"foia_days": 15, "no_bid_pct": 12, "contractor_donations": 50000, "political_lean": "Purple", "ec_votes": 10})
+        
+        base_score = 100
+        foia_penalty = -20 if state_data.get("foia_days", 10) > 20 else 0
+        no_bid_penalty = -30 if state_data.get("no_bid_pct", 10) > 15 else 0
+        donation_penalty = -20 if state_data.get("contractor_donations", 0) > 100000 else 0
+        governor_score = base_score + foia_penalty + no_bid_penalty + donation_penalty
+        
         local_data = [
-            {"Name": f"Governor of {selected_state}", "Role": "Governor", "Transparency": "High", "Score": 85, "Status": "Visible"},
-            {"Name": "Local County Executive", "Role": "County Exec", "Transparency": "Low", "Score": -50, "Status": "HIDDEN (Adverse Inference)"},
-            {"Name": "City Mayor", "Role": "Mayor", "Transparency": "Medium", "Score": 45, "Status": "Partial Data"}
+            {"Name": f"Governor of {selected_state}", "Role": "Governor", "Transparency": "Calculated", "Score": governor_score, "Status": "Based on State Data"},
+            {"Name": f"{selected_state} County Executive", "Role": "County Exec", "Transparency": "Low", "Score": -50, "Status": "HIDDEN (Adverse Inference)"},
+            {"Name": f"{selected_state} City Mayor", "Role": "Mayor", "Transparency": "Medium", "Score": 45, "Status": "Partial Data"}
         ]
 
         df_shadow = pd.DataFrame(local_data)
@@ -810,7 +830,9 @@ Silence is not neutral. Silence is an admission.
     st.progress(min(1.0, weighted_consensus / 100))
     st.caption(f"**{weighted_consensus:.1f}%** toward National Audit Consensus ({weighted_votes}/{total_ec_votes} EC votes, 270 = majority)")
     
-    if weighted_consensus >= 50:
+    if weighted_votes >= 270:
+        st.success("🎉 **NATIONAL MANDATE FOR AUDIT!** 270+ Electoral College points reached. The People have spoken.")
+    elif weighted_consensus >= 50:
         st.success("🎉 **NATIONAL CONSENSUS REACHED!** Enough support to demand a formal audit.")
     elif weighted_consensus >= 25:
         st.warning("📈 **BUILDING MOMENTUM.** Share this tool to grow the movement.")
@@ -1130,7 +1152,7 @@ def page_course_correction():
     
     st.divider()
     
-    tab_recall, tab_impeach, tab_jury = st.tabs(["🗳️ Recall Laws", "⚖️ Impeachment", "👨‍⚖️ Grand Jury Petitions"])
+    tab_recall, tab_impeach, tab_jury, tab_criminal = st.tabs(["🗳️ Recall Laws", "⚖️ Impeachment", "👨‍⚖️ Grand Jury Petitions", "🚨 Criminal Referral"])
     
     with tab_recall:
         st.subheader("Which States Allow Citizens to Fire Their Governor?")
@@ -1215,6 +1237,40 @@ def page_course_correction():
         else:
             st.warning(f"⚠️ **{selected_state} does not have citizen grand jury petitions.** You must work through the District Attorney or Attorney General.")
             st.link_button("Find Your State AG", "https://www.naag.org/find-my-ag/")
+    
+    with tab_criminal:
+        st.subheader("🚨 Criminal Referral: Report Fraud to Authorities")
+        st.markdown("**When officials commit crimes, report them.** These links connect you directly to fraud reporting units.")
+        
+        st.markdown("### Federal Fraud Reporting")
+        fed_col1, fed_col2 = st.columns(2)
+        with fed_col1:
+            st.link_button("🏛️ GAO FraudNet", "https://www.gao.gov/fraudnet")
+            st.caption("Report waste, fraud, and abuse in federal programs")
+            st.link_button("🛡️ DHS OIG Hotline", "https://www.oig.dhs.gov/hotline")
+            st.caption("Report fraud in Homeland Security programs")
+        with fed_col2:
+            st.link_button("🏠 HUD OIG Hotline", "https://www.hudoig.gov/hotline")
+            st.caption("Report housing and urban development fraud")
+            st.link_button("💰 Treasury OIG", "https://oig.treasury.gov/report-fraud-waste-abuse")
+            st.caption("Report financial crimes and Treasury fraud")
+        
+        st.divider()
+        st.markdown("### State-Level Fraud Reporting")
+        st.link_button("🔍 Find Your State Attorney General", "https://www.naag.org/find-my-ag/")
+        st.caption("State AGs prosecute corruption, Medicaid fraud, and public integrity violations.")
+        
+        st.link_button("📊 Find Your State Auditor", "https://www.nasact.org/member_directory")
+        st.caption("State auditors investigate misuse of public funds.")
+        
+        st.info("""
+**Tips for Effective Reporting:**
+1. Document everything with dates and specific amounts
+2. Include names and titles of officials involved
+3. Attach copies of contracts, emails, or financial records
+4. Request confirmation of receipt and case number
+5. Follow up in writing if no response within 30 days
+        """)
     
     with st.expander("ℹ️ Transparency: Legal Sources"):
         st.markdown("""
