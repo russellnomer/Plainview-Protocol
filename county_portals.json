@@ -1,0 +1,85 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "created": "2026-01-08",
+    "description": "User-submitted county financial portal URLs verified by Local Auditors",
+    "total_us_counties": 3143
+  },
+  "verified_portals": {
+    "NC": {
+      "Wake": {
+        "url": "https://www.wakegov.com/departments-government/finance",
+        "status": "sunlight",
+        "verified_by": "System",
+        "verified_date": "2026-01-08"
+      },
+      "Mecklenburg": {
+        "url": "https://www.mecknc.gov/FinanceOffice",
+        "status": "sunlight",
+        "verified_by": "System",
+        "verified_date": "2026-01-08"
+      },
+      "Guilford": {
+        "url": "https://www.guilfordcountync.gov/our-county/budget-management",
+        "status": "sunlight",
+        "verified_by": "System",
+        "verified_date": "2026-01-08"
+      }
+    },
+    "NY": {
+      "Nassau": {
+        "url": "https://www.nassaucountyny.gov/finance",
+        "status": "sunlight",
+        "verified_by": "System",
+        "verified_date": "2026-01-08"
+      },
+      "Suffolk": {
+        "url": "https://www.suffolkcountyny.gov/comptroller",
+        "status": "sunlight",
+        "verified_by": "System",
+        "verified_date": "2026-01-08"
+      }
+    },
+    "FL": {
+      "Miami-Dade": {
+        "url": "https://www.miamidade.gov/finance",
+        "status": "sunlight",
+        "verified_by": "System",
+        "verified_date": "2026-01-08"
+      },
+      "Broward": {
+        "url": "https://www.broward.org/Finance",
+        "status": "sunlight",
+        "verified_by": "System",
+        "verified_date": "2026-01-08"
+      }
+    },
+    "CA": {
+      "Los Angeles": {
+        "url": "https://ceo.lacounty.gov/budget/",
+        "status": "sunlight",
+        "verified_by": "System",
+        "verified_date": "2026-01-08"
+      }
+    },
+    "TX": {
+      "Harris": {
+        "url": "https://budget.harriscountytx.gov/",
+        "status": "sunlight",
+        "verified_by": "System",
+        "verified_date": "2026-01-08"
+      }
+    },
+    "IL": {
+      "Cook": {
+        "url": "https://www.cookcountyil.gov/agency/budget-management-services",
+        "status": "sunlight",
+        "verified_by": "System",
+        "verified_date": "2026-01-08"
+      }
+    }
+  },
+  "black_holes": {},
+  "pending_submissions": [],
+  "local_auditors": []
+}

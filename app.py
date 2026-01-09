@@ -18,6 +18,12 @@ with open("sources.json", "r") as f:
     SOURCES = json.load(f)
 
 try:
+    with open("county_portals.json", "r") as f:
+        COUNTY_PORTALS = json.load(f)
+except:
+    COUNTY_PORTALS = {"verified_portals": {}, "black_holes": {}, "local_auditors": []}
+
+try:
     with open("system_status.json", "r") as f:
         SYSTEM_STATUS = json.load(f)
         is_system_online = all(val == "OK" for val in SYSTEM_STATUS.values())
@@ -536,7 +542,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v6.1 | County Sentinel")
+st.sidebar.caption("v6.2 | The Local Auditor")
 
 st.sidebar.success("🎉 **TODAY IS DAY 1** — The Plainview Protocol is LIVE. Established January 8, 2026.")
 
@@ -741,6 +747,9 @@ We aren't just filing papers; we are training the next generation of legal warri
 
 **🏆 Winning in Court:**
 We aren't just filing papers; we are winning. The Cornell Clinic just cracked a "Black Hole" in North Carolina. This is how the Sovereign Citizen stays free — by using the court as a spotlight.
+
+**🗺️ Mapping the Labyrinth:**
+We are mapping the Labyrinth, county by county. If your local officials are hiding the checkbook, they are hiding something from you. Become a Local Auditor and turn the lights on. 3,143 counties. 3,143 opportunities to demand transparency.
 
 **🎯 The America First Principle:**
 Every dollar extracted from taxpayers deserves an audit trail. Every official who enriches themselves while constituents struggle is a **Taxpayer Parasite**. We don't discriminate by party — we discriminate by transparency.
@@ -3910,6 +3919,78 @@ Thank you.
 
 **Your Lever:** Attend the next board meeting with your generated script. Record it. Share on social media. Transparency grows when citizens demand it.
         """)
+    
+    st.divider()
+    st.subheader("🏅 Local Auditor Submission Portal")
+    st.caption("Help map the 3,143-county Labyrinth — Submit your county's financial portal")
+    
+    if 'local_auditor_badge' not in st.session_state:
+        st.session_state.local_auditor_badge = False
+    
+    US_STATES = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
+    
+    with st.form("local_auditor_form"):
+        la_col1, la_col2 = st.columns(2)
+        with la_col1:
+            submit_state = st.selectbox("State", US_STATES)
+        with la_col2:
+            submit_county = st.text_input("County Name", placeholder="e.g., Wake, Mecklenburg, Cook")
+        
+        submit_url = st.text_input("Official Financial Portal URL", placeholder="https://county.gov/finance")
+        
+        portal_status = st.radio("Portal Status", ["🟢 Sunlight — Portal exists and is functional", "🔴 Black Hole — No public financial portal exists"])
+        
+        submit_name = st.text_input("Your Name (for badge)", placeholder="Optional — for Local Auditor badge")
+        
+        submitted = st.form_submit_button("📤 Submit County Portal", use_container_width=True)
+        
+        if submitted:
+            if submit_county and (submit_url or "Black Hole" in portal_status):
+                st.session_state.local_auditor_badge = True
+                
+                status = "sunlight" if "Sunlight" in portal_status else "black_hole"
+                
+                st.success(f"""
+                ✅ **Submission Received!**
+                
+                **County:** {submit_county}, {submit_state}  
+                **Status:** {portal_status}  
+                **URL:** {submit_url if submit_url else 'N/A (Black Hole)'}
+                
+                🏅 **Congratulations!** You've earned the **Local Auditor Badge** for helping map the Labyrinth.
+                """)
+                
+                if submit_name:
+                    st.balloons()
+                    st.info(f"🏅 **Local Auditor: {submit_name}** — Thank you for turning the lights on in {submit_county} County!")
+            else:
+                st.error("Please provide both County Name and Portal URL (or confirm Black Hole status).")
+    
+    st.divider()
+    st.subheader("🗺️ 3,143-County Master Map Status")
+    st.caption("Tracking transparency across every US county")
+    
+    verified_count = sum(len(state_data) for state_data in COUNTY_PORTALS.get("verified_portals", {}).values())
+    black_hole_count = len(COUNTY_PORTALS.get("black_holes", {}))
+    unknown_count = 3143 - verified_count - black_hole_count
+    
+    map_col1, map_col2, map_col3, map_col4 = st.columns(4)
+    map_col1.metric("🟢 Sunlight", verified_count)
+    map_col2.metric("⚪ Unknown", unknown_count)
+    map_col3.metric("🔴 Black Hole", black_hole_count)
+    map_col4.metric("📊 Coverage", f"{((verified_count + black_hole_count) / 3143 * 100):.1f}%")
+    
+    st.progress((verified_count + black_hole_count) / 3143)
+    
+    with st.expander("🔍 View Verified County Portals"):
+        for state, counties in COUNTY_PORTALS.get("verified_portals", {}).items():
+            st.markdown(f"**{state}:**")
+            for county, data in counties.items():
+                icon = "🟢" if data.get("status") == "sunlight" else "🔴"
+                st.markdown(f"- {icon} **{county}**: [{data.get('url', 'N/A')}]({data.get('url', '#')})")
+    
+    if st.session_state.local_auditor_badge:
+        st.sidebar.success("🏅 **Local Auditor Badge Earned!**")
 
 pages = [
     st.Page(page_national_lens, title="The National Lens", icon="🔭"),
