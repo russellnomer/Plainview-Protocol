@@ -8,8 +8,8 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 
-OG_TITLE = "Plainview Protocol: Audit the Labyrinth"
-OG_DESCRIPTION = "Transparency and Accountability tools for 3,143 counties. Bipartisan corruption tracking, FOIA tools, and citizen oversight."
+OG_TITLE = "Plainview Protocol: Transparency & Accountability"
+OG_DESCRIPTION = "Facts on grift, tools to act. Bipartisan corruption tracking for 3,143 counties."
 OG_IMAGE = "https://i.imgur.com/PlainviewProtocol.png"
 OG_URL = "https://plainview-protocol.replit.app"
 
@@ -49,8 +49,17 @@ def inject_og_meta_tags():
 def get_page_config():
     """Return the page configuration for st.set_page_config."""
     return {
-        "page_title": "Plainview Protocol: Audit the Labyrinth",
+        "page_title": "Plainview Protocol: Transparency & Accountability",
         "page_icon": "🔱",
         "layout": "wide",
         "initial_sidebar_state": "expanded"
     }
+
+
+def get_share_url(page_name: str, custom_text: str = "") -> str:
+    """Generate a pre-filled X (Twitter) share URL."""
+    base_text = custom_text or f"I'm using the Plainview Protocol to track grift and demand transparency. Facts on grift, tools to act."
+    hashtags = "#PlainviewProtocol #Transparency #Accountability"
+    full_text = f"{base_text} {hashtags} {OG_URL}"
+    encoded = full_text.replace(' ', '%20').replace('#', '%23').replace(':', '%3A').replace('\n', '%0A')
+    return f"https://twitter.com/intent/tweet?text={encoded}"

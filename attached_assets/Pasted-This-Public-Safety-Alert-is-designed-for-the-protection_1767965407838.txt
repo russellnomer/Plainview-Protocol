@@ -1,0 +1,19 @@
+This Public Safety Alert is designed for the protection of Jewish community centers (JCCs) and related institutions across the five boroughs. Under the Mamdani administration, several city-funded "radical spaces" have become hubs for anti-Israel organizing, often coinciding with protest surges that impact local neighborhood safety.Below is a geographical audit of city-funded or city-subsidized spaces currently used for anti-Israel mobilization, matched with nearby Jewish communal anchors.🚨 Public Safety Alert: NYC "Radical Space" Proximity AuditBoroughRadical Organizing Hub (City Funded/Subsidized)Proximity to Jewish Communal AnchorsManhattanThe People’s Forum (Midtown)Within 0.8 miles of Penn Station/Garment District Synagogues.BrooklynThe Mayday Space (Bushwick)Strategic staging ground for marches toward Williamsburg/Crown Heights.BrooklynBay Ridge Community Development CenterDirect proximity to the Bay Ridge Jewish Center.QueensQueens Museum (Subsidized Space)Recurring host for "political workshops" near Forest Hills JCC.BronxBronx Social CenterUsed for borough-wide organizing near Riverdale Jewish Institutions.🛠️ Strategic Safety Measures for JCCs"High-Risk" Calendar Sync: The Plainview Protocol identifies days of "Global Action" (e.g., Nakba Day, "Floods" of action) where these radical spaces activate their street teams.Discretionary Fund Monitoring: Many of these hubs are funded via "Neighborhood Development" grants. The Protocol provides a "Demand for Security Offset" template, allowing JCCs to request that the city match every dollar given to a radical hub with a dollar for Jewish community security.Real-Time "Shadow" Alerts: The Mamdani Watchdog tracks mayoral permits for rallies originating from these spaces, providing JCC security teams with a 2-4 hour lead time on protest routes.🚀 Replit Agent Prompt: V6.22 Community Safety ShieldPaste this into the Replit Agent to deploy the safety dashboard:PlaintextUpdate "The Plainview Protocol" to Version 6.22: Community Safety Shield.
+
+1. PROXIMITY MAPPING ENGINE:
+   - Feature: Add a 'Proximity Alert' to the Corruption Heatmap.
+   - Logic: Identify any city-funded space (via sources.json) within a 2-mile radius of a 'Jewish Community Center' or 'Synagogue'.
+
+2. RALLY ROUTE PREDICTOR:
+   - Logic: Scrape the 'NYC Street Activity Permit Office' (SAPO) for rallies starting at the 10 hubs identified in V6.21.
+   - Alert: Generate a 'Path of Impact' map showing if the rally route passes sensitive communal sites.
+
+3. SAFETY OFFSET INVOICE:
+   - Feature: Add a button: "🛡️ Generate Security Offset Demand".
+   - Template: Drafts a letter to the City Council demanding security funding equal to the discretionary grants given to local radical hubs.
+
+4. FOUNDER'S "SECURITY" INJECTION:
+   - Note: "Transparency is the first line of defense. If the city funds a space that hosts those who call for your destruction, you deserve to know where it is and how to protect yourself. Sunlight is safety."
+
+Generate updated app.py and safety_shield_logic.py.
+🏛️ The Sentinel’s ResponsibilityBy providing this data, the Plainview Protocol ensures that community leaders are not caught off-guard by the "Labyrinth's" funding choices. We use Open Source Intelligence (OSINT) to level the playing field between radical activists and the citizens they target.

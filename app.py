@@ -10,7 +10,7 @@ from datetime import datetime, date
 
 from forensic_patch import init_routing_state, catch_all_redirect, safe_navigate, safe_county_selectbox
 from traffic_ledger import init_async_ledger, async_log_traffic, get_queue_stats
-from metadata_handler import inject_og_meta_tags, get_page_config
+from metadata_handler import inject_og_meta_tags, get_page_config, get_share_url
 from agenda_scanner import (
     get_jurisdictions, get_agendas, scan_agenda_item, calculate_transparency_score,
     get_transparency_rating, init_agenda_flags_table, save_agenda_flag, get_flag_count, GRIFT_KEYWORDS
@@ -929,6 +929,10 @@ The Plainview Protocol exists because you deserve to know where your money goes.
 * **Border Multiplier:** 1.6x applied to TX, AZ, NM, CA based on geographic exposure
 * **Update Frequency:** Real-time (Daily Treasury Statement)
         """)
+    
+    st.divider()
+    share_debt_text = f"The US National Debt just passed ${live_debt/1e12:.1f}T. {selected_state}'s share: ${state_share_debt/1e9:.1f}B. Facts on grift, tools to act."
+    st.link_button("🐦 Share These Facts on X", get_share_url("National Lens", share_debt_text), use_container_width=True)
 
 def page_2027_fork():
     st.header("🛤️ The Fork in the Road: 2024-2030")
@@ -1288,6 +1292,9 @@ def page_corruption_heatmap():
 * **Note:** Scores are illustrative. Real-time data requires state-specific API integration.
         """)
     
+    share_heatmap_text = f"{selected_state} scores {state_score:.0f}/100 on transparency. FOIA: {state_data.get('foia_days', 'N/A')} days. No-bid: {state_data.get('no_bid_pct', 'N/A')}%. Demand accountability."
+    st.link_button("🐦 Share State Score on X", get_share_url("Heatmap", share_heatmap_text), use_container_width=True)
+    
     st.divider()
     st.subheader("🔍 Deep Dive: State-Level Analysis")
     st.caption("Click a state below to access detailed no-bid contracts, PAC spending, and investigation links.")
@@ -1553,6 +1560,9 @@ def page_accountability_tribunal():
 - Spoliation Doctrine: Hidden records → adverse inference
 - 18 U.S.C. § 207: Cooling-off violations
             """)
+        
+        share_tribunal_text = f"I'm tracking {selected_state} officials using the Plainview Protocol Shadow List. Transparency scores public - grift exposed."
+        st.link_button("🐦 Share Shadow List on X", get_share_url("Tribunal", share_tribunal_text), use_container_width=True)
         
         if st.session_state.get('show_ledger_template', False):
             st.text_area("FOIA Template: Demand the Ledger", f"""
