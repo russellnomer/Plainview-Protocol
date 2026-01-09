@@ -46,16 +46,18 @@ function extractMetrics(results) {
     const passed = expected;
     const failed = unexpected;
     const total = passed + failed + skipped;
+    const executed = passed + failed;
     const duration = stats.duration || 0;
     const startTime = stats.startTime || new Date().toISOString();
     
-    const successRate = total > 0 ? Math.round((passed / total) * 100) : 0;
+    const successRate = executed > 0 ? Math.round((passed / executed) * 100) : 100;
     
     return {
         timestamp: startTime,
         total,
         passed,
         failed,
+        skipped,
         duration,
         successRate,
         status: failed === 0 ? 'OPERATIONAL' : 'INTEGRITY_CHECK_FAILED'

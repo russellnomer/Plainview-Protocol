@@ -58,11 +58,12 @@ function updateMetrics(results) {
     const passed = expected;
     const failed = unexpected;
     const total = passed + failed + skipped;
+    const executed = passed + failed;
     const duration = stats.duration || 0;
     
     document.getElementById('totalTests').textContent = total;
     
-    const successRate = total > 0 ? Math.round((passed / total) * 100) : 0;
+    const successRate = executed > 0 ? Math.round((passed / executed) * 100) : 100;
     const successRateEl = document.getElementById('successRate');
     successRateEl.textContent = `${successRate}%`;
     successRateEl.className = `text-4xl font-bold ${successRate === 100 ? 'text-green-400' : successRate >= 80 ? 'text-yellow-400' : 'text-red-400'}`;
