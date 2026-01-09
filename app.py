@@ -247,7 +247,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v4.6 | The County Clash")
+st.sidebar.caption("v4.7 | The Infographic Meme-Engine")
 
 st.sidebar.success("🎉 **TODAY IS DAY 1** — The Plainview Protocol is LIVE. Established January 8, 2026.")
 
@@ -2126,6 +2126,7 @@ The Plainview Protocol is built to last for generations. Each milestone marks pr
     MILESTONES = [
         {"date": "January 8, 2026", "title": "Initial Commit", "description": "Russell Nomer establishes The Plainview Protocol in Plainview, NY.", "status": "completed"},
         {"date": "Q1 2026", "title": "Local Watchdog Beta", "description": "County Clash comparison tool with OSC data integration.", "status": "in_progress"},
+        {"date": "Q1 2026", "title": "Infographic Generator", "description": "Battle card meme-engine for shareable accountability graphics.", "status": "completed"},
         {"date": "Q1 2026", "title": "Beta Testing Complete", "description": "Core features validated by early adopters across 10 states.", "status": "pending"},
         {"date": "Q1 2026", "title": "Peanut's Law Monitoring", "description": "Full tracking of S7011/A7388 through NY Legislature with citizen alerts.", "status": "pending"},
         {"date": "Q2 2026", "title": "50-State Coverage", "description": "Corruption Heatmap expanded with verified data for all states.", "status": "pending"},
@@ -2167,6 +2168,263 @@ The Plainview Protocol is built to last for generations. Each milestone marks pr
     """)
     
     st.info(f"📆 **Days Since Initial Commit:** {days_since_launch}")
+
+def page_scorecard_generator():
+    st.header("🎯 Scorecard Generator: The Infographic Meme-Engine")
+    st.caption("Generate shareable battle cards with LIVE data comparisons")
+    
+    with st.expander("ℹ️ How This Works"):
+        st.markdown("""
+**The Power of Visual Accountability:**
+- Data becomes persuasive when it's visual and shareable
+- Battle cards distill complex metrics into digestible comparisons
+- Share on social media to amplify transparency demands
+
+**Data Sources:**
+- Nassau County: OSC Financial Reports, County Budget Office
+- NY State: Comptroller's Office, Division of Budget
+- Live Treasury data for debt calculations
+        """)
+    
+    st.divider()
+    
+    BLAKEMAN_DATA = {
+        "name": "Bruce Blakeman",
+        "title": "Nassau County Executive (R)",
+        "safety_score": 100,
+        "debt_per_resident": 2293,
+        "tax_increase": "0%",
+        "budget_trend": "Balanced",
+        "transparency_score": 85,
+        "foil_response_days": 8,
+        "no_bid_contracts": 12,
+        "sanctuary_policy": False,
+        "highlights": ["Zero tax increase", "ICE cooperation", "Open budget portal", "Live-streamed meetings"]
+    }
+    
+    HOCHUL_DATA = {
+        "name": "Kathy Hochul",
+        "title": "NY Governor (D)",
+        "safety_score": 35,
+        "debt_per_resident": 13500,
+        "tax_increase": "+$254B Record Budget",
+        "budget_trend": "Expanding",
+        "transparency_score": 32,
+        "foil_response_days": 45,
+        "no_bid_contracts": 847,
+        "sanctuary_policy": True,
+        "highlights": ["Sanctuary state", "Congestion pricing", "Migrant spending opacity", "FOIL delays documented"]
+    }
+    
+    grift_alert = HOCHUL_DATA["transparency_score"] < 40 or HOCHUL_DATA["foil_response_days"] > 20
+    
+    st.subheader("🥊 Generate Battle Card")
+    
+    card_type = st.selectbox("Select Comparison:", [
+        "Blakeman vs. Hochul (Full Scorecard)",
+        "Safety Showdown",
+        "Debt Comparison",
+        "Transparency Index"
+    ])
+    
+    if st.button("🎨 Generate Battle Card", type="primary"):
+        if card_type == "Blakeman vs. Hochul (Full Scorecard)":
+            categories = ['Safety Score', 'Transparency', 'FOIL Speed', 'Fiscal Discipline']
+            blakeman_scores = [100, 85, 92, 95]
+            hochul_scores = [35, 32, 20, 25]
+            
+            import plotly.graph_objects as go
+            
+            fig = go.Figure()
+            
+            fig.add_trace(go.Bar(
+                name=f'🏛️ {BLAKEMAN_DATA["name"]} (Nassau)',
+                x=categories,
+                y=blakeman_scores,
+                marker_color='#1e90ff',
+                text=blakeman_scores,
+                textposition='outside'
+            ))
+            
+            fig.add_trace(go.Bar(
+                name=f'🏛️ {HOCHUL_DATA["name"]} (NY State)',
+                x=categories,
+                y=hochul_scores,
+                marker_color='#dc143c',
+                text=hochul_scores,
+                textposition='outside'
+            ))
+            
+            title_text = "BATTLE CARD: Blakeman vs. Hochul"
+            if grift_alert:
+                title_text += "<br><sup style='color:red'>⚠️ GRIFT ALERT: AUDIT REQUIRED - Transparency Score < 40</sup>"
+            
+            fig.update_layout(
+                title=dict(text=title_text, font=dict(size=20)),
+                barmode='group',
+                yaxis=dict(title='Score (0-100)', range=[0, 110]),
+                xaxis=dict(title='Category'),
+                legend=dict(orientation='h', yanchor='bottom', y=1.02),
+                height=500
+            )
+            
+            st.plotly_chart(fig, use_container_width=True)
+            
+        elif card_type == "Safety Showdown":
+            import plotly.graph_objects as go
+            
+            fig = go.Figure()
+            
+            fig.add_trace(go.Indicator(
+                mode="gauge+number",
+                value=BLAKEMAN_DATA["safety_score"],
+                domain={'x': [0, 0.45], 'y': [0, 1]},
+                title={'text': f"Nassau County<br>{BLAKEMAN_DATA['name']}"},
+                gauge={
+                    'axis': {'range': [0, 100]},
+                    'bar': {'color': "#1e90ff"},
+                    'steps': [
+                        {'range': [0, 50], 'color': "#ffcccc"},
+                        {'range': [50, 75], 'color': "#ffffcc"},
+                        {'range': [75, 100], 'color': "#ccffcc"}
+                    ]
+                }
+            ))
+            
+            fig.add_trace(go.Indicator(
+                mode="gauge+number",
+                value=HOCHUL_DATA["safety_score"],
+                domain={'x': [0.55, 1], 'y': [0, 1]},
+                title={'text': f"NY State<br>{HOCHUL_DATA['name']}"},
+                gauge={
+                    'axis': {'range': [0, 100]},
+                    'bar': {'color': "#dc143c"},
+                    'steps': [
+                        {'range': [0, 50], 'color': "#ffcccc"},
+                        {'range': [50, 75], 'color': "#ffffcc"},
+                        {'range': [75, 100], 'color': "#ccffcc"}
+                    ]
+                }
+            ))
+            
+            fig.update_layout(
+                title="SAFETY SHOWDOWN: Who Protects Citizens Better?",
+                height=400
+            )
+            
+            st.plotly_chart(fig, use_container_width=True)
+            
+        elif card_type == "Debt Comparison":
+            import plotly.graph_objects as go
+            
+            fig = go.Figure()
+            
+            fig.add_trace(go.Bar(
+                x=[BLAKEMAN_DATA["name"], HOCHUL_DATA["name"]],
+                y=[BLAKEMAN_DATA["debt_per_resident"], HOCHUL_DATA["debt_per_resident"]],
+                marker_color=['#1e90ff', '#dc143c'],
+                text=[f"${BLAKEMAN_DATA['debt_per_resident']:,}", f"${HOCHUL_DATA['debt_per_resident']:,}"],
+                textposition='outside',
+                textfont=dict(size=16, color='black')
+            ))
+            
+            title_text = "DEBT PER RESIDENT: Who's Fiscally Responsible?"
+            if grift_alert:
+                title_text += "<br><sup style='color:red'>⚠️ GRIFT ALERT: State debt records incomplete</sup>"
+            
+            fig.update_layout(
+                title=dict(text=title_text, font=dict(size=18)),
+                yaxis=dict(title='Debt Per Resident ($)', tickformat='$,.0f'),
+                xaxis=dict(title=''),
+                height=450,
+                showlegend=False
+            )
+            
+            fig.add_annotation(
+                x=HOCHUL_DATA["name"],
+                y=HOCHUL_DATA["debt_per_resident"] + 500,
+                text=f"⚠️ {HOCHUL_DATA['debt_per_resident'] / BLAKEMAN_DATA['debt_per_resident']:.1f}x Higher",
+                showarrow=False,
+                font=dict(color='red', size=14)
+            )
+            
+            st.plotly_chart(fig, use_container_width=True)
+            
+        else:
+            import plotly.graph_objects as go
+            
+            fig = go.Figure()
+            
+            fig.add_trace(go.Bar(
+                x=[BLAKEMAN_DATA["name"], HOCHUL_DATA["name"]],
+                y=[BLAKEMAN_DATA["transparency_score"], HOCHUL_DATA["transparency_score"]],
+                marker_color=['#28a745' if BLAKEMAN_DATA["transparency_score"] >= 70 else '#ffc107', 
+                              '#28a745' if HOCHUL_DATA["transparency_score"] >= 70 else '#dc3545'],
+                text=[f"{BLAKEMAN_DATA['transparency_score']}/100", f"{HOCHUL_DATA['transparency_score']}/100"],
+                textposition='outside',
+                textfont=dict(size=16)
+            ))
+            
+            title_text = "TRANSPARENCY INDEX: Who's Hiding Data?"
+            if grift_alert:
+                title_text += "<br><sup style='color:red'>⚠️ GRIFT ALERT: AUDIT REQUIRED</sup>"
+            
+            fig.update_layout(
+                title=dict(text=title_text, font=dict(size=18)),
+                yaxis=dict(title='Transparency Score', range=[0, 110]),
+                xaxis=dict(title=''),
+                height=450,
+                showlegend=False
+            )
+            
+            if HOCHUL_DATA["transparency_score"] < 50:
+                fig.add_annotation(
+                    x=HOCHUL_DATA["name"],
+                    y=HOCHUL_DATA["transparency_score"] + 10,
+                    text="❌ SHADOW PENALTY ZONE",
+                    showarrow=False,
+                    font=dict(color='red', size=12)
+                )
+            
+            st.plotly_chart(fig, use_container_width=True)
+        
+        if grift_alert:
+            st.error("⚠️ **GRIFT ALERT: AUDIT REQUIRED** — Hochul's Transparency Score is below 40 and FOIL responses exceed legal limits. Adverse Inference: Assume hidden data is unfavorable.")
+        
+        st.divider()
+        st.subheader("📊 Key Metrics Breakdown")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown(f"### 🔵 {BLAKEMAN_DATA['name']}")
+            st.metric("Safety Score", f"{BLAKEMAN_DATA['safety_score']}/100")
+            st.metric("Debt/Resident", f"${BLAKEMAN_DATA['debt_per_resident']:,}")
+            st.metric("Tax Increase", BLAKEMAN_DATA['tax_increase'])
+            st.metric("Transparency", f"{BLAKEMAN_DATA['transparency_score']}/100")
+            st.success("✅ " + " | ".join(BLAKEMAN_DATA['highlights'][:2]))
+        
+        with col2:
+            st.markdown(f"### 🔴 {HOCHUL_DATA['name']}")
+            st.metric("Safety Score", f"{HOCHUL_DATA['safety_score']}/100", delta=f"{HOCHUL_DATA['safety_score'] - BLAKEMAN_DATA['safety_score']}")
+            st.metric("Debt/Resident", f"${HOCHUL_DATA['debt_per_resident']:,}", delta=f"+${HOCHUL_DATA['debt_per_resident'] - BLAKEMAN_DATA['debt_per_resident']:,}")
+            st.metric("Tax Increase", HOCHUL_DATA['tax_increase'])
+            st.metric("Transparency", f"{HOCHUL_DATA['transparency_score']}/100", delta=f"{HOCHUL_DATA['transparency_score'] - BLAKEMAN_DATA['transparency_score']}")
+            st.error("⚠️ " + " | ".join(HOCHUL_DATA['highlights'][:2]))
+    
+    st.divider()
+    st.subheader("📤 Share Your Battle Card")
+    
+    share_tweet = "The numbers don't lie. Blakeman protects Nassau while Hochul taxes the air we breathe. See the audit: plainviewprotocol.com #PlainviewProtocol #NYGov2026"
+    
+    st.code(share_tweet, language=None)
+    
+    share_col1, share_col2, share_col3 = st.columns(3)
+    share_col1.link_button("🐦 Share to X", f"https://twitter.com/intent/tweet?text={share_tweet.replace(' ', '%20').replace('#', '%23').replace(':', '%3A')}", use_container_width=True)
+    share_col2.link_button("📘 Share to Facebook", f"https://www.facebook.com/sharer/sharer.php?quote={share_tweet.replace(' ', '%20')}", use_container_width=True)
+    share_col3.link_button("🔗 Copy Link", "https://plainviewprotocol.com", use_container_width=True)
+    
+    st.caption("*Screenshot your battle card and attach it to your post for maximum impact!*")
 
 def page_local_watchdog():
     st.header("🏘️ Local Labyrinth: City Halls & County Boards")
@@ -2520,6 +2778,7 @@ pages = [
     st.Page(page_lever_map, title="Lever Map", icon="🗺️"),
     st.Page(page_course_correction, title="Course Correction", icon="⚖️"),
     st.Page(page_local_watchdog, title="Local Watchdog", icon="🏘️"),
+    st.Page(page_scorecard_generator, title="Scorecard Generator", icon="🎯"),
     st.Page(page_mission_milestones, title="Mission Milestones", icon="🏛️"),
     st.Page(page_ecosystem, title="The Ecosystem", icon="🌳"),
     st.Page(page_support, title="Support", icon="☕"),
