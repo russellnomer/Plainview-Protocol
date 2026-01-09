@@ -26,7 +26,6 @@ except FileNotFoundError:
 
 @st.cache_data(ttl=3600)
 def get_live_debt():
-    """Fetches live debt from US Treasury API. Fallback: Hardcoded Projection."""
     fallback_debt = 36500000000000.00
     try:
         url = SOURCES["treasury_debt"]
@@ -41,7 +40,6 @@ def get_live_debt():
 
 @st.cache_data(ttl=3600)
 def get_senate_votes():
-    """Fetches Senate XML feed. Fallback: Generic Message."""
     fallback_votes = ["Vote data currently unavailable - Check back later", "System Maintenance"]
     votes = []
     try:
@@ -62,7 +60,6 @@ def get_senate_votes():
 
 @st.cache_data(ttl=86400)
 def get_reps(state_full_name):
-    """Fetches live Congress data from UnitedStates.io Open Data with resilient error handling."""
     us_state_to_abbrev = {
         "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR", "California": "CA",
         "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE", "Florida": "FL", "Georgia": "GA",
@@ -110,7 +107,6 @@ def get_reps(state_full_name):
 
 @st.cache_data(ttl=3600)
 def get_tariff_revenue():
-    """Fetches tariff/customs revenue from Treasury API. Fallback: FY2025 Estimate."""
     fallback_tariff = 195000000000.00
     try:
         url = SOURCES.get("treasury_tariffs", "")
@@ -127,7 +123,6 @@ def get_tariff_revenue():
     return fallback_tariff
 
 def calculate_transparency_score(visible_votes, total_sessions):
-    """Applies Adverse Inference for officials who hide data."""
     if total_sessions == 0:
         return 0, "⚠️ NO DATA (Shadow Penalty Applied)"
     
@@ -253,8 +248,21 @@ st.markdown("""
 st.sidebar.title("🇺🇸 Plainview Protocol")
 st.sidebar.caption("v4.0 | National Referendum Engine")
 
-selected_state = st.sidebar.selectbox("Select Your State", STATES, index=31)
-selected_focus = st.sidebar.selectbox("Select Focus", ["All", "Border Security", "Veterans First", "Education & Skills", "Crime & Safety", "Trade & Industry"])
+if "selected_state" not in st.session_state:
+    st.session_state.selected_state = "New York"
+if "selected_focus" not in st.session_state:
+    st.session_state.selected_focus = "All"
+
+st.session_state.selected_state = st.sidebar.selectbox(
+    "Select Your State", 
+    STATES, 
+    index=STATES.index(st.session_state.selected_state)
+)
+st.session_state.selected_focus = st.sidebar.selectbox(
+    "Select Focus", 
+    ["All", "Border Security", "Veterans First", "Education & Skills", "Crime & Safety", "Trade & Industry"],
+    index=["All", "Border Security", "Veterans First", "Education & Skills", "Crime & Safety", "Trade & Industry"].index(st.session_state.selected_focus)
+)
 
 st.sidebar.divider()
 if is_system_online:
@@ -266,9 +274,8 @@ st.sidebar.divider()
 st.sidebar.markdown("### Fuel the Mission")
 st.sidebar.link_button("☕ Support Russell", "https://buymeacoffee.com/russellnomer")
 
-page = st.radio("Navigate", ["The National Lens", "The 2027 Fork", "Trade & Industry", "DOGE Scrutiny Hub", "Corruption Heatmap", "The Activism Hub", "Accountability Tribunal", "FOIA Cannon", "Lever Map", "Course Correction", "The Ecosystem", "Support"], horizontal=True, label_visibility="collapsed")
-
-if page == "The National Lens":
+def page_national_lens():
+    selected_state = st.session_state.get("selected_state", "New York")
     st.header(f"📍 State of the Union: {selected_state}")
     
     live_debt = get_live_debt()
@@ -331,7 +338,7 @@ if page == "The National Lens":
 * **Update Frequency:** Real-time (Daily Treasury Statement)
         """)
 
-elif page == "The 2027 Fork":
+def page_2027_fork():
     st.header("🛤️ The Fork in the Road: 2024-2030")
     
     live_debt = get_live_debt() / 1e12
@@ -358,7 +365,8 @@ elif page == "The 2027 Fork":
 * **Savings Calculation:** Difference between projected endpoints x $1 Trillion scale factor
         """)
 
-elif page == "Trade & Industry":
+def page_trade_industry():
+    selected_state = st.session_state.get("selected_state", "New York")
     st.header("🇺🇸 Made in America: The Pivot")
     
     tab_dividend, tab_sourcing = st.tabs(["💵 The Tariff Dividend", "🏭 Sourcing Finder"])
@@ -482,7 +490,7 @@ elif page == "Trade & Industry":
         st.code(biz_template, language=None)
         st.link_button("Share on X", f"https://twitter.com/intent/tweet?text={biz_template.replace(' ', '%20').replace('#', '%23')}")
 
-elif page == "DOGE Scrutiny Hub":
+def page_doge_scrutiny():
     st.header("🔦 DOGE-Level Scrutiny: Fight the Grift")
     
     st.markdown("""
@@ -528,7 +536,8 @@ The Plainview Protocol demands FULL LEDGER TRANSPARENCY for all public-private s
 * **Investigative Style:** Inspired by Nick Shirley's citizen journalism model
         """)
 
-elif page == "Corruption Heatmap":
+def page_corruption_heatmap():
+    selected_state = st.session_state.get("selected_state", "New York")
     st.header("🗺️ The Corruption Heatmap")
     st.markdown("**Corruption has no party.** We track the grift in Red, Blue, and Purple states alike.")
     
@@ -613,7 +622,8 @@ elif page == "Corruption Heatmap":
 * **Note:** Scores are illustrative. Real-time data requires state-specific API integration.
         """)
 
-elif page == "The Activism Hub":
+def page_activism_hub():
+    selected_state = st.session_state.get("selected_state", "New York")
     st.header("🌉 The Bridge Builder: Facts Over Rage")
     
     tab1, tab2, tab3, tab4 = st.tabs(["Veterans First", "Border Security", "Education", "Business Owner"])
@@ -652,7 +662,8 @@ elif page == "The Activism Hub":
             st.success("✅ Ready to Send:")
             st.code(final_msg, language=None)
 
-elif page == "Accountability Tribunal":
+def page_accountability_tribunal():
+    selected_state = st.session_state.get("selected_state", "New York")
     st.header("⚖️ The Accountability Tribunal")
     st.markdown("We apply the **Spoliation Doctrine**: If a leader hides their record, we assume the worst.")
 
@@ -814,7 +825,8 @@ Silence is not neutral. Silence is an admission.
 * **Adverse Inference:** Legal principle that hidden evidence is presumed to be harmful to the party hiding it
         """)
 
-elif page == "FOIA Cannon":
+def page_foia_cannon():
+    selected_state = st.session_state.get("selected_state", "New York")
     st.header("🔦 The Sunlight Cannon: Wake the Watchers")
     
     st.markdown("""
@@ -888,88 +900,79 @@ NOTICE: Failure to produce these records will be viewed as evidence of malfeasan
 2. No-bid contracts and sole-source justifications
 3. Contractor performance evaluations and complaints
 4. Communications between contractors and elected officials
-5. Ethics complaints filed regarding contractor relationships
+5. Any investigations into contract irregularities
 
 NOTICE: Failure to produce these records will be viewed as evidence of malfeasance under the Spoliation Doctrine."""
         }
         
-        UNI_TEMPLATES = {
-            "Bureaucratic Bloat Audit": """All records showing:
-1. Total administrative/overhead costs vs. direct program delivery (FY 2022-Present)
-2. Number of administrative staff vs. frontline workers
-3. Executive compensation, bonuses, and benefits
-4. Consultants hired for "administrative support"
-5. Any efficiency audits conducted in the past 3 years
+        UNIVERSAL_TEMPLATES = {
+            "Emergency Spending Audit": """All records related to:
+1. Emergency declarations and associated spending authority
+2. Contracts awarded under emergency provisions (last 3 years)
+3. Waived procurement requirements and justifications
+4. Post-emergency audits and findings
+5. Any fraud referrals or investigations
 
 NOTICE: Failure to produce these records will be viewed as evidence of malfeasance under the Spoliation Doctrine.""",
-            "Grant Disbursement Review": """All records related to:
-1. Federal and state grants received and disbursed (FY 2022-Present)
-2. Sub-grantees and their payment amounts
-3. Performance reports and outcome metrics
-4. Any grant funds returned, rescinded, or flagged for misuse
-5. Internal controls and audit procedures for grant management
-
-NOTICE: Failure to produce these records will be viewed as evidence of malfeasance under the Spoliation Doctrine.""",
-            "Consultant Spending Analysis": """All records showing:
-1. All consulting contracts over $50,000 (FY 2022-Present)
-2. Scope of work, deliverables, and payment schedules
-3. Selection process documentation
-4. Any consulting work by former agency employees
-5. Outcomes achieved vs. contract objectives
+            "Consultant Contract Review": """All records showing:
+1. Consulting contracts over $50,000 (FY 2022-Present)
+2. Deliverables produced vs. contracted scope
+3. Hourly rates and total payments by firm
+4. Relationship between consultants and hiring officials
+5. Competitive bidding documentation or sole-source justifications
 
 NOTICE: Failure to produce these records will be viewed as evidence of malfeasance under the Spoliation Doctrine."""
         }
         
         with grift_type[0]:
-            st.markdown("**Focus:** NGO fraud, migrant housing contracts, social service bloat in Democratic strongholds.")
-            blue_choice = st.radio("Select Template:", list(BLUE_TEMPLATES.keys()), key="blue_template")
-            blue_agency = st.text_input("Target Agency", placeholder="e.g., NYC Mayor's Office", key="blue_agency")
-            st.text_area("Preview", BLUE_TEMPLATES[blue_choice], height=200, disabled=True, key="blue_preview")
-            if st.button("📋 Use This Template", key="use_blue"):
-                st.session_state.template_agency = blue_agency
-                st.session_state.template_records = BLUE_TEMPLATES[blue_choice]
-                st.success("Template loaded! Scroll down to generate.")
+            st.markdown("### 🔵 Sanctuary City & NGO Grift Templates")
+            st.caption("Target: Cities with sanctuary policies and high NGO spending")
+            
+            blue_template_choice = st.selectbox("Select Template:", list(BLUE_TEMPLATES.keys()), key="blue_template")
+            if st.button("Load Template", key="load_blue"):
+                st.session_state.template_records = BLUE_TEMPLATES[blue_template_choice]
+                st.session_state.template_agency = f"{selected_state} Office of Immigrant Affairs / Mayor's Office"
+                st.success("Template loaded! Scroll down to generate your request.")
         
         with grift_type[1]:
-            st.markdown("**Focus:** Corporate tax breaks, pay-to-play contracts, crony capitalism in Republican strongholds.")
-            red_choice = st.radio("Select Template:", list(RED_TEMPLATES.keys()), key="red_template")
-            red_agency = st.text_input("Target Agency", placeholder="e.g., TX Governor's Office", key="red_agency")
-            st.text_area("Preview", RED_TEMPLATES[red_choice], height=200, disabled=True, key="red_preview")
-            if st.button("📋 Use This Template", key="use_red"):
-                st.session_state.template_agency = red_agency
-                st.session_state.template_records = RED_TEMPLATES[red_choice]
-                st.success("Template loaded! Scroll down to generate.")
+            st.markdown("### 🔴 Corporate Welfare & Pay-to-Play Templates")
+            st.caption("Target: States with large corporate subsidies and donor-connected contracts")
+            
+            red_template_choice = st.selectbox("Select Template:", list(RED_TEMPLATES.keys()), key="red_template")
+            if st.button("Load Template", key="load_red"):
+                st.session_state.template_records = RED_TEMPLATES[red_template_choice]
+                st.session_state.template_agency = f"{selected_state} Economic Development Agency / Governor's Office"
+                st.success("Template loaded! Scroll down to generate your request.")
         
         with grift_type[2]:
-            st.markdown("**Universal templates that apply to any state, regardless of party.**")
-            uni_choice = st.radio("Select Template:", list(UNI_TEMPLATES.keys()), key="uni_template")
-            uni_agency = st.text_input("Target Agency", placeholder="e.g., State Comptroller", key="uni_agency")
-            st.text_area("Preview", UNI_TEMPLATES[uni_choice], height=200, disabled=True, key="uni_preview")
-            if st.button("📋 Use This Template", key="use_uni"):
-                st.session_state.template_agency = uni_agency
-                st.session_state.template_records = UNI_TEMPLATES[uni_choice]
-                st.success("Template loaded! Scroll down to generate.")
+            st.markdown("### 🟣 Universal Accountability Templates")
+            st.caption("Works in any state, any party")
+            
+            universal_template_choice = st.selectbox("Select Template:", list(UNIVERSAL_TEMPLATES.keys()), key="universal_template")
+            if st.button("Load Template", key="load_universal"):
+                st.session_state.template_records = UNIVERSAL_TEMPLATES[universal_template_choice]
+                st.session_state.template_agency = f"{selected_state} State Comptroller / Budget Office"
+                st.success("Template loaded! Scroll down to generate your request.")
     
     st.divider()
-    st.subheader("📝 The Generator")
+    st.subheader("📝 Generate Your Request")
     
-    def generate_foia(jurisdiction, agency, topic, spoliation):
-        today = time.strftime("%B %d, %Y")
-        
+    def generate_foia(jurisdiction, agency, topic, spoliation=True):
         if "Federal" in jurisdiction:
             legal_cite = "5 U.S.C. § 552 (Freedom of Information Act)"
             response_time = "20 business days"
         else:
-            legal_cite = "State Public Records Act / Sunshine Laws"
-            response_time = "varies by state (typically 5-30 days)"
+            legal_cite = f"State Public Records Law ({selected_state})"
+            response_time = "the statutory timeframe (typically 5-30 days)"
         
         letter = f"""
-FREEDOM OF INFORMATION ACT REQUEST
-
-Date: {today}
+FREEDOM OF INFORMATION REQUEST
+Date: {time.strftime("%B %d, %Y")}
 
 To: FOIA Officer
-{agency if agency else "[AGENCY NAME]"}
+{agency}
+
+Re: Request for Public Records
 
 Dear FOIA Officer,
 
@@ -1046,7 +1049,7 @@ Generated by The Plainview Protocol | Truth, Kindness, Security
 * **Resources:** FOIA.gov (Federal), NFOIC.org (State-by-State), MuckRock.com (Community Support)
         """)
 
-elif page == "Lever Map":
+def page_lever_map():
     st.header("🗺️ The Citizen's Lever Map")
     st.markdown("**How to Pull the Levers of Power.** Three tools every citizen can use to fight corruption.")
     
@@ -1120,7 +1123,8 @@ Anonymous tips can trigger full investigations.
 * **IRS Whistleblower:** 26 U.S.C. § 7623 (rewards for tax fraud tips)
         """)
 
-elif page == "Course Correction":
+def page_course_correction():
+    selected_state = st.session_state.get("selected_state", "New York")
     st.header("⚖️ The Course Correction Manual")
     st.markdown("**Citizen Levers for Removal & Justice.** Your state-by-state guide to holding officials accountable through legal means.")
     
@@ -1220,7 +1224,7 @@ elif page == "Course Correction":
 * **Note:** Laws vary significantly by state. Consult an attorney for specific guidance.
         """)
 
-elif page == "The Ecosystem":
+def page_ecosystem():
     st.header("🌳 From Pain to Purpose: The Full Grove")
     
     st.markdown("""
@@ -1254,7 +1258,7 @@ turning it all into tools for truth and protection. The Plainview Protocol is on
     st.divider()
     st.info("🌲 Music, books, apps—all channeling resilience into protecting America. **Join the Grove.**")
 
-elif page == "Support":
+def page_support():
     st.header("☕ Sustain the Mission")
     st.write("This tool is free, ad-free, and uncensorable thanks to supporters like you.")
     
@@ -1262,6 +1266,24 @@ elif page == "Support":
     c1.link_button("Donate via PayPal", "https://paypal.com")
     c2.link_button("Buy Russell a Coffee", "https://buymeacoffee.com/russellnomer")
     c3.link_button("Fork on GitHub", "https://github.com")
+
+pages = [
+    st.Page(page_national_lens, title="The National Lens", icon="🔭"),
+    st.Page(page_2027_fork, title="The 2027 Fork", icon="🍴"),
+    st.Page(page_trade_industry, title="Trade & Industry", icon="🏭"),
+    st.Page(page_doge_scrutiny, title="DOGE Scrutiny Hub", icon="🔦"),
+    st.Page(page_corruption_heatmap, title="Corruption Heatmap", icon="🗺️"),
+    st.Page(page_activism_hub, title="The Activism Hub", icon="🌉"),
+    st.Page(page_accountability_tribunal, title="Accountability Tribunal", icon="⚖️"),
+    st.Page(page_foia_cannon, title="FOIA Cannon", icon="📄"),
+    st.Page(page_lever_map, title="Lever Map", icon="🗺️"),
+    st.Page(page_course_correction, title="Course Correction", icon="⚖️"),
+    st.Page(page_ecosystem, title="The Ecosystem", icon="🌳"),
+    st.Page(page_support, title="Support", icon="☕"),
+]
+
+nav = st.navigation(pages)
+nav.run()
 
 st.markdown("---")
 st.markdown("<center>Built by Russell Nomer in Plainview, NY | <i>Truth, Kindness, Security</i></center>", unsafe_allow_html=True)
