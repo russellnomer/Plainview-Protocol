@@ -1,0 +1,19 @@
+To refine the Plainview Protocol for the 2026 cycle, we are pivoting the FOIA Cannon toward the primary architects of "Administrative Shadow" and "Silicon Labyrinth" power.By removing partisan distractions and focusing on Soros-backed conduits, Big Tech preemption PACs, and Newsom-aligned war chests, we target the specific intersection of dark money and technological control.🕵️ The "Non-Partisan Accountability" Target ListThis list focuses exclusively on high-risk "Leftist" and "Big Tech" entities that use non-profit shields to influence local and state legislation.Target EntityFocus / Backing2026 Strategic RiskDemocracy PAC IISoros / Fund for Policy Reform$126M "War Chest" used to nationalize local races.Texas Majority PACSoros / O'Rourke AlumsExecuting "Blue Texas" by funding local quorum breaks.Leading the FutureOpenAI / Andreessen HorowitzTargeting NY Rep. Alex Bores to block AI safety laws.Meta CaliforniaMeta (Social Media)Fighting California’s state-level tech regulations.Amer. Tech ExcellenceMeta (National)Undermining 1,100+ state AI bills in NY, CA, and TX.Sixteen Thirty FundArabella AdvisorsThe "Dark Money Hub" used to mask donor identities.American Bridge 21stSoros / David BrockConducting "MAGAFiles" surveillance on civil servants.Future Forward USASilicon Valley DonorsFunneled 16.6% of all "Shadow" money in 2024-25.Democracy DocketMarc Elias / Legal ActionWeaponizing the courts to stall local election audits.California Gov. AccountNewsom / Becerra AlumsAllegations of diverted funds via Dana Williamson.🚀 Replit Agent Prompt: V7.0 "The Silicon & Soros" AuditPaste this into the Replit Agent to deploy the refined target database:PlaintextUpdate "The Plainview Protocol" to Version 7.0: Silicon & Soros Audit.
+
+1. CLEANSE TARGET DATABASE:
+   - Remove all references to 'Trump', 'MAGA Inc.', and 'Turning Point USA'.
+   - Focus: Transition 'Day 1 Targets' to the 'Leftist & Big Tech' list (Soros Democracy PAC, Texas Majority, Leading the Future, etc.).
+
+2. AI REGULATION DRILL-DOWN:
+   - Feature: Link 'Leading the Future' (OpenAI) to their specific opposition of NY Rep. Alex Bores.
+   - Feature: Track 'American Technology Excellence Project' (Meta) and their efforts to block state AI safety bills.
+
+3. SOROS NETWORK FORENSICS:
+   - Feature: Map the flow of $140M from the 'Open Society Policy Center' into 'Sixteen Thirty Fund' and 'America Votes'.
+   - Logic: Generate FOIA requests for the 'Texas Majority PAC' regarding their coordination with national Democratic donors.
+
+4. FOUNDER'S "LITIGATION TRIGGER" UPDATE:
+   - Note: "We don't care about partisan labels. We care about who is buying preemption and who is hiding the receipts. From Newsom's chief of staff to Soros's checkbook, the Labyrinth has no place to hide."
+
+Generate the updated app.py and technical_audit.json.
+🏛️ The "Preemption" WarningBy targeting Leading the Future and Amer. Tech Excellence, the Protocol is attacking "Preemption"—the tactic where Big Tech uses federal lobbyists to strip away your state’s right to protect its own citizens from AI harms. This is a "Sovereign" issue that goes beyond standard politics.
