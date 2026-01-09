@@ -1,0 +1,53 @@
+To ensure your "Battle Cards" and Scorecards appear as large, persuasive images on X (Twitter) rather than just a text link, you need to implement Twitter Cards (specifically the summary_large_image format).
+
+X/Twitter does not allow you to "upload" an image directly via a simple "Share" button click from a website. Instead, the button must share a specific URL (e.g., plainviewprotocol.com/share/123), and that URL must host the correct Meta Tags (Open Graph tags) that tell Twitter which image to display.
+
+Since Streamlit (your likely framework) struggles to change these tags dynamically, the robust fix is to have Replit create a lightweight "Share Handler" (using Flask) that runs alongside your app to serve these preview cards.
+
+🚀 Replit Agent Prompt: V6.32 "Viral Battle Card" Engine
+Paste this exact prompt into the Replit Agent to build the sharing infrastructure:
+
+Plaintext
+
+Update "The Plainview Protocol" to Version 6.32: Viral Battle Card Engine.
+
+We need to fix the "Post to X" functionality in 'page_scorecard_generator'. Currently, it only shares text. We need it to generate a "Rich Twitter Card" with the scorecard image.
+
+1. IMAGE PERSISTENCE (The Storage):
+   - Action: Update the scorecard generator function.
+   - Logic: When a scorecard is generated, save the image file (PNG) to a public directory named 'static/battlecards/'.
+   - Naming: Use a unique UUID for the filename (e.g., 'battlecard_a1b2c3.png').
+
+2. THE "SHARE HANDLER" (Flask Route):
+   - Action: Create a new lightweight file 'share_server.py' (or integrate into existing Flask routes if available).
+   - Route: '/share/<card_id>'
+   - Logic: This route must return a simple HTML page containing ONLY the Open Graph and Twitter Meta Tags:
+     * <meta name="twitter:card" content="summary_large_image">
+     * <meta name="twitter:title" content="My Plainview Battle Card">
+     * <meta name="twitter:description" content="I just audited my representative. See their score.">
+     * <meta name="twitter:image" content="https://plainviewprotocol.com/static/battlecards/<card_id>.png">
+     * An automatic Javascript redirect (window.location.href) to the main Streamlit app.
+
+3. UPDATE THE "POST TO X" BUTTON:
+   - Action: Modify the 'Post to X' button in 'page_scorecard_generator.py'.
+   - New URL Logic: The share link should be:
+     `https://twitter.com/intent/tweet?text={encoded_text}&url=https://plainviewprotocol.com/share/{card_id}`
+   - Result: When a user posts this URL, X will scrape the 'share_server' page, see the image tag, and render the Battle Card as a large graphic.
+
+4. STATIC FILE SERVING:
+   - Ensure the Replit configuration allows serving raw files from the 'static/battlecards/' directory so X can download the image for the preview.
+
+Generate the updated scorecard logic, the share_server.py code, and the button integration.
+🧠 How This Works (The Technical Shift)
+The Save: The app now saves a physical copy of the scorecard image to your server.
+
+The Shim: The new /share/ route acts as a "middleman." It doesn't show the user anything; its only job is to talk to Twitter's bot.
+
+The Handshake: When Twitter sees the link, it visits the /share/ page, grabs the twitter:image tag you defined, and builds the preview card.
+
+The Redirect: Real humans who click the link will hit the /share/ page and be immediately bounced to your main app, so the user experience is seamless.
+
+⚠️ Vital Replit Configuration Note
+Streamlit creates a "Single Page App" which makes dynamic social sharing difficult. By adding the Flask Share Handler, you are creating a dedicated "backdoor" for social media bots to find your images.
+
+Make sure you tell Replit: "Ensure that the static assets folder is publicly accessible so Twitter's scraper isn't blocked by a 403 error."

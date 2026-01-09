@@ -4880,6 +4880,13 @@ def page_scorecard_generator():
     
     if st.button("🎨 Generate Battle Card", type="primary"):
         import plotly.graph_objects as go
+        import uuid
+        import os
+        
+        card_uuid = str(uuid.uuid4())[:8]
+        card_id = f"battlecard_{card_uuid}"
+        battlecard_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'battlecards')
+        os.makedirs(battlecard_dir, exist_ok=True)
         
         if template_style == "Professional Scorecard":
             blakeman_color, hochul_color = '#1e90ff', '#dc143c'
@@ -4955,6 +4962,14 @@ def page_scorecard_generator():
             
             st.plotly_chart(fig, use_container_width=True)
             
+            try:
+                image_path = os.path.join(battlecard_dir, f"{card_id}.png")
+                fig.write_image(image_path, width=1080, height=1080, scale=2)
+                st.session_state['current_card_id'] = card_uuid
+            except Exception as e:
+                st.warning(f"Image save skipped (install kaleido for rich sharing): {e}")
+                st.session_state['current_card_id'] = None
+            
         elif card_type == "Safety Showdown":
             import plotly.graph_objects as go
             
@@ -4999,6 +5014,14 @@ def page_scorecard_generator():
             
             st.plotly_chart(fig, use_container_width=True)
             
+            try:
+                image_path = os.path.join(battlecard_dir, f"{card_id}.png")
+                fig.write_image(image_path, width=1080, height=1080, scale=2)
+                st.session_state['current_card_id'] = card_uuid
+            except Exception as e:
+                st.warning(f"Image save skipped (install kaleido for rich sharing): {e}")
+                st.session_state['current_card_id'] = None
+            
         elif card_type == "Debt Comparison":
             import plotly.graph_objects as go
             
@@ -5034,6 +5057,14 @@ def page_scorecard_generator():
             )
             
             st.plotly_chart(fig, use_container_width=True)
+            
+            try:
+                image_path = os.path.join(battlecard_dir, f"{card_id}.png")
+                fig.write_image(image_path, width=1080, height=1080, scale=2)
+                st.session_state['current_card_id'] = card_uuid
+            except Exception as e:
+                st.warning(f"Image save skipped (install kaleido for rich sharing): {e}")
+                st.session_state['current_card_id'] = None
             
         else:
             import plotly.graph_objects as go
@@ -5072,6 +5103,14 @@ def page_scorecard_generator():
                 )
             
             st.plotly_chart(fig, use_container_width=True)
+            
+            try:
+                image_path = os.path.join(battlecard_dir, f"{card_id}.png")
+                fig.write_image(image_path, width=1080, height=1080, scale=2)
+                st.session_state['current_card_id'] = card_uuid
+            except Exception as e:
+                st.warning(f"Image save skipped (install kaleido for rich sharing): {e}")
+                st.session_state['current_card_id'] = None
         
         if audit_required:
             st.error("🚨 **FRAUD SENSE TRIGGERED: AUDIT THIS** — Transparency Score < 50 OR Debt exceeds 10% of budget. Adverse Inference: Assume hidden data is unfavorable.")
@@ -5125,16 +5164,46 @@ def page_scorecard_generator():
     st.divider()
     st.subheader("📤 Share Your Battle Card")
     
-    share_tweet = "One of these is the safest county in the USA. The other is a budget disaster. The numbers don't lie. #PlainviewProtocol #AuditHochul plainviewprotocol.com"
+    import uuid
+    import os
     
-    st.code(share_tweet, language=None)
+    card_id = st.session_state.get('current_card_id', None)
     
-    share_col1, share_col2, share_col3 = st.columns(3)
-    share_col1.link_button("🐦 Share to X", f"https://twitter.com/intent/tweet?text={share_tweet.replace(' ', '%20').replace('#', '%23').replace(':', '%3A')}", use_container_width=True)
-    share_col2.link_button("📘 Share to Facebook", f"https://www.facebook.com/sharer/sharer.php?quote={share_tweet.replace(' ', '%20')}", use_container_width=True)
-    share_col3.link_button("🔗 Copy Link", "https://plainviewprotocol.com", use_container_width=True)
-    
-    st.caption("*Screenshot your battle card and attach it to your post for maximum impact!*")
+    if card_id:
+        base_url = os.environ.get('REPLIT_DEV_DOMAIN', 'plainviewprotocol.com')
+        share_url = f"https://{base_url}/share/{card_id}"
+        share_tweet = f"I just audited my representative. The numbers don't lie. See their score: #PlainviewProtocol #AuditHochul"
+        
+        st.success(f"✅ Battle Card saved! Card ID: `{card_id}`")
+        st.code(share_tweet, language=None)
+        
+        encoded_tweet = share_tweet.replace(' ', '%20').replace('#', '%23').replace(':', '%3A')
+        encoded_url = share_url.replace(':', '%3A').replace('/', '%2F')
+        
+        share_col1, share_col2, share_col3 = st.columns(3)
+        share_col1.link_button(
+            "🐦 Share to X (with Card)", 
+            f"https://twitter.com/intent/tweet?text={encoded_tweet}&url={encoded_url}", 
+            use_container_width=True
+        )
+        share_col2.link_button(
+            "📘 Share to Facebook", 
+            f"https://www.facebook.com/sharer/sharer.php?u={encoded_url}&quote={encoded_tweet}", 
+            use_container_width=True
+        )
+        share_col3.link_button("🔗 Copy Link", share_url, use_container_width=True)
+        
+        st.info("💡 **Twitter Card Preview:** When you share this link, X will automatically display your Battle Card as a large image preview!")
+    else:
+        share_tweet = "One of these is the safest county in the USA. The other is a budget disaster. The numbers don't lie. #PlainviewProtocol #AuditHochul plainviewprotocol.com"
+        st.code(share_tweet, language=None)
+        
+        share_col1, share_col2, share_col3 = st.columns(3)
+        share_col1.link_button("🐦 Share to X", f"https://twitter.com/intent/tweet?text={share_tweet.replace(' ', '%20').replace('#', '%23').replace(':', '%3A')}", use_container_width=True)
+        share_col2.link_button("📘 Share to Facebook", f"https://www.facebook.com/sharer/sharer.php?quote={share_tweet.replace(' ', '%20')}", use_container_width=True)
+        share_col3.link_button("🔗 Copy Link", "https://plainviewprotocol.com", use_container_width=True)
+        
+        st.caption("*Generate a Battle Card above to unlock rich Twitter Card sharing!*")
 
 def page_local_watchdog():
     st.header("🏘️ Local Labyrinth: City Halls & County Boards")

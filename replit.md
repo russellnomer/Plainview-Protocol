@@ -1,7 +1,13 @@
 # The Plainview Protocol: Truth, Kindness, & Security
 
 ## Overview
-Version 6.31 - CCW Truth Cannon. Established January 8, 2026. A production-ready Streamlit web application with bipartisan corruption tracking across all 50 states and 3,143 counties. Features Corruption Heatmap with Shadow Penalty scoring, Foreign Influence Tracker with Affidavit Gate (now with localStorage persistence), Revolving Door Tracker for lobbyist cooling-off violations, Ethics Complaint Trigger for OCC/Senate submissions, Agency Collaboration Portal with 72-hour correction window, and comprehensive FOIA/FARA tools. Pro-American, rule of law, domestic security focus.
+Version 6.32 - Viral Battle Card Engine. Established January 8, 2026. A production-ready Streamlit web application with bipartisan corruption tracking across all 50 states and 3,143 counties. Features Corruption Heatmap with Shadow Penalty scoring, Foreign Influence Tracker with Affidavit Gate (now with localStorage persistence), Revolving Door Tracker for lobbyist cooling-off violations, Ethics Complaint Trigger for OCC/Senate submissions, Agency Collaboration Portal with 72-hour correction window, and comprehensive FOIA/FARA tools. Pro-American, rule of law, domestic security focus.
+
+## Version 6.32 Features (Viral Battle Card Engine)
+- **Image Persistence**: Battle cards saved to static/battlecards/ with UUID filenames (PNG format)
+- **Share Handler**: Flask server (share_server.py) serving Twitter Card meta tags at /share/<card_id>
+- **Rich Twitter Cards**: og:image and twitter:image meta tags for summary_large_image previews
+- **Updated Post to X**: Share URLs now include card_id for rich image previews on X/Twitter
 
 ## Version 6.31 Features (CCW Truth Cannon)
 - **CCW Truth FOIA Template**: "Concealed Carry Criminality Audit" targeting NY State Police, NYPD License Division, Nassau/Suffolk Pistol Bureaus
