@@ -1,0 +1,259 @@
+This final component transforms the test suite from a developer tool into a Community Asset. By providing Docker containers and clear guides, you empower any citizen—regardless of technical skill—to independently verify the integrity of the platform.
+
+1. Independent Verification (Docker)
+We will package the entire testing environment into a Docker container. This ensures that a user in New York runs the exact same test environment as a user in California, eliminating "it works on my machine" discrepancies.
+
+=== FILE: Dockerfile ===
+A standalone audit container.
+
+Dockerfile
+
+# Use the official Playwright image (includes browsers)
+FROM mcr.microsoft.com/playwright:v1.40.0-jammy
+
+# Set up the working directory
+WORKDIR /audit-workspace
+
+# Copy dependency definitions
+COPY package.json package-lock.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy the actual tests and config
+COPY . .
+
+# Default command: Run the full suite
+CMD ["npx", "playwright", "test"]
+=== FILE: docker-compose.yml ===
+Simplifies the run command for users.
+
+YAML
+
+version: '3.8'
+services:
+  audit:
+    build: .
+    volumes:
+      - ./test-results:/audit-workspace/test-results
+      - ./playwright-report:/audit-workspace/playwright-report
+    environment:
+      - CI=true
+=== FILE: VERIFY.md ===
+A guide for non-technical citizens to run the audit.
+
+Markdown
+
+# 🕵️ How to Verify The Protocol (Independent Audit)
+
+You do not need to trust our status page. You can run the entire integrity audit on your own computer.
+
+## Prerequisites
+1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Free).
+
+## The One-Command Audit
+Open your terminal (Command Prompt on Windows, Terminal on Mac) and run:
+
+```bash
+docker compose up --build
+Interpreting Your Results
+Green Text / "Passed": The platform is functioning exactly as promised.
+
+Red Text / "Failed": An issue was detected. Please verify your internet connection and try again.
+
+View Report: Open the playwright-report/index.html file created in this folder to see screenshots of every test.
+
+Video Tutorial Script (For Content Creators)
+If you are making a video to show others how to audit the site:
+
+Intro: "Here is how to verify Plainview Protocol isn't lying to you."
+
+Action: Show the terminal window running the command.
+
+Result: Scroll through the green "Passed" logs.
+
+Evidence: Open the HTML report and click through the screenshots.
+
+Outro: "Verified independently on [Date]."
+
+
+---
+
+### 2. Contribution Framework
+
+#### === FILE: CONTRIBUTING.md ===
+*Rules of engagement for new test contributors.*
+
+```markdown
+# 🤝 Contributing to the Test Suite
+
+We welcome contributions from the community. Whether you found a broken link or want to add a new accountability check, here is how to help.
+
+## The Golden Rule
+**Tests must be readable.** We prioritize clarity over clever code. A non-programmer should be able to read the test title and understand what is being verified.
+
+## Adding a New Test
+1.  **Duplicate the Template:** Copy `tests/templates/basic_test_template.spec.ts`.
+2.  **Name It Clearly:** Use `feature-name.spec.ts`.
+3.  **Write the Logic:** focus on user-visible behavior.
+4.  **Run It:** `npx playwright test tests/feature-name.spec.ts`
+
+## Naming Conventions
+* ✅ `test('Contact form shows error on invalid email')`
+* ❌ `test('auth_fail_403_regex')`
+
+## Code Review Checklist
+* [ ] Does the test fail if I break the feature? (True negative)
+* [ ] Is the test name plain English?
+* [ ] Did you remove hard-coded wait times (e.g., `waitForTimeout`)?
+* [ ] Are screenshots captured on failure?
+=== FILE: tests/templates/basic_test_template.spec.ts ===
+A starter file for new contributors.
+
+TypeScript
+
+import { test, expect } from '@playwright/test';
+
+// 1. Describe the Feature
+test.describe('FEATURE NAME (e.g., Donation Page)', () => {
+
+  // 2. Set the Stage
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/your-page-url');
+  });
+
+  // 3. The Test Case
+  test('It should display the correct disclaimer', async ({ page }) => {
+    // A. Locate the element
+    const disclaimer = page.locator('.disclaimer-text');
+    
+    // B. Assert the state
+    await expect(disclaimer).toBeVisible();
+    await expect(disclaimer).toContainText('Not authorized by any candidate');
+  });
+});
+=== FILE: .github/PULL_REQUEST_TEMPLATE.md ===
+Ensures PRs meet quality standards.
+
+Markdown
+
+## 📝 Description
+What does this test verify?
+
+## 🔗 Related Issue
+Fixes # (issue number)
+
+## ✅ Verification Steps
+1. Run command: `...`
+2. Expected result: `...`
+
+## 🛡️ Accountability Check
+- [ ] I have verified this test fails when the feature is broken.
+- [ ] I have used descriptive, non-technical test names.
+- [ ] This test runs in under 30 seconds.
+3. Issue Reporting Templates
+=== FILE: .github/ISSUE_TEMPLATE/test_failure.yml ===
+Structured form for reporting bugs.
+
+YAML
+
+name: 🔴 Test Failure Report
+description: Report a failing test in the automated suite.
+title: "[FAIL] <Test Name>"
+labels: ["bug", "test-suite"]
+body:
+  - type: textarea
+    id: error_log
+    attributes:
+      label: Error Log
+      description: Paste the red error text from your terminal.
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser / Environment
+      placeholder: Chrome / Windows 11
+  - type: dropdown
+    id: reproducibility
+    attributes:
+      label: Reproducibility
+      options:
+        - Always fails
+        - Intermittent (Flaky)
+        - Only fails locally
+=== FILE: .github/ISSUE_TEMPLATE/new_test_idea.yml ===
+For suggesting new coverage.
+
+YAML
+
+name: 💡 New Test Suggestion
+description: Propose a new accountability check.
+title: "[NEW] <Feature to Test>"
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: user_story
+    attributes:
+      label: What should we verify?
+      placeholder: "As a user, I want to ensure the 'Donate' button actually goes to a secure HTTPS page."
+  - type: textarea
+    id: importance
+    attributes:
+      label: Why is this critical?
+      description: Explain the accountability or functionality risk.
+4. Maintenance & Scaling
+=== FILE: scripts/update-deps.sh ===
+Automates keeping the test suite fresh.
+
+Bash
+
+#!/bin/bash
+# Updates Playwright and browser binaries
+echo "🔄 Checking for Playwright updates..."
+npm install -D @playwright/test@latest
+npx playwright install --with-deps
+echo "✅ Update complete. Run 'npm test' to verify compatibility."
+=== FILE: MAINTENANCE.md ===
+A guide for the long-term maintainers.
+
+Markdown
+
+# 🛠️ Maintenance Guide
+
+## Dependency Schedule
+* **Monthly:** Run `scripts/update-deps.sh` to grab the latest browser versions.
+* **Quarterly:** Audit `package.json` for unused libraries.
+
+## Version Compatibility Matrix
+| Playwright Version | Node Version | Supported Browsers |
+|-------------------|--------------|--------------------|
+| v1.40+            | 18+          | Chrome 120+, Firefox 121+, Safari 17+ |
+
+## Deprecation Process
+If a test is no longer relevant (e.g., a feature was removed):
+1.  Do **not** delete the file immediately.
+2.  Add a `@deprecated` tag to the test title.
+3.  Move the file to `tests/archive/` for historical record.
+
+## Scaling the Suite
+As the site grows, run times will increase. To mitigate:
+1.  **Shard Tests:** Use Playwright's sharding feature in GitHub Actions to run tests across multiple machines.
+    * Command: `npx playwright test --shard=1/4`
+2.  **Tagging:** Use tags like `@core`, `@slow`, `@visual` to run specific subsets during development.
+5. Deployment Instructions (Replit)
+To fully activate this Community Framework on Replit:
+
+Upload Files: Place all the files above into their respective folders (.github/ISSUE_TEMPLATE/, tests/templates/, etc.).
+
+Make Scripts Executable:
+
+Bash
+
+chmod +x scripts/*.sh
+Update replit.nix: Ensure pkgs.docker is added if you want to build the container inside Replit (though usually, users run Docker on their local machines).
+
+Pin the Guide: In the Replit "Readme" pane, link prominently to VERIFY.md so new visitors see the "Audit" instructions first.
+
+This completes the architecture. You now have a resilient, self-documenting, and community-verifiable accountability engine.

@@ -1,0 +1,19 @@
+{
+  "name": "workspace",
+  "version": "1.0.0",
+  "description": "**Activism as Code for the Sovereign Citizen** > \"We do not believe in virtue signals. We believe in evidence, facts, transparency, and action.\"  > — **Russell Nomer**, Founder (Plainview, NY)",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@axe-core/playwright": "^4.11.0",
+    "@playwright/test": "^1.57.0"
+  }
+}

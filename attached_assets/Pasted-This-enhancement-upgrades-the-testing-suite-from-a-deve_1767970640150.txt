@@ -1,0 +1,367 @@
+This enhancement upgrades the testing suite from a developer tool into a Public Accountability Engine. By deploying a static dashboard to GitHub Pages, you provide an immutable, user-friendly record of the site's integrity that anyone can audit.
+
+1. Architecture: The "Stateful" Static Dashboard
+Since GitHub Pages is static, we need a clever way to maintain Historical Data (trends over 30 days) without a database.
+
+The Solution:
+
+Test Run: Playwright generates results.json.
+
+History Extraction: A custom script runs in CI, fetches the existing history.json from the live gh-pages branch, appends the new test data, and saves it.
+
+Deployment: The dashboard index.html fetches these JSON files client-side to render graphs and status.
+
+2. Dashboard Code (HTML/JS/CSS)
+Create a new folder: dashboard/
+
+=== FILE: dashboard/index.html ===
+The single-page application that renders the status board.
+
+HTML
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plainview Protocol | Accountability Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .status-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+    <header id="status-header" class="bg-white shadow-sm border-b border-gray-200 p-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900 tracking-tight">🏛️ Site Health Dashboard</h1>
+                <p class="text-sm text-gray-500 mt-1">Live Accountability Audit • <span id="last-updated">Loading...</span></p>
+            </div>
+            <div id="status-indicator" class="mt-4 md:mt-0 flex items-center px-4 py-2 rounded-full bg-gray-100 border border-gray-200">
+                <div class="w-3 h-3 rounded-full bg-gray-400 mr-2"></div>
+                <span class="font-bold text-gray-600">LOADING DATA...</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-6 space-y-8">
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                <h3 class="text-xs font-semibold text-gray-400 uppercase">Total Tests</h3>
+                <p id="metric-total" class="text-3xl font-bold text-gray-900 mt-2">-</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                <h3 class="text-xs font-semibold text-gray-400 uppercase">Success Rate</h3>
+                <p id="metric-rate" class="text-3xl font-bold text-green-600 mt-2">-%</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                <h3 class="text-xs font-semibold text-gray-400 uppercase">Duration</h3>
+                <p id="metric-duration" class="text-3xl font-bold text-gray-900 mt-2">-s</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                <h3 class="text-xs font-semibold text-gray-400 uppercase">Commit Hash</h3>
+                <p id="metric-commit" class="text-3xl font-mono font-bold text-blue-600 mt-2 text-lg truncate">...</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                <h3 class="font-bold text-gray-700 mb-4">30-Day Integrity Trend</h3>
+                <canvas id="historyChart" height="100"></canvas>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                <h3 class="font-bold text-gray-700 mb-4">Audit Controls</h3>
+                <div class="space-y-4">
+                    <a href="results.json" target="_blank" class="block w-full text-center py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-50 text-sm font-medium">Download Raw JSON</a>
+                    <a href="https://github.com/plainviewprotocol/repo/actions" target="_blank" class="block w-full text-center py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm font-medium">Run Live Audit (GitHub)</a>
+                    <div class="text-xs text-gray-400 mt-4">
+                        <p>Environment: <span id="env-info">Production</span></p>
+                        <p>Runner: GitHub Actions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
+                <h3 class="font-bold text-gray-700">Detailed Test Ledger</h3>
+                <span class="text-xs bg-gray-200 px-2 py-1 rounded text-gray-600">Filter: All</span>
+            </div>
+            <div id="test-list" class="divide-y divide-gray-100">
+                </div>
+        </div>
+    </main>
+
+    <footer class="text-center py-8 text-gray-400 text-sm">
+        <p>Generated automatically by The Plainview Protocol Accountability Engine.</p>
+        <p class="mt-2"><a href="#" class="underline hover:text-gray-600">View Source Code</a></p>
+    </footer>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
+=== FILE: dashboard/dashboard.js ===
+Handles logic to fetch data and render the UI.
+
+JavaScript
+
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        // 1. Fetch Data
+        const resultsReq = await fetch('./results.json');
+        const historyReq = await fetch('./history.json');
+        
+        if (!resultsReq.ok) throw new Error("Could not load test results.");
+        
+        const data = await resultsReq.json();
+        const history = historyReq.ok ? await historyReq.json() : [];
+
+        // 2. Update Header Status
+        const totalTests = data.stats.expected;
+        const failedTests = data.stats.unexpected; // Playwright structure
+        const passedTests = totalTests - failedTests;
+        const isHealthy = failedTests === 0;
+
+        const indicator = document.getElementById('status-indicator');
+        const statusText = isHealthy ? "ALL SYSTEMS OPERATIONAL" : "ISSUES DETECTED";
+        const statusColor = isHealthy ? "bg-green-100 text-green-800 border-green-200" : "bg-red-100 text-red-800 border-red-200";
+        const dotColor = isHealthy ? "bg-green-500" : "bg-red-500";
+
+        indicator.className = `mt-4 md:mt-0 flex items-center px-4 py-2 rounded-full border ${statusColor}`;
+        indicator.innerHTML = `<div class="w-3 h-3 rounded-full ${dotColor} status-pulse mr-2"></div><span class="font-bold text-xs md:text-sm">${statusText}</span>`;
+
+        // 3. Update Metrics
+        document.getElementById('last-updated').innerText = new Date(data.stats.startTime).toLocaleString();
+        document.getElementById('metric-total').innerText = totalTests;
+        document.getElementById('metric-rate').innerText = `${Math.round((passedTests / totalTests) * 100)}%`;
+        document.getElementById('metric-duration').innerText = `${(data.stats.duration / 1000).toFixed(1)}s`;
+        
+        // Try to find commit hash from metadata or env
+        // Note: You need to inject this into results.json or fetch separately. 
+        // For now, we simulate or use a placeholder if missing.
+        document.getElementById('metric-commit').innerText = data.metadata?.commit?.substring(0,7) || "LATEST";
+
+        // 4. Render History Chart
+        renderChart(history);
+
+        // 5. Render Test List
+        const listContainer = document.getElementById('test-list');
+        data.suites.forEach(suite => {
+            suite.specs.forEach(spec => {
+                const testResult = spec.tests[0].results[0];
+                const status = testResult.status;
+                const isPass = status === 'passed';
+                
+                const item = document.createElement('div');
+                item.className = "p-4 hover:bg-gray-50 transition-colors flex items-start space-x-4";
+                item.innerHTML = `
+                    <div class="mt-1">
+                        <span class="flex items-center justify-center w-6 h-6 rounded-full ${isPass ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}">
+                            ${isPass ? '✓' : '✗'}
+                        </span>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-sm font-medium text-gray-900">${spec.title}</h4>
+                        <p class="text-xs text-gray-500 mt-1">${suite.title} • ${testResult.duration}ms</p>
+                        ${!isPass ? `<div class="mt-2 text-xs bg-red-50 text-red-700 p-2 rounded font-mono">${testResult.error?.message}</div>` : ''}
+                    </div>
+                `;
+                listContainer.appendChild(item);
+            });
+        });
+
+    } catch (e) {
+        console.error(e);
+        document.body.innerHTML = `<div class="p-10 text-center text-red-600"><h1>Failed to load dashboard data.</h1><p>${e.message}</p></div>`;
+    }
+});
+
+function renderChart(history) {
+    if (!history || history.length === 0) return;
+    
+    // Limit to last 30 runs
+    const recentHistory = history.slice(-30);
+    
+    const ctx = document.getElementById('historyChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: recentHistory.map((_, i) => i + 1), // Simple 1-30 index
+            datasets: [{
+                label: 'Pass Rate (%)',
+                data: recentHistory.map(h => (h.passed / h.total) * 100),
+                borderColor: '#10B981',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: { y: { min: 0, max: 100 } },
+            maintainAspectRatio: false
+        }
+    });
+}
+3. Data Processing Scripts
+=== FILE: scripts/process-history.js ===
+Node script to maintain the 30-day history file in the build pipeline.
+
+JavaScript
+
+const fs = require('fs');
+const path = require('path');
+
+// Paths
+const RESULTS_PATH = path.join(__dirname, '../test-results/results.json');
+const HISTORY_PATH = path.join(__dirname, '../public/history.json'); // 'public' is the build folder
+const OUTPUT_PATH = path.join(__dirname, '../public/history.json');
+
+try {
+    // 1. Read current run results
+    const resultsRaw = fs.readFileSync(RESULTS_PATH);
+    const results = JSON.parse(resultsRaw);
+    
+    // 2. Extract key metrics
+    const stats = results.stats;
+    const passed = stats.expected - stats.unexpected;
+    const total = stats.expected;
+    const timestamp = stats.startTime;
+    
+    const currentRun = {
+        timestamp,
+        total,
+        passed,
+        failed: stats.unexpected,
+        duration: stats.duration
+    };
+
+    // 3. Read existing history (or init empty)
+    let history = [];
+    if (fs.existsSync(HISTORY_PATH)) {
+        try {
+            history = JSON.parse(fs.readFileSync(HISTORY_PATH));
+        } catch (e) { console.warn("Corrupt history file, starting fresh."); }
+    }
+
+    // 4. Append and Slice
+    history.push(currentRun);
+    if (history.length > 30) {
+        history = history.slice(-30);
+    }
+
+    // 5. Save back to the build folder
+    fs.writeFileSync(OUTPUT_PATH, JSON.stringify(history, null, 2));
+    
+    console.log("✅ History updated successfully.");
+
+} catch (e) {
+    console.error("❌ Error processing history:", e);
+    process.exit(1);
+}
+4. GitHub Actions Workflow (Deployment)
+=== FILE: .github/workflows/deploy-dashboard.yml ===
+Builds the dashboard, runs tests, and deploys to GitHub Pages.
+
+YAML
+
+name: Deploy Accountability Dashboard
+
+on:
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: '0 */6 * * *' # Run every 6 hours
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install Dependencies
+      run: npm ci
+
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps chromium
+
+    - name: Run Tests (Generate JSON)
+      run: npx playwright test --reporter=json
+      env:
+        PLAYWRIGHT_JSON_OUTPUT_NAME: test-results/results.json
+      continue-on-error: true # Don't stop deploy if tests fail; we want to publish the failure!
+
+    - name: Prepare Dashboard Build Folder
+      run: |
+        mkdir -p public
+        cp dashboard/* public/
+        cp test-results/results.json public/
+        
+    # Magic Step: Fetch history from previous deployment
+    - name: Restore History
+      uses: actions/checkout@v4
+      with:
+        ref: gh-pages
+        path: gh-pages-branch
+      continue-on-error: true
+      
+    - name: Copy History if Exists
+      run: |
+        if [ -f gh-pages-branch/history.json ]; then
+          cp gh-pages-branch/history.json public/history.json
+        fi
+
+    - name: Process New History
+      run: node scripts/process-history.js
+
+    - name: Inject Commit Hash
+      run: |
+        # Use jq to inject commit hash into results.json for the dashboard to read
+        jq --arg hash "${{ github.sha }}" '.metadata += {"commit": $hash}' public/results.json > public/results.tmp && mv public/results.tmp public/results.json
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
+5. Integration Instructions
+Dependencies: Ensure you have jq (usually pre-installed in Actions) or install it if you want to perform the complex JSON injection step strictly locally, but the Workflow above handles it.
+
+Playwright Config: Ensure your playwright.config.ts includes the JSON reporter:
+
+TypeScript
+
+reporter: [
+  ['json', { outputFile: 'test-results/results.json' }],
+  ['html']
+]
+Embed Code: Add this to your README.md to show off the dashboard.
+
+=== README Embed Snippet ===
+Markdown
+
+### 📡 Live Accountability Dashboard
+We maintain a public, real-time dashboard of our system's integrity.
+[**View Live Site Health Board**](https://your-username.github.io/your-repo-name/)
+
+<a href="https://your-username.github.io/your-repo-name/">
+  <img src="https://img.shields.io/badge/Status-Dashboard_Live-blue?style=for-the-badge&logo=github" alt="Dashboard Status" />
+</a>

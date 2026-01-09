@@ -1,0 +1,275 @@
+This section expands the architectural foundation into a site-specific test suite for plainviewprotocol.com. These tests are designed to be "drop-in" ready for the tests/ directory defined in Prompt 1.
+
+📂 Directory Structure Update
+Ensure your tests folder is organized as follows to keep functional tests separate from accountability audits:
+
+Plaintext
+
+/tests
+  /e2e
+    home.spec.ts
+    about.spec.ts
+    protocol.spec.ts
+    contact.spec.ts
+    global.spec.ts
+  /accountability
+    transparency.spec.ts
+1. Homepage & Hero Validation
+=== FILE: tests/e2e/home.spec.ts ===
+Validates the first impression: messaging, calls to action, and responsive behavior.
+
+TypeScript
+
+import { test, expect } from '@playwright/test';
+
+test.describe('Homepage Critical Path', () => {
+  
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/');
+  });
+
+  test('Hero section loads with correct messaging', async ({ page }) => {
+    // Validate the core value proposition is visible immediately
+    const heroHeading = page.locator('h1');
+    await expect(heroHeading).toBeVisible();
+    await expect(heroHeading).toHaveText(/Transparency|Accountability|Protocol/i);
+    
+    // Check sub-headline for civic mission context
+    await expect(page.locator('h2, .hero-subtitle')).toBeVisible();
+  });
+
+  test('Primary Call-to-Action (CTA) buttons are functional', async ({ page }) => {
+    const primaryCta = page.getByRole('button', { name: /Join|Start|Act/i }).first();
+    
+    await expect(primaryCta).toBeVisible();
+    await expect(primaryCta).toBeEnabled();
+    
+    // verify it links to a valid destination (doesn't stay on same page anchor unless intended)
+    const href = await primaryCta.getAttribute('href');
+    expect(href).toBeTruthy();
+  });
+
+  test('Mobile Responsiveness: Menu toggles correctly', async ({ page }) => {
+    // Set viewport to mobile size
+    await page.setViewportSize({ width: 375, height: 667 });
+    
+    // Check if desktop menu is hidden
+    const desktopMenu = page.locator('.desktop-nav'); // Adjust selector based on actual CSS
+    await expect(desktopMenu).toBeHidden();
+
+    // Check for hamburger menu
+    const hamburger = page.locator('button[aria-label="Menu"], .hamburger-icon');
+    await expect(hamburger).toBeVisible();
+    
+    // Click and verify menu opens
+    await hamburger.click();
+    await expect(page.locator('.mobile-nav-content')).toBeVisible();
+  });
+});
+2. About & Mission Validation
+=== FILE: tests/e2e/about.spec.ts ===
+Ensures the mission statement and organizational credibility are established.
+
+TypeScript
+
+import { test, expect } from '@playwright/test';
+
+test.describe('About Page Content', () => {
+  
+  test('Mission statement is present and prominent', async ({ page }) => {
+    await page.goto('/about');
+    
+    const missionSection = page.locator('section.mission, #mission');
+    await expect(missionSection).toBeVisible();
+    await expect(missionSection).toContainText(/civic|accountability|transparency/i);
+  });
+
+  test('Team or Organization info is loaded', async ({ page }) => {
+    await page.goto('/about');
+    
+    // Check for team cards or list
+    const teamSection = page.locator('.team-grid, .organization-info');
+    await expect(teamSection).toBeVisible();
+  });
+
+  test('Embedded media (video/images) loads correctly', async ({ page }) => {
+    await page.goto('/about');
+    
+    // Check all images in the main content area
+    const images = page.locator('main img');
+    const count = await images.count();
+    
+    for (let i = 0; i < count; ++i) {
+      const img = images.nth(i);
+      await expect(img).toBeVisible();
+      // JavaScript check to ensure image naturalWidth > 0 (actually loaded)
+      const isLoaded = await img.evaluate((image: HTMLImageElement) => image.naturalWidth > 0);
+      expect(isLoaded).toBeTruthy();
+    }
+  });
+});
+3. Protocol Documentation Tests
+=== FILE: tests/e2e/protocol.spec.ts ===
+Verifies the technical documentation and downloadable resources.
+
+TypeScript
+
+import { test, expect } from '@playwright/test';
+
+test.describe('Protocol Documentation', () => {
+  
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/protocol');
+  });
+
+  test('Documentation text is readable and formatted', async ({ page }) => {
+    // Check for readable font size and headers
+    const content = page.locator('article, main');
+    await expect(content).toHaveCSS('font-size', /[1-2][0-9]px/); // Regex allows 14px-29px approx
+    
+    // Ensure headings exist for structure
+    await expect(page.locator('h2')).not.toHaveCount(0);
+  });
+
+  test('Downloadable resources are accessible (HTTP 200)', async ({ page, request }) => {
+    // Find all download links (PDFs, zips, etc.)
+    const downloadLinks = page.locator('a[href$=".pdf"], a[download]');
+    const count = await downloadLinks.count();
+    
+    // If no downloads exist yet, skip test but log it
+    if (count === 0) {
+      console.log('ℹ️ No downloadable resources found on Protocol page.');
+      return;
+    }
+
+    for (let i = 0; i < count; ++i) {
+      const href = await downloadLinks.nth(i).getAttribute('href');
+      if (href) {
+        // Perform a HEAD request to ensure the file exists without downloading the whole thing
+        const response = await request.head(href);
+        expect(response.status()).toBe(200);
+      }
+    }
+  });
+});
+4. Contact Form Security & Validation
+=== FILE: tests/e2e/contact.spec.ts ===
+Critical for civic engagement: ensuring citizens can reach out securely.
+
+TypeScript
+
+import { test, expect } from '@playwright/test';
+
+test.describe('Contact Page Functionality', () => {
+  
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/contact');
+  });
+
+  test('Form validation triggers on empty submission', async ({ page }) => {
+    // Try to submit without filling anything
+    const submitBtn = page.getByRole('button', { name: /Submit|Send/i });
+    await submitBtn.click();
+    
+    // Expect browser validation or HTML5 validation message
+    // This checks for the :invalid pseudo-class often used in modern forms
+    const invalidInputs = page.locator('input:invalid, textarea:invalid');
+    expect(await invalidInputs.count()).toBeGreaterThan(0);
+  });
+
+  test('Privacy Policy link is present near submission', async ({ page }) => {
+    // Civic tech requires trust; look for privacy links near the form
+    const formSection = page.locator('form').locator('xpath=..'); // Parent of form
+    const privacyLink = formSection.getByRole('link', { name: /Privacy/i });
+    
+    await expect(privacyLink).toBeVisible();
+  });
+
+  test('Email format validation', async ({ page }) => {
+    const emailInput = page.locator('input[type="email"]');
+    await emailInput.fill('not-an-email');
+    await page.getByRole('button', { name: /Submit|Send/i }).click();
+    
+    // Check validity state via JS
+    const isInvalid = await emailInput.evaluate((e: HTMLInputElement) => !e.checkValidity());
+    expect(isInvalid).toBe(true);
+  });
+});
+5. Global & Performance Tests
+=== FILE: tests/e2e/global.spec.ts ===
+Ensures site-wide consistency and performance standards.
+
+TypeScript
+
+import { test, expect } from '@playwright/test';
+
+const PAGES = ['/', '/about', '/protocol', '/contact'];
+
+test.describe('Global Site Consistency', () => {
+
+  for (const url of PAGES) {
+    test(`Page load time under 3s: ${url}`, async ({ page }) => {
+      const start = Date.now();
+      await page.goto(url);
+      const end = Date.now();
+      
+      const duration = end - start;
+      console.log(`⏱️ ${url} loaded in ${duration}ms`);
+      
+      // Warn if slow, fail if critical (adjusted to 5s for robust CI, goal is 3s)
+      expect(duration).toBeLessThan(5000); 
+    });
+
+    test(`Footer loads on: ${url}`, async ({ page }) => {
+      await page.goto(url);
+      const footer = page.locator('footer');
+      await expect(footer).toBeVisible();
+      await expect(footer).toContainText(/Plainview Protocol/i);
+      
+      // Check for copyright year dynamic update
+      const currentYear = new Date().getFullYear().toString();
+      await expect(footer).toContainText(currentYear);
+    });
+  }
+});
+6. Accountability & Transparency Audit
+=== FILE: tests/accountability/transparency.spec.ts ===
+These tests specifically validate the "Civic Trust" aspects of the project.
+
+TypeScript
+
+import { test, expect } from '@playwright/test';
+
+test.describe('Accountability & Trust Indicators', () => {
+  
+  test('Open Source License is visible', async ({ page }) => {
+    await page.goto('/');
+    // usually in footer or specific open source section
+    const licenseText = page.getByText(/MIT License|Creative Commons|Open Source/i).first();
+    await expect(licenseText).toBeVisible();
+  });
+
+  test('Citation/Attribution section exists on Protocol page', async ({ page }) => {
+    await page.goto('/protocol');
+    // Looking for a section that lists sources or methodology
+    const sources = page.locator('text=Sources', 'text=Methodology');
+    await expect(sources.first()).toBeVisible();
+  });
+
+  test('No broken internal links (Link Integrity)', async ({ page }) => {
+    // Navigate home
+    await page.goto('/');
+    
+    // Collect all internal links
+    const links = await page.locator('a[href^="/"]').all();
+    
+    for (const link of links) {
+      const href = await link.getAttribute('href');
+      if (href) {
+        const response = await page.request.head(href);
+        // Expect 200 OK or 3xx Redirect, but definitely not 404
+        expect(response.status(), `Link broken: ${href}`).not.toBe(404);
+      }
+    }
+  });
+});
