@@ -6,6 +6,7 @@ import json
 import xml.etree.ElementTree as ET
 import os
 import time
+from datetime import datetime, date
 
 st.set_page_config(
     page_title="The Plainview Protocol",
@@ -246,7 +247,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v4.9 | Corrected Legacy")
+st.sidebar.caption("v4.9 | The Legacy Timeline")
 
 st.sidebar.success("🎉 **TODAY IS DAY 1** — The Plainview Protocol is LIVE. Established January 8, 2026.")
 
@@ -2106,6 +2107,63 @@ The Protocol is designed to be forked. Each fork is a new node in the transparen
     
     st.caption("*Share counts are tracked locally. In a production deployment, these would sync to a central database.*")
 
+def page_mission_milestones():
+    st.header("🏛️ Mission Milestones: Founded January 8, 2026")
+    
+    with st.expander("ℹ️ Planning for the Century"):
+        st.markdown("""
+A good timeline turns scattered tasks into a clear path forward. This living document ensures our mission remains focused on Truth, Kindness, and Security.
+
+The Plainview Protocol is built to last for generations. Each milestone marks progress toward a more transparent government.
+        """)
+    
+    st.divider()
+    
+    FOUNDING_DATE = date(2026, 1, 8)
+    today = date.today()
+    days_since_launch = (today - FOUNDING_DATE).days
+    
+    MILESTONES = [
+        {"date": "January 8, 2026", "title": "Initial Commit", "description": "Russell Nomer establishes The Plainview Protocol in Plainview, NY.", "status": "completed"},
+        {"date": "Q1 2026", "title": "Beta Testing Complete", "description": "Core features validated by early adopters across 10 states.", "status": "pending"},
+        {"date": "Q1 2026", "title": "Peanut's Law Monitoring", "description": "Full tracking of S7011/A7388 through NY Legislature with citizen alerts.", "status": "pending"},
+        {"date": "Q2 2026", "title": "50-State Coverage", "description": "Corruption Heatmap expanded with verified data for all states.", "status": "pending"},
+        {"date": "Q2 2026", "title": "Neighborhood Mobilization Launch", "description": "Hyper-local tools for county and municipal oversight.", "status": "pending"},
+        {"date": "Q3 2026", "title": "First FOIA Victory", "description": "Documents obtained through citizen-generated FOIA requests.", "status": "pending"},
+        {"date": "Q3 2026", "title": "Fork Network Expansion", "description": "10+ active forks adapting the Protocol for local jurisdictions.", "status": "pending"},
+        {"date": "Q4 2026", "title": "Referendum Prototype Live", "description": "Electoral College-weighted citizen consensus on key transparency issues.", "status": "pending"},
+        {"date": "Q4 2026", "title": "First Anniversary", "description": "One year of citizen-powered government oversight.", "status": "pending"},
+    ]
+    
+    st.subheader("📅 The Legacy Timeline")
+    
+    for milestone in MILESTONES:
+        if milestone["status"] == "completed":
+            icon = "💎"
+            border_color = "#28a745"
+        else:
+            icon = "⭕"
+            border_color = "#6c757d"
+        
+        st.markdown(f"""
+<div style="border-left: 3px solid {border_color}; padding-left: 20px; margin-bottom: 20px;">
+    <p style="margin: 0; font-size: 0.9em; color: #666;">{milestone['date']}</p>
+    <h4 style="margin: 5px 0;">{icon} {milestone['title']}</h4>
+    <p style="margin: 0;">{milestone['description']}</p>
+</div>
+        """, unsafe_allow_html=True)
+    
+    st.divider()
+    st.subheader("🔮 Future Vision")
+    st.markdown("""
+- **2027**: Course Correction tools drive first successful recall campaigns
+- **2028**: Protocol data informs voter guides in 25+ states
+- **2030**: Transparency becomes a bipartisan campaign platform
+- **2050**: A generation raised on government accountability
+    """)
+    
+    st.info(f"📆 **Days Since Initial Commit:** {days_since_launch}")
+
 pages = [
     st.Page(page_national_lens, title="The National Lens", icon="🔭"),
     st.Page(page_2027_fork, title="The 2027 Fork", icon="🍴"),
@@ -2118,6 +2176,7 @@ pages = [
     st.Page(page_foia_cannon, title="FOIA Cannon", icon="📄"),
     st.Page(page_lever_map, title="Lever Map", icon="🗺️"),
     st.Page(page_course_correction, title="Course Correction", icon="⚖️"),
+    st.Page(page_mission_milestones, title="Mission Milestones", icon="🏛️"),
     st.Page(page_ecosystem, title="The Ecosystem", icon="🌳"),
     st.Page(page_support, title="Support", icon="☕"),
 ]
@@ -2126,4 +2185,6 @@ nav = st.navigation(pages)
 nav.run()
 
 st.markdown("---")
-st.markdown("<center>Built by Russell Nomer in Plainview, NY | Established Jan 8, 2026 | <i>Truth, Kindness, Security</i></center>", unsafe_allow_html=True)
+FOUNDING_DATE = date(2026, 1, 8)
+days_since_launch = (date.today() - FOUNDING_DATE).days
+st.markdown(f"<center>Established Jan 8, 2026 — Built by Russell Nomer to last for generations. | <b>Day {days_since_launch + 1}</b> of the mission.</center>", unsafe_allow_html=True)
