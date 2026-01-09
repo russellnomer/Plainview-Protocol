@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plainview Protocol - Accountability Dashboard</title>
+    <meta name="description" content="Public accountability dashboard for The Plainview Protocol. Real-time test results and system integrity verification.">
+    <meta property="og:title" content="Plainview Protocol - Accountability Dashboard">
+    <meta property="og:description" content="Public transparency report. Verify our system integrity.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @keyframes pulse-green {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+        }
+        @keyframes pulse-red {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+        }
+        .pulse-green { animation: pulse-green 2s infinite; }
+        .pulse-red { animation: pulse-red 2s infinite; }
+        body { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+    </style>
+</head>
+<body class="min-h-screen text-white">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold mb-2">🛡️ PLAINVIEW PROTOCOL</h1>
+            <h2 class="text-xl text-gray-400">Public Accountability Dashboard</h2>
+            <p class="text-sm text-gray-500 mt-2">
+                Last Audit: <span id="lastAuditTimestamp" class="text-blue-400">Loading...</span>
+            </p>
+        </header>
+
+        <section id="statusSection" class="mb-12">
+            <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700 text-center">
+                <div id="statusIndicator" class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gray-700 mb-4">
+                    <div class="w-16 h-16 rounded-full bg-gray-600"></div>
+                </div>
+                <h3 id="statusText" class="text-2xl font-bold text-gray-400">CHECKING...</h3>
+                <p id="statusSubtext" class="text-gray-500 mt-2">Verifying system integrity</p>
+            </div>
+        </section>
+
+        <section id="metricsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 text-center">
+                <p class="text-gray-400 text-sm uppercase tracking-wide">Total Tests</p>
+                <p id="totalTests" class="text-4xl font-bold text-white mt-2">--</p>
+            </div>
+            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 text-center">
+                <p class="text-gray-400 text-sm uppercase tracking-wide">Success Rate</p>
+                <p id="successRate" class="text-4xl font-bold text-white mt-2">--%</p>
+            </div>
+            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 text-center">
+                <p class="text-gray-400 text-sm uppercase tracking-wide">Build Duration</p>
+                <p id="buildDuration" class="text-4xl font-bold text-white mt-2">--s</p>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                <h3 class="text-xl font-semibold mb-4">📈 30-Day Trend</h3>
+                <div class="h-64">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                <h3 class="text-xl font-semibold mb-4">📋 Test Ledger</h3>
+                <div id="testLedger" class="space-y-2">
+                    <p class="text-gray-500">Loading test results...</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-12 text-center text-gray-500 text-sm">
+            <p>The Plainview Protocol - Established January 8, 2026</p>
+            <p class="mt-1">"We use the same data the Labyrinth uses, but we use it for the people."</p>
+            <p class="mt-4">
+                <a href="https://github.com" class="text-blue-400 hover:underline">Fork on GitHub</a> |
+                <a href="/" class="text-blue-400 hover:underline">Return to Protocol</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

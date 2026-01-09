@@ -1,0 +1,13 @@
+{
+  "runs": [
+    {
+      "timestamp": "2026-01-09T15:28:05.797Z",
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "duration": 10156.572,
+      "successRate": 100,
+      "status": "OPERATIONAL"
+    }
+  ]
+}
