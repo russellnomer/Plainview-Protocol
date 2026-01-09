@@ -20,6 +20,7 @@ from press_kit_handler import render_press_kit
 from media_automation import render_media_automation
 from force_continuum import render_force_continuum
 from org_transparency_tracker import render_org_transparency
+from ice_shield_logic import render_ice_shield
 from agenda_scanner import (
     get_jurisdictions, get_agendas, scan_agenda_item, calculate_transparency_score,
     get_transparency_rating, init_agenda_flags_table, save_agenda_flag, get_flag_count, GRIFT_KEYWORDS
@@ -4093,6 +4094,10 @@ def page_org_transparency():
     """Organizational Transparency Tracker - V8.9 verified public records."""
     render_org_transparency()
 
+def page_ice_shield():
+    """ICE Shield - V6.26 Stand with Law Enforcement support module."""
+    render_ice_shield()
+
 def page_support():
     st.header("☕ Sustain the Mission")
     st.write("This tool is free, ad-free, and uncensorable thanks to supporters like you.")
@@ -6807,6 +6812,7 @@ pages = [
     st.Page(page_media_automation, title="Media Automation", icon="📧"),
     st.Page(page_force_continuum, title="Force Continuum", icon="⚡"),
     st.Page(page_org_transparency, title="Org Transparency", icon="🔍"),
+    st.Page(page_ice_shield, title="ICE Shield", icon="🛡️"),
 ]
 
 nav = st.navigation(pages)
