@@ -62,7 +62,7 @@ def get_senate_votes():
 
 @st.cache_data(ttl=86400)
 def get_reps(state_full_name):
-    """Fetches live Congress data from UnitedStates.io Open Data."""
+    """Fetches live Congress data from UnitedStates.io Open Data with resilient error handling."""
     us_state_to_abbrev = {
         "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR", "California": "CA",
         "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE", "Florida": "FL", "Georgia": "GA",
@@ -78,11 +78,12 @@ def get_reps(state_full_name):
     
     code = us_state_to_abbrev.get(state_full_name)
     if not code:
-        return pd.DataFrame([{"Error": "Invalid State"}])
+        return pd.DataFrame([{"Status": "Invalid State"}]), False
 
     try:
         url = SOURCES.get("congress_legislators", "https://theunitedstates.io/congress-legislators/legislators-current.json")
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=5, stream=True)
+        response.raise_for_status()
         data = response.json()
         
         reps = []
@@ -96,9 +97,16 @@ def get_reps(state_full_name):
                     "Party": current['party']
                 })
         
-        return pd.DataFrame(reps) if reps else pd.DataFrame([{"Status": "No reps found"}])
-    except Exception as e:
-        return pd.DataFrame([{"Error": "Data Fetch Failed - Check connection"}])
+        if reps:
+            return pd.DataFrame(reps), True
+        else:
+            return pd.DataFrame([{"Status": f"No representatives found for {state_full_name}"}]), True
+    except requests.exceptions.Timeout:
+        return pd.DataFrame([{"Status": "Live Feed Temporarily Unavailable"}]), False
+    except requests.exceptions.RequestException:
+        return pd.DataFrame([{"Status": "Live Feed Temporarily Unavailable"}]), False
+    except Exception:
+        return pd.DataFrame([{"Status": "Live Feed Temporarily Unavailable"}]), False
 
 @st.cache_data(ttl=3600)
 def get_tariff_revenue():
@@ -660,8 +668,10 @@ elif page == "Accountability Tribunal":
                 st.info(f"• {v}")
         with col2:
             st.markdown(f"#### Your {selected_state} Reps")
-            reps_df = get_reps(selected_state)
+            reps_df, fetch_success = get_reps(selected_state)
             st.dataframe(reps_df, hide_index=True)
+            if not fetch_success:
+                st.link_button("🔍 Search Congress.gov Directly", f"https://www.congress.gov/members?q=%7B%22member-state%22%3A%22{selected_state}%22%7D")
 
     with type_tab2:
         st.subheader("🔦 The Shadow List (Governors & Local Officials)")
