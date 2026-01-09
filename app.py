@@ -1358,6 +1358,35 @@ def page_accountability_tribunal():
     st.header("⚖️ The Accountability Tribunal")
     st.markdown("We apply the **Spoliation Doctrine**: If a leader hides their record, we assume the worst.")
 
+    st.divider()
+    
+    ccw_col1, ccw_col2 = st.columns([2, 1])
+    with ccw_col1:
+        st.subheader("🎯 Zero Hypothesis Tracker: CCW Permit Holders")
+        st.metric(
+            label="Verified Crimes by CCW Holders",
+            value="0",
+            delta="Pending FOIL verification",
+            delta_color="off"
+        )
+        st.caption("**Hypothesis: 0.** Concealed carry permit holders are statistically among the most law-abiding citizens.")
+    
+    with ccw_col2:
+        with st.expander("📋 Methodology"):
+            st.markdown("""
+**Data Source:** NY State Police, NYPD License Division, Nassau/Suffolk Pistol Bureaus
+
+**Method:** FOIL requests for pistol permit revocations due to firearm crimes.
+
+**Logic:** If a permit holder commits a gun crime, their permit must be revoked. The "Revocation Order" is the smoking gun document.
+
+**If records = 0:** The narrative that "lawful gun owners are the problem" is dead.
+            """)
+    
+    st.info("💡 *\"The media says lawful gun owners are the problem. The data usually says we are the solution. We are asking for the list of 'bad apples.' If the list is empty, the narrative is dead.\"* — Founder's Note")
+    
+    st.divider()
+
     type_tab1, type_tab2 = st.tabs(["Federal (Senate/House)", "State & Local (The Shadow List)"])
 
     with type_tab1:
@@ -1870,7 +1899,27 @@ NOTICE: Failure to produce these records will be viewed as evidence of malfeasan
 4. Relationship between consultants and hiring officials
 5. Competitive bidding documentation or sole-source justifications
 
+NOTICE: Failure to produce these records will be viewed as evidence of malfeasance under the Spoliation Doctrine.""",
+            "Concealed Carry Criminality Audit (CCW Truth)": """Under the provisions of the New York Freedom of Information Law (Article 6 of the Public Officers Law), I hereby request records containing the following statistical data for the period of January 1, 2020, to Present:
+
+1. **Revocation Statistics:** The total number of Concealed Carry Pistol Licenses that were revoked or suspended due to the license holder being charged with or convicted of a crime involving the use, display, or discharge of a firearm.
+
+2. **Incident Correlation:** Any annual reports, internal memos, or statistical summaries that categorize arrests for Criminal Possession of a Weapon (CPW) by the permit status of the arrestee (i.e., "Licensed" vs. "Unlicensed").
+
+3. **Homicide/Assault Data:** The total number of homicide or assault investigations where the identified suspect was confirmed to hold a valid New York State pistol permit at the time of the offense.
+
+If the agency does not maintain a document specifically aggregating this data, I request the "Revocation Orders" issued during this period, with personal identifying information redacted, so that I may tally the reasons for revocation myself.
+
+**TRAP CLAUSE:** If no such records exist because no permit holders have committed such crimes, please issue a formal written response certifying that zero permit holders were revoked for gun crimes during this period.
+
 NOTICE: Failure to produce these records will be viewed as evidence of malfeasance under the Spoliation Doctrine."""
+        }
+        
+        CCW_AGENCIES = {
+            "NY State Police - Pistol Permit Bureau": "New York State Police, Pistol Permit Section, 1220 Washington Ave, Building 22, Albany, NY 12226",
+            "NYPD License Division": "New York City Police Department, License Division, One Police Plaza, Room 110A, New York, NY 10038",
+            "Nassau County Pistol Bureau": "Nassau County Police Department, Pistol Licensing Section, 1490 Franklin Avenue, Mineola, NY 11501",
+            "Suffolk County Pistol Bureau": "Suffolk County Police Department, Pistol License Bureau, 30 Yaphank Avenue, Yaphank, NY 11980"
         }
         
         with grift_type[0]:
@@ -1898,10 +1947,27 @@ NOTICE: Failure to produce these records will be viewed as evidence of malfeasan
             st.caption("Works in any state, any party")
             
             universal_template_choice = st.selectbox("Select Template:", list(UNIVERSAL_TEMPLATES.keys()), key="universal_template")
-            if st.button("Load Template", key="load_universal"):
-                st.session_state.template_records = UNIVERSAL_TEMPLATES[universal_template_choice]
-                st.session_state.template_agency = f"{selected_state} State Comptroller / Budget Office"
-                st.success("Template loaded! Scroll down to generate your request.")
+            
+            if "CCW" in universal_template_choice:
+                st.markdown("---")
+                st.markdown("#### 🎯 CCW Truth Cannon: Target Agency")
+                st.info("💡 *\"The media says lawful gun owners are the problem. The data usually says we are the solution. We are asking for the list of 'bad apples.' If the list is empty, the narrative is dead.\"*")
+                ccw_agency_choice = st.selectbox(
+                    "Select Target Agency:",
+                    list(CCW_AGENCIES.keys()),
+                    key="ccw_agency_select"
+                )
+                st.caption(f"📍 Address: {CCW_AGENCIES[ccw_agency_choice]}")
+                
+                if st.button("🎯 Load CCW Truth Template", key="load_ccw", type="primary"):
+                    st.session_state.template_records = UNIVERSAL_TEMPLATES[universal_template_choice]
+                    st.session_state.template_agency = CCW_AGENCIES[ccw_agency_choice]
+                    st.success("✅ CCW Truth template loaded! Scroll down to generate your FOIL request.")
+            else:
+                if st.button("Load Template", key="load_universal"):
+                    st.session_state.template_records = UNIVERSAL_TEMPLATES[universal_template_choice]
+                    st.session_state.template_agency = f"{selected_state} State Comptroller / Budget Office"
+                    st.success("Template loaded! Scroll down to generate your request.")
     
     with foia_tab3:
         st.subheader("🔍 Grift Hunter: Bill Search")

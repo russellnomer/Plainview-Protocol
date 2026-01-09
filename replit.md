@@ -1,7 +1,13 @@
 # The Plainview Protocol: Truth, Kindness, & Security
 
 ## Overview
-Version 8.4 - Hardened Patch. Established January 8, 2026. A production-ready Streamlit web application with bipartisan corruption tracking across all 50 states and 3,143 counties. Features Corruption Heatmap with Shadow Penalty scoring, Foreign Influence Tracker with Affidavit Gate (now with localStorage persistence), Revolving Door Tracker for lobbyist cooling-off violations, Ethics Complaint Trigger for OCC/Senate submissions, Agency Collaboration Portal with 72-hour correction window, and comprehensive FOIA/FARA tools. Pro-American, rule of law, domestic security focus.
+Version 6.31 - CCW Truth Cannon. Established January 8, 2026. A production-ready Streamlit web application with bipartisan corruption tracking across all 50 states and 3,143 counties. Features Corruption Heatmap with Shadow Penalty scoring, Foreign Influence Tracker with Affidavit Gate (now with localStorage persistence), Revolving Door Tracker for lobbyist cooling-off violations, Ethics Complaint Trigger for OCC/Senate submissions, Agency Collaboration Portal with 72-hour correction window, and comprehensive FOIA/FARA tools. Pro-American, rule of law, domestic security focus.
+
+## Version 6.31 Features (CCW Truth Cannon)
+- **CCW Truth FOIA Template**: "Concealed Carry Criminality Audit" targeting NY State Police, NYPD License Division, Nassau/Suffolk Pistol Bureaus
+- **Zero Hypothesis Tracker**: Counter on Tribunal page showing "Verified Crimes by CCW Holders" (default: 0, pending FOIL verification)
+- **Trap Clause**: "If no records exist, please certify that zero permit holders were revoked for gun crimes"
+- **Founder's Law Abiding Injection**: "The media says lawful gun owners are the problem. The data usually says we are the solution."
 
 ## Version 8.4 Features (Hardened Patch)
 - **UnitedStates.io Integration**: JSON API for reliable Congress legislator data with bioguide links
