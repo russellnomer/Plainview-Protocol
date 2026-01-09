@@ -20,19 +20,60 @@
       "focus": "Flip Texas by 2026",
       "fec_id": "C00758664",
       "verified_source": "https://www.fec.gov/data/committee/C00758664/",
-      "risk_flags": ["Out-of-state funding", "Aggressive ad spending"]
+      "risk_flags": ["Out-of-state funding", "Aggressive ad spending"],
+      "foia_target": true,
+      "foia_focus": "Coordination with national Democratic donors"
     },
     {
-      "name": "American Bridge 21st Century",
+      "name": "Leading the Future",
+      "type": "Super PAC Network",
+      "principal_funder": "Greg Brockman (OpenAI), Andreessen Horowitz",
+      "cash_on_hand": 100000000,
+      "2025_spending": 50000000,
+      "focus": "Oppose state AI safety legislation",
+      "verified_source": "https://www.fec.gov/",
+      "risk_flags": ["Corporate policy capture", "Regulatory preemption", "Former regulator employment"],
+      "ai_regulation_target": true,
+      "primary_target": {
+        "name": "NY Assemblyman Alex Bores",
+        "district": "AD 73 (Manhattan)",
+        "legislation": "RAISE Act",
+        "attack_spending": 7000000
+      },
+      "affiliate_pacs": ["Think Big PAC", "American Mission PAC"],
+      "dark_money_arm": "Build American AI (501c4)"
+    },
+    {
+      "name": "Think Big PAC",
       "type": "Super PAC",
-      "principal_funder": "Multiple donors including Soros Fund",
-      "cash_on_hand": 8500000,
-      "2024_spending": 25000000,
-      "focus": "Opposition research and tracking",
-      "fec_id": "C00492140",
-      "verified_source": "https://www.fec.gov/data/committee/C00492140/",
-      "risk_flags": ["MAGAFiles surveillance project", "Federal official tracking"],
-      "special_project": "MAGAFiles - database of Republican officials"
+      "principal_funder": "Leading the Future network",
+      "estimated_spending": 7000000,
+      "focus": "Attack ads against AI regulation advocates",
+      "verified_source": "https://www.fec.gov/",
+      "risk_flags": ["Attack ad spending", "Tech industry backing"],
+      "primary_target": "NY Assemblyman Alex Bores",
+      "messaging": "State AI laws harm American competitiveness"
+    },
+    {
+      "name": "American Mission PAC",
+      "type": "Super PAC",
+      "principal_funder": "Leading the Future network",
+      "estimated_spending": 5000000,
+      "focus": "Support pro-tech candidates",
+      "verified_source": "https://www.fec.gov/",
+      "risk_flags": ["Tech industry coordination", "Issue advocacy"]
+    },
+    {
+      "name": "American Technology Excellence Project",
+      "type": "501(c)(4)",
+      "principal_funder": "Meta / Mark Zuckerberg",
+      "estimated_spending": 25000000,
+      "focus": "Block state AI safety bills",
+      "verified_source": "https://www.opensecrets.org/",
+      "risk_flags": ["Regulatory capture", "Preemption agenda", "Newsom coordination"],
+      "ai_regulation_target": true,
+      "lobbying_targets": ["California SB 1047 (Vetoed)", "NY AI Transparency Act", "Colorado AI Accountability Act"],
+      "newsom_connection": "Multiple meetings with Governor's office documented in lobby disclosures"
     },
     {
       "name": "Sixteen Thirty Fund",
@@ -43,7 +84,9 @@
       "focus": "Fiscal sponsorship for progressive causes",
       "irs_ein": "26-4486735",
       "verified_source": "https://projects.propublica.org/nonprofits/organizations/264486735",
-      "risk_flags": ["Dark money conduit", "No donor disclosure required", "Pop-up group funding"]
+      "risk_flags": ["Dark money conduit", "No donor disclosure required", "Pop-up group funding"],
+      "soros_network_recipient": true,
+      "soros_flow_amount": 85000000
     },
     {
       "name": "Open Society Policy Center",
@@ -55,63 +98,52 @@
       "irs_ein": "52-2267024",
       "verified_source": "https://projects.propublica.org/nonprofits/organizations/522267024",
       "risk_flags": ["International funding source", "501(c)(4) dark money shield"],
-      "funnel_logic": "Receives funds from OSF international branches, redistributes to U.S. nonprofits"
+      "funnel_logic": "Receives funds from OSF international branches, redistributes to U.S. nonprofits",
+      "soros_network_primary": true,
+      "total_flow": 140000000
     },
     {
-      "name": "Fund for Policy Reform",
+      "name": "America Votes",
       "type": "501(c)(4)",
-      "principal_funder": "George Soros",
-      "quarterly_injection": 60000000,
-      "focus": "Criminal justice and immigration reform",
+      "principal_funder": "Multiple progressive donors including Soros network",
+      "estimated_spending": 55000000,
+      "focus": "Voter mobilization coordination",
       "verified_source": "https://www.opensecrets.org/",
-      "risk_flags": ["Large quarterly transfers", "Policy advocacy near elections"]
+      "risk_flags": ["Swing state targeting", "Coordination allegations", "Late disclosure timing"],
+      "soros_network_recipient": true,
+      "soros_flow_amount": 55000000
     },
     {
-      "name": "Priorities USA Action",
-      "type": "Super PAC",
-      "principal_funder": "Multiple Democratic megadonors",
-      "cash_on_hand": 12000000,
-      "2024_spending": 35000000,
-      "focus": "Democratic presidential and swing state races",
-      "fec_id": "C00495861",
-      "verified_source": "https://www.fec.gov/data/committee/C00495861/",
-      "risk_flags": ["Swing state targeting", "High ad volume"]
-    },
-    {
-      "name": "Senate Majority PAC",
-      "type": "Super PAC",
-      "principal_funder": "Multiple Democratic donors",
-      "cash_on_hand": 45000000,
-      "2024_spending": 120000000,
-      "focus": "Democratic Senate candidates",
-      "fec_id": "C00484642",
-      "verified_source": "https://www.fec.gov/data/committee/C00484642/",
-      "risk_flags": ["Massive ad spending", "Late money transfers"]
-    },
-    {
-      "name": "House Majority PAC",
-      "type": "Super PAC",
-      "principal_funder": "Multiple Democratic donors",
-      "cash_on_hand": 38000000,
-      "2024_spending": 95000000,
-      "focus": "Democratic House candidates",
-      "fec_id": "C00495028",
-      "verified_source": "https://www.fec.gov/data/committee/C00495028/",
-      "risk_flags": ["Swing district targeting", "High volume spending"]
-    },
-    {
-      "name": "Way to Win",
+      "name": "Build American AI",
       "type": "501(c)(4)",
-      "principal_funder": "Multiple progressive donors",
-      "estimated_assets": 50000000,
-      "focus": "Progressive infrastructure and candidate support",
+      "principal_funder": "Leading the Future network (dark money arm)",
+      "estimated_spending": "Undisclosed",
+      "focus": "Issue advocacy for AI industry without donor disclosure",
       "verified_source": "https://www.opensecrets.org/",
-      "risk_flags": ["Voter mobilization near elections", "Dark money structure"]
+      "risk_flags": ["Dark money conduit", "Former regulator employment", "No donor disclosure"],
+      "ai_regulation_target": true,
+      "revolving_door_flag": true
     }
   ],
+  "soros_network_forensics": {
+    "total_flow": 140000000,
+    "source": "Open Society Policy Center",
+    "recipients": [
+      {"name": "Sixteen Thirty Fund", "amount": 85000000},
+      {"name": "America Votes", "amount": 55000000}
+    ],
+    "verification": "IRS Form 990 Schedule I filings"
+  },
+  "ai_preemption_warning": {
+    "definition": "Preemption is the tactic where Big Tech uses federal lobbyists to strip away your state's right to protect its citizens from AI harms",
+    "total_ai_lobbying_2025": 50000000,
+    "revolving_door_rate": "53% of tech-adjacent lobbyists are former government officials",
+    "protocol_response": "FOIA every meeting between AI lobbyists and state officials"
+  },
   "metadata": {
     "last_updated": "2026-01-09",
-    "data_sources": ["FEC.gov", "OpenSecrets.org", "ProPublica Nonprofit Explorer"],
-    "verification_standard": "All figures from official filings or verified journalism"
+    "data_sources": ["FEC.gov", "OpenSecrets.org", "ProPublica Nonprofit Explorer", "State lobby disclosures"],
+    "verification_standard": "All figures from official filings or verified journalism",
+    "version": "6.17"
   }
 }

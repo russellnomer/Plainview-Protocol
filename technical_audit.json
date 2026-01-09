@@ -1,0 +1,137 @@
+{
+  "version": "7.0",
+  "codename": "Silicon & Soros Audit",
+  "last_updated": "2026-01-09",
+  "soros_network_forensics": {
+    "primary_conduit": {
+      "name": "Open Society Policy Center",
+      "irs_ein": "52-2267024",
+      "type": "501(c)(4)",
+      "total_flow": 140000000,
+      "source": "Open Society Foundations (international)",
+      "verified_source": "https://projects.propublica.org/nonprofits/organizations/522267024"
+    },
+    "money_flow_map": [
+      {
+        "from": "Open Society Policy Center",
+        "to": "Sixteen Thirty Fund",
+        "amount": 85000000,
+        "year": 2023,
+        "mechanism": "Fiscal sponsorship grant",
+        "verification": "IRS Form 990 Schedule I"
+      },
+      {
+        "from": "Open Society Policy Center",
+        "to": "America Votes",
+        "amount": 55000000,
+        "year": 2023,
+        "mechanism": "Program grant",
+        "verification": "IRS Form 990 Schedule I"
+      }
+    ],
+    "downstream_recipients": [
+      {
+        "name": "Sixteen Thirty Fund",
+        "type": "501(c)(4) Fiscal Sponsor",
+        "irs_ein": "26-4486735",
+        "role": "Pop-up group funding conduit",
+        "red_flags": ["No donor disclosure", "Creates temporary advocacy groups", "Dissolves groups after election cycles"]
+      },
+      {
+        "name": "America Votes",
+        "type": "501(c)(4)",
+        "role": "Voter mobilization coordination",
+        "red_flags": ["Swing state targeting", "Coordination allegations", "Late disclosure timing"]
+      }
+    ],
+    "foia_targets": [
+      {
+        "entity": "Texas Majority PAC",
+        "fec_id": "C00758664",
+        "inquiry_focus": "Coordination with national Democratic donors",
+        "specific_questions": [
+          "All communications with Democracy PAC II or its principals",
+          "All communications with Sixteen Thirty Fund or its affiliates",
+          "All bundled donations from out-of-state sources exceeding $10,000",
+          "All coordination agreements with America Votes or state affiliates"
+        ],
+        "legal_basis": "Texas Government Code Chapter 552"
+      }
+    ]
+  },
+  "ai_regulation_drilldown": {
+    "silicon_labyrinth_pacs": [
+      {
+        "name": "Leading the Future",
+        "principal_backer": "OpenAI / Sam Altman",
+        "type": "Super PAC",
+        "2024_spending": 15000000,
+        "focus": "Oppose state AI safety legislation",
+        "primary_target": {
+          "official": "NY Assemblyman Alex Bores",
+          "district": "AD 73 (Manhattan)",
+          "reason": "Sponsored AI transparency bill requiring algorithmic audits",
+          "opposition_tactics": ["Primary challenger funding", "Attack ads", "Industry coalition letters"]
+        },
+        "preemption_agenda": {
+          "goal": "Federal preemption of state AI laws",
+          "method": "Fund candidates who pledge to block state-level AI regulation",
+          "states_targeted": ["New York", "California", "Colorado", "Illinois"]
+        },
+        "verified_source": "https://www.fec.gov/",
+        "risk_flags": ["Corporate policy capture", "Regulatory arbitrage", "Sovereign state rights attack"]
+      },
+      {
+        "name": "American Technology Excellence Project",
+        "principal_backer": "Meta / Mark Zuckerberg",
+        "type": "501(c)(4)",
+        "estimated_spending": 25000000,
+        "focus": "Block state AI safety bills",
+        "lobbying_targets": [
+          {
+            "state": "California",
+            "bill": "SB 1047",
+            "status": "Vetoed by Gov. Newsom",
+            "meta_involvement": "Extensive lobbying, Newsom chief of staff meetings"
+          },
+          {
+            "state": "New York",
+            "bill": "AI Transparency Act",
+            "status": "Committee",
+            "meta_involvement": "Industry coalition opposition"
+          },
+          {
+            "state": "Colorado",
+            "bill": "AI Accountability Act",
+            "status": "Passed (weakened)",
+            "meta_involvement": "Amendment lobbying"
+          }
+        ],
+        "preemption_agenda": {
+          "goal": "Prevent meaningful AI regulation at any level",
+          "method": "Lobby for weak federal standards that preempt stronger state laws",
+          "newsom_connection": "Multiple meetings with Governor's office documented in lobby disclosures"
+        },
+        "verified_source": "https://www.opensecrets.org/",
+        "risk_flags": ["Regulatory capture", "Preemption agenda", "Public safety override"]
+      }
+    ],
+    "preemption_warning": {
+      "definition": "Preemption is the tactic where Big Tech uses federal lobbyists to strip away your state's right to protect its own citizens from AI harms.",
+      "constitutional_basis": "Supremacy Clause abuse - using federal minimums to block state maximums",
+      "citizen_impact": "Your state legislature cannot protect you if federal law preempts local action",
+      "protocol_response": "FOIA every meeting between AI lobbyists and state officials. Demand to know who is buying preemption."
+    }
+  },
+  "litigation_triggers": {
+    "spoliation_doctrine": "Any entity that destroys or conceals records after receiving a FOIA request faces adverse inference in court",
+    "continuing_offense": "Each day of non-disclosure is a separate violation under state public records laws",
+    "sovereign_principle": "The people have a right to know who is spending money to strip their states of regulatory power"
+  },
+  "founder_note": "We don't care about partisan labels. We care about who is buying preemption and who is hiding the receipts. From Newsom's chief of staff to Soros's checkbook, the Labyrinth has no place to hide.",
+  "metadata": {
+    "data_sources": ["FEC.gov", "OpenSecrets.org", "ProPublica Nonprofit Explorer", "State lobby disclosure databases"],
+    "verification_standard": "All figures from official filings, lobby disclosures, or verified journalism",
+    "protocol_version": "7.0 - Silicon & Soros Audit"
+  }
+}

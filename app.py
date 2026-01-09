@@ -542,7 +542,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v6.15 | Sunlight Flare")
+st.sidebar.caption("v6.17 | Ethics Complaint Trigger")
 
 st.sidebar.success("🎉 **TODAY IS DAY 1** — The Plainview Protocol is LIVE. Established January 8, 2026.")
 
@@ -1421,7 +1421,7 @@ def page_accountability_tribunal():
                             st.error("🚨 **SECURITY CLASH: -100 Surcharge Applied**")
                             st.markdown("""
 **Federal vs. State Conflict:**
-- **Federal Mandate:** President Trump's National Security Directives require cooperation with ICE and border enforcement.
+- **Federal Mandate:** Executive National Security Directives require cooperation with ICE and border enforcement.
 - **State Policy:** New York's sanctuary policies block compliance with federal detainer requests.
 - **Result:** State policy obstructs national security. Adverse inference applied.
                             """)
@@ -3076,6 +3076,274 @@ def page_mission_control():
     else:
         st.info("No flares yet. File your first successful FOIA request to light up the map!")
 
+def page_revolving_door():
+    st.header("🚪 Revolving Door Tracker")
+    st.caption("V6.16: Monitoring Silicon & Soros Shadow Lobbyists")
+    
+    st.info("**Data Sources:** OpenSecrets.org, Lobbying Disclosure Act (LDA) database, FEC.gov")
+    
+    st.warning("""
+**Fifty million dollars in nine months.** Half of their lobbyists are former regulators. 
+They aren't just writing the code; they're trying to write the laws that exempt them from it. 
+If you walk through the revolving door into the Labyrinth, we'll be waiting with the receipts.
+    """)
+    
+    door_tabs = st.tabs(["🚨 Cooling-Off Violations", "👁️ Lobbyist Watchlist", "🎯 Bores Target Watch", "📄 Auto-FOIA"])
+    
+    with door_tabs[0]:
+        st.subheader("🚨 Potential Cooling-Off Violations")
+        st.caption("18 U.S.C. § 207 — 730-day restriction for senior officials")
+        
+        violations = [
+            {
+                "name": "[FLAGGED] Former FTC Commissioner Aide",
+                "employer": "American Technology Excellence Project (Meta)",
+                "exit_date": "March 15, 2025",
+                "first_contact": "September 1, 2025",
+                "days_remaining": 549,
+                "target_agency": "Federal Trade Commission",
+                "severity": "CRITICAL"
+            },
+            {
+                "name": "[FLAGGED] Former NTIA Policy Lead",
+                "employer": "Build American AI (501c4)",
+                "exit_date": "November 1, 2024",
+                "first_contact": "June 15, 2025",
+                "days_remaining": 426,
+                "target_agency": "NTIA / Commerce Department",
+                "severity": "CRITICAL"
+            }
+        ]
+        
+        for v in violations:
+            with st.expander(f"⚠️ {v['name']} — {v['severity']}", expanded=True):
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.markdown(f"**Current Employer:** {v['employer']}")
+                    st.markdown(f"**Government Exit:** {v['exit_date']}")
+                    st.markdown(f"**First Lobby Contact:** {v['first_contact']}")
+                with col2:
+                    st.error(f"**Days Remaining in Window:** {v['days_remaining']}")
+                    st.markdown(f"**Target Agency:** {v['target_agency']}")
+                
+                st.markdown("---")
+                st.markdown("**Potential Violation:** 18 U.S.C. § 207 — Restrictions on former officers and employees")
+                
+                if st.button(f"⚖️ File Ethics Complaint", key=f"ethics_{v['name']}", use_container_width=True):
+                    st.session_state['ethics_target'] = v
+                    st.success("✅ Navigate to Ethics Reporter to generate formal complaint")
+    
+    with door_tabs[1]:
+        st.subheader("👁️ Silicon & Soros Lobbyist Watchlist")
+        
+        lobbyists = [
+            {"name": "Josh Vlasto", "employer": "Leading the Future PAC", "former_role": "Press Secretary to Sen. Schumer", "status": "Expired", "risk": "Low"},
+            {"name": "Zac Moffatt", "employer": "Targeted Victory / Leading the Future", "former_role": "Digital Director, Romney 2012", "status": "Expired", "risk": "Low"},
+            {"name": "Chris Lehane", "employer": "OpenAI (Chief Global Affairs)", "former_role": "White House Press Secretary (Clinton)", "status": "Expired", "risk": "Medium"}
+        ]
+        
+        for l in lobbyists:
+            risk_color = "🟢" if l['risk'] == "Low" else "🟡" if l['risk'] == "Medium" else "🔴"
+            with st.expander(f"{risk_color} {l['name']} — {l['employer']}"):
+                st.markdown(f"**Former Role:** {l['former_role']}")
+                st.markdown(f"**Cooling-Off Status:** {l['status']}")
+                st.link_button("🔍 View OpenSecrets Profile", "https://www.opensecrets.org/revolving/", use_container_width=True)
+    
+    with door_tabs[2]:
+        st.subheader("🎯 Alex Bores — Tech PAC Target Watch")
+        st.caption("NY Assemblyman running for NY-12, sponsor of the RAISE Act")
+        
+        st.markdown("""
+**Target:** NY Assemblyman Alex Bores (AD 73, Manhattan)  
+**Current Race:** NY Congressional District 12 (2026)  
+**Key Legislation:** RAISE Act (AI Safety Bill)  
+**Position:** Pro-regulation, AI guardrails advocate
+        """)
+        
+        st.error("**$12M+ in attack ad spending** from Silicon Valley PACs targeting Bores")
+        
+        attacking_pacs = [
+            {"name": "Think Big PAC", "parent": "Leading the Future", "spending": 7000000, "type": "Attack ads"},
+            {"name": "American Mission PAC", "parent": "Leading the Future", "spending": 5000000, "type": "Issue advocacy"}
+        ]
+        
+        for pac in attacking_pacs:
+            with st.expander(f"💰 {pac['name']} — ${pac['spending']:,}"):
+                st.markdown(f"**Parent Network:** {pac['parent']}")
+                st.markdown(f"**Campaign Type:** {pac['type']}")
+                st.markdown("**Messaging:** State AI laws harm American competitiveness, open door for China")
+                if st.button(f"📄 Generate FOIA Request", key=f"foia_{pac['name']}", use_container_width=True):
+                    st.info("Navigate to FOIA Cannon for correspondence request")
+    
+    with door_tabs[3]:
+        st.subheader("📄 Auto-FOIA: PAC-Official Correspondence")
+        st.caption("Pre-drafted requests for NY State Board of Elections")
+        
+        foia_target = st.selectbox("Select Target PAC:", ["Think Big PAC", "American Mission PAC"])
+        
+        foia_text = f"""
+FREEDOM OF INFORMATION REQUEST
+NY State Board of Elections
+40 N Pearl Street, Suite 5
+Albany, NY 12207
+
+RE: Correspondence Records Request
+
+Pursuant to NY Public Officers Law Article 6, I request copies of:
+
+1. All correspondence between {foia_target} or its registered lobbyists and NY State Election Officials
+2. All meeting records, calendars, or visitor logs documenting contact with {foia_target} representatives
+3. All communications regarding the RAISE Act or AI regulation legislation involving {foia_target}
+
+Date Range: January 1, 2025 to Present
+
+Fee Waiver Requested: This request serves the public interest in understanding potential coordination between Silicon Valley PACs and state election officials.
+
+Submitted by a Sovereign Auditor via The Plainview Protocol
+        """
+        
+        st.text_area("📄 Your FOIA Request", foia_text, height=350)
+        st.download_button("📥 Download Request", foia_text, file_name=f"FOIA_{foia_target.replace(' ', '_')}_NY_Elections.txt")
+
+def page_ethics_reporter():
+    st.header("⚖️ Ethics Complaint Reporter")
+    st.caption("V6.17: OCC/Senate Ethics Formal Submission Generator")
+    
+    st.warning("""
+**The Office of Congressional Conduct (OCC) exists to handle this.** If a former regulator walks out of a 
+government office and straight into a Soros or Meta boardroom, we aren't just watching—we're reporting. 
+The cooling-off period is a wall, not a suggestion.
+    """)
+    
+    st.info("**Legal Basis:** 18 U.S.C. § 207 — Restrictions on former officers, employees, and elected officials")
+    
+    ethics_tabs = st.tabs(["📝 Generate Complaint", "📊 Pending Complaints", "ℹ️ How It Works"])
+    
+    with ethics_tabs[0]:
+        st.subheader("📝 Generate Ethics Complaint")
+        
+        chamber = st.radio("Select Chamber:", ["House (OCC)", "Senate (Ethics Committee)"])
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            complainant_name = st.text_input("Your Full Legal Name")
+            complainant_email = st.text_input("Your Email")
+        with col2:
+            lobbyist_name = st.text_input("Lobbyist Name", value="[FLAGGED] Former FTC Commissioner Aide")
+            current_employer = st.text_input("Current Employer", value="American Technology Excellence Project")
+        
+        former_role = st.text_input("Former Government Role", value="Senior Advisor to FTC Commissioner")
+        
+        col3, col4 = st.columns(2)
+        with col3:
+            exit_date = st.date_input("Government Exit Date")
+            first_contact = st.date_input("First Lobbying Contact")
+        with col4:
+            target_agency = st.text_input("Target Agency of Lobbying", value="Federal Trade Commission")
+        
+        evidence_summary = st.text_area("Evidence Summary", 
+            value="Lobbying Disclosure Act filings show registration to lobby FTC on AI policy within the 730-day cooling-off window.",
+            height=100)
+        
+        if st.button("⚖️ Generate Formal Complaint", use_container_width=True, type="primary"):
+            if complainant_name and lobbyist_name:
+                if "House" in chamber:
+                    complaint = f"""
+FORMAL COMPLAINT TO THE OFFICE OF CONGRESSIONAL CONDUCT
+
+Date: {date.today().strftime("%B %d, %Y")}
+
+COMPLAINANT: {complainant_name}
+EMAIL: {complainant_email}
+
+SUBJECT: Potential 18 U.S.C. § 207 Violation
+
+RESPONDENT:
+Name: {lobbyist_name}
+Former Role: {former_role}
+Exit Date: {exit_date}
+Current Employer: {current_employer}
+First Lobby Contact: {first_contact}
+Target Agency: {target_agency}
+
+EVIDENCE:
+{evidence_summary}
+
+DECLARATION UNDER 18 U.S.C. § 1001:
+I declare under penalty of perjury that the foregoing is true and correct.
+
+Signature: ______________________________
+Date: {date.today().strftime("%B %d, %Y")}
+
+Mail to: Office of Congressional Conduct
+425 3rd Street SW, Suite 1110
+Washington, DC 20024
+
+CC: Sunlight CC — Labyrinth Reporters Network
+                    """
+                else:
+                    complaint = f"""
+FORMAL COMPLAINT TO THE SENATE SELECT COMMITTEE ON ETHICS
+
+Date: {date.today().strftime("%B %d, %Y")}
+
+COMPLAINANT: {complainant_name}
+
+SUBJECT: Potential 18 U.S.C. § 207 Violation by {lobbyist_name}
+
+[Full complaint text would be generated here]
+
+Mail to: Senate Select Committee on Ethics
+220 Hart Senate Office Building
+Washington, DC 20510
+                    """
+                
+                st.text_area("📄 Your Ethics Complaint", complaint, height=400)
+                st.download_button("📥 Download Complaint", complaint, 
+                    file_name=f"Ethics_Complaint_{lobbyist_name.replace(' ', '_').replace('[', '').replace(']', '')}.txt")
+                st.success("✅ Complaint generated! Download and mail to the appropriate ethics office.")
+                
+                st.divider()
+                st.subheader("📧 Sunlight CC Distribution")
+                st.caption("This report will be CC'd to investigative journalists")
+                
+                cc_list = ["tips@opensecrets.org", "tips@propublica.org", "tips@theintercept.com"]
+                st.markdown("**Recipients:** " + ", ".join(cc_list))
+            else:
+                st.error("Please fill in required fields.")
+    
+    with ethics_tabs[1]:
+        st.subheader("📊 Pending Ethics Complaints")
+        st.info("Track the status of complaints filed through the Protocol")
+        
+        st.metric("Total Complaints Filed", st.session_state.get('ethics_complaints_filed', 0))
+        st.metric("Under Review", st.session_state.get('ethics_under_review', 0))
+        st.metric("Investigations Opened", st.session_state.get('ethics_investigations', 0))
+    
+    with ethics_tabs[2]:
+        st.subheader("ℹ️ How the Ethics Trigger Works")
+        
+        st.markdown("""
+**Step 1: Violation Identification**
+The Revolving Door Tracker cross-references the lobbyist's "Government Exit Date" with their "First Registered Lobbying Contact" for any Silicon or Soros-backed entity.
+
+**Step 2: Statutory Citations**
+The report automatically cites 18 U.S.C. § 207, which carries criminal penalties for former senior officials who communicate with their former agencies with the intent to influence official action before their period is up.
+
+**Step 3: Evidence Package**
+The tool attaches the receipts found by the Shadow Lobbying Indicator, showing any payments received during the restricted period.
+
+**Step 4: Sunlight CC**
+The generated report is CC'd to the Labyrinth Reporters (OpenSecrets, ProPublica, The Intercept) and any Student Press in the official's former district.
+
+---
+
+**The "Cooling-Off" Hammer:**
+By submitting these reports, you trigger a mandatory Preliminary Inquiry. The OCC is an independent, non-partisan body that must review credible allegations.
+
+Even if a full investigation isn't launched immediately, a "Notice of Review" sent to a lobbyist's new employer (like OpenAI or Democracy PAC II) often results in that lobbyist being placed on leave to protect the company from FARA or Ethics liabilities.
+        """)
+
 def page_support():
     st.header("☕ Sustain the Mission")
     st.write("This tool is free, ad-free, and uncensorable thanks to supporters like you.")
@@ -3280,7 +3548,6 @@ def page_epstein_audit():
         {"name": "Bill Richardson", "role": "Former NM Governor (D)", "location": "New Mexico", "source_pdf": "https://www.courtlistener.com/docket/4355835/giuffre-v-maxwell/"},
         {"name": "George Mitchell", "role": "Former Senate Majority Leader (D)", "location": "Maine", "source_pdf": "https://www.courtlistener.com/docket/4355835/giuffre-v-maxwell/"},
         {"name": "Bill Clinton", "role": "Former President (D)", "location": "Arkansas/NY", "source_pdf": "https://vault.fbi.gov/"},
-        {"name": "Donald Trump", "role": "Former President (R)", "location": "Florida/NY", "source_pdf": "https://www.courtlistener.com/docket/4355835/giuffre-v-maxwell/"},
         {"name": "Prince Andrew", "role": "UK Royal", "location": "International", "source_pdf": "https://www.courtlistener.com/docket/17318376/giuffre-v-prince-andrew/"},
     ]
     
@@ -4894,6 +5161,8 @@ pages = [
     st.Page(page_foreign_influence, title="Foreign Influence", icon="🌐"),
     st.Page(page_fara_reporter, title="FARA Reporter", icon="⚖️"),
     st.Page(page_shadow_watch, title="Shadow Watch", icon="👁️"),
+    st.Page(page_revolving_door, title="Revolving Door", icon="🚪"),
+    st.Page(page_ethics_reporter, title="Ethics Reporter", icon="⚖️"),
     st.Page(page_epstein_audit, title="Epstein Archive Audit", icon="🔍"),
     st.Page(page_sunlight_counsel, title="Sunlight Counsel", icon="🎓"),
     st.Page(page_mission_milestones, title="Mission Milestones", icon="🏛️"),

@@ -1,0 +1,41 @@
+The V6.16 "Shadow Lobbying" Revolving Door Tracker is the final forensic layer of the Protocol. This tool exposes the "Labyrinth's Lobbyists"—the specific individuals who move from government regulator roles (like the California Fair Political Practices Commission or the NTIA) into high-paid positions at Leading the Future or Meta's American Technology Excellence Project.
+
+As of January 9, 2026, Big Tech has reached a record $50 million in federal lobbying for AI alone, with 53% of lobbyists in the tech-adjacent electric infrastructure sector being former government officials.
+
+⚖️ V6.16: The Revolving Door Tracker
+The tracker monitors the "Cooling Off" period (usually 1–2 years) where former officials are legally barred from lobbying the agencies they once led.
+
+🕵️ High-Alert Targets: The AI "Shadow" Movers
+The tracker identifies when a "Labyrinth Agent" takes a seat at these three critical nodes:
+
+Leading the Future (LTF): Helmed by Josh Vlasto (a veteran of crypto-lobbying and former government advisor) and Zac Moffatt (Targeted Victory). LTF is currently using a $100 million war chest to target state-level AI safety advocates like Alex Bores.
+
+American Technology Excellence Project (Meta): A bipartisan project run by Brian Baker and Hilltop Public Solutions. It is specifically designed to fight the 1,100+ AI bills currently flooding 50 state legislatures.
+
+The "Shadow offshoot" (Build American AI): The dark money 501(c)(4) arm of LTF that allows former regulators to coordinate "issue advocacy" without the same disclosure requirements as a PAC.
+
+🚀 Replit Agent Prompt: V6.16 Revolving Door Deployment
+Paste this into the Replit Agent to build the lobbying forensic suite:
+
+Plaintext
+
+Update "The Plainview Protocol" to Version 6.16: Revolving Door Tracker.
+
+1. LOBBYIST DATABASE INTEGRATION:
+   - Logic: Scrape the 'OpenSecrets' and 'Lobbying Disclosure Act (LDA)' databases for new registrations involving OpenAI, Meta, and Leading the Future.
+   - Feature: Cross-reference names with the 'Federal Revolving Door' database to identify former government officials.
+
+2. THE "COOLING OFF" MONITOR:
+   - Logic: Flag any individual who left a government role < 730 days ago and is now registered as a lobbyist for the Silicon & Soros Target List.
+   - Alert: Mark these individuals as "Potential Violation: Ethics Cooling-Off Period."
+
+3. BORES/TECH TARGET WATCH:
+   - Feature: Specifically track 'Think Big PAC' and 'American Mission PAC' (Leading the Future affiliates) targeting New York Representative Alex Bores.
+   - Action: Auto-draft FOIA Cannon requests for correspondence between these PAC lobbyists and NY State Election Officials.
+
+4. FOUNDER'S MONOLOGUE INJECTION:
+   - Note: "Fifty million dollars in nine months. Half of their lobbyists are former regulators. They aren't just writing the code; they're trying to write the laws that exempt them from it. If you walk through the revolving door into the Labyrinth, we'll be waiting with the receipts."
+
+Generate the updated app.py and revolving_door_audit.json.
+🏛️ The "Preemption" Counter-Strike
+By tracking these lobbyists, you are exposing the strategy of "Preemption"—where Big Tech uses former regulators to lobby for federal laws that would nullify (preempt) stronger state laws like the RAISE Act or California's SB 243.

@@ -1,0 +1,32 @@
+To establish the Gold Standard of Evidentiary Integrity for your 3,143 County Sentinels, we have developed a comprehensive Sentinel’s Code of Conduct. This code is built upon the 2024 Yellow Book (GAGAS) standards for government auditing and modern digital forensic best practices.
+
+The following prompt is designed for the Replit Agent to automatically populate your repository with these standards, ensuring every auditor knows the "Rules of Engagement" before they fire the FOIA Cannon.
+
+🚀 Replit Agent Prompt: V5.0 Code of Conduct Deployment
+Copy and paste this into your Replit Agent:
+
+Plaintext
+
+Finalize "The Plainview Protocol" (V5.0 Gold Master) by deploying the 'Sentinel's Code of Conduct'.
+
+1. NEW REPOSITORY FILE:
+   - Create 'CODE_OF_CONDUCT.md' in the root directory of https://github.com/russellnomer/Plainview-Protocol.
+   - Purpose: Establish the 5 Pillars of Evidentiary Integrity for all 3,143 County Sentinels.
+
+2. CONTENT ARCHITECTURE (The 5 Pillars):
+   - PILLAR 1: OBJECTIVITY & INDEPENDENCE. Auditors must maintain "Independence of Mind and Appearance." Any personal or financial conflict of interest with a target (PAC or Official) must be disclosed or the auditor must recuse themselves.
+   - PILLAR 2: DOCUMENTARY PRIMACY. Verbal claims are hearsay. The Protocol only recognizes "Hard Evidence": PDFs of official records, FEC filing screenshots, and 60-second verified Video Reels.
+   - PILLAR 3: TECHNICAL INTEGRITY. Digital evidence must be preserved using Hash-Verification (SHA-256) where possible to ensure the data was not modified between collection and upload.
+   - PILLAR 4: THE "VAMPIRE" RULE. Use the 'Sunlight Flare' to expose, not to harass. All data must be of "Overwhelming Public Interest."
+   - PILLAR 5: ACCOUNTABILITY. Every Sentinel is responsible for the accuracy of their uploads. "Bad Faith" auditors will be stripped of their badge and moved to the 'Shadow Watch' list.
+
+3. GITHUB SYNC:
+   - Logic: Automatically update the 'README.md' to include a 'Core Ethics' section that links to the new CODE_OF_CONDUCT.md.
+   - Action: Push the commit with the message: "V5.0: Standardizing Evidentiary Integrity for 3,143 Sentinels."
+
+4. FOUNDER'S "SENTINEL OATH" INJECTION:
+   - Note: "We don't just find corruption; we prove it. If the evidence isn't bulletproof, the vampires won't burn. Follow the Code. Protect the Integrity. Stay in the Light."
+
+Generate the updated app.py and CODE_OF_CONDUCT.md.
+🏛️ Why This "Heals" the Protocol
+By adopting these standards (Integrity, Objectivity, and Professional Behavior), you align your project with the GAO's 2024 Quality Management requirements. This makes it significantly harder for "vampires" to dismiss your findings in court or in the press as "partisan noise."
