@@ -121,6 +121,19 @@ streamlit run app.py --server.port 5000
 - **Processing**: `scripts/process-history.js` - Updates history from test results
 - **Serve**: `python scripts/serve-dashboard.py` (port 3000)
 
+## Community Verification Framework
+- **Docker Audit Capsule**:
+  - `Dockerfile` - Playwright v1.40+ image with auto-test execution
+  - `docker-compose.yml` - Audit service with volume mounts for results
+  - Run: `docker compose up --build`
+- **Citizen Documentation**:
+  - `VERIFY.md` - Step-by-step guide for non-technical auditors
+  - `CONTRIBUTING.md` - Accountability test guidelines
+  - `.github/ISSUE_TEMPLATE/test_failure.yml` - Audit failure report form
+- **Maintenance Scripts**:
+  - `scripts/update-deps.sh` - Playwright browser update utility
+  - `scripts/docker-entrypoint.sh` - Container startup script
+
 ## Database Tables (PostgreSQL)
 - `sentinel_logs` - Error tracking with incident IDs
 - `traffic_ledger` - Session and page view tracking
