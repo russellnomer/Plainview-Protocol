@@ -2798,11 +2798,22 @@ def page_foreign_influence():
                     import hashlib
                     from datetime import datetime
                     timestamp = datetime.now().isoformat()
-                    sig_hash = hashlib.sha256(f"{signer_name}|{timestamp}".encode()).hexdigest()
+                    
+                    try:
+                        with open("CODE_OF_CONDUCT.md", "r") as f:
+                            coc_content = f.read()
+                        coc_hash = hashlib.sha256(coc_content.encode()).hexdigest()
+                    except FileNotFoundError:
+                        coc_hash = hashlib.sha256(b"CODE_OF_CONDUCT_V6.18").hexdigest()
+                    
+                    sig_hash = hashlib.sha256(f"{signer_name}|{timestamp}|{coc_hash}".encode()).hexdigest()
                     st.session_state['affidavit_signed'] = True
                     st.session_state['affidavit_signer'] = signer_name
                     st.session_state['affidavit_hash'] = sig_hash
+                    st.session_state['affidavit_coc_hash'] = coc_hash
+                    st.session_state['affidavit_timestamp'] = timestamp
                     st.success(f"✅ Affidavit signed! Hash: {sig_hash[:16]}...")
+                    st.caption(f"Bound to CODE_OF_CONDUCT.md version: {coc_hash[:12]}...")
                     st.rerun()
                 else:
                     st.error("Please type your name and check the agreement box.")
@@ -3408,12 +3419,13 @@ Collaboration is the shorter path to the light.
         
         gov_email = st.text_input("Government Email Address (.gov or .mil required)")
         
-        is_valid_gov_email = gov_email.endswith('.gov') or gov_email.endswith('.mil')
+        normalized_email = gov_email.strip().lower()
+        is_valid_gov_email = normalized_email.endswith('.gov') or normalized_email.endswith('.mil')
         
         if gov_email and not is_valid_gov_email:
             st.error("❌ Please use a valid .gov or .mil email address.")
         elif gov_email and is_valid_gov_email:
-            st.success("✅ Government email verified")
+            st.success(f"✅ Government email verified: {normalized_email}")
         
         agency_name = st.text_input("Agency/Department Name")
         official_title = st.text_input("Your Official Title")

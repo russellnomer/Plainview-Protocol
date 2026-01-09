@@ -9,7 +9,9 @@
       "annual_grantmaking": 1500000000,
       "us_affiliate": "Open Society Policy Center",
       "risk_level": "High",
-      "risk_factors": ["International funding flows", "501(c)(4) dark money shield", "Policy advocacy"]
+      "risk_factors": ["International funding flows", "501(c)(4) dark money shield", "Policy advocacy"],
+      "source_url": "https://www.opensocietyfoundations.org/who-we-are/financials",
+      "irs_990_link": "https://projects.propublica.org/nonprofits/organizations/137029285"
     },
     {
       "name": "East-West Management Institute",
@@ -19,7 +21,9 @@
       "state_dept_grants": 12000000,
       "foreign_partnerships": ["Ukraine", "Moldova", "Georgia", "Kyrgyzstan"],
       "risk_level": "Medium",
-      "risk_factors": ["Federal grant recipient", "Foreign government partnerships"]
+      "risk_factors": ["Federal grant recipient", "Foreign government partnerships"],
+      "source_url": "https://www.usaspending.gov/recipient/a0a6afa7-f20d-5680-7b36-b0c83f17e88c-C/latest",
+      "irs_990_link": "https://projects.propublica.org/nonprofits/organizations/133689142"
     },
     {
       "name": "Anti-Corruption Action Centre (AntAC)",
@@ -27,7 +31,9 @@
       "us_funding_sources": ["USAID", "Open Society Foundations", "State Department"],
       "estimated_us_funding": 8000000,
       "risk_level": "High",
-      "risk_factors": ["Foreign entity", "U.S. taxpayer funded", "Political advocacy abroad"]
+      "risk_factors": ["Foreign entity", "U.S. taxpayer funded", "Political advocacy abroad"],
+      "source_url": "https://antac.org.ua/en/about/",
+      "usaid_source": "https://foreignassistance.gov/cd/ukraine/"
     },
     {
       "name": "Atlantic Council",
@@ -36,7 +42,9 @@
       "estimated_foreign_funding_pct": 25,
       "focus": "Foreign policy think tank",
       "risk_level": "Medium",
-      "risk_factors": ["Foreign government funding", "Policy influence"]
+      "risk_factors": ["Foreign government funding", "Policy influence"],
+      "source_url": "https://www.atlanticcouncil.org/support-the-council/honor-roll-of-contributors/",
+      "irs_990_link": "https://projects.propublica.org/nonprofits/organizations/520649077"
     }
   ],
   "501c4_conduits": [
@@ -47,7 +55,9 @@
       "pop_up_groups_funded": 45,
       "donor_disclosure": "Not required",
       "risk_level": "High",
-      "risk_factors": ["No donor disclosure", "Fiscal sponsorship model", "Election-adjacent spending"]
+      "risk_factors": ["No donor disclosure", "Fiscal sponsorship model", "Election-adjacent spending"],
+      "source_url": "https://www.opensecrets.org/dark-money/explore-our-reports?id=1630-4d",
+      "irs_990_link": "https://projects.propublica.org/nonprofits/organizations/264486735"
     },
     {
       "name": "New Venture Fund",
@@ -56,7 +66,9 @@
       "pop_up_groups_funded": 60,
       "donor_disclosure": "Not required",
       "risk_level": "High",
-      "risk_factors": ["No donor disclosure", "Large anonymous donations"]
+      "risk_factors": ["No donor disclosure", "Large anonymous donations"],
+      "source_url": "https://www.opensecrets.org/dark-money/explore-our-reports?id=nvf",
+      "irs_990_link": "https://projects.propublica.org/nonprofits/organizations/205806345"
     },
     {
       "name": "Open Society Policy Center",
@@ -65,7 +77,9 @@
       "international_funding_pct": 95,
       "donor_disclosure": "Not required",
       "risk_level": "High",
-      "risk_factors": ["International funding source", "Policy advocacy", "Lobbying activities"]
+      "risk_factors": ["International funding source", "Policy advocacy", "Lobbying activities"],
+      "source_url": "https://www.opensecrets.org/federal-lobbying/clients/summary?id=D000046963",
+      "irs_990_link": "https://projects.propublica.org/nonprofits/organizations/522032055"
     }
   ],
   "fara_watchlist": [
@@ -73,13 +87,15 @@
       "entity": "Democracy PAC II",
       "fara_status": "Not registered",
       "concern": "Principal funder has extensive international business interests",
-      "recommended_action": "FOIA request for FARA compliance review"
+      "recommended_action": "FOIA request for FARA compliance review",
+      "fec_source": "https://www.fec.gov/data/committee/C00849836/"
     },
     {
       "entity": "Sixteen Thirty Fund",
       "fara_status": "Not registered",
       "concern": "Potential foreign-sourced funding through fiscal sponsorship",
-      "recommended_action": "Cross-reference with FARA database"
+      "recommended_action": "Cross-reference with FARA database",
+      "fara_search": "https://efile.fara.gov/ords/fara/f?p=1235:10"
     }
   ],
   "legal_framework": {
@@ -87,6 +103,7 @@
     "description": "Foreign nationals prohibited from making direct or indirect contributions to U.S. elections",
     "enforcement": "Federal Election Commission, Department of Justice",
     "penalties": "Civil fines and criminal prosecution",
+    "law_source": "https://www.law.cornell.edu/uscode/text/52/30121",
     "high_risk_indicators": [
       "Foreign address on donation",
       "Foreign passport for ID verification",
@@ -102,6 +119,12 @@
   "metadata": {
     "last_updated": "2026-01-09",
     "data_sources": ["FARA.gov", "FEC.gov", "ProPublica", "OpenSecrets.org", "IRS Form 990s"],
-    "verification_standard": "Official filings and verified investigative journalism"
+    "verification_standard": "Official filings and verified investigative journalism",
+    "source_urls": {
+      "fara_database": "https://efile.fara.gov/ords/fara/f?p=1235:10",
+      "fec_database": "https://www.fec.gov/data/",
+      "propublica_nonprofits": "https://projects.propublica.org/nonprofits/",
+      "opensecrets": "https://www.opensecrets.org/"
+    }
   }
 }
