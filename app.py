@@ -155,6 +155,85 @@ STATE_POPS = {
 }
 US_POP = 333000000
 
+STATE_CORRUPTION_DATA = {
+    "Alabama": {"foia_days": 7, "no_bid_pct": 18, "contractor_donations": 2.1, "lean": "R", "ec_votes": 9},
+    "Alaska": {"foia_days": 10, "no_bid_pct": 22, "contractor_donations": 1.8, "lean": "R", "ec_votes": 3},
+    "Arizona": {"foia_days": 5, "no_bid_pct": 15, "contractor_donations": 3.2, "lean": "Purple", "ec_votes": 11},
+    "Arkansas": {"foia_days": 3, "no_bid_pct": 20, "contractor_donations": 1.5, "lean": "R", "ec_votes": 6},
+    "California": {"foia_days": 10, "no_bid_pct": 28, "contractor_donations": 8.5, "lean": "D", "ec_votes": 54},
+    "Colorado": {"foia_days": 3, "no_bid_pct": 12, "contractor_donations": 2.8, "lean": "D", "ec_votes": 10},
+    "Connecticut": {"foia_days": 4, "no_bid_pct": 19, "contractor_donations": 3.1, "lean": "D", "ec_votes": 7},
+    "Delaware": {"foia_days": 15, "no_bid_pct": 25, "contractor_donations": 2.2, "lean": "D", "ec_votes": 3},
+    "Florida": {"foia_days": 3, "no_bid_pct": 16, "contractor_donations": 5.8, "lean": "R", "ec_votes": 30},
+    "Georgia": {"foia_days": 3, "no_bid_pct": 17, "contractor_donations": 4.2, "lean": "Purple", "ec_votes": 16},
+    "Hawaii": {"foia_days": 10, "no_bid_pct": 30, "contractor_donations": 1.2, "lean": "D", "ec_votes": 4},
+    "Idaho": {"foia_days": 3, "no_bid_pct": 14, "contractor_donations": 0.8, "lean": "R", "ec_votes": 4},
+    "Illinois": {"foia_days": 5, "no_bid_pct": 32, "contractor_donations": 6.5, "lean": "D", "ec_votes": 19},
+    "Indiana": {"foia_days": 7, "no_bid_pct": 18, "contractor_donations": 2.4, "lean": "R", "ec_votes": 11},
+    "Iowa": {"foia_days": 10, "no_bid_pct": 15, "contractor_donations": 1.6, "lean": "R", "ec_votes": 6},
+    "Kansas": {"foia_days": 3, "no_bid_pct": 16, "contractor_donations": 1.4, "lean": "R", "ec_votes": 6},
+    "Kentucky": {"foia_days": 3, "no_bid_pct": 21, "contractor_donations": 2.0, "lean": "R", "ec_votes": 8},
+    "Louisiana": {"foia_days": 3, "no_bid_pct": 35, "contractor_donations": 3.8, "lean": "R", "ec_votes": 8},
+    "Maine": {"foia_days": 5, "no_bid_pct": 12, "contractor_donations": 0.9, "lean": "D", "ec_votes": 4},
+    "Maryland": {"foia_days": 30, "no_bid_pct": 24, "contractor_donations": 4.1, "lean": "D", "ec_votes": 10},
+    "Massachusetts": {"foia_days": 10, "no_bid_pct": 20, "contractor_donations": 4.8, "lean": "D", "ec_votes": 11},
+    "Michigan": {"foia_days": 5, "no_bid_pct": 18, "contractor_donations": 4.5, "lean": "Purple", "ec_votes": 15},
+    "Minnesota": {"foia_days": 10, "no_bid_pct": 22, "contractor_donations": 3.2, "lean": "D", "ec_votes": 10},
+    "Mississippi": {"foia_days": 7, "no_bid_pct": 28, "contractor_donations": 1.8, "lean": "R", "ec_votes": 6},
+    "Missouri": {"foia_days": 3, "no_bid_pct": 19, "contractor_donations": 2.6, "lean": "R", "ec_votes": 10},
+    "Montana": {"foia_days": 3, "no_bid_pct": 14, "contractor_donations": 0.7, "lean": "R", "ec_votes": 4},
+    "Nebraska": {"foia_days": 4, "no_bid_pct": 13, "contractor_donations": 1.1, "lean": "R", "ec_votes": 5},
+    "Nevada": {"foia_days": 5, "no_bid_pct": 20, "contractor_donations": 2.9, "lean": "Purple", "ec_votes": 6},
+    "New Hampshire": {"foia_days": 5, "no_bid_pct": 11, "contractor_donations": 0.8, "lean": "Purple", "ec_votes": 4},
+    "New Jersey": {"foia_days": 7, "no_bid_pct": 26, "contractor_donations": 5.2, "lean": "D", "ec_votes": 14},
+    "New Mexico": {"foia_days": 15, "no_bid_pct": 23, "contractor_donations": 1.5, "lean": "D", "ec_votes": 5},
+    "New York": {"foia_days": 20, "no_bid_pct": 31, "contractor_donations": 9.2, "lean": "D", "ec_votes": 28},
+    "North Carolina": {"foia_days": 14, "no_bid_pct": 17, "contractor_donations": 4.0, "lean": "Purple", "ec_votes": 16},
+    "North Dakota": {"foia_days": 3, "no_bid_pct": 15, "contractor_donations": 0.5, "lean": "R", "ec_votes": 3},
+    "Ohio": {"foia_days": 10, "no_bid_pct": 19, "contractor_donations": 4.8, "lean": "R", "ec_votes": 17},
+    "Oklahoma": {"foia_days": 3, "no_bid_pct": 17, "contractor_donations": 1.9, "lean": "R", "ec_votes": 7},
+    "Oregon": {"foia_days": 5, "no_bid_pct": 16, "contractor_donations": 2.3, "lean": "D", "ec_votes": 8},
+    "Pennsylvania": {"foia_days": 5, "no_bid_pct": 21, "contractor_donations": 5.8, "lean": "Purple", "ec_votes": 19},
+    "Rhode Island": {"foia_days": 10, "no_bid_pct": 24, "contractor_donations": 0.9, "lean": "D", "ec_votes": 4},
+    "South Carolina": {"foia_days": 15, "no_bid_pct": 19, "contractor_donations": 2.4, "lean": "R", "ec_votes": 9},
+    "South Dakota": {"foia_days": 3, "no_bid_pct": 14, "contractor_donations": 0.4, "lean": "R", "ec_votes": 3},
+    "Tennessee": {"foia_days": 7, "no_bid_pct": 18, "contractor_donations": 3.0, "lean": "R", "ec_votes": 11},
+    "Texas": {"foia_days": 10, "no_bid_pct": 22, "contractor_donations": 8.9, "lean": "R", "ec_votes": 40},
+    "Utah": {"foia_days": 10, "no_bid_pct": 15, "contractor_donations": 1.6, "lean": "R", "ec_votes": 6},
+    "Vermont": {"foia_days": 3, "no_bid_pct": 10, "contractor_donations": 0.3, "lean": "D", "ec_votes": 3},
+    "Virginia": {"foia_days": 5, "no_bid_pct": 20, "contractor_donations": 4.5, "lean": "D", "ec_votes": 13},
+    "Washington": {"foia_days": 5, "no_bid_pct": 17, "contractor_donations": 3.8, "lean": "D", "ec_votes": 12},
+    "West Virginia": {"foia_days": 5, "no_bid_pct": 23, "contractor_donations": 1.2, "lean": "R", "ec_votes": 4},
+    "Wisconsin": {"foia_days": 10, "no_bid_pct": 16, "contractor_donations": 2.8, "lean": "Purple", "ec_votes": 10},
+    "Wyoming": {"foia_days": 3, "no_bid_pct": 12, "contractor_donations": 0.3, "lean": "R", "ec_votes": 3}
+}
+
+STATE_RECALL_DATA = {
+    "California": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": True},
+    "Colorado": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": False},
+    "Georgia": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": True},
+    "Kansas": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": True},
+    "Louisiana": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": False},
+    "Michigan": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": False},
+    "Minnesota": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": False},
+    "Montana": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": False},
+    "Nevada": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": False},
+    "New Jersey": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": False},
+    "North Dakota": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": False},
+    "Oregon": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": False},
+    "Rhode Island": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": False},
+    "Washington": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": False},
+    "Wisconsin": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": False},
+    "Arizona": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": False},
+    "Idaho": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": False},
+    "Alaska": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": False},
+    "Texas": {"recall": False, "impeachment": "Legislature 2/3 vote", "grand_jury": True},
+    "Oklahoma": {"recall": False, "impeachment": "Legislature 2/3 vote", "grand_jury": True},
+    "New York": {"recall": False, "impeachment": "Assembly votes, Senate tries", "grand_jury": True},
+    "Florida": {"recall": False, "impeachment": "Legislature 2/3 vote", "grand_jury": True},
+    "Illinois": {"recall": True, "impeachment": "Legislature 2/3 vote", "grand_jury": False},
+}
+
 st.markdown("""
     <style>
     .stMetric { background-color: #f0f2f6; padding: 10px; border-radius: 5px; border-left: 5px solid #0d3b66; }
@@ -164,7 +243,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v3.8 | The Scrutiny Engine")
+st.sidebar.caption("v4.0 | National Referendum Engine")
 
 selected_state = st.sidebar.selectbox("Select Your State", STATES, index=31)
 selected_focus = st.sidebar.selectbox("Select Focus", ["All", "Border Security", "Veterans First", "Education & Skills", "Crime & Safety", "Trade & Industry"])
@@ -179,7 +258,7 @@ st.sidebar.divider()
 st.sidebar.markdown("### Fuel the Mission")
 st.sidebar.link_button("☕ Support Russell", "https://buymeacoffee.com/russellnomer")
 
-page = st.radio("Navigate", ["The National Lens", "The 2027 Fork", "Trade & Industry", "DOGE Scrutiny Hub", "The Activism Hub", "Accountability Tribunal", "FOIA Cannon", "Lever Map", "The Ecosystem", "Support"], horizontal=True, label_visibility="collapsed")
+page = st.radio("Navigate", ["The National Lens", "The 2027 Fork", "Trade & Industry", "DOGE Scrutiny Hub", "Corruption Heatmap", "The Activism Hub", "Accountability Tribunal", "FOIA Cannon", "Lever Map", "Course Correction", "The Ecosystem", "Support"], horizontal=True, label_visibility="collapsed")
 
 if page == "The National Lens":
     st.header(f"📍 State of the Union: {selected_state}")
@@ -441,6 +520,91 @@ The Plainview Protocol demands FULL LEDGER TRANSPARENCY for all public-private s
 * **Investigative Style:** Inspired by Nick Shirley's citizen journalism model
         """)
 
+elif page == "Corruption Heatmap":
+    st.header("🗺️ The Corruption Heatmap")
+    st.markdown("**Corruption has no party.** We track the grift in Red, Blue, and Purple states alike.")
+    
+    st.divider()
+    st.subheader("📊 Shadow Penalty Scoring")
+    st.caption("States ranked by: (A) FOIA Response Speed, (B) No-Bid Contract %, (C) Contractor Campaign Donations")
+    
+    def calculate_state_shadow_score(state_name):
+        data = STATE_CORRUPTION_DATA.get(state_name, {})
+        foia_penalty = min(data.get("foia_days", 10) * 2, 40)
+        no_bid_penalty = data.get("no_bid_pct", 15) * 1.5
+        donation_penalty = data.get("contractor_donations", 2) * 3
+        base_score = 100 - foia_penalty - no_bid_penalty - donation_penalty
+        return max(0, min(100, base_score))
+    
+    heatmap_data = []
+    for state in STATES:
+        score = calculate_state_shadow_score(state)
+        data = STATE_CORRUPTION_DATA.get(state, {})
+        heatmap_data.append({
+            "State": state,
+            "Shadow Score": score,
+            "FOIA Days": data.get("foia_days", "N/A"),
+            "No-Bid %": data.get("no_bid_pct", "N/A"),
+            "Contractor $M": data.get("contractor_donations", "N/A"),
+            "Lean": data.get("lean", "N/A")
+        })
+    
+    df_heatmap = pd.DataFrame(heatmap_data)
+    df_heatmap = df_heatmap.sort_values("Shadow Score", ascending=True)
+    
+    worst_states = df_heatmap.head(10)
+    best_states = df_heatmap.tail(10).iloc[::-1]
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("### 🔴 Worst Transparency (Shadow Zone)")
+        for _, row in worst_states.iterrows():
+            lean_emoji = "🔵" if row["Lean"] == "D" else "🔴" if row["Lean"] == "R" else "🟣"
+            st.error(f"{lean_emoji} **{row['State']}**: Score {row['Shadow Score']:.0f} | FOIA: {row['FOIA Days']}d | No-Bid: {row['No-Bid %']}%")
+    
+    with col2:
+        st.markdown("### 🟢 Best Transparency (Sunlight Zone)")
+        for _, row in best_states.iterrows():
+            lean_emoji = "🔵" if row["Lean"] == "D" else "🔴" if row["Lean"] == "R" else "🟣"
+            st.success(f"{lean_emoji} **{row['State']}**: Score {row['Shadow Score']:.0f} | FOIA: {row['FOIA Days']}d | No-Bid: {row['No-Bid %']}%")
+    
+    st.divider()
+    st.subheader("📈 Full State Rankings")
+    
+    fig = px.bar(df_heatmap, x="State", y="Shadow Score", color="Lean",
+                 color_discrete_map={"R": "#b22222", "D": "#0d3b66", "Purple": "#8b008b"},
+                 title="State Transparency Scores (Higher = Better)")
+    fig.update_layout(xaxis_tickangle=-45)
+    st.plotly_chart(fig, use_container_width=True)
+    
+    st.divider()
+    st.subheader(f"🔍 Your State: {selected_state}")
+    state_data = STATE_CORRUPTION_DATA.get(selected_state, {})
+    state_score = calculate_state_shadow_score(selected_state)
+    
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Shadow Score", f"{state_score:.0f}/100")
+    c2.metric("FOIA Response", f"{state_data.get('foia_days', 'N/A')} days")
+    c3.metric("No-Bid Contracts", f"{state_data.get('no_bid_pct', 'N/A')}%")
+    c4.metric("Contractor Donations", f"${state_data.get('contractor_donations', 'N/A')}M")
+    
+    if state_score < 40:
+        st.error("⚠️ **SHADOW ZONE:** Your state shows signs of systemic opacity. Use the FOIA Cannon and Lever Map to demand accountability.")
+    elif state_score < 60:
+        st.warning("🟡 **CAUTION ZONE:** Mixed transparency. Monitor closely and engage with local officials.")
+    else:
+        st.success("🟢 **SUNLIGHT ZONE:** Above-average transparency. Keep watching to maintain standards.")
+    
+    with st.expander("ℹ️ Transparency: Scoring Methodology"):
+        st.markdown("""
+* **FOIA Penalty:** 2 points per day of average response time (max 40 points)
+* **No-Bid Penalty:** 1.5 points per percentage of no-bid contracts
+* **Donation Penalty:** 3 points per $1M in contractor campaign donations
+* **Data Sources:** State FOIA compliance reports, USASpending.gov, OpenSecrets.org
+* **Note:** Scores are illustrative. Real-time data requires state-specific API integration.
+        """)
+
 elif page == "The Activism Hub":
     st.header("🌉 The Bridge Builder: Facts Over Rage")
     
@@ -579,6 +743,59 @@ I formally request that this body:
 Silence is not neutral. Silence is an admission.
             """, height=250)
     
+    st.divider()
+    st.subheader("🗳️ The Referendum Prototype: Vote to Audit")
+    st.markdown("**Building National Consensus.** Track which officials have enough public support to trigger a formal audit.")
+    
+    if 'audit_votes' not in st.session_state:
+        st.session_state.audit_votes = {}
+    
+    officials_to_audit = [
+        {"name": "Governor", "state": selected_state},
+        {"name": "State Attorney General", "state": selected_state},
+        {"name": "County Executive", "state": selected_state}
+    ]
+    
+    for official in officials_to_audit:
+        key = f"{official['name']}_{official['state']}"
+        if key not in st.session_state.audit_votes:
+            st.session_state.audit_votes[key] = 0
+        
+        ref_col1, ref_col2, ref_col3 = st.columns([3, 1, 1])
+        ref_col1.write(f"**{official['name']}** ({official['state']})")
+        
+        if ref_col2.button(f"🗳️ Vote to Audit", key=f"vote_{key}"):
+            st.session_state.audit_votes[key] += 1
+        
+        ref_col3.metric("Votes", st.session_state.audit_votes[key])
+    
+    st.divider()
+    st.markdown("### 📊 Electoral College-Weighted Consensus")
+    
+    total_ec_votes = 538
+    
+    weighted_votes = 0
+    states_voting = set()
+    for key, count in st.session_state.audit_votes.items():
+        if count > 0:
+            state_name = key.split("_")[-1]
+            if state_name not in states_voting:
+                states_voting.add(state_name)
+                state_ec = STATE_CORRUPTION_DATA.get(state_name, {}).get("ec_votes", 0)
+                weighted_votes += state_ec
+    
+    weighted_consensus = (weighted_votes / total_ec_votes) * 100
+    
+    st.progress(min(1.0, weighted_consensus / 100))
+    st.caption(f"**{weighted_consensus:.1f}%** toward National Audit Consensus ({weighted_votes}/{total_ec_votes} EC votes, 270 = majority)")
+    
+    if weighted_consensus >= 50:
+        st.success("🎉 **NATIONAL CONSENSUS REACHED!** Enough support to demand a formal audit.")
+    elif weighted_consensus >= 25:
+        st.warning("📈 **BUILDING MOMENTUM.** Share this tool to grow the movement.")
+    else:
+        st.info("🌱 **EARLY STAGE.** Every vote counts toward accountability.")
+    
     with st.expander("ℹ️ Transparency: Scoring Methodology"):
         st.markdown("""
 * **Federal Data:** Live feed from **UnitedStates.io** (Open Congress Data Project)
@@ -607,56 +824,121 @@ We demand the data. If they hide it, we apply **'Adverse Inference'**—assuming
         include_spoliation = st.checkbox("Include 'Spoliation of Evidence' Warning?", value=True, key="custom_spoliation")
     
     with foia_tab2:
-        st.subheader("🎯 Grift Hunter: Pre-Built Templates")
-        st.caption("One-click templates for common fraud patterns. Auto-fills with Spoliation Warning.")
+        st.subheader("🎯 Grift Hunter: Bipartisan Templates")
+        st.caption("**Corruption has no party.** We hunt grift in both Blue and Red states.")
         
-        template_choice = st.radio("Select Template:", [
-            "NGO/Contractor Fraud (Migrant Housing, Social Services)",
-            "Bureaucratic Bloat (Admin vs. Output Audit)",
-            "Grant Disbursement Audit",
-            "Consultant Spending Review"
-        ], key="template_choice")
+        grift_type = st.tabs(["🔵 Sanctuary Grift (Blue Hubs)", "🔴 Corporate Subsidy Grift (Red Hubs)", "🟣 Universal Templates"])
         
-        template_agency = st.text_input("Target Agency", placeholder="e.g., HHS, State Dept. of Education, County Executive Office", key="template_agency")
+        BLUE_TEMPLATES = {
+            "NGO/Migrant Housing Fraud": """All records related to:
+1. Contracts and payments to NGOs for migrant housing, shelter, and services (FY 2022-Present)
+2. Per-migrant cost breakdown vs. comparable market rates
+3. Proof of service delivery and occupancy verification
+4. Communications between city officials and NGO executives
+5. Any audits, complaints, or fraud investigations related to these contracts
+
+NOTICE: Failure to produce these records will be viewed as evidence of malfeasance under the Spoliation Doctrine.""",
+            "Social Service Contract Audit": """All records showing:
+1. Social service contracts over $100,000 (FY 2022-Present)
+2. Performance metrics and outcome data for each contract
+3. Administrative overhead vs. direct client services ratio
+4. Subcontractor payments and their deliverables
+5. Any sole-source justifications or no-bid contract explanations
+
+NOTICE: Failure to produce these records will be viewed as evidence of malfeasance under the Spoliation Doctrine.""",
+            "Sanctuary City Cost Analysis": """All records related to:
+1. Total annual cost of sanctuary city policies
+2. Legal costs defending sanctuary policies
+3. Federal funding withheld due to sanctuary status
+4. ICE detainer requests received and compliance rate
+5. Crimes committed by individuals released despite detainers
+
+NOTICE: Failure to produce these records will be viewed as evidence of malfeasance under the Spoliation Doctrine."""
+        }
         
-        if template_choice == "NGO/Contractor Fraud (Migrant Housing, Social Services)":
-            template_records = """All records related to:
-1. Contracts and payments to NGOs and private contractors for migrant housing, shelter, or social services (FY 2022-Present)
-2. Invoices, receipts, and proof of service delivery for each payment
-3. Internal communications (emails, memos) regarding contractor selection and oversight
-4. Any audits, complaints, or investigations related to these contracts
-5. Names and compensation of all personnel administering these programs"""
+        RED_TEMPLATES = {
+            "Corporate Subsidy Audit": """All records related to:
+1. Tax abatements, subsidies, and incentives given to corporations (FY 2020-Present)
+2. Job creation commitments vs. actual jobs created
+3. Clawback provisions and enforcement actions
+4. Campaign donations from subsidy recipients to decision-makers
+5. Cost-benefit analyses performed before granting subsidies
+
+NOTICE: Failure to produce these records will be viewed as evidence of malfeasance under the Spoliation Doctrine.""",
+            "Tax Incentive Clawback Analysis": """All records showing:
+1. Companies that received tax incentives but failed to meet job/investment targets
+2. Clawback provisions in original agreements
+3. Enforcement actions taken to recover funds
+4. Total taxpayer cost of unfulfilled incentive promises
+5. Officials who approved incentives and their current employment
+
+NOTICE: Failure to produce these records will be viewed as evidence of malfeasance under the Spoliation Doctrine.""",
+            "Pay-to-Play Contract Review": """All records related to:
+1. State contracts awarded to campaign donors (FY 2020-Present)
+2. No-bid contracts and sole-source justifications
+3. Contractor performance evaluations and complaints
+4. Communications between contractors and elected officials
+5. Ethics complaints filed regarding contractor relationships
+
+NOTICE: Failure to produce these records will be viewed as evidence of malfeasance under the Spoliation Doctrine."""
+        }
         
-        elif template_choice == "Bureaucratic Bloat (Admin vs. Output Audit)":
-            template_records = """All records showing:
-1. Total administrative/overhead costs vs. direct program delivery costs (FY 2022-Present)
-2. Number of administrative staff vs. frontline service staff
-3. Executive compensation, bonuses, and benefits for leadership positions
-4. Consultants and contractors hired for "administrative support"
-5. Any efficiency audits or staffing reviews conducted in the past 3 years"""
-        
-        elif template_choice == "Grant Disbursement Audit":
-            template_records = """All records related to:
+        UNI_TEMPLATES = {
+            "Bureaucratic Bloat Audit": """All records showing:
+1. Total administrative/overhead costs vs. direct program delivery (FY 2022-Present)
+2. Number of administrative staff vs. frontline workers
+3. Executive compensation, bonuses, and benefits
+4. Consultants hired for "administrative support"
+5. Any efficiency audits conducted in the past 3 years
+
+NOTICE: Failure to produce these records will be viewed as evidence of malfeasance under the Spoliation Doctrine.""",
+            "Grant Disbursement Review": """All records related to:
 1. Federal and state grants received and disbursed (FY 2022-Present)
 2. Sub-grantees and their payment amounts
-3. Performance reports and outcome metrics for grant-funded programs
+3. Performance reports and outcome metrics
 4. Any grant funds returned, rescinded, or flagged for misuse
-5. Internal controls and audit procedures for grant management"""
+5. Internal controls and audit procedures for grant management
+
+NOTICE: Failure to produce these records will be viewed as evidence of malfeasance under the Spoliation Doctrine.""",
+            "Consultant Spending Analysis": """All records showing:
+1. All consulting contracts over $50,000 (FY 2022-Present)
+2. Scope of work, deliverables, and payment schedules
+3. Selection process documentation
+4. Any consulting work by former agency employees
+5. Outcomes achieved vs. contract objectives
+
+NOTICE: Failure to produce these records will be viewed as evidence of malfeasance under the Spoliation Doctrine."""
+        }
         
-        else:
-            template_records = """All records showing:
-1. All consulting contracts over $25,000 (FY 2022-Present)
-2. Scope of work, deliverables, and payment schedules for each contract
-3. Selection process documentation (RFPs, bid evaluations, sole-source justifications)
-4. Any consulting work performed by former employees of this agency
-5. Outcomes achieved vs. stated contract objectives"""
+        with grift_type[0]:
+            st.markdown("**Focus:** NGO fraud, migrant housing contracts, social service bloat in Democratic strongholds.")
+            blue_choice = st.radio("Select Template:", list(BLUE_TEMPLATES.keys()), key="blue_template")
+            blue_agency = st.text_input("Target Agency", placeholder="e.g., NYC Mayor's Office", key="blue_agency")
+            st.text_area("Preview", BLUE_TEMPLATES[blue_choice], height=200, disabled=True, key="blue_preview")
+            if st.button("📋 Use This Template", key="use_blue"):
+                st.session_state.template_agency = blue_agency
+                st.session_state.template_records = BLUE_TEMPLATES[blue_choice]
+                st.success("Template loaded! Scroll down to generate.")
         
-        st.text_area("Auto-Generated Records Request", template_records, height=200, disabled=True, key="template_preview")
+        with grift_type[1]:
+            st.markdown("**Focus:** Corporate tax breaks, pay-to-play contracts, crony capitalism in Republican strongholds.")
+            red_choice = st.radio("Select Template:", list(RED_TEMPLATES.keys()), key="red_template")
+            red_agency = st.text_input("Target Agency", placeholder="e.g., TX Governor's Office", key="red_agency")
+            st.text_area("Preview", RED_TEMPLATES[red_choice], height=200, disabled=True, key="red_preview")
+            if st.button("📋 Use This Template", key="use_red"):
+                st.session_state.template_agency = red_agency
+                st.session_state.template_records = RED_TEMPLATES[red_choice]
+                st.success("Template loaded! Scroll down to generate.")
         
-        if st.button("📋 Use This Template", key="use_template"):
-            st.session_state.template_agency = template_agency
-            st.session_state.template_records = template_records
-            st.success("Template loaded! Scroll down to generate your request.")
+        with grift_type[2]:
+            st.markdown("**Universal templates that apply to any state, regardless of party.**")
+            uni_choice = st.radio("Select Template:", list(UNI_TEMPLATES.keys()), key="uni_template")
+            uni_agency = st.text_input("Target Agency", placeholder="e.g., State Comptroller", key="uni_agency")
+            st.text_area("Preview", UNI_TEMPLATES[uni_choice], height=200, disabled=True, key="uni_preview")
+            if st.button("📋 Use This Template", key="use_uni"):
+                st.session_state.template_agency = uni_agency
+                st.session_state.template_records = UNI_TEMPLATES[uni_choice]
+                st.success("Template loaded! Scroll down to generate.")
     
     st.divider()
     st.subheader("📝 The Generator")
@@ -826,6 +1108,106 @@ Anonymous tips can trigger full investigations.
 * **Whistleblower Protection:** Whistleblower Protection Act of 1989, enhanced 2012
 * **False Claims Act:** 31 U.S.C. §§ 3729-3733 (allows private citizens to sue on behalf of government)
 * **IRS Whistleblower:** 26 U.S.C. § 7623 (rewards for tax fraud tips)
+        """)
+
+elif page == "Course Correction":
+    st.header("⚖️ The Course Correction Manual")
+    st.markdown("**Citizen Levers for Removal & Justice.** Your state-by-state guide to holding officials accountable through legal means.")
+    
+    st.divider()
+    
+    tab_recall, tab_impeach, tab_jury = st.tabs(["🗳️ Recall Laws", "⚖️ Impeachment", "👨‍⚖️ Grand Jury Petitions"])
+    
+    with tab_recall:
+        st.subheader("Which States Allow Citizens to Fire Their Governor?")
+        st.markdown("**19 states** allow citizens to recall their Governor through petition and special election.")
+        
+        recall_states = [s for s, d in STATE_RECALL_DATA.items() if d.get("recall", False)]
+        no_recall_states = [s for s in STATES if s not in recall_states or not STATE_RECALL_DATA.get(s, {}).get("recall", False)]
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            st.success("🟢 **Recall Allowed:**")
+            for state in sorted(recall_states):
+                st.write(f"• {state}")
+        with col2:
+            st.error("🔴 **No Recall (Impeachment Only):**")
+            st.caption("These states require legislative action to remove officials.")
+            st.write(", ".join(sorted([s for s in ["New York", "Texas", "Florida", "Ohio", "Pennsylvania"] if s not in recall_states])))
+        
+        st.divider()
+        recall_data = STATE_RECALL_DATA.get(selected_state, {})
+        if recall_data.get("recall", False):
+            st.success(f"✅ **{selected_state} ALLOWS RECALL.** You can petition to remove your Governor.")
+            st.info("""
+**How to Start a Recall:**
+1. Obtain official petition forms from your Secretary of State
+2. Gather required signatures (typically 10-25% of votes cast in last election)
+3. Submit within statutory deadline (usually 60-160 days)
+4. If validated, a recall election is scheduled
+            """)
+        else:
+            st.warning(f"⚠️ **{selected_state} does NOT allow recall.** You must pursue impeachment through the legislature.")
+    
+    with tab_impeach:
+        st.subheader("The Legal Path to Removal for 'High Crimes and Misdemeanors'")
+        
+        st.markdown("""
+**Impeachment is a legislative process.** Unlike recall, citizens cannot directly initiate impeachment.
+
+**Standard Process:**
+1. **Investigation:** Legislative committee investigates alleged misconduct
+2. **Articles of Impeachment:** Lower house votes to impeach (simple majority)
+3. **Trial:** Upper house (Senate) conducts trial
+4. **Removal:** 2/3 supermajority required for conviction and removal
+        """)
+        
+        recall_data = STATE_RECALL_DATA.get(selected_state, {})
+        impeachment_process = recall_data.get("impeachment", "Legislature 2/3 vote")
+        
+        st.info(f"**{selected_state} Impeachment Process:** {impeachment_process}")
+        
+        st.divider()
+        st.markdown("**Your Role:**")
+        st.markdown("""
+- Contact your state legislators and demand investigation
+- Provide evidence to legislative oversight committees
+- Attend public hearings and testify if invited
+- Use FOIA to obtain records that support your case
+- Organize community pressure campaigns
+        """)
+    
+    with tab_jury:
+        st.subheader("Citizen-Initiated Grand Juries")
+        st.markdown("**In some states, citizens can petition to convene a grand jury** to investigate fraud, corruption, or criminal misconduct.")
+        
+        grand_jury_states = [s for s, d in STATE_RECALL_DATA.items() if d.get("grand_jury", False)]
+        
+        st.success("🟢 **States with Citizen Grand Jury Petitions:**")
+        for state in sorted(grand_jury_states):
+            st.write(f"• {state}")
+        
+        recall_data = STATE_RECALL_DATA.get(selected_state, {})
+        if recall_data.get("grand_jury", False):
+            st.success(f"✅ **{selected_state} allows citizen-initiated grand juries.**")
+            st.info("""
+**How It Works:**
+1. Draft a petition describing the alleged crimes
+2. Gather required signatures (varies by state)
+3. Submit to the court with supporting evidence
+4. If accepted, a grand jury is empaneled to investigate
+5. Grand jury can issue subpoenas and indictments
+            """)
+        else:
+            st.warning(f"⚠️ **{selected_state} does not have citizen grand jury petitions.** You must work through the District Attorney or Attorney General.")
+            st.link_button("Find Your State AG", "https://www.naag.org/find-my-ag/")
+    
+    with st.expander("ℹ️ Transparency: Legal Sources"):
+        st.markdown("""
+* **Recall Laws:** National Conference of State Legislatures (NCSL)
+* **Impeachment:** State Constitutions and Legislative Rules
+* **Grand Jury:** State Criminal Procedure Codes
+* **Note:** Laws vary significantly by state. Consult an attorney for specific guidance.
         """)
 
 elif page == "The Ecosystem":

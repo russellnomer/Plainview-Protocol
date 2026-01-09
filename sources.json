@@ -13,5 +13,9 @@
   "hud_oig": "https://www.hudoig.gov/hotline",
   "treasury_oig": "https://oig.treasury.gov/report-fraud-waste-abuse",
   "ethics_links": "https://www.ncsl.org/ethics/ethics-links",
-  "state_auditors": "https://www.nasact.org/member_directory"
+  "state_auditors": "https://www.nasact.org/member_directory",
+  "ncsl_recall": "https://www.ncsl.org/research/elections-and-campaigns/recall-of-state-officials.aspx",
+  "naag_ag_finder": "https://www.naag.org/find-my-ag/",
+  "usaspending": "https://www.usaspending.gov",
+  "opensecrets": "https://www.opensecrets.org"
 }
