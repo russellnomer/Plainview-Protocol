@@ -11,6 +11,7 @@ from datetime import datetime, date
 from forensic_patch import init_routing_state, catch_all_redirect, safe_navigate, safe_county_selectbox
 from traffic_ledger import init_async_ledger, async_log_traffic, get_queue_stats
 from metadata_handler import inject_og_meta_tags, get_page_config, get_share_url
+from mamdani_watchdog import render_mamdani_watchdog, get_mamdani_profile, render_mamdani_sidebar_status
 from agenda_scanner import (
     get_jurisdictions, get_agendas, scan_agenda_item, calculate_transparency_score,
     get_transparency_rating, init_agenda_flags_table, save_agenda_flag, get_flag_count, GRIFT_KEYWORDS
@@ -4048,6 +4049,10 @@ def page_protocol_pulse():
     except ImportError as e:
         st.error(f"Forensic Logger not available: {e}")
 
+def page_mamdani_watchdog():
+    """Mamdani Watchdog page - V6.20 forensic monitoring of NYC administration."""
+    render_mamdani_watchdog()
+
 def page_support():
     st.header("☕ Sustain the Mission")
     st.write("This tool is free, ad-free, and uncensorable thanks to supporters like you.")
@@ -5476,18 +5481,20 @@ def page_local_watchdog():
             "osc_link": "https://wwe2.osc.state.ny.us/transparency/LocalGov/LocalGovIntro.cfm"
         },
         "New York City (5 Boroughs)": {
-            "leader": "Eric Adams (D)",
+            "leader": "Zohran Mamdani (D)",
             "population": 8336817,
             "total_debt": 98000000000,
             "no_bid_contracts": 847,
-            "transparency_score": 35,
+            "transparency_score": 25,
+            "integrity_score": -25,
             "live_stream": True,
             "searchable_portal": True,
             "timely_minutes": False,
             "foil_responsive": False,
             "sanctuary_policy": True,
-            "notes": "Federal indictment pending. Sanctuary city. Migrant spending opacity. FOIL obstruction documented.",
-            "osc_link": "https://comptroller.nyc.gov/reports/"
+            "notes": "Adverse Inference Applied: Day 1 removal of IHRA antisemitism protections. Active Mamdani Watchdog monitoring.",
+            "osc_link": "https://comptroller.nyc.gov/reports/",
+            "watchdog_active": True
         },
         "Niagara County": {
             "leader": "Rebecca Wydysh (R)",
@@ -6751,6 +6758,7 @@ pages = [
     st.Page(page_support, title="Support", icon="☕"),
     st.Page(page_audit_logs, title="Audit Logs", icon="🔍"),
     st.Page(page_protocol_pulse, title="Protocol Pulse", icon="📊"),
+    st.Page(page_mamdani_watchdog, title="Mamdani Watchdog", icon="🏛️"),
 ]
 
 nav = st.navigation(pages)
