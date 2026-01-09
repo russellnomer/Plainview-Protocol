@@ -246,7 +246,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v4.6 | The Citizen Orator")
+st.sidebar.caption("v4.8 | The Open-Source Sentinel")
 
 if "selected_state" not in st.session_state:
     st.session_state.selected_state = "New York"
@@ -292,6 +292,16 @@ st.sidebar.caption("""
 def page_national_lens():
     selected_state = st.session_state.get("selected_state", "New York")
     st.header(f"📍 State of the Union: {selected_state}")
+    
+    if 'bill_shares' in st.session_state and st.session_state.bill_shares:
+        top_bills = sorted(st.session_state.bill_shares.items(), key=lambda x: x[1], reverse=True)[:3]
+        if top_bills and top_bills[0][1] >= 1:
+            st.subheader("🔥 Top Community Concerns")
+            st.caption("Bills with the highest share counts are promoted here automatically.")
+            concern_cols = st.columns(len(top_bills))
+            for i, (bill_id, shares) in enumerate(top_bills):
+                concern_cols[i].metric(bill_id, f"{shares} shares", delta="Trending")
+            st.divider()
     
     live_debt = get_live_debt()
     
@@ -1752,8 +1762,28 @@ Respectfully,
 [YOUR NAME]
 """
             
-            if st.button(f"🗡️ One-Click Petition: {bill['id']}", key=f"petition_{bill['id']}"):
-                st.text_area(f"Petition for {bill['id']}", petition_bill, height=180, key=f"petition_text_{bill['id']}")
+            petition_col, thread_col = st.columns(2)
+            
+            with petition_col:
+                if st.button(f"🗡️ One-Click Petition: {bill['id']}", key=f"petition_{bill['id']}"):
+                    st.text_area(f"Petition for {bill['id']}", petition_bill, height=180, key=f"petition_text_{bill['id']}")
+            
+            with thread_col:
+                if st.button(f"📢 One-Click Thread: {bill['id']}", key=f"thread_{bill['id']}"):
+                    thread_1 = f"🧵 THREAD: {bill['name']} ({bill['id']}) - A Plainview Protocol Audit\n\n✅ THE GOOD: {bill['good']}\n\n#PlainviewProtocol #TransparencyNow 1/"
+                    thread_2 = f"⚠️ THE BAD: {bill['bad']}\n\n💀 THE UGLY: {bill['ugly']}\n\n2/"
+                    thread_3 = f"📊 VERDICT: {bill['reward_pct']}% Reward / {bill['risk_pct']}% Risk = {bill['classification']}\n\n🗳️ My position: {'SUPPORT' if bill['reward_pct'] >= 50 else 'OPPOSE'}\n\nAudit your government: plainview-protocol.replit.app 3/3"
+                    
+                    st.text_area("Thread Part 1", thread_1, height=100, key=f"thread1_{bill['id']}")
+                    st.text_area("Thread Part 2", thread_2, height=100, key=f"thread2_{bill['id']}")
+                    st.text_area("Thread Part 3", thread_3, height=100, key=f"thread3_{bill['id']}")
+                    
+                    full_thread = f"{thread_1}\n\n{thread_2}\n\n{thread_3}"
+                    st.link_button("🐦 Post Thread to X", f"https://twitter.com/intent/tweet?text={thread_1.replace(' ', '%20').replace('#', '%23').replace('\n', '%0A')[:280]}")
+                    
+                    if 'bill_shares' not in st.session_state:
+                        st.session_state.bill_shares = {}
+                    st.session_state.bill_shares[bill['id']] = st.session_state.bill_shares.get(bill['id'], 0) + 1
             
             st.divider()
     
@@ -2013,7 +2043,65 @@ def page_support():
     c1, c2, c3 = st.columns(3)
     c1.link_button("Donate via PayPal", "https://paypal.com")
     c2.link_button("Buy Russell a Coffee", "https://buymeacoffee.com/russellnomer")
-    c3.link_button("Fork on GitHub", "https://github.com")
+    c3.link_button("Fork on GitHub", "https://github.com/russellnomer/plainview-protocol")
+    
+    st.divider()
+    st.subheader("🛠️ Decentralize the Protocol")
+    
+    with st.expander("ℹ️ Why Decentralize?"):
+        st.markdown("""
+**Centralization is a target. Decentralization is a movement.**
+
+By forking our code, you ensure the truth cannot be deleted or paywalled.
+
+**Academic Foundation:**
+- **Thompson (1961):** *"Organizations centralize when they fear loss of control, but decentralized systems are more resilient to attack."* — Academy of Management
+- **DAO Principles (Investopedia):** Decentralized Autonomous Organizations prove that collective action without central authority can achieve transparency at scale.
+
+**The Plainview Protocol is open-source because:**
+1. No single point of failure - if we go down, forks survive
+2. Community auditing - thousands of eyes catch errors we miss
+3. Local adaptation - your town has different officials than ours
+4. Censorship resistance - truth cannot be memory-holed
+
+*"Don't just watch us—become us."*
+        """)
+    
+    st.markdown("""
+**Fork the code, apply it to your town, and help us audit the Uniparty everywhere.**
+
+The Protocol is designed to be forked. Each fork is a new node in the transparency network.
+    """)
+    
+    fork_col1, fork_col2 = st.columns(2)
+    fork_col1.link_button("🔧 Fork on GitHub", "https://github.com/russellnomer/plainview-protocol", use_container_width=True)
+    fork_col2.link_button("🔧 Fork on Replit", "https://replit.com/@russellnomer/plainview-protocol", use_container_width=True)
+    
+    st.divider()
+    st.subheader("📢 Share the Alarm")
+    st.caption("Spread the word on social media. Every share is a vote for transparency.")
+    
+    share_message = "I'm using The Plainview Protocol to audit my government. Free, open-source citizen oversight. Truth, Kindness, Security. #PlainviewProtocol #TransparencyNow"
+    
+    share_col1, share_col2, share_col3 = st.columns(3)
+    share_col1.link_button("🐦 Share on X", f"https://twitter.com/intent/tweet?text={share_message.replace(' ', '%20').replace('#', '%23')}", use_container_width=True)
+    share_col2.link_button("📘 Share on Facebook", "https://www.facebook.com/sharer/sharer.php?quote=" + share_message.replace(' ', '%20'), use_container_width=True)
+    share_col3.link_button("🔴 Post on Reddit", "https://www.reddit.com/submit?title=The%20Plainview%20Protocol%20-%20Citizen%20Government%20Oversight&url=https://plainview-protocol.replit.app", use_container_width=True)
+    
+    st.divider()
+    st.subheader("📊 Viral Reach Tracker")
+    
+    if 'viral_shares' not in st.session_state:
+        st.session_state.viral_shares = {"x": 0, "facebook": 0, "reddit": 0}
+    
+    viral_col1, viral_col2, viral_col3, viral_col4 = st.columns(4)
+    viral_col1.metric("X/Twitter", st.session_state.viral_shares.get("x", 0))
+    viral_col2.metric("Facebook", st.session_state.viral_shares.get("facebook", 0))
+    viral_col3.metric("Reddit", st.session_state.viral_shares.get("reddit", 0))
+    total_shares = sum(st.session_state.viral_shares.values())
+    viral_col4.metric("Total Reach", total_shares, delta="Growing" if total_shares > 0 else None)
+    
+    st.caption("*Share counts are tracked locally. In a production deployment, these would sync to a central database.*")
 
 pages = [
     st.Page(page_national_lens, title="The National Lens", icon="🔭"),
