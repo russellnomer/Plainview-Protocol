@@ -101,6 +101,26 @@ Version 8.4 - Hardened Patch. Established January 8, 2026. A production-ready St
 streamlit run app.py --server.port 5000
 ```
 
+## Playwright Testing Infrastructure
+- **Test Suite**: 16 automated audits across 3 spec files
+  - `tests/e2e/home.spec.ts` - Homepage critical path audits (4 tests)
+  - `tests/e2e/contact.spec.ts` - Contact functionality audits (5 tests)
+  - `tests/accountability/security.spec.ts` - Security & privacy audits (7 tests)
+- **Run Commands**:
+  - Full suite: `npx playwright test --project=chromium`
+  - Smoke tests: `npx playwright test --grep @smoke --project=chromium`
+  - Security audits: `npx playwright test tests/accountability/ --project=chromium`
+- **Output**: JSON results to `tests/test-results/results.json`
+
+## Public Accountability Dashboard
+- **Location**: `dashboard/` directory
+- **Files**:
+  - `dashboard/index.html` - Tailwind CSS Status Board with OPERATIONAL/FAILED indicators
+  - `dashboard/dashboard.js` - Fetches results.json, renders Chart.js 30-day trend
+  - `dashboard/history.json` - Rolling 30-day test history
+- **Processing**: `scripts/process-history.js` - Updates history from test results
+- **Serve**: `python scripts/serve-dashboard.py` (port 3000)
+
 ## Database Tables (PostgreSQL)
 - `sentinel_logs` - Error tracking with incident IDs
 - `traffic_ledger` - Session and page view tracking
