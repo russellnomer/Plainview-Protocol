@@ -10,7 +10,7 @@ from datetime import datetime, date
 
 from forensic_patch import init_routing_state, catch_all_redirect, safe_navigate, safe_county_selectbox
 from traffic_ledger import init_async_ledger, async_log_traffic, get_queue_stats
-from metadata_handler import inject_og_meta_tags, get_page_config, get_share_url
+from metadata_handler import inject_og_meta_tags, get_page_config, get_share_url, get_base_url
 from mamdani_watchdog import render_mamdani_watchdog, get_mamdani_profile, render_mamdani_sidebar_status
 from bds_audit_logic import render_bds_clawback_tracker, get_total_discretionary_funding, get_grift_alerts as get_bds_grift_alerts
 from safety_shield_logic import render_safety_shield, get_proximity_alerts
@@ -29,17 +29,13 @@ from agenda_scanner import (
 page_config = get_page_config()
 st.set_page_config(**page_config)
 
-init_routing_state()
-init_async_ledger()
-catch_all_redirect()
-
 query_params = st.query_params
 page_param = query_params.get("page", None)
 shared_card_id = query_params.get("id", None) or query_params.get("card", None)
 
-inject_og_meta_tags(card_id=shared_card_id)
-
 if page_param == "share" and shared_card_id:
+    inject_og_meta_tags(card_id=shared_card_id)
+    
     st.title("🎴 Battle Card Shared")
     st.markdown(f"**Card ID:** `{shared_card_id}`")
     
@@ -59,6 +55,12 @@ if page_param == "share" and shared_card_id:
         st.switch_page("pages/Scorecard_Generator.py")
     
     st.stop()
+
+init_routing_state()
+init_async_ledger()
+catch_all_redirect()
+
+inject_og_meta_tags()
 
 with open("sources.json", "r") as f:
     SOURCES = json.load(f)
@@ -5196,8 +5198,8 @@ def page_scorecard_generator():
     card_id = st.session_state.get('current_card_id', None)
     
     if card_id:
-        base_url = os.environ.get('REPLIT_DEV_DOMAIN', 'plainviewprotocol.com')
-        share_url = f"https://{base_url}/?page=share&id={card_id}"
+        base_url = get_base_url()
+        share_url = f"{base_url}/?page=share&id={card_id}"
         share_tweet = f"I just audited my representative. The numbers don't lie. See their score: #PlainviewProtocol #AuditHochul"
         
         st.success(f"✅ Battle Card saved! Card ID: `{card_id}`")
