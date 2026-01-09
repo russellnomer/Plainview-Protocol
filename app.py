@@ -247,7 +247,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v5.0 | The Founder's Desk")
+st.sidebar.caption("v5.1 | The Founder's Monologue")
 
 st.sidebar.success("🎉 **TODAY IS DAY 1** — The Plainview Protocol is LIVE. Established January 8, 2026.")
 
@@ -376,6 +376,99 @@ def page_national_lens():
         </div>
     </div>
     """, unsafe_allow_html=True)
+    
+    st.divider()
+    
+    st.subheader("🎙️ The Founder's Note: State of the Labyrinth")
+    st.caption("Daily briefing on Career Politician Wealth, PAC Transparency, and Black Hole Spending")
+    
+    today_str = date.today().strftime("%B %d, %Y")
+    
+    if 'monologue_data' not in st.session_state:
+        st.session_state.monologue_data = {
+            "inexplicable_wealth": [
+                {"name": "Sen. Example (D-CA)", "net_worth_change": "+$4.2M", "salary_years": 12, "flag": "Resource Control"},
+                {"name": "Rep. Sample (R-TX)", "net_worth_change": "+$2.8M", "salary_years": 8, "flag": "Black Hole PAC"},
+                {"name": "Gov. Placeholder (D-NY)", "net_worth_change": "+$6.1M", "salary_years": 6, "flag": "Taxpayer Parasite"},
+            ],
+            "pac_audits": [
+                {"pac_name": "Citizens for Progress PAC", "undisclosed": "$1.2M", "status": "Black Hole"},
+                {"pac_name": "American Values Coalition", "undisclosed": "$890K", "status": "Opacity Warning"},
+                {"pac_name": "Future Forward Fund", "undisclosed": "$2.1M", "status": "Black Hole"},
+            ],
+            "last_updated": today_str
+        }
+    
+    wealth_findings = st.session_state.monologue_data["inexplicable_wealth"]
+    pac_findings = st.session_state.monologue_data["pac_audits"]
+    
+    black_hole_pacs = [p for p in pac_findings if p["status"] == "Black Hole"]
+    resource_control_flags = [w for w in wealth_findings if w["flag"] == "Resource Control"]
+    parasite_flags = [w for w in wealth_findings if w["flag"] == "Taxpayer Parasite"]
+    
+    monologue_templates = [
+        f"""Fellow Americans,
+
+Today we continue our mission to expose the **Labyrinth** — the maze of shell PACs, undisclosed assets, and **Black Hole** spending that allows career politicians to control resources without declaring them as income.
+
+**📊 Inexplicable Wealth Scanner Update:**
+Our scanners have flagged {len(wealth_findings)} officials with wealth accumulation that defies their public salaries. When a public servant earning $174,000/year somehow accumulates millions, the math doesn't lie — **Resource Control** is in play.
+
+**🕳️ Black Hole PAC Alert:**
+We've identified {len(black_hole_pacs)} PACs operating as **Black Holes** — money flows in, influence flows out, but transparency? Nowhere to be found. These entities represent ${sum(float(p['undisclosed'].replace('$','').replace('M','000000').replace('K','000')) for p in black_hole_pacs)/1e6:.1f}M in undisclosed funds.
+
+**🎯 The America First Principle:**
+Every dollar extracted from taxpayers deserves an audit trail. Every official who enriches themselves while constituents struggle is a **Taxpayer Parasite**. We don't discriminate by party — we discriminate by transparency.
+
+The Plainview Protocol exists because you deserve to know where your money goes. Use the tools. Share the findings. Pull the levers.
+
+*Transparency is our only shield. Respect is earned, not taken. — Russell Nomer, Plainview, NY.*""",
+    ]
+    
+    monologue = monologue_templates[0]
+    
+    st.markdown("""
+    <style>
+    .monologue-card {
+        background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+        border: 2px solid #30363d;
+        border-left: 4px solid #ffd700;
+        border-radius: 12px;
+        padding: 24px;
+        margin-bottom: 20px;
+        color: #c9d1d9;
+        line-height: 1.8;
+    }
+    .monologue-date {
+        color: #ffd700;
+        font-weight: bold;
+        margin-bottom: 16px;
+    }
+    .founder-sig {
+        color: #ffd700;
+        font-style: italic;
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid #30363d;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    st.markdown(f"<div class='monologue-date'>📅 {today_str}</div>", unsafe_allow_html=True)
+    st.markdown(monologue)
+    
+    with st.expander("📊 View Raw Scanner Data"):
+        data_col1, data_col2 = st.columns(2)
+        with data_col1:
+            st.markdown("**Inexplicable Wealth Flags:**")
+            for w in wealth_findings:
+                flag_icon = "🔴" if w["flag"] == "Taxpayer Parasite" else "🟠" if w["flag"] == "Black Hole PAC" else "🟡"
+                st.write(f"{flag_icon} {w['name']}: {w['net_worth_change']} over {w['salary_years']} years — *{w['flag']}*")
+        with data_col2:
+            st.markdown("**PAC Audit Findings:**")
+            for p in pac_findings:
+                status_icon = "🕳️" if p["status"] == "Black Hole" else "⚠️"
+                st.write(f"{status_icon} {p['pac_name']}: {p['undisclosed']} undisclosed — *{p['status']}*")
     
     st.divider()
     
@@ -2208,6 +2301,7 @@ The Plainview Protocol is built to last for generations. Each milestone marks pr
     
     MILESTONES = [
         {"date": "January 8, 2026", "title": "🏛️ LEGACY ESTABLISHED", "description": "Russell Nomer establishes The Plainview Protocol in Plainview, NY. The founding moment of citizen-powered accountability.", "status": "completed"},
+        {"date": "January 8, 2026", "title": "🎙️ Founder's Monologue Launched", "description": "Voice of the Citizen Activated — Daily briefings on Career Politician Wealth, PAC Transparency, and Black Hole Spending.", "status": "completed"},
         {"date": "Q1 2026", "title": "Local Watchdog Beta", "description": "County Clash comparison tool with OSC data integration.", "status": "in_progress"},
         {"date": "Q1 2026", "title": "Infographic Generator", "description": "Battle card meme-engine for shareable accountability graphics.", "status": "completed"},
         {"date": "Q1 2026", "title": "Beta Testing Complete", "description": "Core features validated by early adopters across 10 states.", "status": "pending"},
