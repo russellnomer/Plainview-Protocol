@@ -1,0 +1,983 @@
+{
+  "config": {
+    "configFile": "/home/runner/workspace/playwright.config.ts",
+    "rootDir": "/home/runner/workspace/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        {
+          "outputFolder": "tests/playwright-report"
+        }
+      ],
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "tests/test-results/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/runner/workspace/tests/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/runner/workspace/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/home/runner/workspace/tests/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/home/runner/workspace/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.57.0",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "accountability/security.spec.ts",
+      "file": "accountability/security.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Security & Privacy Accountability Audit",
+          "file": "accountability/security.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Protocol loads over secure connection @smoke",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9531,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🔍 Running Security Audit: Connection integrity...\n"
+                        },
+                        {
+                          "text": "✅ Security Audit: Page loads successfully\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-09T15:22:37.310Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c98271e02ca7753d3d0-887b84ea508029bef0ee",
+              "file": "accountability/security.spec.ts",
+              "line": 5,
+              "column": 7
+            },
+            {
+              "title": "Console is free of severe JavaScript errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 8744,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🔍 Running Security Audit: Console error scan...\n"
+                        },
+                        {
+                          "text": "✅ Security Audit: Found 0 console messages, 0 critical\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-09T15:22:37.297Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/runner/workspace/tests/test-results/accountability-security-Se-feaf9-of-severe-JavaScript-errors-chromium/test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c98271e02ca7753d3d0-8d717e799e9723872304",
+              "file": "accountability/security.spec.ts",
+              "line": 14,
+              "column": 7
+            },
+            {
+              "title": "Privacy Policy link is accessible in footer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 9614,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🔍 Running Security Audit: Privacy Policy accessibility...\n"
+                        },
+                        {
+                          "text": "✅ Security Audit: Privacy Policy is accessible\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-09T15:22:37.319Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/runner/workspace/tests/test-results/accountability-security-Se-af221-ink-is-accessible-in-footer-chromium/test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c98271e02ca7753d3d0-428a7284344a1a5ee240",
+              "file": "accountability/security.spec.ts",
+              "line": 37,
+              "column": 7
+            },
+            {
+              "title": "Terms of Service link is accessible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 13291,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🔍 Running Security Audit: Terms of Service accessibility...\n"
+                        },
+                        {
+                          "text": "✅ Security Audit: Terms of Service is accessible\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-09T15:22:37.258Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/runner/workspace/tests/test-results/accountability-security-Se-fb349--Service-link-is-accessible-chromium/test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c98271e02ca7753d3d0-abb3362fc24ac1e2c0aa",
+              "file": "accountability/security.spec.ts",
+              "line": 57,
+              "column": 7
+            },
+            {
+              "title": "Safe Harbor statement is accessible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 8581,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🔍 Running Security Audit: Safe Harbor accessibility...\n"
+                        },
+                        {
+                          "text": "✅ Security Audit: Safe Harbor statement is accessible\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-09T15:22:49.349Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/runner/workspace/tests/test-results/accountability-security-Se-d12f6-bor-statement-is-accessible-chromium/test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c98271e02ca7753d3d0-83193a505b3abeb3ff87",
+              "file": "accountability/security.spec.ts",
+              "line": 75,
+              "column": 7
+            },
+            {
+              "title": "Affidavit signing mechanism is present",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "timedOut",
+                      "duration": 33110,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/home/runner/workspace/tests/accountability/security.spec.ts",
+                            "column": 16,
+                            "line": 101
+                          },
+                          "message": "Error: page.waitForFunction: Test timeout of 30000ms exceeded.\n\n   99 |     await expect(page.locator('.stApp')).toBeVisible({ timeout: 20000 });\n  100 |     \n> 101 |     await page.waitForFunction(() => {\n      |                ^\n  102 |       const body = document.body.innerText;\n  103 |       return body.includes('Affidavit') || body.includes('Integrity') || body.includes('Sign') || body.includes('Foreign') || body.includes('Influence');\n  104 |     }, { timeout: 15000 });\n    at /home/runner/workspace/tests/accountability/security.spec.ts:101:16"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "🔍 Running Security Audit: Affidavit integrity...\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-09T15:22:50.041Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/runner/workspace/tests/test-results/accountability-security-Se-62c26-igning-mechanism-is-present-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/runner/workspace/tests/test-results/accountability-security-Se-62c26-igning-mechanism-is-present-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1c98271e02ca7753d3d0-93d52a97de720d53a654",
+              "file": "accountability/security.spec.ts",
+              "line": 93,
+              "column": 7
+            },
+            {
+              "title": "Founder disclaimer is visible in footer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8107,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🔍 Running Security Audit: Legal disclaimer visibility...\n"
+                        },
+                        {
+                          "text": "✅ Security Audit: Legal disclaimers are visible\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-09T15:22:50.401Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/runner/workspace/tests/test-results/accountability-security-Se-ff00f-laimer-is-visible-in-footer-chromium/test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c98271e02ca7753d3d0-cd392c721a51bffc1693",
+              "file": "accountability/security.spec.ts",
+              "line": 109,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e/contact.spec.ts",
+      "file": "e2e/contact.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "ICE Shield Contact Audit",
+          "file": "e2e/contact.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "ICE Shield page loads with content",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 8866,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🔍 Running ICE Shield Contact Audit...\n"
+                        },
+                        {
+                          "text": "🔍 Auditing: ICE Shield page structure...\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-09T15:22:55.188Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/runner/workspace/tests/test-results/e2e-contact-ICE-Shield-Con-1c698-eld-page-loads-with-content-chromium/test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7e113a30b0fcf0eb3b38-c48da4a281216e600a3c",
+              "file": "e2e/contact.spec.ts",
+              "line": 11,
+              "column": 7
+            },
+            {
+              "title": "Page has form input elements for user data",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 25828,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input[type=\"text\"], select, [data-testid*=\"Input\"]').first()\nExpected: visible\nTimeout: 15000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('input[type=\"text\"], select, [data-testid*=\"Input\"]').first()\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input[type=\"text\"], select, [data-testid*=\"Input\"]').first()\nExpected: visible\nTimeout: 15000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('input[type=\"text\"], select, [data-testid*=\"Input\"]').first()\u001b[22m\n\n    at /home/runner/workspace/tests/e2e/contact.spec.ts:26:39",
+                        "location": {
+                          "file": "/home/runner/workspace/tests/e2e/contact.spec.ts",
+                          "column": 39,
+                          "line": 26
+                        },
+                        "snippet": "  24 |     \n  25 |     const inputFields = page.locator('input[type=\"text\"], select, [data-testid*=\"Input\"]');\n> 26 |     await expect(inputFields.first()).toBeVisible({ timeout: 15000 });\n     |                                       ^\n  27 |   });\n  28 |\n  29 |   test('Page references DHS or immigration enforcement', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/runner/workspace/tests/e2e/contact.spec.ts",
+                            "column": 39,
+                            "line": 26
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input[type=\"text\"], select, [data-testid*=\"Input\"]').first()\nExpected: visible\nTimeout: 15000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('input[type=\"text\"], select, [data-testid*=\"Input\"]').first()\u001b[22m\n\n\n  24 |     \n  25 |     const inputFields = page.locator('input[type=\"text\"], select, [data-testid*=\"Input\"]');\n> 26 |     await expect(inputFields.first()).toBeVisible({ timeout: 15000 });\n     |                                       ^\n  27 |   });\n  28 |\n  29 |   test('Page references DHS or immigration enforcement', async ({ page }) => {\n    at /home/runner/workspace/tests/e2e/contact.spec.ts:26:39"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "🔍 Running ICE Shield Contact Audit...\n"
+                        },
+                        {
+                          "text": "🔍 Auditing: Form input fields...\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-09T15:22:58.043Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/runner/workspace/tests/test-results/e2e-contact-ICE-Shield-Con-c4eda-nput-elements-for-user-data-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/runner/workspace/tests/test-results/e2e-contact-ICE-Shield-Con-c4eda-nput-elements-for-user-data-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/runner/workspace/tests/e2e/contact.spec.ts",
+                        "column": 39,
+                        "line": 26
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7e113a30b0fcf0eb3b38-f253c8795651cd5364ac",
+              "file": "e2e/contact.spec.ts",
+              "line": 22,
+              "column": 7
+            },
+            {
+              "title": "Page references DHS or immigration enforcement",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 37313,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/home/runner/workspace/tests/e2e/contact.spec.ts",
+                            "column": 16,
+                            "line": 32
+                          },
+                          "message": "Error: page.waitForFunction: Test timeout of 30000ms exceeded.\n\n  30 |     console.log('🔍 Auditing: DHS reference presence...');\n  31 |     \n> 32 |     await page.waitForFunction(() => {\n     |                ^\n  33 |       const body = document.body.innerText;\n  34 |       return body.includes('DHS') || body.includes('ICE') || body.includes('enforcement') || body.includes('immigration');\n  35 |     }, { timeout: 15000 });\n    at /home/runner/workspace/tests/e2e/contact.spec.ts:32:16"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "🔍 Running ICE Shield Contact Audit...\n"
+                        },
+                        {
+                          "text": "🔍 Auditing: DHS reference presence...\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-09T15:22:58.880Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/runner/workspace/tests/test-results/e2e-contact-ICE-Shield-Con-21b1f--or-immigration-enforcement-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/runner/workspace/tests/test-results/e2e-contact-ICE-Shield-Con-21b1f--or-immigration-enforcement-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7e113a30b0fcf0eb3b38-cc78ccfcfc476ebb2475",
+              "file": "e2e/contact.spec.ts",
+              "line": 29,
+              "column": 7
+            },
+            {
+              "title": "Mailto link generation is present",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 6874,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🔍 Running ICE Shield Contact Audit...\n"
+                        },
+                        {
+                          "text": "🔍 Auditing: Mailto link presence...\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-09T15:23:04.311Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/runner/workspace/tests/test-results/e2e-contact-ICE-Shield-Con-253a2--link-generation-is-present-chromium/test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7e113a30b0fcf0eb3b38-1905e12fb95cf8691237",
+              "file": "e2e/contact.spec.ts",
+              "line": 38,
+              "column": 7
+            },
+            {
+              "title": "Social share functionality exists",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "timedOut",
+                      "duration": 34527,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/home/runner/workspace/tests/e2e/contact.spec.ts",
+                            "column": 16,
+                            "line": 54
+                          },
+                          "message": "Error: page.waitForFunction: Test timeout of 30000ms exceeded.\n\n  52 |     console.log('🔍 Auditing: Social share presence...');\n  53 |     \n> 54 |     await page.waitForFunction(() => {\n     |                ^\n  55 |       const body = document.body.innerText;\n  56 |       return body.includes('Share') || body.includes('Twitter') || body.includes('Facebook') || body.includes('Post');\n  57 |     }, { timeout: 15000 });\n    at /home/runner/workspace/tests/e2e/contact.spec.ts:54:16"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "🔍 Running ICE Shield Contact Audit...\n"
+                        },
+                        {
+                          "text": "🔍 Auditing: Social share presence...\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-09T15:23:11.235Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/runner/workspace/tests/test-results/e2e-contact-ICE-Shield-Con-ecf18--share-functionality-exists-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/runner/workspace/tests/test-results/e2e-contact-ICE-Shield-Con-ecf18--share-functionality-exists-chromium/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7e113a30b0fcf0eb3b38-227e5770333b518fb14f",
+              "file": "e2e/contact.spec.ts",
+              "line": 51,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e/home.spec.ts",
+      "file": "e2e/home.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Homepage Critical Path Audit",
+          "file": "e2e/home.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Protocol loads successfully @smoke",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 7586,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🔍 Running Homepage Audit...\n"
+                        },
+                        {
+                          "text": "🔍 Auditing: Protocol initialization...\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-09T15:23:25.854Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/runner/workspace/tests/test-results/e2e-home-Homepage-Critical-4e649-ol-loads-successfully-smoke-chromium/test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ff75c9407109e0c193c2-a27bf98bcd4debb61f28",
+              "file": "e2e/home.spec.ts",
+              "line": 11,
+              "column": 7
+            },
+            {
+              "title": "Debt Ticker module loads and displays data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 9610,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🔍 Running Homepage Audit...\n"
+                        },
+                        {
+                          "text": "🔍 Auditing: Debt Ticker module...\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-09T15:23:26.448Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/runner/workspace/tests/test-results/e2e-home-Homepage-Critical-5c8db-ule-loads-and-displays-data-chromium/test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ff75c9407109e0c193c2-a0835984d1dc16f4b03e",
+              "file": "e2e/home.spec.ts",
+              "line": 17,
+              "column": 7
+            },
+            {
+              "title": "Force Continuum module loads with content",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 14037,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🔍 Running Homepage Audit...\n"
+                        },
+                        {
+                          "text": "🔍 Auditing: Force Continuum module...\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-09T15:23:36.244Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/runner/workspace/tests/test-results/e2e-home-Homepage-Critical-c4aa9-m-module-loads-with-content-chromium/test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ff75c9407109e0c193c2-7798595abb0dd48e4eaf",
+              "file": "e2e/home.spec.ts",
+              "line": 29,
+              "column": 7
+            },
+            {
+              "title": "Navigation sidebar displays core modules",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5957,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🔍 Running Homepage Audit...\n"
+                        },
+                        {
+                          "text": "🔍 Auditing: Navigation integrity...\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-09T15:23:39.452Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/runner/workspace/tests/test-results/e2e-home-Homepage-Critical-59f26-debar-displays-core-modules-chromium/test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ff75c9407109e0c193c2-c0ac3ee6f6ae434b38fa",
+              "file": "e2e/home.spec.ts",
+              "line": 43,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-01-09T15:22:34.408Z",
+    "duration": 76123.097,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

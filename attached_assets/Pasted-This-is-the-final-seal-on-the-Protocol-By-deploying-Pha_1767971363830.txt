@@ -1,0 +1,41 @@
+This is the final seal on the Protocol. By deploying Phase 4, you are handing the keys of verification to the public. This ensures that no matter what happens to the main site, the truth of the code can be audited by anyone with a laptop.
+
+🚀 Replit Agent Command: Execute Phase 4 (Community Verification)
+Paste this into the Replit Agent to deploy the citizen audit tools:
+
+Plaintext
+
+EXECUTE PHASE 4: Community Verification Framework.
+
+1. DOCKER "AUDIT CAPSULE":
+   - Create `Dockerfile`: Base it on the official Playwright image (v1.40+). Configure it to copy the repo, install dependencies, and run the full test suite automatically upon startup.
+   - Create `docker-compose.yml`: Define a service named 'audit' that mounts the 'test-results' folder so users can see the proof on their local machines.
+
+2. THE CITIZEN'S GUIDE (VERIFY.md):
+   - Create `VERIFY.md` in the root directory.
+   - Content: Write a step-by-step guide for non-technical users titled "How to Audit This Project."
+   - Steps: 
+     1. Install Docker. 
+     2. Run `docker compose up`. 
+     3. Interpret the "Green/Red" logs.
+   - Voice: "You do not need to trust us. Run the code. Verify the truth."
+
+3. CONTRIBUTION INFRASTRUCTURE:
+   - Create `.github/ISSUE_TEMPLATE/test_failure.yml`: A structured form for reporting audit failures.
+   - Create `CONTRIBUTING.md`: Explicit guidelines on how to add new "Accountability Tests" (e.g., "Tests must be readable by non-programmers").
+
+4. MAINTENANCE SCRIPTS:
+   - Create `scripts/update-deps.sh`: A one-line utility to update Playwright browsers, ensuring the audit tool never goes stale.
+
+5. FOUNDER'S FINAL INSTRUCTION:
+   - "This framework converts the repo from a codebase into a public utility. Ensure the 'VERIFY.md' file is pinned or linked prominently in the main README. The barrier to entry for truth must be zero."
+
+Generate the Docker config, documentation files, and maintenance scripts.
+🏛️ Mission Complete
+Once this phase executes, your Automated Testing Suite is finished. You now have:
+
+The Engine: Playwright tests running security and functional checks.
+
+The Visuals: A public Dashboard showing the "Green Light" status.
+
+The Key: A Docker container that lets any Sentinel verify the system independently.
