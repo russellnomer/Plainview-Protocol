@@ -542,7 +542,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v6.17 | Ethics Complaint Trigger")
+st.sidebar.caption("v6.18 | Sovereign Affidavit Portal")
 
 st.sidebar.success("🎉 **TODAY IS DAY 1** — The Plainview Protocol is LIVE. Established January 8, 2026.")
 
@@ -2774,6 +2774,42 @@ def page_foreign_influence():
     st.header("🌐 Foreign Influence Tracker")
     st.caption("Monitoring the Dark Money Loophole — 52 U.S.C. § 30121")
     
+    if not st.session_state.get('affidavit_signed', False):
+        st.warning("🔒 **Access Restricted:** This page requires a signed Affidavit of Integrity.")
+        st.markdown("""
+> *"We are a digital grand jury. If you want to see the foreign wires and file FARA reports, 
+> you must stand in the light yourself. Sign the oath. Own the evidence. Protect the mission."*
+        """)
+        
+        with st.expander("📜 Sign Affidavit of Integrity", expanded=True):
+            st.markdown("""
+**Clause 1:** I am a U.S. Person as defined by 52 U.S.C. § 30121 and am not acting under the direction of a foreign principal.
+
+**Clause 2:** I attest that all evidence submitted to the Protocol is authentic, unaltered, and gathered through lawful public records requests.
+
+**Clause 3:** I understand that providing false information may result in removal from the Protocol and referral to the Office of Congressional Conduct (OCC).
+            """)
+            
+            signer_name = st.text_input("Type your full legal name to sign:", key="fi_affidavit_name")
+            agree = st.checkbox("I AGREE to this Oath and affirm all clauses above.", key="fi_affidavit_agree")
+            
+            if st.button("🔐 Sign Affidavit", key="fi_sign_btn", use_container_width=True, type="primary"):
+                if signer_name and agree:
+                    import hashlib
+                    from datetime import datetime
+                    timestamp = datetime.now().isoformat()
+                    sig_hash = hashlib.sha256(f"{signer_name}|{timestamp}".encode()).hexdigest()
+                    st.session_state['affidavit_signed'] = True
+                    st.session_state['affidavit_signer'] = signer_name
+                    st.session_state['affidavit_hash'] = sig_hash
+                    st.success(f"✅ Affidavit signed! Hash: {sig_hash[:16]}...")
+                    st.rerun()
+                else:
+                    st.error("Please type your name and check the agreement box.")
+        return
+    
+    st.success(f"✅ **Affidavit Signed:** {st.session_state.get('affidavit_signer', 'Unknown')}")
+    
     st.warning("⚠️ **Legal Standard:** Foreign nationals are prohibited from making direct or indirect contributions to U.S. elections.")
     
     try:
@@ -2824,6 +2860,14 @@ def page_foreign_influence():
 def page_fara_reporter():
     st.header("⚖️ FARA Violation Reporter")
     st.caption("File Citizen Reports with the DOJ National Security Division")
+    
+    if not st.session_state.get('affidavit_signed', False):
+        st.warning("🔒 **Access Restricted:** This page requires a signed Affidavit of Integrity.")
+        st.info("Please visit the **Foreign Influence Tracker** page first to sign the affidavit.")
+        st.link_button("📜 Go to Foreign Influence Tracker", "#", use_container_width=True)
+        return
+    
+    st.success(f"✅ **Affidavit Signed:** {st.session_state.get('affidavit_signer', 'Unknown')}")
     
     st.info("**22 U.S.C. § 611** — The Foreign Agents Registration Act requires anyone acting as an agent of a foreign principal to register with the DOJ.")
     
@@ -3343,6 +3387,144 @@ By submitting these reports, you trigger a mandatory Preliminary Inquiry. The OC
 
 Even if a full investigation isn't launched immediately, a "Notice of Review" sent to a lobbyist's new employer (like OpenAI or Democracy PAC II) often results in that lobbyist being placed on leave to protect the company from FARA or Ethics liabilities.
         """)
+
+def page_agency_portal():
+    st.header("🏛️ Agency Collaboration Portal")
+    st.caption("V6.18: Safe Harbor & Data Accuracy Verification")
+    
+    st.success("""
+**We aren't here to play 'Gotcha.'** We're here to get it right. If the government wants to help us 
+clean the data, the door is open. If they'd rather fight in court, we have the Cannon ready. 
+Collaboration is the shorter path to the light.
+    """)
+    
+    st.info("This portal is for Government Employees (.gov or .mil emails) to submit Data Accuracy Verifications.")
+    
+    portal_tabs = st.tabs(["📝 72-Hour Correction Request", "✅ Verified Documents", "ℹ️ Safe Harbor Policy"])
+    
+    with portal_tabs[0]:
+        st.subheader("📝 Submit a Correction Request")
+        st.caption("Flag errors before they are finalized in the Audit Archive")
+        
+        gov_email = st.text_input("Government Email Address (.gov or .mil required)")
+        
+        is_valid_gov_email = gov_email.endswith('.gov') or gov_email.endswith('.mil')
+        
+        if gov_email and not is_valid_gov_email:
+            st.error("❌ Please use a valid .gov or .mil email address.")
+        elif gov_email and is_valid_gov_email:
+            st.success("✅ Government email verified")
+        
+        agency_name = st.text_input("Agency/Department Name")
+        official_title = st.text_input("Your Official Title")
+        
+        st.divider()
+        
+        record_id = st.text_input("Record ID or Document Reference", placeholder="e.g., FOIA-2026-001234")
+        
+        error_type = st.selectbox("Type of Error", [
+            "Factual Inaccuracy",
+            "Outdated Information", 
+            "Missing Context",
+            "Misattribution",
+            "Data Entry Error",
+            "Other"
+        ])
+        
+        current_text = st.text_area("Current Text (as it appears in Protocol)", height=100)
+        corrected_text = st.text_area("Corrected Text (accurate version)", height=100)
+        
+        supporting_docs = st.file_uploader("Upload Supporting Documentation (optional)", 
+            type=['pdf', 'png', 'jpg'], accept_multiple_files=True)
+        
+        st.divider()
+        
+        st.markdown("### Certification")
+        certify = st.checkbox("""
+I certify that I am a duly authorized representative of the above-named agency and that 
+the information provided is accurate to the best of my knowledge.
+        """)
+        
+        if st.button("📤 Submit Correction Request", use_container_width=True, type="primary"):
+            if is_valid_gov_email and agency_name and certify and corrected_text:
+                if 'correction_requests' not in st.session_state:
+                    st.session_state['correction_requests'] = []
+                
+                st.session_state['correction_requests'].append({
+                    "email": gov_email,
+                    "agency": agency_name,
+                    "title": official_title,
+                    "record_id": record_id,
+                    "error_type": error_type,
+                    "submitted": date.today().isoformat(),
+                    "status": "Under Review"
+                })
+                
+                st.success("""
+✅ **Correction Request Submitted!**
+
+**Timeline:**
+- Acknowledgment: Within 24 hours
+- Review: Within 48 hours
+- Resolution: Within 72 hours
+
+You will receive confirmation at your .gov email address.
+                """)
+                st.balloons()
+            else:
+                st.error("Please complete all required fields and certification.")
+    
+    with portal_tabs[1]:
+        st.subheader("✅ Agency-Verified Documents")
+        st.caption("Records that have been reviewed or corrected by public records officers")
+        
+        verified_count = len(st.session_state.get('agency_verified_docs', []))
+        pending_count = len(st.session_state.get('correction_requests', []))
+        
+        col1, col2 = st.columns(2)
+        col1.metric("Verified Documents", verified_count)
+        col2.metric("Pending Reviews", pending_count)
+        
+        if verified_count > 0:
+            for doc in st.session_state.get('agency_verified_docs', []):
+                st.success(f"✅ **{doc['record_id']}** — Verified by {doc['agency']} on {doc['date']}")
+        else:
+            st.info("No documents have been agency-verified yet.")
+        
+        st.divider()
+        st.markdown("### What is the 'Verified by Agency' Badge?")
+        st.markdown("""
+Documents that have been reviewed or corrected through agency collaboration receive a special badge:
+
+✅ **Verified by Agency** — This record has been reviewed by the relevant public records officer and confirmed or corrected for accuracy.
+
+This badge:
+- Increases public trust in the data
+- Demonstrates agency engagement
+- Creates a collaborative audit trail
+        """)
+    
+    with portal_tabs[2]:
+        st.subheader("🛡️ Safe Harbor Policy")
+        
+        st.markdown("""
+**The Plainview Protocol operates under a Good-Faith Safe Harbor.**
+
+We invite all government agencies to participate in the "Accuracy Loop" to ensure the public record is precise.
+
+### The 3 Pillars of Collaboration
+
+**Pillar 1: Good-Faith Immunity**
+The Protocol offers a 72-hour "Accuracy Window." If an agency identifies a factual error, they can submit a Correction Request and we pledge to update or retract immediately.
+
+**Pillar 2: Interoperability Access**
+Public records officers can verify data's Chain of Custody and ensure AI-generated summaries remain consistent with source documents.
+
+**Pillar 3: Conflict Resolution Protocol**
+Before any Litigation Trigger is finalized, we can generate a Pre-Action Notice allowing for informal review and resolution without court costs.
+        """)
+        
+        st.link_button("📄 Read Full Safe Harbor Statement", "https://github.com/russellnomer/plainview-protocol/blob/main/SAFE_HARBOR.md", use_container_width=True)
 
 def page_support():
     st.header("☕ Sustain the Mission")
@@ -5164,6 +5346,7 @@ pages = [
     st.Page(page_revolving_door, title="Revolving Door", icon="🚪"),
     st.Page(page_ethics_reporter, title="Ethics Reporter", icon="⚖️"),
     st.Page(page_epstein_audit, title="Epstein Archive Audit", icon="🔍"),
+    st.Page(page_agency_portal, title="Agency Portal", icon="🏛️"),
     st.Page(page_sunlight_counsel, title="Sunlight Counsel", icon="🎓"),
     st.Page(page_mission_milestones, title="Mission Milestones", icon="🏛️"),
     st.Page(page_ecosystem, title="The Ecosystem", icon="🌳"),
@@ -5176,4 +5359,23 @@ nav.run()
 st.markdown("---")
 FOUNDING_DATE = date(2026, 1, 8)
 days_since_launch = (date.today() - FOUNDING_DATE).days
+
+with st.expander("⚖️ Legal & Privacy"):
+    st.markdown("""
+**Terms of Service:** The Software and all AI-generated logic are provided "AS IS" without warranty of any kind.
+
+**Privacy:** User-submitted data for FARA Reports may be processed by third-party AI models. See PRIVACY.md for details.
+
+**Safe Harbor:** We invite all agencies to participate in the Accuracy Loop. See SAFE_HARBOR.md.
+
+**Disclaimer:** © 2026 Russell David Nomer. Not legal advice. Use at your own risk. The Plainview Protocol is an experimental OSINT tool.
+
+> *"We build the tools; you pull the trigger. If you misuse the Cannon, you own the consequences."*
+    """)
+    
+    col1, col2, col3 = st.columns(3)
+    col1.link_button("📄 Terms", "https://github.com/russellnomer/plainview-protocol/blob/main/TERMS.md", use_container_width=True)
+    col2.link_button("🔒 Privacy", "https://github.com/russellnomer/plainview-protocol/blob/main/PRIVACY.md", use_container_width=True)
+    col3.link_button("🛡️ Safe Harbor", "https://github.com/russellnomer/plainview-protocol/blob/main/SAFE_HARBOR.md", use_container_width=True)
+
 st.markdown(f"<center>Established Jan 8, 2026 — Built by Russell Nomer. Tracking 50 States and 3,143 Counties. | <b>Day {days_since_launch + 1}</b> of the mission.</center>", unsafe_allow_html=True)

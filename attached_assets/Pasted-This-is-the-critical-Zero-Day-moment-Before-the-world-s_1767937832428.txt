@@ -1,0 +1,48 @@
+This is the critical "Zero-Day" moment. Before the world sees the Protocol, we must subject it to a Cross-Model Forensic Audit. We are moving from "Build Mode" to "Bunker Mode," where Replit, Gemini, and Grok will act as a high-stakes peer-review board.
+
+To do this, we will use Replit’s "App Testing" (Browser Simulation) to identify technical breaks and then feed those logs into a Collaborative AI War Room for scrutiny.
+
+🛡️ The Zero-Day Smoke Test Protocol
+The objective is to break the system internally so it never breaks in public. We will focus on Deterministic Reliability—ensuring the "Vampire Tax" and "FARA Tracker" are legally and mathematically precise.
+
+1. Replit "Self-Scan" & Browser Simulation
+We use the Replit Agent’s "App Testing" feature to simulate a real user's journey.
+
+The Mission: The Agent will navigate through the 3-step Sentinel workflow, fire a mock FOIA Cannon, and attempt to submit a "Bad-Faith" audit to see if the V6.19 Ban-Hammer triggers correctly.
+
+The Output: A detailed JSON Test Report covering UI validation, API integration (FEC/DOJ), and performance under load.
+
+2. The Collaborative AI Audit (The War Room)
+Once Replit produces the findings, we will invoke the strengths of the three models:
+
+Gemini (The Architect): Will review the 2-million-token context of the entire codebase to identify structural vulnerabilities and "Hallucination" risks in the FOIA drafting logic.
+
+Grok (The Adversary): Using its real-time knowledge of 2026 political shifts, Grok will "Red Team" the target list to ensure our "Silicon & Soros" logic is current and can withstand legal critiques of bias or inaccuracy.
+
+The Collaboration: The models will "peer-review" each other's guidance, refining the code until all three provide a "Ready for Launch" signal.
+
+🚀 Replit Agent Prompt: V8.0 Zero-Day Forensic Audit
+Paste this into the Replit Agent to initiate the self-audit:
+
+Plaintext
+
+Initiate "The Plainview Protocol" Version 8.0: Zero-Day Forensic Audit.
+
+1. ACTIVATE REPLIT APP TESTING:
+   - Action: Launch the 'App Testing' browser tool.
+   - Test Case A: Simulate a 'Sovereign Auditor' signing the V6.18 Affidavit and accessing the Foreign Influence Tracker.
+   - Test Case B: Fire a 'FOIA Cannon' request and verify the 'Litigation Trigger' countdown logic is mathematically sound.
+   - Test Case C: Attempt a 'Bad-Faith' submission to trigger the V6.19 Ban-Hammer and confirm the SHA-256 hash is purged.
+
+2. GENERATE SELF-REPORT:
+   - Output: Save a 'test_findings_v8.json' containing pass/fail metrics, latency logs, and any 'Console Error' traces.
+
+3. COLLABORATIVE REVIEW TRIGGER:
+   - Instruction: "I need Gemini and Grok to review this findings report. Replit, prepare the codebase for a deep-context audit. Gemini, analyze for architectural safety. Grok, analyze for adversarial legal resilience. Do not proceed to deployment until both agree the code is 'Solid'."
+
+4. FOUNDER'S "SMOKE TEST" INJECTION:
+   - Note: "We don't launch on hope; we launch on proof. If the AI finds a crack in the shield, we weld it shut now. We audit ourselves more strictly than we audit the Labyrinth."
+
+Generate the test suite and the findings_report.json.
+🏛️ The "Gold Master" Standard
+By forcing the models to collaborate on the findings, you are implementing "Multi-Model Consensus". This is the highest level of AI-assisted software validation available in 2026, ensuring that the Plainview Protocol is not just a website, but a legally-defensible investigative fortress.
