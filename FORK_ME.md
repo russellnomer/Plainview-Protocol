@@ -132,6 +132,124 @@ docker run -p 5000:5000 -e SESSION_SECRET=your-secret plainview-protocol
 
 ---
 
+## 🔑 Connect Your Own API Keys (FEC/DOJ)
+
+As a Sentinel, you can connect your own API keys to unlock deeper data access:
+
+### Federal Election Commission (FEC) API
+1. Register at [api.open.fec.gov](https://api.open.fec.gov/developers/)
+2. Request a free API key (instant approval)
+3. Add to your environment:
+```bash
+export FEC_API_KEY="your-fec-api-key"
+```
+4. Update `sources.json`:
+```json
+{
+  "fec_api": "https://api.open.fec.gov/v1/",
+  "fec_api_key": "${FEC_API_KEY}"
+}
+```
+
+**FEC Data Access:**
+- Committee filings and expenditures
+- Individual donor lookups
+- PAC contribution histories
+- 24/48 hour independent expenditure reports
+
+### Department of Justice (DOJ) FOIA API
+1. No API key required for public FOIA logs
+2. PACER access requires registration at [pacer.uscourts.gov](https://pacer.uscourts.gov)
+3. Add PACER credentials (optional):
+```bash
+export PACER_USERNAME="your-username"
+export PACER_PASSWORD="your-password"
+```
+
+**DOJ Data Sources:**
+- [justice.gov/usao](https://www.justice.gov/usao) — U.S. Attorney press releases
+- [vault.fbi.gov](https://vault.fbi.gov) — FBI FOIA reading room
+- [fara.gov](https://efile.fara.gov) — Foreign agent registrations
+
+### OpenSecrets API (Dark Money Tracking)
+1. Register at [opensecrets.org/api](https://www.opensecrets.org/api)
+2. Add your key:
+```bash
+export OPENSECRETS_API_KEY="your-key"
+```
+
+---
+
+## 🛡️ Data Sovereignty: The Uncensorable Network
+
+### Why Decentralized Hosting Makes the Protocol Unstoppable
+
+**The Problem with Centralized Truth:**
+When truth lives on one server, it can be silenced with one subpoena, one DDOS attack, or one phone call to a hosting provider. Centralized transparency is an oxymoron.
+
+**The Plainview Solution:**
+Every fork is a sovereign node. Your instance, your data, your jurisdiction.
+
+### How Decentralization Works
+
+```
+         ┌─────────────────┐
+         │  Main Protocol  │
+         │  (Plainview HQ) │
+         └────────┬────────┘
+                  │
+    ┌─────────────┼─────────────┐
+    │             │             │
+    ▼             ▼             ▼
+┌───────┐   ┌───────┐   ┌───────┐
+│ Fork  │   │ Fork  │   │ Fork  │
+│Texas  │   │ NY    │   │ CA    │
+└───┬───┘   └───┬───┘   └───┬───┘
+    │           │           │
+    ▼           ▼           ▼
+┌───────┐   ┌───────┐   ┌───────┐
+│County │   │County │   │County │
+│ Forks │   │ Forks │   │ Forks │
+└───────┘   └───────┘   └───────┘
+```
+
+**If one node goes dark, 3,142 others shine.**
+
+### Data Sovereignty Principles
+
+1. **Your Fork, Your Rules**: Each Sentinel controls their own instance. No central authority can modify your data.
+
+2. **Jurisdictional Shield**: A fork hosted in State A cannot be subpoenaed by State B (absent federal action).
+
+3. **Evidence Redundancy**: When you document corruption, submit it to multiple forks. The network remembers.
+
+4. **Censorship Resistance**: Takedown notices must be served to *every* fork. Good luck with that.
+
+5. **No Single Point of Failure**: The main Protocol could disappear tomorrow. The mission would survive.
+
+### The Legal Shield
+
+Each fork inherits independent legal standing:
+- **First Amendment Protection**: Journalism and civic speech protections apply
+- **Safe Harbor (DMCA § 512)**: User-generated content protections
+- **State Shield Laws**: Varies by jurisdiction (NY has strong reporter protections)
+- **Whistleblower Statutes**: Dodd-Frank, SOX, and state equivalents
+
+### Hosting Recommendations for Maximum Sovereignty
+
+| Host | Jurisdiction | Censorship Risk | Cost |
+|------|--------------|-----------------|------|
+| **Replit** | USA | Medium | Free tier |
+| **Vercel** | USA | Medium | Free tier |
+| **Hetzner** | Germany | Low | €4/mo |
+| **OVH** | France | Low | €5/mo |
+| **Self-hosted** | Your closet | Lowest | Your hardware |
+| **IPFS** | Decentralized | Minimal | Complex setup |
+
+**Pro Tip:** Run multiple forks across different hosting providers and jurisdictions.
+
+---
+
 ## 🔧 Customize for Your Region
 
 ### Update Data Sources
