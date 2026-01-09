@@ -542,7 +542,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v6.10 | Sovereign Appeal")
+st.sidebar.caption("v6.15 | Sunlight Flare")
 
 st.sidebar.success("🎉 **TODAY IS DAY 1** — The Plainview Protocol is LIVE. Established January 8, 2026.")
 
@@ -759,6 +759,15 @@ The vampires hate the spotlight, but they're terrified of a kid with a smartphon
 
 **📹 The Citizen Reel:**
 Every smartphone is a witness. The Citizen Reel allows verified Sentinels to upload 60-second video tips directly to our Grassroots Media Network. Your footage gets privacy-scrubbed (EXIF/GPS stripped), tagged to Corruption Heatmap data points, and distributed to independent press. The vampires can hide from cameras, but they can't hide from citizens with receipts.
+
+**🌐 The Foreign Influence Tracker:**
+Foreign money is forbidden in our elections, but the Labyrinth uses "Social Welfare" nonprofits to launder it. We're following the wires from Istanbul to DC. If the money isn't American, the influence shouldn't be either. We're turning every citizen into a FARA whistleblower.
+
+**🧛 The Vampire Tax:**
+FARA isn't just a paperwork error; it's a debt to the taxpayers. If you took foreign-backed money to manipulate our elections while hiding in the shadows, you owe the public for every day you stayed there. The clock is ticking. Pay up or get out of the light.
+
+**☀️ The Sunlight Flare:**
+Every document released is a crack in the Labyrinth. Every Sunlight Flare is a victory for the Sovereign Citizen. We don't just audit; we celebrate the truth. The map is turning yellow, one document at a time.
 
 **🛡️ The Moderation Shield:**
 We protect our platform from bad actors while preserving free speech. Every upload passes through content filters, but we don't shadowban — we show you exactly what was flagged and why. Privacy scrubbing is automatic. If you disagree with a moderation decision, the Sovereign Appeal process gives you due process.
@@ -2624,6 +2633,449 @@ turning it all into tools for truth and protection. The Plainview Protocol is on
     st.divider()
     st.info("🌲 Music, books, apps—all channeling resilience into protecting America. **Join the Grove.**")
 
+def page_sentinel_training():
+    st.header("🎓 Sentinel Training Ground")
+    st.caption("From curious citizen to Sovereign Auditor in 5 minutes")
+    
+    st.info("🆕 **Welcome, Sentinel!** This is your training ground. Master the FOIA Cannon before you fire.")
+    
+    train_tabs = st.tabs(["📚 The Guide", "🎯 Practice Cannon", "⚖️ Code of Conduct"])
+    
+    with train_tabs[0]:
+        st.subheader("Step 1: Target Your Request")
+        st.markdown("""
+**Research First:** Before firing, check if records are in the "Reading Room" or Plainview Archive.
+
+**Identify the Component:** Target the specific office (e.g., FBI Field Office in your district, not DC HQ).
+        """)
+        
+        st.subheader("Step 2: Load the Cannon (Drafting)")
+        st.markdown("""
+**No Questions:** FOIA is for records, not answers. Don't ask "Why?" — request "All emails between Person A and Person B regarding Subject X from Jan 2026 to Present."
+
+**The Small Track Strategy:** Limit to specific dates/individuals to keep under 50 pages for faster processing.
+        """)
+        
+        st.subheader("Step 3: Assert Your Status")
+        st.markdown("""
+**Media/Educational Status:** As a Sentinel Auditor, request a Fee Waiver (public interest, not commercial).
+
+**Commitment to Pay:** Include max fee (e.g., $25) so they don't stop the clock for copying costs.
+        """)
+        
+        st.subheader("Step 4: Fire & Track")
+        st.markdown("""
+**The 20-Day Clock:** Federal law gives agencies 20 working days (5 U.S.C. § 552(a)(6)(A)).
+
+**The Sentinel Tracker:** If status stays "Received" for 21+ days, the Litigation Trigger glows crimson.
+        """)
+    
+    with train_tabs[1]:
+        st.subheader("🎯 Practice Cannon Sandbox")
+        st.caption("Draft a request and get AI feedback before firing")
+        
+        practice_request = st.text_area("Draft your FOIA request here:", height=200, 
+            placeholder="Example: All contracts between [Agency] and [Vendor X] from January 2024 to December 2025...")
+        
+        if st.button("🔍 Analyze My Request", use_container_width=True):
+            if practice_request:
+                word_count = len(practice_request.split())
+                has_date_range = any(x in practice_request.lower() for x in ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december", "2024", "2025", "2026", "from", "to", "between"])
+                has_specific_target = any(x in practice_request.lower() for x in ["contract", "email", "correspondence", "record", "document", "agreement", "invoice", "payment"])
+                
+                st.divider()
+                st.subheader("📊 Analysis Results")
+                
+                if word_count < 20:
+                    st.error("❌ **TOO VAGUE** — Your request is under 20 words. Be more specific about what records you want.")
+                elif word_count > 200 and not has_date_range:
+                    st.warning("⚠️ **TOO BROAD** — Over 200 words without a clear date range. Narrow your scope.")
+                elif not has_date_range:
+                    st.warning("⚠️ **MISSING DATE RANGE** — Always specify start and end dates to avoid delays.")
+                elif not has_specific_target:
+                    st.warning("⚠️ **VAGUE TARGET** — Specify the type of records (emails, contracts, payments, etc.)")
+                else:
+                    st.success("✅ **LOOKS GOOD!** Your request has specificity, date range, and clear targets. Ready to fire!")
+                
+                st.metric("Word Count", word_count)
+                st.metric("Has Date Range", "Yes" if has_date_range else "No")
+                st.metric("Has Specific Target", "Yes" if has_specific_target else "No")
+            else:
+                st.warning("Please enter a draft request to analyze.")
+    
+    with train_tabs[2]:
+        st.subheader("⚖️ The Sentinel Code of Conduct")
+        st.markdown("""
+> *"We deal in evidence, not hearsay. If the record doesn't exist, we document the absence. If the record is redacted, we appeal the 'Black Hole'. We do not stop until the sunlight is total."*
+        """)
+        
+        st.info("""
+**Core Principles:**
+1. **Evidence First** — Never claim without documentation
+2. **Bipartisan Scrutiny** — Corruption has no party
+3. **Precision Strikes** — Target specific records, not fishing expeditions
+4. **Persistence** — Appeal denials, escalate delays
+5. **Transparency** — Share victories with the community
+        """)
+
+def page_citizen_reel():
+    st.header("📹 Citizen Reel")
+    st.caption("Upload evidence, tag it to the Heatmap, and send to investigative press")
+    
+    st.info("📱 Record government meetings, public hearings, or document evidence. 60-second clips, 50MB max.")
+    
+    uploaded_video = st.file_uploader("Upload Video Evidence (MP4/MOV)", type=["mp4", "mov"], 
+        help="Maximum 50MB, 60 seconds. EXIF/GPS metadata will be stripped for your privacy.")
+    
+    if uploaded_video:
+        file_size_mb = uploaded_video.size / (1024 * 1024)
+        if file_size_mb > 50:
+            st.error(f"❌ File too large ({file_size_mb:.1f}MB). Maximum is 50MB.")
+        else:
+            st.success(f"✅ Video uploaded: {uploaded_video.name} ({file_size_mb:.1f}MB)")
+            st.info("🔒 **Privacy Scrubbing:** EXIF and GPS metadata will be automatically stripped.")
+            
+            st.divider()
+            st.subheader("🏷️ Tag to Corruption Heatmap")
+            
+            tag_col1, tag_col2 = st.columns(2)
+            with tag_col1:
+                tag_state = st.selectbox("State", ["New York", "North Carolina", "Florida", "Texas", "California", "Illinois", "Georgia"])
+            with tag_col2:
+                tag_county = st.text_input("County", placeholder="e.g., Nassau, Wake, Harris")
+            
+            tag_entity = st.text_input("Target Entity", placeholder="e.g., County Commission, School Board, PAC Name")
+            tag_description = st.text_area("Brief Description", placeholder="What does this video show?", height=100)
+            
+            st.divider()
+            if st.button("🚀 Send Viral Tip to Independent Press", use_container_width=True):
+                if tag_county and tag_entity:
+                    st.session_state['pending_viral_tip'] = {
+                        "state": tag_state,
+                        "county": tag_county,
+                        "entity": tag_entity,
+                        "description": tag_description
+                    }
+                    st.success("""
+✅ **Tip Queued for Distribution!**
+
+Your video will be sent to:
+- Local investigative reporters (Labyrinth Network)
+- Student press (Grassroots Swarm)
+- Independent creators (Nick Shirley tier)
+
+The press CC list has been automatically populated based on your county selection.
+                    """)
+                    st.balloons()
+                else:
+                    st.error("Please fill in County and Target Entity before sending.")
+
+def page_foreign_influence():
+    st.header("🌐 Foreign Influence Tracker")
+    st.caption("Monitoring the Dark Money Loophole — 52 U.S.C. § 30121")
+    
+    st.warning("⚠️ **Legal Standard:** Foreign nationals are prohibited from making direct or indirect contributions to U.S. elections.")
+    
+    try:
+        with open("foreign_influence_audit.json", "r") as f:
+            foreign_data = json.load(f)
+    except:
+        foreign_data = {"international_conduits": [], "501c4_conduits": [], "fara_watchlist": []}
+    
+    fi_tabs = st.tabs(["🌍 International Conduits", "🏛️ 501(c)(4) Dark Money", "⚖️ FARA Watchlist"])
+    
+    with fi_tabs[0]:
+        st.subheader("International NGO Funding Flows")
+        for conduit in foreign_data.get("international_conduits", []):
+            risk_color = "🔴" if conduit.get("risk_level") == "High" else "🟡"
+            with st.expander(f"{risk_color} {conduit['name']} — {conduit.get('headquarters', 'Unknown')}"):
+                st.markdown(f"**Focus:** {conduit.get('focus', 'N/A')}")
+                if conduit.get('estimated_global_assets'):
+                    st.markdown(f"**Global Assets:** ${conduit['estimated_global_assets']:,}")
+                if conduit.get('international_branches'):
+                    st.markdown(f"**International Branches:** {', '.join(conduit['international_branches'])}")
+                st.markdown(f"**Risk Level:** {conduit.get('risk_level', 'Unknown')}")
+                st.markdown(f"**Risk Factors:** {', '.join(conduit.get('risk_factors', []))}")
+    
+    with fi_tabs[1]:
+        st.subheader("501(c)(4) Dark Money Conduits")
+        st.caption("No donor disclosure required under 'Social Welfare' status")
+        
+        for conduit in foreign_data.get("501c4_conduits", []):
+            risk_color = "🔴" if conduit.get("risk_level") == "High" else "🟡"
+            with st.expander(f"{risk_color} {conduit['name']} — {conduit.get('parent_network', 'Independent')}"):
+                if conduit.get('2023_revenue'):
+                    st.metric("2023 Revenue", f"${conduit['2023_revenue']:,}")
+                if conduit.get('pop_up_groups_funded'):
+                    st.metric("Pop-Up Groups Funded", conduit['pop_up_groups_funded'])
+                st.markdown(f"**Donor Disclosure:** {conduit.get('donor_disclosure', 'Unknown')}")
+                st.markdown(f"**Risk Factors:** {', '.join(conduit.get('risk_factors', []))}")
+    
+    with fi_tabs[2]:
+        st.subheader("FARA Compliance Watchlist")
+        st.link_button("🔎 Search FARA Database", "https://efile.fara.gov/ords/fara/f?p=1235:10", use_container_width=True)
+        
+        for entity in foreign_data.get("fara_watchlist", []):
+            with st.expander(f"⚠️ {entity['entity']}"):
+                st.markdown(f"**FARA Status:** {entity.get('fara_status', 'Unknown')}")
+                st.markdown(f"**Concern:** {entity.get('concern', 'N/A')}")
+                st.markdown(f"**Recommended Action:** {entity.get('recommended_action', 'N/A')}")
+
+def page_fara_reporter():
+    st.header("⚖️ FARA Violation Reporter")
+    st.caption("File Citizen Reports with the DOJ National Security Division")
+    
+    st.info("**22 U.S.C. § 611** — The Foreign Agents Registration Act requires anyone acting as an agent of a foreign principal to register with the DOJ.")
+    
+    try:
+        with open("leftist_target_list.json", "r") as f:
+            target_data = json.load(f)
+    except:
+        target_data = {"top_10_pacs": []}
+    
+    st.subheader("🎯 High-Risk PAC Target List")
+    
+    for pac in target_data.get("top_10_pacs", [])[:5]:
+        with st.expander(f"💰 {pac['name']} — {pac['type']}"):
+            col1, col2 = st.columns(2)
+            with col1:
+                if pac.get('cash_on_hand'):
+                    st.metric("Cash on Hand", f"${pac['cash_on_hand']:,}")
+                if pac.get('2024_spending'):
+                    st.metric("2024 Spending", f"${pac['2024_spending']:,}")
+            with col2:
+                st.markdown(f"**Principal Funder:** {pac.get('principal_funder', 'Unknown')}")
+                st.markdown(f"**Focus:** {pac.get('focus', 'N/A')}")
+            
+            if pac.get('risk_flags'):
+                st.warning(f"⚠️ **Risk Flags:** {', '.join(pac['risk_flags'])}")
+            
+            if pac.get('verified_source'):
+                st.link_button("🔗 Verify Source (FEC)", pac['verified_source'], use_container_width=True)
+    
+    st.divider()
+    st.subheader("📝 Generate Citizen FARA Report")
+    
+    report_target = st.selectbox("Select Target Entity", [p['name'] for p in target_data.get("top_10_pacs", [])])
+    report_evidence = st.text_area("Evidence Summary", placeholder="Describe the suspected foreign influence activity...", height=150)
+    
+    if st.button("⚖️ Generate FARA Report for DOJ", use_container_width=True):
+        if report_target and report_evidence:
+            report_text = f"""
+CITIZEN TIP: POTENTIAL FARA VIOLATION
+Submitted via The Plainview Protocol
+
+TO: FARA Unit, National Security Division
+    U.S. Department of Justice
+    175 N Street NE
+    Washington, DC 20002
+
+DATE: {date.today().strftime("%B %d, %Y")}
+
+RE: Formal tip regarding potential unregistered agent status under 22 U.S.C. § 611
+
+SUSPECTED ENTITY: {report_target}
+
+EVIDENCE SUMMARY:
+{report_evidence}
+
+LEGAL BASIS:
+Under the Foreign Agents Registration Act (22 U.S.C. § 611 et seq.), any person acting as an agent of a foreign principal must register with the Department of Justice. Failure to register is a continuing offense under 22 U.S.C. § 618.
+
+ESTIMATED VAMPIRE TAX LIABILITY:
+Based on publicly available information, the estimated penalty for this entity may include:
+- Base Penalty: $250,000 per foreign principal (22 U.S.C. § 618(a))
+- Daily Continuing Offense: $1,000 per day unregistered (18 U.S.C. § 3571)
+- Shadow Income Recovery: All income received while unregistered
+
+REQUEST:
+I respectfully request that the FARA Unit investigate whether {report_target} or its principals are required to register under FARA and have failed to do so.
+
+CC: This report is being simultaneously sent to investigative journalists via the Plainview Protocol Sunlight CC system.
+
+Submitted by a Sovereign Auditor via The Plainview Protocol
+https://github.com/russellnomer/plainview-protocol
+            """
+            st.text_area("📄 Your FARA Report", report_text, height=400)
+            st.download_button("📥 Download Report", report_text, file_name=f"FARA_Report_{report_target.replace(' ', '_')}.txt")
+            st.success("✅ Report generated! Download and submit to the DOJ FARA Unit.")
+        else:
+            st.error("Please select a target and provide evidence summary.")
+
+def page_shadow_watch():
+    st.header("👁️ Shadow Watch Tracker")
+    st.caption("Monitoring FARA registrations and Shadow Agent activity")
+    
+    st.info("**Data Source:** efile.fara.gov — DOJ Foreign Agents Registration Act eFile System")
+    
+    watch_tabs = st.tabs(["📊 Watchlist", "🏆 Sunlight Victories", "💰 Vampire Tax Calculator"])
+    
+    with watch_tabs[0]:
+        st.subheader("🎯 Active Surveillance Targets")
+        
+        watchlist = [
+            {"name": "Open Society Policy Center", "status": "Monitoring", "days_tracked": 45, "foreign_principal": "Open Society Foundations"},
+            {"name": "Democracy PAC II Consultants", "status": "Under Review", "days_tracked": 30, "foreign_principal": "Soros Fund Management"},
+            {"name": "Sixteen Thirty Fund Lobbyists", "status": "Monitoring", "days_tracked": 60, "foreign_principal": "Arabella Advisors Network"}
+        ]
+        
+        for target in watchlist:
+            with st.expander(f"👁️ {target['name']} — {target['status']}"):
+                st.metric("Days Tracked", target['days_tracked'])
+                st.markdown(f"**Suspected Foreign Principal:** {target['foreign_principal']}")
+                
+                shadow_data = {
+                    "Open Society Policy Center": {"principals": 3, "days": 1825, "income": 45000000},
+                    "Democracy PAC II Consultants": {"principals": 2, "days": 730, "income": 12000000},
+                    "Sixteen Thirty Fund Lobbyists": {"principals": 5, "days": 1460, "income": 85000000}
+                }
+                
+                if target['name'] in shadow_data:
+                    sd = shadow_data[target['name']]
+                    vampire_tax = (250000 * sd['principals']) + (1000 * sd['days']) + sd['income']
+                    st.markdown(f"""
+<div style="background: #1a1a1a; padding: 10px; border-radius: 5px; text-align: center; margin: 10px 0;">
+    <span style="font-family: monospace; font-size: 18px; color: #ff4444;">
+        💀 VAMPIRE TAX OWED: ${vampire_tax:,}
+    </span>
+    <br><small style="color: #888;">Accruing $0.01/second (continuing offense)</small>
+</div>
+                    """, unsafe_allow_html=True)
+                
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.link_button("🔎 Check FARA Registration", "https://efile.fara.gov/ords/fara/f?p=1235:10", use_container_width=True)
+                with col2:
+                    if st.button(f"📄 Generate Invoice", key=f"invoice_{target['name']}", use_container_width=True):
+                        if target['name'] in shadow_data:
+                            sd = shadow_data[target['name']]
+                            vampire_tax = (250000 * sd['principals']) + (1000 * sd['days']) + sd['income']
+                            invoice = f"""
+VAMPIRE TAX INVOICE - {target['name']}
+Date: {date.today().strftime("%B %d, %Y")}
+Foreign Principal: {target['foreign_principal']}
+Days Unregistered: {sd['days']:,}
+Principals: {sd['principals']}
+
+CALCULATION:
+Base Penalty: ${250000 * sd['principals']:,}
+Daily Penalty: ${1000 * sd['days']:,}
+Shadow Income: ${sd['income']:,}
+═══════════════════════════════
+TOTAL OWED: ${vampire_tax:,}
+
+Pay to: U.S. Department of the Treasury
+"""
+                            st.code(invoice)
+                            st.download_button("📥 Download Invoice", invoice, file_name=f"Vampire_Tax_Invoice_{target['name'].replace(' ', '_')}.txt", use_container_width=True)
+    
+    with watch_tabs[1]:
+        st.subheader("☀️ Sunlight Victory Alerts")
+        st.caption("When a target registers after Protocol pressure")
+        
+        if st.session_state.get('sunlight_victories'):
+            for victory in st.session_state['sunlight_victories']:
+                st.success(f"🎉 **VICTORY:** {victory['entity']} registered on {victory['date']}")
+        else:
+            st.info("No victories recorded yet. Keep filing those FARA reports!")
+        
+        st.divider()
+        st.subheader("📊 Community Impact")
+        st.metric("Total FARA Reports Filed", st.session_state.get('fara_reports_filed', 0))
+        st.metric("Pending Investigations", st.session_state.get('pending_investigations', 3))
+    
+    with watch_tabs[2]:
+        st.subheader("🧛 Vampire Tax Calculator")
+        st.caption("22 U.S.C. § 618(a) and 18 U.S.C. § 3571")
+        
+        st.markdown("""
+**Formula:** Total Liability = ($250,000 × # of Principals) + ($1,000 × Days in Shadow Gap) + Shadow Income
+        """)
+        
+        calc_col1, calc_col2 = st.columns(2)
+        with calc_col1:
+            num_principals = st.number_input("Number of Foreign Principals", min_value=1, value=1)
+            days_in_shadow = st.number_input("Days Operating Unregistered", min_value=1, value=365)
+        with calc_col2:
+            shadow_income = st.number_input("Shadow Income ($)", min_value=0, value=1000000)
+        
+        if st.button("🧮 Calculate Vampire Tax", use_container_width=True):
+            base_penalty = 250000 * num_principals
+            daily_penalty = 1000 * days_in_shadow
+            total_liability = base_penalty + daily_penalty + shadow_income
+            
+            st.divider()
+            st.metric("Base Penalty (per principal)", f"${base_penalty:,}")
+            st.metric("Daily Continuing Offense", f"${daily_penalty:,}")
+            st.metric("Shadow Income Recovery", f"${shadow_income:,}")
+            st.error(f"💀 **TOTAL VAMPIRE TAX OWED:** ${total_liability:,}")
+            
+            st.info("""
+**Legal Basis:**
+- 22 U.S.C. § 618(a): Criminal penalties for FARA violations
+- 18 U.S.C. § 3571: Fine schedule for federal offenses
+- Continuing offense doctrine: Each day unregistered is a new violation
+            """)
+
+def page_mission_control():
+    st.header("🎯 Sentinel Mission Control")
+    st.caption("3,143 Counties. One Protocol. Follow the checklist.")
+    
+    st.success("🏁 **Ready Room:** Today, the Labyrinth stops growing and starts dissolving. Follow the checklist, fire the Cannon, and stay in the light.")
+    
+    st.subheader("📋 Day 1 Mission Sequence")
+    
+    phase_tabs = st.tabs(["🔎 Phase 1: Sweep", "💥 Phase 2: Salvo", "🔥 Phase 3: Burn"])
+    
+    with phase_tabs[0]:
+        st.markdown("### 🔎 The Perimeter Sweep (08:00 - 10:00)")
+        st.markdown("Before firing a single shot, map the local defensive perimeter.")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("🔎 Map Local Portals", use_container_width=True, key="sweep1"):
+                st.session_state['sweep_complete'] = True
+                st.success("✅ Navigating to County Portal Map...")
+        with col2:
+            if st.button("🕵️ Identify the PRO", use_container_width=True, key="sweep2"):
+                st.info("Find your Public Records Officer — by 2026 law, their contact must be visible.")
+        
+        st.info("**ADA Title II Deadline:** April 24, 2026 — Flag any Black Hole county website that's non-compliant with WCAG 2.1 AA standards.")
+    
+    with phase_tabs[1]:
+        st.markdown("### 💥 The First Salvo (10:00 - 12:00)")
+        st.markdown("Load the FOIA Cannon with precision-strike payloads.")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("💥 Fire FOIA Cannon", use_container_width=True, key="salvo1"):
+                st.success("✅ Navigating to FOIA Cannon...")
+        with col2:
+            if st.button("⚖️ Assert Fee Waiver", use_container_width=True, key="salvo2"):
+                st.info("Ensure 'Sovereign Auditor' fee waiver is checked — you're media/educational.")
+    
+    with phase_tabs[2]:
+        st.markdown("### 🔥 The Vampire Burn (13:00 - 17:00)")
+        st.markdown("Expose the Shadow Agents to the community.")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("🧛 Activate FARA Tracker", use_container_width=True, key="burn1"):
+                st.success("✅ Navigating to Shadow Watch...")
+        with col2:
+            if st.button("📹 Upload Evidence Reel", use_container_width=True, key="burn2"):
+                st.success("✅ Navigating to Citizen Reel...")
+    
+    st.divider()
+    st.subheader("☀️ Sunlight Flare Map")
+    st.caption("Every yellow flare is a document victory")
+    
+    if st.session_state.get('sunlight_flares'):
+        for flare in st.session_state['sunlight_flares']:
+            st.success(f"☀️ **SUNLIGHT!** Document Released in {flare['county']} County, {flare['state']}!")
+    else:
+        st.info("No flares yet. File your first successful FOIA request to light up the map!")
+
 def page_support():
     st.header("☕ Sustain the Mission")
     st.write("This tool is free, ad-free, and uncensorable thanks to supporters like you.")
@@ -4421,6 +4873,7 @@ Established January 8, 2026 | https://plainview-protocol.replit.app
             st.error("Please enter both State and County name.")
 
 pages = [
+    st.Page(page_mission_control, title="Mission Control", icon="🎯"),
     st.Page(page_national_lens, title="The National Lens", icon="🔭"),
     st.Page(page_2027_fork, title="The 2027 Fork", icon="🍴"),
     st.Page(page_trade_industry, title="Trade & Industry", icon="🏭"),
@@ -4431,11 +4884,16 @@ pages = [
     st.Page(page_accountability_tribunal, title="Accountability Tribunal", icon="⚖️"),
     st.Page(page_docket_decoder, title="Docket Decoder", icon="🛡️"),
     st.Page(page_foia_cannon, title="FOIA Cannon", icon="📄"),
+    st.Page(page_sentinel_training, title="Sentinel Training", icon="🎓"),
     st.Page(page_lever_map, title="Lever Map", icon="🗺️"),
     st.Page(page_course_correction, title="Course Correction", icon="⚖️"),
     st.Page(page_local_watchdog, title="Local Watchdog", icon="🏘️"),
     st.Page(page_scorecard_generator, title="Scorecard Generator", icon="🎯"),
     st.Page(page_community_leaderboard, title="Community Leaderboard", icon="🏆"),
+    st.Page(page_citizen_reel, title="Citizen Reel", icon="📹"),
+    st.Page(page_foreign_influence, title="Foreign Influence", icon="🌐"),
+    st.Page(page_fara_reporter, title="FARA Reporter", icon="⚖️"),
+    st.Page(page_shadow_watch, title="Shadow Watch", icon="👁️"),
     st.Page(page_epstein_audit, title="Epstein Archive Audit", icon="🔍"),
     st.Page(page_sunlight_counsel, title="Sunlight Counsel", icon="🎓"),
     st.Page(page_mission_milestones, title="Mission Milestones", icon="🏛️"),

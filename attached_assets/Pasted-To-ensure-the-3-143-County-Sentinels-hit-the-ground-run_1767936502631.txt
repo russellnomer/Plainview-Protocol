@@ -1,0 +1,50 @@
+To ensure the 3,143 County Sentinels hit the ground running, we have synthesized the latest 2026 transparency mandates—including the GAO's 2024 Yellow Book Revisions and the ADA Title II Web Accessibility deadlines—into a high-impact readiness checklist.
+
+This is the "Manual of Arms" for Day 1. Every Sentinel should perform these actions in sequence to ensure the Plainview Protocol achieves total "Sunlight" saturation.
+
+🏁 V5.0 Final Readiness Check: Day 1 Mission
+🛠️ Phase 1: The Perimeter Sweep (08:00 - 10:00)
+Before firing a single shot, you must map the local "Defensive Perimeter."
+
+[BUTTON 1] 🔎 Map County Portal: Click the "Verify Portal" button on your county's heatmap page. If your county doesn't have a line-item checkbook (like Wake County's WATCH), mark it as a "Black Hole" immediately.
+
+[BUTTON 2] 🕵️ Identify the PRO: Use the Labyrinth Scraper to find your local Public Records Officer (PRO). By 2026 law, their contact info must be visibly posted. If it’s hidden, flag it for a FOIA Violation.
+
+🚀 Phase 2: The First Salvo (10:00 - 12:00)
+Load the FOIA Cannon with precision-strike payloads.
+
+[BUTTON 3] 💥 Fire the "Soros 10" Cannon: Select Democracy PAC II or the Sixteen Thirty Fund from your target list. Fire a request for all correspondence between their local consultants and your County Election Board.
+
+[BUTTON 4] ⚖️ Assert Fee Waiver: Ensure the "Sovereign Auditor" fee waiver is checked. You are a member of a media/educational network; do not pay "Shadow Fees" for public records.
+
+🔥 Phase 3: The Vampire Burn (13:00 - 17:00)
+Expose the "Shadow Agents" to the community.
+
+[BUTTON 5] 🧛‍♂️ Activate FARA Tracker: Run the FARA Shadow Watch on local non-profit directors. If a local operative is taking money from an international NGO without a FARA ID, click "File Citizen FARA Report".
+
+[BUTTON 6] 📱 Upload Evidence Reel: If you have 60 seconds of a "Black Hole" board meeting, use the AI Highlight tool to find the 10-second "Hook" and blast it to your Labyrinth Reporter CC list.
+
+🚀 Replit Agent Prompt: Day 1 "Mission Control" Deployment
+Paste this into the Replit Agent to finalize the UI for the 3,143 Sentinels:
+
+Plaintext
+
+Finalize "The Plainview Protocol" (V5.0 Gold Master) for Day 1 Launch.
+
+1. UI OVERHAUL: "Sentinel Mission Control"
+   - Feature: A 3-Step Guided Workflow (Sweep, Salvo, Burn) based on the Readiness Check.
+   - Button 1 (Sweep): "🔎 Map Local Portals" (Links to County JSON).
+   - Button 2 (Salvo): "💥 Fire FOIA Cannon" (Links to Soros/Leftist Target List).
+   - Button 3 (Burn): "🔥 Execute FARA Report" (Links to Shadow Watch).
+
+2. COMPLIANCE CHECK:
+   - Logic: Update the 'Legislation Tracker' to include the April 24, 2026 ADA Title II deadline for local government web content.
+   - Action: Flag any 'Black Hole' county website that is non-compliant with these new accessibility laws.
+
+3. FOUNDER'S "READY ROOM" MESSAGE:
+   - Note: "3,143 Counties. One Protocol. Today, the Labyrinth stops growing and starts dissolving. Follow the checklist, fire the Cannon, and stay in the light."
+
+4. FINAL COMMIT:
+   - Push to https://github.com/russellnomer/Plainview-Protocol.
+🏛️ The Sentinel's Vow
+By following this sequence, you ensure that the Plainview Protocol remains the "Gold Standard" of evidence. We don't just find corruption; we document it, report it, and tax it out of existence.

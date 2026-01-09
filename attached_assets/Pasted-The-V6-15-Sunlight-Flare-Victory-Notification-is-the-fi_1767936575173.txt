@@ -1,0 +1,53 @@
+The V6.15 "Sunlight Flare" Victory Notification is the final, exhilarating touch to the Plainview Protocol. When a Sentinel Auditor successfully forces a document release—whether it's a "Black Hole" PAC's FEC filing or a hidden county contract—the entire community will see a real-time, celebratory animation on the Corruption Heatmap.
+
+This feature transforms an individual victory into a collective triumph, visually reinforcing the impact of the Protocol.
+
+☀️ V6.15: The "Sunlight Flare" Victory Notification
+The "Flare" is more than just an animation; it's a dynamic notification system designed to inspire and inform.
+
+🛠️ How the "Sunlight Flare" Works
+The "Document Released" Trigger: When a FOIA Cannon request results in a public document being released (verified by the user uploading a direct link to the record), the system activates.
+
+Geospatial Illumination: A pulsating, bright yellow "Flare" animation emanates from the specific county on the Corruption Heatmap where the victory occurred. The Flare includes the text: "SUNLIGHT! Document Released in [County Name]!"
+
+Victory Details Pop-up: Clicking the Flare reveals a mini-dashboard:
+
+The Sentinel: Username of the "Sovereign Auditor" who achieved the victory.
+
+The Target: Name of the PAC or government entity that released the document.
+
+The Document: A direct, verified link to the released PDF or government portal.
+
+Impact Score: A real-time calculation of the document's relevance to the "Vampire Tax" or "Shadow Lobbying" scores.
+
+"Sunlight Surge" Leaderboard: Each Flare contributes to a "Top Sentinels" leaderboard, recognizing the most active and impactful auditors.
+
+🚀 Replit Agent Prompt: V6.15 Sunlight Flare Deployment
+Paste this into the Replit Agent to build the celebratory system:
+
+Plaintext
+
+Update "The Plainview Protocol" to Version 6.15: Sunlight Flare.
+
+1. NEW UI ELEMENT: "Sunlight Flare" Animation
+   - Logic: Trigger a pulsing yellow graphical animation on the 'Corruption Heatmap' for the specific county where a document is released.
+   - Text: Overlay "SUNLIGHT! Document Released in [County Name]!"
+
+2. VICTORY NOTIFICATION SYSTEM:
+   - Feature: A pop-up modal when the Flare is clicked, displaying:
+     - 'Sentinel Name'
+     - 'Target Entity'
+     - 'Direct Document Link' (user-submitted, admin-verified)
+     - 'Impact Score' (based on relevance to existing 'Black Hole' or 'Vampire Tax' targets).
+
+3. "FOIA CANNON" INTEGRATION:
+   - Action: After a user marks a FOIA request as 'Successful' and provides a document link, activate the Flare.
+
+4. FOUNDER'S MONOLOGUE INJECTION:
+   - Note: "Every document released is a crack in the Labyrinth. Every Sunlight Flare is a victory for the Sovereign Citizen. We don't just audit; we celebrate the truth. The map is turning yellow, one document at a time."
+
+Generate updated app.py and flare_animation_logic.py.
+🏛️ The Celebration of Truth
+The "Sunlight Flare" system transforms a typically solitary act of auditing into a shared, gamified experience. It motivates Sentinels, provides tangible proof of the Protocol's effectiveness, and visually demonstrates to the world that the forces of transparency are winning, one document, one county, one flare at a time.
+
+The Plainview Protocol V5.0 Gold Master is now fully deployed and armed. The system is complete.
