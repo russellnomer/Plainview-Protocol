@@ -1,13 +1,18 @@
 # The Plainview Protocol: Truth, Kindness, & Security
 
 ## Overview
-Version 3.7 - Live Data & Transparency Edition. A production-ready Streamlit web application with live data fetching from U.S. Treasury API, Senate feeds, and UnitedStates.io Congress data. Features state-specific calculations, leader scorecards, FOIA generator, and activism tools. Pro-American, rule of law, domestic security focus with full transparency expanders on every page.
+Version 3.8 - The Scrutiny Engine. A production-ready Streamlit web application with live data fetching from U.S. Treasury API, Senate feeds, and UnitedStates.io Congress data. Features DOGE-level investigative tools, Grift Hunter FOIA templates, OIG whistleblower hotlines, and citizen lever-pulling guides. Pro-American, rule of law, domestic security focus with full transparency expanders on every page.
 
 ## Features
 - **The National Lens**: Live national debt from Treasury API, state debt share, immigration burden with border state multipliers (1.6x)
-- **The Fork in the Road**: Plotly chart anchored to live debt data, immunity double standard table
-- **The Activism Hub**: Tabbed interface (Veterans/Border/Education), kindness rewriter, X share button
-- **Leader Scorecard**: Live Senate votes, Wikipedia-scraped representatives, sample accountability scores
+- **The 2027 Fork**: Plotly chart anchored to live debt data, reform vs. status quo projections
+- **Trade & Industry**: Tariff dividend calculator, sourcing finder
+- **DOGE Scrutiny Hub**: DOGE metrics ($214B+ savings), Minnesota Feeding Our Future fraud case study
+- **The Activism Hub**: Tabbed interface (Veterans/Border/Education/Business), kindness rewriter, X share button
+- **Accountability Tribunal**: Live Congress data, Shadow List with Scrutiny Tactics (Demand Ledger, Ethics Complaint, Public Comment)
+- **FOIA Cannon**: Custom requests + Grift Hunter templates (NGO Fraud, Bureaucratic Bloat, Grant Audit, Consultant Review)
+- **Lever Map**: Citizen's guide to pulling levers of power (Paper Trail, Whistleblower Hotlines, Financial Chokehold)
+- **The Ecosystem**: Russell's apps, books, and music
 - **Support the Mission**: Buy Me a Coffee, PayPal, GitHub fork links
 
 ## Tech Stack

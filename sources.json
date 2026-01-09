@@ -7,5 +7,11 @@
   "open_states": "https://v3.openstates.org/",
   "foia_gov": "https://www.foia.gov",
   "muckrock": "https://www.muckrock.com",
-  "state_laws": "https://www.nfoic.org/coalitions/state-foi-resources/"
+  "state_laws": "https://www.nfoic.org/coalitions/state-foi-resources/",
+  "gao_fraudnet": "https://www.gao.gov/fraudnet",
+  "dhs_oig": "https://www.oig.dhs.gov/hotline",
+  "hud_oig": "https://www.hudoig.gov/hotline",
+  "treasury_oig": "https://oig.treasury.gov/report-fraud-waste-abuse",
+  "ethics_links": "https://www.ncsl.org/ethics/ethics-links",
+  "state_auditors": "https://www.nasact.org/member_directory"
 }

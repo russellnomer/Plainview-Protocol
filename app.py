@@ -164,7 +164,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v3.7 | Live Data & Transparency")
+st.sidebar.caption("v3.8 | The Scrutiny Engine")
 
 selected_state = st.sidebar.selectbox("Select Your State", STATES, index=31)
 selected_focus = st.sidebar.selectbox("Select Focus", ["All", "Border Security", "Veterans First", "Education & Skills", "Crime & Safety", "Trade & Industry"])
@@ -179,7 +179,7 @@ st.sidebar.divider()
 st.sidebar.markdown("### Fuel the Mission")
 st.sidebar.link_button("☕ Support Russell", "https://buymeacoffee.com/russellnomer")
 
-page = st.radio("Navigate", ["The National Lens", "The 2027 Fork", "Trade & Industry", "The Activism Hub", "Accountability Tribunal", "FOIA Cannon", "The Ecosystem", "Support"], horizontal=True, label_visibility="collapsed")
+page = st.radio("Navigate", ["The National Lens", "The 2027 Fork", "Trade & Industry", "DOGE Scrutiny Hub", "The Activism Hub", "Accountability Tribunal", "FOIA Cannon", "Lever Map", "The Ecosystem", "Support"], horizontal=True, label_visibility="collapsed")
 
 if page == "The National Lens":
     st.header(f"📍 State of the Union: {selected_state}")
@@ -395,6 +395,52 @@ elif page == "Trade & Industry":
         st.code(biz_template, language=None)
         st.link_button("Share on X", f"https://twitter.com/intent/tweet?text={biz_template.replace(' ', '%20').replace('#', '%23')}")
 
+elif page == "DOGE Scrutiny Hub":
+    st.header("🔦 DOGE-Level Scrutiny: Fight the Grift")
+    
+    st.markdown("""
+**Inspired by Nick Shirley's investigative style.** The Department of Government Efficiency (DOGE) has exposed billions in waste.
+Now YOU can apply the same scrutiny to your local officials.
+    """)
+    
+    st.divider()
+    st.subheader("📊 DOGE Impact Metrics")
+    
+    col1, col2, col3 = st.columns(3)
+    col1.metric("💰 Claimed Savings", "$214B+", delta="Growing", delta_color="normal")
+    col2.metric("👥 Workforce Buyouts", "75,000+", delta="Voluntary Exits")
+    col3.metric("🚨 Fraud Programs Cut", "12+", delta="Exposed")
+    
+    st.info("**Source:** DOGE public announcements and Treasury data (2025). Independent verification ongoing.")
+    
+    st.divider()
+    st.subheader("📂 Case Study: Minnesota Feeding Our Future")
+    
+    show_case = st.checkbox("🔍 Show Minnesota Fraud Case Study", key="show_mn_case_toggle")
+    
+    if show_case:
+        st.error("**$250 MILLION STOLEN** from a child nutrition program.")
+        st.markdown("""
+**The Facts:**
+- **What:** Federal Child Nutrition Program funds diverted through fake meal claims
+- **Who:** 70+ defendants charged; largest pandemic-era fraud case in U.S. history
+- **How:** NGO "Feeding Our Future" submitted claims for millions of meals never served
+- **Red Flags Ignored:** Minnesota Dept. of Education received warnings but continued payments
+- **Outcome:** Multiple convictions, ongoing prosecutions
+
+**The Lesson:** When NGOs receive taxpayer money with weak oversight, fraud thrives.
+The Plainview Protocol demands FULL LEDGER TRANSPARENCY for all public-private spending.
+        """)
+        
+        st.warning("⚠️ **Adverse Inference:** Any official who blocked audits or delayed investigations is presumed complicit until proven otherwise.")
+    
+    with st.expander("ℹ️ Transparency: Sources"):
+        st.markdown("""
+* **DOGE Metrics:** Department of Government Efficiency public announcements (2025)
+* **Minnesota Case:** DOJ Press Releases, FBI Minneapolis Field Office, Court Documents
+* **Investigative Style:** Inspired by Nick Shirley's citizen journalism model
+        """)
+
 elif page == "The Activism Hub":
     st.header("🌉 The Bridge Builder: Facts Over Rage")
     
@@ -484,6 +530,54 @@ elif page == "Accountability Tribunal":
                     c2.success(f"Score: {score} (A)")
                     c3.markdown("🟢 **TRANSPARENT**")
                 st.divider()
+        
+        st.subheader("🎯 Scrutiny Tactics")
+        st.caption("Tools to hold officials accountable:")
+        
+        tactic_col1, tactic_col2, tactic_col3 = st.columns(3)
+        
+        with tactic_col1:
+            if st.button("📄 Demand the Ledger", key="tactic_ledger"):
+                st.session_state.show_ledger_template = True
+        
+        with tactic_col2:
+            st.link_button("⚖️ File Ethics Complaint", "https://www.ncsl.org/ethics/ethics-links")
+        
+        with tactic_col3:
+            if st.button("🎤 Public Comment Script", key="tactic_comment"):
+                st.session_state.show_comment_script = True
+        
+        if st.session_state.get('show_ledger_template', False):
+            st.text_area("FOIA Template: Demand the Ledger", f"""
+FREEDOM OF INFORMATION REQUEST - FINANCIAL RECORDS
+
+To: [AGENCY FOIA OFFICER]
+Re: Complete Financial Ledger for FY 2023-2025
+
+I request all records showing:
+1. Complete expenditure ledger including vendor names, amounts, and contract numbers
+2. All grants disbursed to NGOs and contractors
+3. Administrative overhead costs vs. program delivery costs
+
+NOTICE OF SPOLIATION: Failure to produce these records will be viewed as evidence of malfeasance.
+
+Pursuant to [FOIA/State Sunshine Law], respond within the statutory timeframe.
+            """, height=300)
+        
+        if st.session_state.get('show_comment_script', False):
+            st.text_area("Public Comment Script", f"""
+My name is [YOUR NAME], a taxpayer from {selected_state}.
+
+I'm here to demand transparency. The Spoliation Doctrine states that when officials hide records, 
+we must assume those records contain evidence of wrongdoing.
+
+I formally request that this body:
+1. Publish complete financial ledgers online within 30 days
+2. Disclose all contractor and NGO payments over $10,000
+3. Explain any FOIA denials on the public record
+
+Silence is not neutral. Silence is an admission.
+            """, height=250)
     
     with st.expander("ℹ️ Transparency: Scoring Methodology"):
         st.markdown("""
@@ -502,13 +596,67 @@ We demand the data. If they hide it, we apply **'Adverse Inference'**—assuming
     """)
     
     st.divider()
-    st.subheader("⚙️ The Configurator")
     
-    jurisdiction = st.radio("Select Jurisdiction:", ["Federal (US Agencies)", "State/Local (Governor, Mayor, Sheriff)"], horizontal=True)
+    foia_tab1, foia_tab2 = st.tabs(["⚙️ Custom Request", "🎯 Grift Hunter Templates"])
     
-    agency_name = st.text_input("Target Agency Name", placeholder="e.g., Department of Homeland Security, Nassau County PD")
-    records_requested = st.text_area("Specific Records Requested", placeholder="e.g., All emails regarding migrant housing contracts between Jan 2025 and Present")
-    include_spoliation = st.checkbox("Include 'Spoliation of Evidence' Warning?", value=True)
+    with foia_tab1:
+        st.subheader("Custom FOIA Configurator")
+        jurisdiction = st.radio("Select Jurisdiction:", ["Federal (US Agencies)", "State/Local (Governor, Mayor, Sheriff)"], horizontal=True, key="custom_jurisdiction")
+        agency_name = st.text_input("Target Agency Name", placeholder="e.g., Department of Homeland Security, Nassau County PD", key="custom_agency")
+        records_requested = st.text_area("Specific Records Requested", placeholder="e.g., All emails regarding migrant housing contracts between Jan 2025 and Present", key="custom_records")
+        include_spoliation = st.checkbox("Include 'Spoliation of Evidence' Warning?", value=True, key="custom_spoliation")
+    
+    with foia_tab2:
+        st.subheader("🎯 Grift Hunter: Pre-Built Templates")
+        st.caption("One-click templates for common fraud patterns. Auto-fills with Spoliation Warning.")
+        
+        template_choice = st.radio("Select Template:", [
+            "NGO/Contractor Fraud (Migrant Housing, Social Services)",
+            "Bureaucratic Bloat (Admin vs. Output Audit)",
+            "Grant Disbursement Audit",
+            "Consultant Spending Review"
+        ], key="template_choice")
+        
+        template_agency = st.text_input("Target Agency", placeholder="e.g., HHS, State Dept. of Education, County Executive Office", key="template_agency")
+        
+        if template_choice == "NGO/Contractor Fraud (Migrant Housing, Social Services)":
+            template_records = """All records related to:
+1. Contracts and payments to NGOs and private contractors for migrant housing, shelter, or social services (FY 2022-Present)
+2. Invoices, receipts, and proof of service delivery for each payment
+3. Internal communications (emails, memos) regarding contractor selection and oversight
+4. Any audits, complaints, or investigations related to these contracts
+5. Names and compensation of all personnel administering these programs"""
+        
+        elif template_choice == "Bureaucratic Bloat (Admin vs. Output Audit)":
+            template_records = """All records showing:
+1. Total administrative/overhead costs vs. direct program delivery costs (FY 2022-Present)
+2. Number of administrative staff vs. frontline service staff
+3. Executive compensation, bonuses, and benefits for leadership positions
+4. Consultants and contractors hired for "administrative support"
+5. Any efficiency audits or staffing reviews conducted in the past 3 years"""
+        
+        elif template_choice == "Grant Disbursement Audit":
+            template_records = """All records related to:
+1. Federal and state grants received and disbursed (FY 2022-Present)
+2. Sub-grantees and their payment amounts
+3. Performance reports and outcome metrics for grant-funded programs
+4. Any grant funds returned, rescinded, or flagged for misuse
+5. Internal controls and audit procedures for grant management"""
+        
+        else:
+            template_records = """All records showing:
+1. All consulting contracts over $25,000 (FY 2022-Present)
+2. Scope of work, deliverables, and payment schedules for each contract
+3. Selection process documentation (RFPs, bid evaluations, sole-source justifications)
+4. Any consulting work performed by former employees of this agency
+5. Outcomes achieved vs. stated contract objectives"""
+        
+        st.text_area("Auto-Generated Records Request", template_records, height=200, disabled=True, key="template_preview")
+        
+        if st.button("📋 Use This Template", key="use_template"):
+            st.session_state.template_agency = template_agency
+            st.session_state.template_records = template_records
+            st.success("Template loaded! Scroll down to generate your request.")
     
     st.divider()
     st.subheader("📝 The Generator")
@@ -571,11 +719,18 @@ Generated by The Plainview Protocol | Truth, Kindness, Security
         return letter
     
     if st.button("🔥 Generate Legal Request", type="primary"):
-        if agency_name and records_requested:
-            foia_letter = generate_foia(jurisdiction, agency_name, records_requested, include_spoliation)
+        final_agency = st.session_state.get('template_agency') or st.session_state.get('custom_agency', '')
+        final_records = st.session_state.get('template_records') or st.session_state.get('custom_records', '')
+        final_jurisdiction = st.session_state.get('custom_jurisdiction', 'Federal (US Agencies)')
+        final_spoliation = st.session_state.get('custom_spoliation', True)
+        
+        if final_agency and final_records:
+            foia_letter = generate_foia(final_jurisdiction, final_agency, final_records, final_spoliation)
             st.session_state.generated_foia = foia_letter
+            st.session_state.template_agency = None
+            st.session_state.template_records = None
         else:
-            st.error("Please fill in the Agency Name and Records Requested fields.")
+            st.error("Please fill in the Agency Name and Records Requested fields (or use a Grift Hunter template).")
     
     if 'generated_foia' in st.session_state:
         st.text_area("Your FOIA Request", st.session_state.generated_foia, height=400)
@@ -597,6 +752,80 @@ Generated by The Plainview Protocol | Truth, Kindness, Security
 * **Response Time:** Federal agencies must respond within 20 business days; state timelines vary (typically 5-30 days)
 * **Spoliation Doctrine:** Legal principle that destruction of evidence creates adverse inference against the destroying party
 * **Resources:** FOIA.gov (Federal), NFOIC.org (State-by-State), MuckRock.com (Community Support)
+        """)
+
+elif page == "Lever Map":
+    st.header("🗺️ The Citizen's Lever Map")
+    st.markdown("**How to Pull the Levers of Power.** Three tools every citizen can use to fight corruption.")
+    
+    lever1, lever2, lever3 = st.tabs(["📄 The Paper Trail", "🔔 The Whistleblower", "💰 The Financial Chokehold"])
+    
+    with lever1:
+        st.subheader("Lever 1: The Paper Trail (FOIA/FOIL)")
+        st.markdown("""
+**Your Right:** The Freedom of Information Act (federal) and state equivalents (FOIL, Sunshine Laws) 
+guarantee your access to government records.
+
+**How to Pull It:**
+1. Identify the agency holding the records you need
+2. Use our FOIA Cannon to generate a legally-compliant request
+3. Send via certified mail or email with read receipt
+4. Track the 20-day federal deadline (state timelines vary)
+5. Appeal any denials—agencies often cave on appeal
+
+**Pro Tip:** Request "all communications" between specific officials and contractors. Email chains expose the real story.
+        """)
+        st.link_button("🔥 Go to FOIA Cannon", "#")
+        
+    with lever2:
+        st.subheader("Lever 2: The Whistleblower (OIG Hotlines)")
+        st.markdown("""
+**Your Power:** Offices of Inspector General (OIG) investigate waste, fraud, and abuse. 
+Anonymous tips can trigger full investigations.
+
+**Key Hotlines:**
+        """)
+        
+        hotline_col1, hotline_col2 = st.columns(2)
+        with hotline_col1:
+            st.link_button("🏛️ GAO FraudNet", "https://www.gao.gov/fraudnet")
+            st.link_button("🛂 DHS OIG Hotline", "https://www.oig.dhs.gov/hotline")
+            st.link_button("🏠 HUD OIG Hotline", "https://www.hudoig.gov/hotline")
+        with hotline_col2:
+            st.link_button("💰 Treasury OIG", "https://oig.treasury.gov/report-fraud-waste-abuse")
+            st.link_button("🏥 HHS OIG Hotline", "https://oig.hhs.gov/fraud/report-fraud/")
+            st.link_button("📚 Education OIG", "https://www2.ed.gov/about/offices/list/oig/hotline.html")
+        
+        st.info("**Whistleblower Protection:** Federal law protects employees who report fraud. Retaliation is illegal.")
+        
+    with lever3:
+        st.subheader("Lever 3: The Financial Chokehold")
+        st.markdown("""
+**The Nuclear Option:** When fraud is discovered, you can help recover taxpayer money.
+
+**Tools:**
+1. **State Auditor Complaints:** Every state has an auditor who investigates misuse of public funds
+2. **Qui Tam (False Claims Act):** If you have evidence a contractor defrauded the government, 
+   you can file a lawsuit ON BEHALF of the government—and keep 15-30% of recovered funds
+3. **IRS Form 211:** Report tax fraud and receive a reward (up to 30% of collected proceeds over $2M)
+        """)
+        
+        st.warning("⚠️ **Qui Tam requires an attorney.** Find a whistleblower lawyer before filing.")
+        
+        audit_col1, audit_col2 = st.columns(2)
+        with audit_col1:
+            st.link_button("📊 Find Your State Auditor", "https://www.nasact.org/member_directory")
+            st.link_button("⚖️ False Claims Act Info", "https://www.justice.gov/civil/false-claims-act")
+        with audit_col2:
+            st.link_button("💵 IRS Whistleblower Program", "https://www.irs.gov/compliance/whistleblower-office")
+            st.link_button("🔍 Taxpayers Against Fraud", "https://www.taf.org")
+    
+    with st.expander("ℹ️ Transparency: Legal Framework"):
+        st.markdown("""
+* **FOIA:** 5 U.S.C. § 552 (Federal); each state has equivalent
+* **Whistleblower Protection:** Whistleblower Protection Act of 1989, enhanced 2012
+* **False Claims Act:** 31 U.S.C. §§ 3729-3733 (allows private citizens to sue on behalf of government)
+* **IRS Whistleblower:** 26 U.S.C. § 7623 (rewards for tax fraud tips)
         """)
 
 elif page == "The Ecosystem":
