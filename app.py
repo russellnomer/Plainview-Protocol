@@ -1779,7 +1779,8 @@ Respectfully,
                     st.text_area("Thread Part 3", thread_3, height=100, key=f"thread3_{bill['id']}")
                     
                     full_thread = f"{thread_1}\n\n{thread_2}\n\n{thread_3}"
-                    st.link_button("🐦 Post Thread to X", f"https://twitter.com/intent/tweet?text={thread_1.replace(' ', '%20').replace('#', '%23').replace('\n', '%0A')[:280]}")
+                    tweet_text = thread_1.replace(' ', '%20').replace('#', '%23').replace('\n', '%0A')[:280]
+                    st.link_button("🐦 Post Thread to X", f"https://twitter.com/intent/tweet?text={tweet_text}")
                     
                     if 'bill_shares' not in st.session_state:
                         st.session_state.bill_shares = {}
