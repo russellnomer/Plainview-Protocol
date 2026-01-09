@@ -6836,8 +6836,26 @@ with st.expander("⚖️ Legal & Privacy"):
     """)
     
     col1, col2, col3 = st.columns(3)
-    col1.link_button("📄 Terms", "https://github.com/russellnomer/plainview-protocol/blob/main/TERMS.md", use_container_width=True)
-    col2.link_button("🔒 Privacy", "https://github.com/russellnomer/plainview-protocol/blob/main/PRIVACY.md", use_container_width=True)
-    col3.link_button("🛡️ Safe Harbor", "https://github.com/russellnomer/plainview-protocol/blob/main/SAFE_HARBOR.md", use_container_width=True)
+    with col1:
+        with st.popover("📄 Terms", use_container_width=True):
+            try:
+                with open("TERMS.md", "r") as f:
+                    st.markdown(f.read())
+            except:
+                st.info("Terms document not available.")
+    with col2:
+        with st.popover("🔒 Privacy", use_container_width=True):
+            try:
+                with open("PRIVACY.md", "r") as f:
+                    st.markdown(f.read())
+            except:
+                st.info("Privacy document not available.")
+    with col3:
+        with st.popover("🛡️ Safe Harbor", use_container_width=True):
+            try:
+                with open("SAFE_HARBOR.md", "r") as f:
+                    st.markdown(f.read())
+            except:
+                st.info("Safe Harbor document not available.")
 
 st.markdown(f"<center>Established Jan 8, 2026 — Built by Russell Nomer. Tracking 50 States and 3,143 Counties. | <b>Day {days_since_launch + 1}</b> of the mission.</center>", unsafe_allow_html=True)
