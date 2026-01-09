@@ -247,7 +247,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v4.7 | The Infographic Meme-Engine")
+st.sidebar.caption("v4.8 | The Roast & Reveal Engine")
 
 st.sidebar.success("🎉 **TODAY IS DAY 1** — The Plainview Protocol is LIVE. Established January 8, 2026.")
 
@@ -2170,7 +2170,7 @@ The Plainview Protocol is built to last for generations. Each milestone marks pr
     st.info(f"📆 **Days Since Initial Commit:** {days_since_launch}")
 
 def page_scorecard_generator():
-    st.header("🎯 Scorecard Generator: The Infographic Meme-Engine")
+    st.header("🎯 Scorecard Generator: The Roast & Reveal Engine")
     st.caption("Generate shareable battle cards with LIVE data comparisons")
     
     with st.expander("ℹ️ How This Works"):
@@ -2199,7 +2199,8 @@ def page_scorecard_generator():
         "foil_response_days": 8,
         "no_bid_contracts": 12,
         "sanctuary_policy": False,
-        "highlights": ["Zero tax increase", "ICE cooperation", "Open budget portal", "Live-streamed meetings"]
+        "highlights": ["Zero tax increase", "ICE cooperation", "Open budget portal", "Live-streamed meetings"],
+        "dynamic_badges": ["🏆 Safest County in America", "💰 Tax-Free Tips Leader", "✅ Balanced Budget"]
     }
     
     HOCHUL_DATA = {
@@ -2213,10 +2214,21 @@ def page_scorecard_generator():
         "foil_response_days": 45,
         "no_bid_contracts": 847,
         "sanctuary_policy": True,
-        "highlights": ["Sanctuary state", "Congestion pricing", "Migrant spending opacity", "FOIL delays documented"]
+        "highlights": ["Sanctuary state", "Congestion pricing", "Migrant spending opacity", "FOIL delays documented"],
+        "dynamic_badges": ["⚠️ $119B Budget Debt", "📈 Corporate Tax Hike Warning", "🚨 Migrant Cost Opacity"],
+        "budget_amount": 254000000000,
+        "debt_amount": 119000000000
     }
     
     grift_alert = HOCHUL_DATA["transparency_score"] < 40 or HOCHUL_DATA["foil_response_days"] > 20
+    audit_required = HOCHUL_DATA["transparency_score"] < 50 or (HOCHUL_DATA.get("debt_amount", 0) > HOCHUL_DATA.get("budget_amount", 1) * 0.1)
+    
+    st.subheader("🎨 Meme Template Selector")
+    
+    template_style = st.radio("Choose Your Style:", 
+        ["Professional Scorecard", "Savage Roast", "Founder's Red Pill"],
+        horizontal=True
+    )
     
     st.subheader("🥊 Generate Battle Card")
     
@@ -2228,12 +2240,25 @@ def page_scorecard_generator():
     ])
     
     if st.button("🎨 Generate Battle Card", type="primary"):
+        import plotly.graph_objects as go
+        
+        if template_style == "Professional Scorecard":
+            blakeman_color, hochul_color = '#1e90ff', '#dc143c'
+            bg_color, font_color = 'white', 'black'
+            stamp_text = ""
+        elif template_style == "Savage Roast":
+            blakeman_color, hochul_color = '#00ff00', '#ff0000'
+            bg_color, font_color = '#1a1a1a', 'white'
+            stamp_text = "🔥 GRIFT ALERT 🔥" if grift_alert else ""
+        else:
+            blakeman_color, hochul_color = '#ffd700', '#8b0000'
+            bg_color, font_color = '#0d1117', '#c9d1d9'
+            stamp_text = "💊 RED PILL DATA 💊"
+        
         if card_type == "Blakeman vs. Hochul (Full Scorecard)":
             categories = ['Safety Score', 'Transparency', 'FOIL Speed', 'Fiscal Discipline']
             blakeman_scores = [100, 85, 92, 95]
             hochul_scores = [35, 32, 20, 25]
-            
-            import plotly.graph_objects as go
             
             fig = go.Figure()
             
@@ -2241,32 +2266,45 @@ def page_scorecard_generator():
                 name=f'🏛️ {BLAKEMAN_DATA["name"]} (Nassau)',
                 x=categories,
                 y=blakeman_scores,
-                marker_color='#1e90ff',
+                marker_color=blakeman_color,
                 text=blakeman_scores,
-                textposition='outside'
+                textposition='outside',
+                textfont=dict(color=font_color)
             ))
             
             fig.add_trace(go.Bar(
                 name=f'🏛️ {HOCHUL_DATA["name"]} (NY State)',
                 x=categories,
                 y=hochul_scores,
-                marker_color='#dc143c',
+                marker_color=hochul_color,
                 text=hochul_scores,
-                textposition='outside'
+                textposition='outside',
+                textfont=dict(color=font_color)
             ))
             
-            title_text = "BATTLE CARD: Blakeman vs. Hochul"
-            if grift_alert:
-                title_text += "<br><sup style='color:red'>⚠️ GRIFT ALERT: AUDIT REQUIRED - Transparency Score < 40</sup>"
+            title_text = f"{stamp_text} BATTLE CARD: Blakeman vs. Hochul" if stamp_text else "BATTLE CARD: Blakeman vs. Hochul"
+            if audit_required:
+                title_text += "<br><sup style='color:red'>🚨 AUDIT THIS - Transparency < 50 OR Debt > 10% Budget</sup>"
             
             fig.update_layout(
-                title=dict(text=title_text, font=dict(size=20)),
+                title=dict(text=title_text, font=dict(size=20, color=font_color)),
                 barmode='group',
-                yaxis=dict(title='Score (0-100)', range=[0, 110]),
-                xaxis=dict(title='Category'),
-                legend=dict(orientation='h', yanchor='bottom', y=1.02),
-                height=500
+                yaxis=dict(title='Score (0-100)', range=[0, 110], color=font_color),
+                xaxis=dict(title='Category', color=font_color),
+                legend=dict(orientation='h', yanchor='bottom', y=1.02, font=dict(color=font_color)),
+                height=500,
+                paper_bgcolor=bg_color,
+                plot_bgcolor=bg_color
             )
+            
+            if audit_required:
+                fig.add_annotation(
+                    x=0.5, y=0.5, xref='paper', yref='paper',
+                    text="⚠️ AUDIT THIS ⚠️",
+                    font=dict(size=60, color='rgba(255,0,0,0.3)'),
+                    showarrow=False,
+                    textangle=-30
+                )
             
             st.plotly_chart(fig, use_container_width=True)
             
@@ -2388,11 +2426,26 @@ def page_scorecard_generator():
             
             st.plotly_chart(fig, use_container_width=True)
         
-        if grift_alert:
-            st.error("⚠️ **GRIFT ALERT: AUDIT REQUIRED** — Hochul's Transparency Score is below 40 and FOIL responses exceed legal limits. Adverse Inference: Assume hidden data is unfavorable.")
+        if audit_required:
+            st.error("🚨 **FRAUD SENSE TRIGGERED: AUDIT THIS** — Transparency Score < 50 OR Debt exceeds 10% of budget. Adverse Inference: Assume hidden data is unfavorable.")
+        elif grift_alert:
+            st.warning("⚠️ **GRIFT ALERT** — Hochul's Transparency Score is below 40 and FOIL responses exceed legal limits.")
         
         st.divider()
         st.subheader("📊 Key Metrics Breakdown")
+        
+        if template_style == "Savage Roast":
+            st.markdown("### 🔥 The Bad & The Ugly")
+            ugly_col1, ugly_col2 = st.columns(2)
+            with ugly_col1:
+                st.success("**✅ THE GOOD (Nassau)**")
+                for badge in BLAKEMAN_DATA["dynamic_badges"]:
+                    st.write(badge)
+            with ugly_col2:
+                st.error("**❌ THE UGLY (NY State)**")
+                for badge in HOCHUL_DATA["dynamic_badges"]:
+                    st.write(badge)
+            st.divider()
         
         col1, col2 = st.columns(2)
         
@@ -2415,7 +2468,7 @@ def page_scorecard_generator():
     st.divider()
     st.subheader("📤 Share Your Battle Card")
     
-    share_tweet = "The numbers don't lie. Blakeman protects Nassau while Hochul taxes the air we breathe. See the audit: plainviewprotocol.com #PlainviewProtocol #NYGov2026"
+    share_tweet = "One of these is the safest county in the USA. The other is a budget disaster. The numbers don't lie. #PlainviewProtocol #AuditHochul plainviewprotocol.com"
     
     st.code(share_tweet, language=None)
     
