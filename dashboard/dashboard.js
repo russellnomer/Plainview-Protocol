@@ -1,4 +1,4 @@
-const RESULTS_PATH = '../tests/test-results/results.json';
+const RESULTS_PATH = 'results.json';
 const HISTORY_PATH = 'history.json';
 
 let trendChart = null;

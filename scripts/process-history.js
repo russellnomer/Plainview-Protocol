@@ -5,6 +5,7 @@ const path = require('path');
 
 const RESULTS_PATH = path.join(__dirname, '..', 'tests', 'test-results', 'results.json');
 const HISTORY_PATH = path.join(__dirname, '..', 'dashboard', 'history.json');
+const DASHBOARD_RESULTS_PATH = path.join(__dirname, '..', 'dashboard', 'results.json');
 const MAX_ENTRIES = 30;
 
 function loadResults() {
@@ -89,6 +90,8 @@ function processHistory() {
     }
     
     saveHistory(history);
+    
+    fs.copyFileSync(RESULTS_PATH, DASHBOARD_RESULTS_PATH);
     
     console.log('✅ History updated successfully!');
     console.log(`   📊 Total runs tracked: ${history.runs.length}`);
