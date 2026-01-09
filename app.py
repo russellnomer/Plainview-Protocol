@@ -542,7 +542,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v6.2 | The Local Auditor")
+st.sidebar.caption("v6.3 | Black Hole Interceptor")
 
 st.sidebar.success("🎉 **TODAY IS DAY 1** — The Plainview Protocol is LIVE. Established January 8, 2026.")
 
@@ -3991,6 +3991,157 @@ Thank you.
     
     if st.session_state.local_auditor_badge:
         st.sidebar.success("🏅 **Local Auditor Badge Earned!**")
+    
+    st.divider()
+    st.subheader("🕳️ Black Hole Interceptor")
+    st.caption("Generate Demand for Sunlight letters for counties hiding their finances")
+    
+    STATE_AUDIT_LAWS = {
+        "Georgia": "O.C.G.A. § 36-81-7 requires annual audits by independent CPAs for counties with population over 1,500 or expenditures exceeding $300,000.",
+        "New York": "NY General Municipal Law § 30 and § 35 require annual financial reports and independent audits for all municipalities.",
+        "California": "California Government Code § 26909 requires annual audits of county finances by a licensed CPA.",
+        "Texas": "Texas Local Government Code § 115.001 requires annual audits of county finances.",
+        "Florida": "Florida Statutes § 218.39 requires annual financial audits by independent CPAs for all counties.",
+        "Illinois": "Illinois Compiled Statutes 50 ILCS 310/9 requires annual audits for counties.",
+        "North Carolina": "N.C.G.S. § 159-34 requires annual audits by independent CPAs for all local governments.",
+        "Pennsylvania": "Pennsylvania County Code § 1741 requires annual audits of county finances.",
+        "Ohio": "Ohio Revised Code § 117.11 requires audits by the State Auditor or independent CPAs.",
+        "Michigan": "Michigan Compiled Laws § 141.421 requires annual audits for local units of government.",
+        "Default": "State law typically requires annual financial audits of county governments to ensure proper stewardship of public funds."
+    }
+    
+    bh_col1, bh_col2 = st.columns(2)
+    with bh_col1:
+        bh_state = st.selectbox("Select State", list(STATE_AUDIT_LAWS.keys())[:-1], key="bh_state")
+    with bh_col2:
+        bh_county = st.text_input("County Name", placeholder="Enter county name", key="bh_county")
+    
+    bh_sender_name = st.text_input("Your Name", placeholder="Your full legal name", key="bh_sender")
+    bh_sender_address = st.text_input("Your Address", placeholder="Street, City, State ZIP", key="bh_addr")
+    
+    if st.button("🚀 Generate Demand for Sunlight", use_container_width=True):
+        if bh_county and bh_state:
+            state_law = STATE_AUDIT_LAWS.get(bh_state, STATE_AUDIT_LAWS["Default"])
+            
+            demand_letter = f"""
+DEMAND FOR FISCAL TRANSPARENCY AND INDEPENDENT AUDIT
+{bh_county} County, {bh_state}
+
+DATE: {date.today().strftime("%B %d, %Y")}
+
+TO: Board of County Commissioners
+    {bh_county} County
+    [County Administrative Office]
+    {bh_state}
+
+FROM: {bh_sender_name or "[YOUR NAME]"}
+      {bh_sender_address or "[YOUR ADDRESS]"}
+
+RE: Formal Demand for Fiscal Transparency Portal and Independent Audit
+
+Dear Members of the Board of County Commissioners:
+
+I am writing as a concerned citizen and taxpayer to formally demand that {bh_county} County take immediate action to address critical gaps in fiscal transparency and accountability.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PART 1: DEMAND FOR FISCAL TRANSPARENCY PORTAL
+
+I hereby demand that {bh_county} County establish and maintain a publicly accessible Fiscal Transparency Portal that includes:
+
+1. **Proactive Disclosure**: All financial documents, including budgets, expenditure reports, contracts over $10,000, and audit findings, must be published online without requiring a formal records request.
+
+2. **User-Centered Design**: The portal must be accessible to citizens without specialized financial training, with clear navigation, searchable databases, and plain-language summaries.
+
+3. **Real-Time Updates**: Financial data should be updated at minimum quarterly, with checkbook-level detail available for public review.
+
+4. **Open Data Standards**: All data should be available in machine-readable formats (CSV, JSON) to enable independent analysis by citizens, journalists, and watchdog organizations.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PART 2: DEMAND FOR INDEPENDENT AUDIT
+
+I hereby demand that {bh_county} County commission an Independent Financial Audit conducted by an AICPA-certified public accounting firm, in accordance with:
+
+• **Generally Accepted Government Auditing Standards (GAGAS)** — Also known as the "Yellow Book" standards issued by the U.S. Government Accountability Office (GAO).
+
+• **AICPA Professional Standards** — Including AU-C Section 700 (Forming an Opinion on Financial Statements) and AU-C Section 705 (Modifications to the Opinion).
+
+The audit must include:
+- Examination of internal controls over financial reporting
+- Compliance testing for applicable laws and regulations
+- Opinion on fair presentation of financial statements
+- Management letter identifying material weaknesses
+
+**Evidentiary Standard:**
+"An audit by an independent certified public accounting firm is essential to ensure that public funds have been expended as legally required and to maintain public trust."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PART 3: LEGAL BASIS
+
+This demand is supported by the following legal authority:
+
+**State Law Citation:**
+{state_law}
+
+**Federal Guidance:**
+The Single Audit Act (31 U.S.C. § 7501-7507) and OMB Uniform Guidance (2 CFR Part 200) establish audit requirements for entities receiving federal funds.
+
+**Constitutional Basis:**
+Citizens have a fundamental right to know how their tax dollars are spent. Fiscal transparency is essential to democratic governance and public accountability.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NOTICE AND TIMELINE
+
+I request a written response within 30 days acknowledging receipt of this demand and outlining the County's plan to:
+
+1. Establish a Fiscal Transparency Portal (within 90 days)
+2. Commission an independent GAGAS-compliant audit (within 180 days)
+3. Publish audit findings publicly upon completion
+
+Failure to respond or take corrective action may result in:
+- Formal complaints to the State Auditor's Office
+- Public records requests under applicable Freedom of Information laws
+- Advocacy for voter initiatives requiring transparency measures
+- Media engagement to inform fellow taxpayers
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+I trust that {bh_county} County shares my commitment to fiscal transparency and public accountability. I look forward to your prompt response.
+
+Respectfully submitted,
+
+{bh_sender_name or "[SIGNATURE]"}
+Concerned Citizen and Taxpayer
+{bh_county} County, {bh_state}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Generated by The Plainview Protocol — Black Hole Interceptor
+Established January 8, 2026 | https://plainview-protocol.replit.app
+            """
+            
+            st.text_area("📄 Your Demand for Sunlight Letter", demand_letter, height=600)
+            
+            st.download_button(
+                "📥 Download Demand Letter (TXT)",
+                demand_letter,
+                file_name=f"{bh_county.replace(' ', '_')}_County_Demand_for_Sunlight.txt",
+                use_container_width=True
+            )
+            
+            st.success("✅ Letter generated! Download and send to your County Commissioners.")
+            
+            st.info("""
+            **Next Steps:**
+            1. Download the letter and customize with your county's specific address
+            2. Send via certified mail for proof of delivery
+            3. Follow up after 30 days if no response
+            4. File a formal complaint with your State Auditor if ignored
+            """)
+        else:
+            st.error("Please enter both State and County name.")
 
 pages = [
     st.Page(page_national_lens, title="The National Lens", icon="🔭"),
