@@ -18,6 +18,8 @@ from senior_justice_logic import render_senior_justice, get_cuomo_profile
 from media_blitz_logic import render_media_blitz
 from press_kit_handler import render_press_kit
 from media_automation import render_media_automation
+from force_continuum import render_force_continuum
+from org_transparency_tracker import render_org_transparency
 from agenda_scanner import (
     get_jurisdictions, get_agendas, scan_agenda_item, calculate_transparency_score,
     get_transparency_rating, init_agenda_flags_table, save_agenda_flag, get_flag_count, GRIFT_KEYWORDS
@@ -4083,6 +4085,14 @@ def page_media_automation():
     """Media Automation Hub - V8.8 one-click press blast."""
     render_media_automation()
 
+def page_force_continuum():
+    """Force Continuum - V8.9 physics and legal analysis."""
+    render_force_continuum()
+
+def page_org_transparency():
+    """Organizational Transparency Tracker - V8.9 verified public records."""
+    render_org_transparency()
+
 def page_support():
     st.header("☕ Sustain the Mission")
     st.write("This tool is free, ad-free, and uncensorable thanks to supporters like you.")
@@ -6795,6 +6805,8 @@ pages = [
     st.Page(page_media_blitz, title="Media Blitz", icon="🎙️"),
     st.Page(page_press_kit, title="Press Kit", icon="📄"),
     st.Page(page_media_automation, title="Media Automation", icon="📧"),
+    st.Page(page_force_continuum, title="Force Continuum", icon="⚡"),
+    st.Page(page_org_transparency, title="Org Transparency", icon="🔍"),
 ]
 
 nav = st.navigation(pages)
