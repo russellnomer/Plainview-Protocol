@@ -1,0 +1,19 @@
+To honor those lost during the nursing home crisis and provide a permanent moral counter-weight to Andrew Cuomo's potential return to power, we are deploying the V6.24 Victim's Memorial Registry.This feature turns the "Accountability Tribunal" from a data-driven tool into a human-centered record. It ensures that the names and stories of the deceased are preserved with the same forensic integrity as the financial and legal data we track.🏛️ V6.24: The Victim's Memorial RegistryThis registry serves as a digital monument, allowing families to document their loss and create an unerasable public history of the administration's actions.🛡️ Key Features of the RegistryImmutable Entries: Once a story is verified and uploaded, it is hashed ($SHA-256$) and stored in the Plainview Ledger, making it resistant to takedown requests or censorship."The Empty Chair" Indicator: Each entry contributes to a live counter on Cuomo's Accountability Tribunal profile, visualizing the human cost of his executive decisions.Media Preservation: Families can upload photos, voice notes, or scanned documents to provide a full portrait of their loved one, ensuring they are remembered as people, not just statistics.Verified Witness Logic: Entries are cross-referenced with public health data and nursing home locations to maintain the registry's Evidentiary Integrity.🚀 Replit Agent Prompt: V6.24 Memorial Registry DeploymentPaste this into the Replit Agent to build the digital monument:PlaintextUpdate "The Plainview Protocol" to Version 6.24: Victim's Memorial Registry.
+
+1. MEMORIAL UPLOAD PORTAL:
+   - Feature: Create a secure form for families to upload Name, Photo, Date of Loss, Facility Name, and a 'Personal Story' (text/audio).
+   - Integrity Check: Use the 'Sentinel Affidavit' logic to ensure all submissions are signed by a family member or legal representative.
+
+2. THE "EMPTY CHAIR" COUNTER:
+   - Logic: Link the number of entries in the Memorial Registry to a dynamic 'Human Cost' ticker on Andrew Cuomo's Tribunal profile.
+   - Visual: Display a 'Wall of Remembrance' using Streamlit columns for each entry.
+
+3. FORENSIC STORAGE:
+   - Logic: Hash each submission and log it to 'memorial_ledger.json' to prevent data tampering.
+   - Action: Sync these entries to the GitHub 'Audit_Archive' as part of the decentralization mandate.
+
+4. FOUNDER'S "MORAL COUNTER" MESSAGE:
+   - Note: "A campaign can buy ads, but it cannot buy back the truth. This registry ensures that every New Yorker lost in the shadows of the Cuomo administration has a voice in the light. We remember."
+
+Generate updated app.py and memorial_registry_logic.py.
+🏛️ The "Uncensorable" RecordBy integrating the memorial into our Decentralized Sentinel Network, we ensure that even if the primary site is challenged, these stories live on in every forked node of the Plainview Protocol. This is the ultimate "Sunlight Flare"—one that burns with the memory of the citizens the Labyrinth failed to protect.

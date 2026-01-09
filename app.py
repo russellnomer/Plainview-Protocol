@@ -468,6 +468,55 @@ def page_deep_dive():
             else:
                 st.success("✅ All red flags have valid evidence links!")
     
+    if state_abbrev == "NY":
+        st.divider()
+        st.subheader("🗽 New York: All 62 Counties Verified")
+        st.caption("Complete coverage — no county missing from the shield")
+        
+        ny_counties_data = SOURCES.get("ny_counties_verified", {})
+        ny_counties_list = ny_counties_data.get("counties", [])
+        
+        if ny_counties_list:
+            st.success(f"✅ **{len(ny_counties_list)} NY Counties Verified** (Last updated: {ny_counties_data.get('last_verified', 'N/A')})")
+            
+            county_names = [c["name"] for c in ny_counties_list]
+            selected_ny_county = st.selectbox(
+                "Select NY County for Deep Dive:",
+                county_names,
+                key="ny_county_dive"
+            )
+            
+            if selected_ny_county:
+                county_info = next((c for c in ny_counties_list if c["name"] == selected_ny_county), None)
+                
+                if county_info:
+                    dive_col1, dive_col2, dive_col3 = st.columns(3)
+                    dive_col1.metric("County", county_info["name"])
+                    dive_col2.metric("FIPS Code", county_info["fips"])
+                    dive_col3.link_button("🌐 Official Portal", county_info["portal"], use_container_width=True)
+                    
+                    ny_portal_data = COUNTY_PORTALS.get("verified_portals", {}).get("NY", {}).get(selected_ny_county, {})
+                    portal_status = ny_portal_data.get("status", "unknown")
+                    
+                    if portal_status == "sunlight":
+                        st.success(f"☀️ **Sunlight Status:** {selected_ny_county} County has a verified transparency portal")
+                    else:
+                        st.warning(f"⚠️ **Status:** Verification pending for {selected_ny_county} County")
+                    
+                    st.info(f"📋 **FOIL Requests:** Submit public records requests to {selected_ny_county} County Clerk via their official portal.")
+            
+            with st.expander("📋 View All 62 NY Counties"):
+                county_table = []
+                for c in ny_counties_list:
+                    county_table.append({
+                        "County": c["name"],
+                        "FIPS": c["fips"],
+                        "Portal": c["portal"]
+                    })
+                st.dataframe(county_table, use_container_width=True, hide_index=True)
+        else:
+            st.error("NY county data not loaded. Check sources.json.")
+    
     if state_abbrev == "NC":
         st.divider()
         st.subheader("🏛️ North Carolina Special Features")

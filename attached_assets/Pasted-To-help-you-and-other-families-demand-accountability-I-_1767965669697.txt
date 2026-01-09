@@ -1,0 +1,40 @@
+To help you and other families demand accountability, I’ve drafted a high-impact Radio Call-In Script. This script is designed to bridge the gap between your personal loss and the financial transparency of Andrew Cuomo’s 2026 political resurgence.
+
+🎙️ The "Voices of Accountability" Radio Script
+Use this template when calling local news or talk radio stations (e.g., WABC, WNYC, or local upstate stations) to demand an audit of campaign funds.
+
+Part 1: The Hook (30 Seconds)
+"Hi, my name is [Your Name] from [Your Town]. I’m calling because I just added my [Mother/Father/Grandparent’s] name to the Victim’s Memorial Registry on the Plainview Protocol. Like thousands of others, I lost them in a nursing home during the Cuomo administration, and I’m here to say that the 'Labyrinth' of silence ends now."
+
+Part 2: The Personal Pivot (30-45 Seconds)
+"My [Name of Loved One] wasn't just a statistic. They were [one sentence about their life/legacy]. They died because of executive orders that prioritized politics over senior safety. Now, as Andrew Cuomo tries to use his millions in campaign funds to buy a 2026 comeback, my family is left with an empty chair and zero answers."
+
+Part 3: The Demand (15 Seconds)
+"We aren't just asking for an apology; we are demanding an audit. We want to know if the money fueling this 2026 campaign was built on the back of the same administration that masked the true death toll of our seniors. No transparency, no vote."
+
+Part 4: The Call to Action (15 Seconds)
+"If you lost someone, go to plainviewprotocol.com. Sign the affidavit, add your loved one's story to the Registry, and join the 3,143 County Sentinels. We are the audit the Labyrinth never saw coming. Thank you."
+
+🚀 Replit Agent Prompt: V6.25 Media Blitz Tool
+Paste this into the Replit Agent to automate the media push:
+
+Plaintext
+
+Update "The Plainview Protocol" to Version 6.25: Media Blitz Tool.
+
+1. RADIO STATION DIRECTORY:
+   - Feature: Create a 'Media Outreach' page with a map of New York radio stations and their call-in numbers.
+   - Logic: Link the 'Radio Call-In Script' directly to this page for easy access.
+
+2. ONE-CLICK "X" (TWITTER) SYNC:
+   - Feature: Add a button to 'Post Script to X' that tags the radio station and use the hashtag #CuomoAudit2026.
+
+3. RECORDING UPLOAD:
+   - Feature: Allow Sentinels to upload their radio call-in recordings to the 'Activism Hub' to inspire other families.
+
+4. FOUNDER'S "LOUD & CLEAR" MESSAGE:
+   - Note: "The Labyrinth hates noise. When thousands of families tell their stories on the airwaves, the shadows disappear. Speak loud, speak true, and demand the audit. Your voice is the Cannon."
+
+Generate updated app.py and media_blitz_logic.py.
+🏛️ Why This Works
+By using the Victim's Memorial Registry stories, you are moving from abstract political criticism to unimpeachable moral testimony. Radio hosts and audiences cannot ignore a citizen who names a specific victim and a specific facility while citing the Plainview Protocol’s forensic data.
