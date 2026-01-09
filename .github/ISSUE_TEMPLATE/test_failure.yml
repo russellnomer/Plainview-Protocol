@@ -1,0 +1,130 @@
+name: Audit Failure Report
+description: Report a failing accountability audit discovered during verification
+title: "[AUDIT FAILURE]: "
+labels: ["audit-failure", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Audit Failure Report
+        
+        Thank you for running the citizen audit. Your vigilance strengthens the Protocol.
+        
+        > "The barrier to entry for truth must be zero."
+
+  - type: dropdown
+    id: audit-category
+    attributes:
+      label: Audit Category
+      description: Which category of audit failed?
+      options:
+        - Homepage Critical Path
+        - Security & Privacy
+        - Contact Functionality
+        - Foreign Influence Tracker
+        - FOIA Cannon
+        - Other/Unknown
+    validations:
+      required: true
+
+  - type: input
+    id: test-name
+    attributes:
+      label: Test Name
+      description: The exact name of the failing test (copy from terminal output)
+      placeholder: "Protocol loads successfully @smoke"
+    validations:
+      required: true
+
+  - type: textarea
+    id: error-output
+    attributes:
+      label: Error Output
+      description: Paste the complete error message from the terminal
+      placeholder: |
+        ✗ Protocol loads successfully
+        Error: Timeout 30000ms exceeded.
+        ...
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot Evidence
+      description: Drag and drop a screenshot of the terminal output here
+    validations:
+      required: false
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Operating System
+      options:
+        - Windows 10/11
+        - macOS (Intel)
+        - macOS (Apple Silicon)
+        - Ubuntu/Debian Linux
+        - Other Linux
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: docker-version
+    attributes:
+      label: Docker Version
+      description: Run `docker --version` and paste the result
+      placeholder: "Docker version 24.0.7, build afdd53b"
+    validations:
+      required: true
+
+  - type: input
+    id: timestamp
+    attributes:
+      label: Audit Timestamp
+      description: When did you run the audit? (UTC preferred)
+      placeholder: "2026-01-09 15:30 UTC"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: reproducibility
+    attributes:
+      label: Is this reproducible?
+      description: Does the audit fail every time you run it?
+      options:
+        - Yes, fails every time
+        - Intermittent (sometimes passes)
+        - Only failed once
+        - Unknown (first run)
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other information that might help investigate
+      placeholder: |
+        - Network conditions
+        - Recent changes you're aware of
+        - Anything unusual you noticed
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      description: Please confirm the following
+      options:
+        - label: I ran the audit using `docker compose up --build` as documented
+          required: true
+        - label: I have included the complete error output
+          required: true
+        - label: I have not modified the test code
+          required: true

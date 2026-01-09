@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  audit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: plainview-audit
+    volumes:
+      - ./tests/test-results:/app/tests/test-results
+      - ./dashboard:/app/dashboard
+    environment:
+      - CI=true
+      - NODE_ENV=production

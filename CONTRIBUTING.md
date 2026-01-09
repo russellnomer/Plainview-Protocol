@@ -30,6 +30,47 @@ The Plainview Protocol is an open-source citizen oversight platform designed to 
 4. Test thoroughly
 5. Submit a Pull Request with a clear description
 
+### Accountability Tests (Most Needed)
+
+New tests that verify the Protocol's integrity are the lifeblood of this project.
+
+**The Golden Rule:**
+> Tests must be readable by non-programmers.
+
+A citizen should understand what a test does by reading its title.
+
+**Naming Convention:**
+```typescript
+test('WHAT_IT_CHECKS in PLAIN_ENGLISH @category', async ({ page }) => {
+  console.log('🔍 Running [Category] Audit: [Description]...');
+  // test logic here
+  console.log('✅ [Category] Audit: [Result]');
+});
+```
+
+**Good Examples:**
+- `Protocol loads successfully @smoke`
+- `No API keys exposed in page source @security`
+- `Foreign Influence data requires affidavit @access-control`
+
+**Bad Examples:**
+- `test1`, `should work`, `check stuff`
+
+**Categories:**
+| Tag | Purpose |
+|-----|---------|
+| `@smoke` | Critical path - must pass for basic functionality |
+| `@security` | Security and privacy checks |
+| `@accessibility` | WCAG compliance checks |
+| `@data-integrity` | Verifies data accuracy |
+| `@access-control` | Permission and gating checks |
+
+**Running Tests:**
+```bash
+npx playwright test --project=chromium           # Full suite
+npx playwright test --grep @smoke --project=chromium  # Smoke tests only
+```
+
 ### Data Contributions
 - Help us expand STATE_CORRUPTION_DATA to all 50 states
 - Verify and cite all data sources

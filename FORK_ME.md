@@ -7,6 +7,18 @@
 
 ---
 
+## 🔍 Before You Fork: Verify
+
+**Run the citizen audit to confirm the codebase is clean:**
+
+```bash
+docker compose up --build
+```
+
+See **[VERIFY.md](VERIFY.md)** for the complete citizen audit guide.
+
+---
+
 ## The Vision
 
 The Plainview Protocol was never meant to be a single point of failure. Democracy doesn't live on one server. It lives in the hearts and hard drives of every citizen who refuses to look away.
