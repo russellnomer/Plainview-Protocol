@@ -246,7 +246,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v4.8 | The Open-Source Sentinel")
+st.sidebar.caption("v4.9 | Corrected Legacy")
+
+st.sidebar.success("🎉 **TODAY IS DAY 1** — The Plainview Protocol is LIVE. Established January 8, 2026.")
 
 if "selected_state" not in st.session_state:
     st.session_state.selected_state = "New York"
@@ -2124,4 +2126,4 @@ nav = st.navigation(pages)
 nav.run()
 
 st.markdown("---")
-st.markdown("<center>Built by Russell Nomer in Plainview, NY | <i>Truth, Kindness, Security</i></center>", unsafe_allow_html=True)
+st.markdown("<center>Built by Russell Nomer in Plainview, NY | Established Jan 8, 2026 | <i>Truth, Kindness, Security</i></center>", unsafe_allow_html=True)
