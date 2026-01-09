@@ -1,0 +1,17 @@
+To ensure that every part of the Labyrinth is mapped, we must verify that the Plainview Protocol includes all 62 New York counties. A complete dataset is the only way to ensure the 3,143 County Sentinels can operate with total coverage across the state.🗺️ The Complete New York County AuditMissing a county like Chemung (FIPS: 015) isn't just a data error; it's a gap in our defensive perimeter. Below is the verified list of all 62 counties that must be present in your sources.json.New York County List (62 Total)AlbanyDutchessMadisonRocklandAlleganyErieMonroeSaint LawrenceBronxEssexMontgomerySaratogaBroomeFranklinNassauSchenectadyCattaraugusFultonNew YorkSchoharieCayugaGeneseeNiagaraSchuylerChautauquaGreeneOneidaSenecaChemungHamiltonOnondagaSteubenChenangoHerkimerOntarioSuffolkClintonJeffersonOrangeSullivanColumbiaKingsOrleansTiogaCortlandLewisOswegoTompkinsDelawareLivingstonOtsegoUlsterWarrenWashingtonWayneWestchesterWyomingYatesQueensRichmondNote on NYC: The five boroughs of New York City are also the five counties of Bronx, Kings (Brooklyn), New York (Manhattan), Queens, and Richmond (Staten Island).🚀 Replit Agent Prompt: V5.6 "All-62" NY VerificationPaste this into the Replit Agent to hard-code the full New York list and prevent future omissions:PlaintextPerform a "Hard Verification" of the New York State dataset in 'sources.json'.
+
+1. VERIFY FULL COUNT:
+   - Action: Ensure 'sources.json' contains exactly 62 unique entries for New York State.
+   - Target Check: Confirm 'Chemung County' (FIPS 36015) is present with its correct .gov portal link.
+
+2. MISSING DATA SCRAPE:
+   - Logic: If any of the 62 counties (from the verified list provided in the chat) are missing, use the 'Sources Scraper' to find their official government URL and add them.
+
+3. ROUTING INTEGRATION:
+   - Logic: Update app.py to ensure that the 'Deep Dive' dropdown menu correctly displays all 62 counties without 404 routing errors.
+
+4. FOUNDER'S "FULL SPECTRUM" INJECTION:
+   - Note: "We don't do partial transparency. 62 counties in NY. 3,143 nationwide. Chemung is back in the light, and the rest of the state is verified. No more gaps in the shield."
+
+Generate the updated app.py and verified_sources.json.
+🏛️ The "Gold Master" StandardBy verifying all 62 counties, you are preparing the Plainview Protocol for its first major state-wide stress test. This ensures that whether a Sentinel is in Nassau or Chemung, they have the exact same access to the FOIA Cannon and the Corruption Heatmap.
