@@ -246,7 +246,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v4.5 | The Local Watchdog")
+st.sidebar.caption("v4.6 | The Citizen Orator")
 
 if "selected_state" not in st.session_state:
     st.session_state.selected_state = "New York"
@@ -278,6 +278,16 @@ st.sidebar.info("Check the Scrutiny Hub to see if your medicine is made by a riv
 st.sidebar.divider()
 st.sidebar.markdown("### Fuel the Mission")
 st.sidebar.link_button("☕ Support Russell", "https://buymeacoffee.com/russellnomer")
+
+st.sidebar.divider()
+st.sidebar.markdown("### 🎤 ProSpeech Tips")
+st.sidebar.caption("""
+**Before Your Testimony:**
+- Print your script **BIG** and **BOLD**
+- Speak **SLOWLY** - nerves make you rush
+- Bring a neighbor—multiple voices carry **5x the weight**
+- Arrive early to sign up for public comment
+""")
 
 def page_national_lens():
     selected_state = st.session_state.get("selected_state", "New York")
@@ -891,6 +901,89 @@ I formally request that this body:
 
 Silence is not neutral. Silence is an admission.
             """, height=250)
+        
+        st.divider()
+        st.subheader("🎙️ Town Hall Script Generator")
+        st.caption("Generate a professional, timed testimony for your next public meeting.")
+        
+        with st.expander("ℹ️ Your First Amendment Shield"):
+            st.markdown("""
+**Constitutional Protection for Public Comment:**
+
+> *"Congress shall make no law... abridging the freedom of speech."* — First Amendment
+
+**Your Rights Under NY Open Meetings Law (Public Officers Law Art. 7):**
+- You have the right to make **critical, harsh, or personal remarks** about official duties
+- Officials may set **time limits** but NOT **viewpoint restrictions**
+- You cannot be removed for expressing unpopular opinions about policy
+- Recording public meetings is generally permitted
+
+**Case Law:** *City of Madison v. Wisconsin Employment Relations Commission* (1976) - Citizens have First Amendment right to speak at public meetings.
+
+*Speak truth to power. The Constitution is your shield.*
+            """)
+        
+        script_col1, script_col2 = st.columns(2)
+        with script_col1:
+            user_name = st.text_input("Your Name", value="[YOUR NAME]", key="trib_user_name")
+            user_town = st.text_input("Your Town/City", value=selected_state, key="trib_user_town")
+        with script_col2:
+            topic = st.text_input("Topic/Agenda Item", value="Government Transparency", key="trib_topic")
+            verdict = st.selectbox("Your Verdict", ["WASTE - Vote NO", "VALUE - Support with Amendments", "AUDIT NEEDED - Delay Vote"], key="trib_verdict")
+        
+        if st.button("🎙️ Generate Timed Testimony", key="gen_trib_script"):
+            st.session_state.show_trib_testimony = True
+        
+        if st.session_state.get('show_trib_testimony', False):
+            ask_text = "vote NO on this item" if "NO" in verdict else ("delay this vote pending an independent audit" if "AUDIT" in verdict else "support this with transparency amendments")
+            
+            script_1min = f"""My name is {user_name} from {user_town}. I'm here regarding {topic}.
+
+The Plainview Protocol audit flags this as {verdict.split(' - ')[0]}. I demand that this board {ask_text}.
+
+Thank you."""
+
+            script_2min = f"""My name is {user_name} from {user_town}. I am a taxpayer and I am here to speak on {topic}.
+
+The Plainview Protocol AI audit has analyzed this item and flagged it as {verdict.split(' - ')[0]}.
+
+THE GOOD: [State any positive aspects]
+THE BAD: [State concerns about process or transparency]
+THE UGLY: [State the worst-case scenario if this passes without scrutiny]
+
+I am demanding that this board {ask_text}. Silence is not neutral. Silence is an admission.
+
+Thank you for your time."""
+
+            script_3min = f"""Good evening. My name is {user_name}, and I am a resident and taxpayer from {user_town}. 
+
+I am here tonight to speak on {topic}, an item that demands your full attention and the public's scrutiny.
+
+I have reviewed this matter using the Plainview Protocol, a citizen-driven transparency tool that applies the Spoliation Doctrine to government actions. Our analysis has flagged this item as {verdict.split(' - ')[0]}.
+
+Let me break this down for you:
+
+THE GOOD: [Acknowledge any legitimate public benefit]
+
+THE BAD: [Identify procedural concerns, lack of transparency, or missing data]
+
+THE UGLY: [Describe the worst-case scenario—what happens if this passes without proper oversight]
+
+Based on this analysis, I am formally demanding that this board {ask_text}.
+
+The public has a right to know how their money is spent. When officials hide records, we must assume those records contain evidence of wrongdoing. That is the Spoliation Doctrine, and it applies to every level of government.
+
+I will be filing a FOIA request for all related documents. I encourage my neighbors to do the same.
+
+Thank you for your time. I yield the remainder to any board member who wishes to respond on the record."""
+
+            tab1, tab2, tab3 = st.tabs(["⏱️ 1 Minute", "⏱️ 2 Minutes", "⏱️ 3 Minutes"])
+            with tab1:
+                st.text_area("1-Minute Script (Quick & Direct)", script_1min, height=150, key="script_1min_trib")
+            with tab2:
+                st.text_area("2-Minute Script (Standard)", script_2min, height=200, key="script_2min_trib")
+            with tab3:
+                st.text_area("3-Minute Script (Full Testimony)", script_3min, height=350, key="script_3min_trib")
     
     st.divider()
     st.subheader("🗳️ The Referendum Prototype: Vote to Audit")
@@ -1670,6 +1763,79 @@ Respectfully,
     grift_col1.warning("**Wide Admin Power**\n+ Minimal Fiscal Note")
     grift_col2.warning("**No Sunset Clause**\n+ Emergency Powers")
     grift_col3.warning("**Vague Language**\n+ Broad Discretion")
+    
+    st.divider()
+    st.subheader("🎙️ Town Hall Script Generator")
+    st.caption("Generate a professional, timed testimony for your next public meeting.")
+    
+    with st.expander("ℹ️ Your First Amendment Shield"):
+        st.markdown("""
+**Constitutional Protection for Public Comment:**
+
+> *"Congress shall make no law... abridging the freedom of speech."* — First Amendment
+
+**Your Rights Under NY Open Meetings Law (Public Officers Law Art. 7):**
+- You have the right to make **critical, harsh, or personal remarks** about official duties
+- Officials may set **time limits** but NOT **viewpoint restrictions**
+- You cannot be removed for expressing unpopular opinions about policy
+- Recording public meetings is generally permitted
+
+**Case Law:** *City of Madison v. Wisconsin Employment Relations Commission* (1976) - Citizens have First Amendment right to speak at public meetings.
+
+*Speak truth to power. The Constitution is your shield.*
+        """)
+    
+    dock_col1, dock_col2 = st.columns(2)
+    with dock_col1:
+        dock_user_name = st.text_input("Your Name", value="[YOUR NAME]", key="dock_user_name")
+        dock_user_town = st.text_input("Your Town/City", value=selected_state, key="dock_user_town")
+    with dock_col2:
+        dock_topic = st.text_input("Bill/Agenda Item", value="Peanut's Law (S7011)", key="dock_topic")
+        dock_verdict = st.selectbox("Your Position", ["SUPPORT - Vote YES", "OPPOSE - Vote NO", "AMEND - Add Transparency Requirements"], key="dock_verdict")
+    
+    if st.button("🎙️ Generate Timed Testimony", key="gen_dock_script"):
+        st.session_state.show_dock_testimony = True
+    
+    if st.session_state.get('show_dock_testimony', False):
+        dock_action = "vote YES" if "YES" in dock_verdict else ("vote NO" if "NO" in dock_verdict else "amend this bill to include transparency requirements")
+        
+        dock_1min = f"""My name is {dock_user_name} from {dock_user_town}. I urge you to {dock_action} on {dock_topic}.
+
+This bill {"protects due process and citizen rights" if "YES" in dock_verdict else "raises serious concerns about overreach"}. Thank you."""
+
+        dock_2min = f"""My name is {dock_user_name} from {dock_user_town}. I'm here to speak on {dock_topic}.
+
+The Plainview Protocol audit rates this bill as {"VALUE" if "YES" in dock_verdict else "requiring scrutiny"}.
+
+THE GOOD: [State the bill's benefits]
+THE BAD: [State any concerns]
+THE UGLY: [State risks of inaction or poor implementation]
+
+I urge this body to {dock_action}. Thank you."""
+
+        dock_3min = f"""Good evening. My name is {dock_user_name}, resident of {dock_user_town}.
+
+I am here to testify on {dock_topic}. After reviewing this legislation through the Plainview Protocol framework, I {"strongly support" if "YES" in dock_verdict else "have serious concerns about"} this bill.
+
+THE GOOD: [Describe positive aspects of this legislation]
+
+THE BAD: [Identify any procedural or implementation concerns]
+
+THE UGLY: [Describe worst-case scenarios or unintended consequences]
+
+Based on this analysis, I formally urge this body to {dock_action}.
+
+Citizens deserve transparency. When we show up and speak, democracy works. I thank you for your time and attention to this matter.
+
+I yield the remainder of my time."""
+
+        dock_tab1, dock_tab2, dock_tab3 = st.tabs(["⏱️ 1 Minute", "⏱️ 2 Minutes", "⏱️ 3 Minutes"])
+        with dock_tab1:
+            st.text_area("1-Minute Script", dock_1min, height=120, key="dock_script_1")
+        with dock_tab2:
+            st.text_area("2-Minute Script", dock_2min, height=180, key="dock_script_2")
+        with dock_tab3:
+            st.text_area("3-Minute Script", dock_3min, height=300, key="dock_script_3")
 
 def page_course_correction():
     selected_state = st.session_state.get("selected_state", "New York")

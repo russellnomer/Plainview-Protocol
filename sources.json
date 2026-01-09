@@ -42,5 +42,7 @@
   "nassau_county_legislature": "https://www.nassaucountyny.gov/legislature",
   "suffolk_county_legislature": "https://www.suffolkcountyny.gov/legislature",
   "oyster_bay_town": "https://oysterbaytown.com",
-  "hempstead_town": "https://hempsteadny.gov"
+  "hempstead_town": "https://hempsteadny.gov",
+  "first_amendment": "https://www.law.cornell.edu/constitution/first_amendment",
+  "city_of_madison_case": "https://supreme.justia.com/cases/federal/us/429/167/"
 }
