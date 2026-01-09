@@ -25,5 +25,9 @@
   "oesa": "https://oesa.org",
   "reshoring_institute": "https://reshoringinstitute.org",
   "usitc_report": "https://www.usitc.gov/research_and_analysis/id091.htm",
-  "gao_supply_chain": "https://www.gao.gov/products/gao-21-271"
+  "gao_supply_chain": "https://www.gao.gov/products/gao-21-271",
+  "ny_state_constitution": "https://www.nysenate.gov/legislation/laws/CNS",
+  "ny_find_legislator": "https://www.nysenate.gov/find-my-senator",
+  "mta_fares": "https://new.mta.info/fares",
+  "congestion_pricing": "https://new.mta.info/project/CBDTP"
 }
