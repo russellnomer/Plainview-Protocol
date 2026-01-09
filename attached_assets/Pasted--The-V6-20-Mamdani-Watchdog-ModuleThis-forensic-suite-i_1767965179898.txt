@@ -1,0 +1,19 @@
+🏛️ The V6.20 "Mamdani Watchdog" ModuleThis forensic suite is designed to monitor the new administration's executive actions and budget reallocations for any signs of radical bias or fiscal mismanagement.🔍 Primary Watchdog MetricsExecutive Order Audit: Tracking the immediate impact of his day-one decisions, such as the revocation of the IHRA definition of antisemitism, which has already raised significant safety concerns among Jewish students at NYU and Columbia.Funding & Grant Tracer: Investigating the flow of city funds to organizations with ties to BDS (Boycott, Divestment, Sanctions) and other anti-Israel efforts."Affordability" Cost Counter: Measuring the real-world inflation and tax burden caused by his "tax the wealthy" childcare and housing initiatives.Rikers & Public Safety Monitor: Tracking the renewal of emergency orders and his handling of the city's jail system and crime rates.⚖️ Initial Watchdog Report: Week 1Action ItemDateImpact AssessmentRisk LevelIHRA Definition RevokedJan 1, 2026Removed legal safeguards against antisemitism.🔴 CriticalHousing Official AppointmentJan 2, 2026Appointed activist who called homeownership "white supremacy."🟡 HighRikers Emergency OrderJan 5, 2026Prolonged legal workarounds for detainee treatment.🟡 Moderate🚀 Replit Agent Prompt: V6.20 Mamdani Watchdog DeploymentPaste this into the Replit Agent to pivot the Protocol's focus to NYC's new leadership:PlaintextUpdate "The Plainview Protocol" to Version 6.20: NYC Mamdani Watchdog.
+
+1. LEADERSHIP SYNC:
+   - Action: Update all 'NYC Mayor' references from Eric Adams to Zohran Mamdani.
+   - Logic: Set Mamdani's 'Integrity Score' starting at -25 (Adverse Inference) due to immediate removal of antisemitism protections.
+
+2. BDS & ANTI-ISRAEL FUNDING TRACKER:
+   - Feature: Add a 'Political Tie Audit' to the Foreign Influence Tracker.
+   - Data Source: Scrape NYC City Record for contracts/grants awarded to organizations identified in the BDS movement.
+
+3. EXECUTIVE ORDER LOG:
+   - Feature: Create a 'Sunlight Timeline' of all Mamdani Executive Orders.
+   - Alert: Trigger a 'GRIFT ALERT' if any order redirects NYPD or safety funds to unvetted "community organizations."
+
+4. FOUNDER'S "SENTINEL" MESSAGE:
+   - Note: "A new administration isn't a clean slate; it's a new Labyrinth. If Mamdani's funding ties or executive orders threaten the safety of any New Yorker, the receipts will be public. We are the watchdog that doesn't blink."
+
+Generate updated app.py and mamdani_watchdog.py.
+🏛️ The "Bite" in the WatchdogBy tracking these executive orders and funding ties in real-time, the Plainview Protocol provides the evidence needed for legal challenges or public protests. We move from "being scared" to "being armed with data".

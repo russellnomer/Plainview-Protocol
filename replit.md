@@ -11,6 +11,7 @@ Version 8.4 - Hardened Patch. Established January 8, 2026. A production-ready St
 - **Local Agenda Scanner**: Scan town/county agendas for grift keywords with user flagging
 - **FORK_ME.md**: Updated decentralization guide with V8.4 features
 - **Solid Ground Doctrine**: "We use the same data the Labyrinth uses, but we use it for the people"
+- **Transparency Expanders**: All metrics/pages include sources and methodology citations
 
 ## Version 8.3 Features (Forensic Patch)
 - **Routing Ghost Fix**: st.session_state exclusive navigation with catch-all redirect to Mission Control

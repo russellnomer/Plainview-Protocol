@@ -1455,6 +1455,8 @@ def page_accountability_tribunal():
                     grift_col1.metric("Fiscal Impact", f"🟢 {fiscal}", help="Budget/spending authority")
                     grift_col2.metric("Power Level", f"🔴 {power}", help="Regulatory/contract authority")
                 
+                st.divider()
+                
                 if selected_state == "New York" and row['Role'] == "Governor":
                     with st.expander("📋 SCRUTINY LOG: Kathy Hochul"):
                         st.markdown("""
@@ -1526,6 +1528,31 @@ def page_accountability_tribunal():
         with tactic_col3:
             if st.button("🎤 Public Comment Script", key="tactic_comment"):
                 st.session_state.show_comment_script = True
+        
+        with st.expander("ℹ️ Transparency: Shadow List Methodology"):
+            st.markdown("""
+**Scoring Formula (Officials):**
+- **Base Score:** 100 points
+- **FOIA Response > 20 days:** -20 points
+- **No-Bid Contracts > 15%:** -30 points
+- **Contractor Donations > $100K:** -20 points
+- **Security Clash (Sanctuary):** -100 points (federal/state conflict)
+- **Visible Records < 50%:** -50 Shadow Penalty (Adverse Inference)
+
+**Grift Alert Trigger:**
+- Fiscal Impact = MINIMAL + Power Level = HIGH → GRIFT ALERT
+- Pattern: Officials with small budgets but high regulatory/contract authority
+
+**Data Sources:**
+- State FOIA compliance reports (RCFP)
+- USASpending.gov contract data
+- OpenSecrets.org campaign finance
+- State ethics commission filings
+
+**Legal Basis:**
+- Spoliation Doctrine: Hidden records → adverse inference
+- 18 U.S.C. § 207: Cooling-off violations
+            """)
         
         if st.session_state.get('show_ledger_template', False):
             st.text_area("FOIA Template: Demand the Ledger", f"""
@@ -2000,6 +2027,33 @@ This is a classic grift pattern: low-cost bills that fly under the radar while c
                     st.info(f"**Sentinel Recommendation:** {analysis['recommendation']}")
                     
                     st.link_button("📜 View Full Bill on Congress.gov", f"https://www.congress.gov/search?q=%7B%22source%22%3A%22legislation%22%2C%22search%22%3A%22{bill_number}%22%7D")
+                    
+                    with st.expander("ℹ️ Transparency: Bill Analysis Methodology"):
+                        st.markdown("""
+**Grift Alert Trigger:**
+- Fiscal Risk = MINIMAL or LOW + Power Level = HIGH → **GRIFT ALERT**
+- Pattern: Low-cost bills that grant significant new authority
+
+**Scoring Metrics:**
+| Metric | Description |
+|--------|-------------|
+| Fiscal Risk | Budget impact (HIGH/MEDIUM/LOW/MINIMAL) |
+| Power Level | Authority granted (regulatory, contract, appointment) |
+| Transparency Score | Readability, hearing time, public input |
+
+**Data Sources:**
+- Congress.gov bill text and status
+- CBO cost estimates
+- GovTrack.us legislative tracking
+- OpenSecrets.org lobbying data
+
+**Red Flags:**
+- Omnibus bills (>1000 pages)
+- Minimal floor debate (<72 hours)
+- Earmarks without disclosure
+- Blanket waiver authority
+- Reduced oversight provisions
+                        """)
             else:
                 st.warning("Please enter a bill number to analyze.")
     
@@ -2268,6 +2322,28 @@ Residents who watch just one meeting a year are 5x more likely to trust their go
         else:
             st.error(f"**Transparency Score: {transparency_score}/100** - 🔴 SHADOW PENALTY APPLIED. This government operates in darkness.")
             st.markdown("**Action Required:** File FOIL requests and demand livestreaming at the next board meeting.")
+        
+        with st.expander("ℹ️ Transparency: Local Index Methodology"):
+            st.markdown("""
+**Scoring Components (100 points max):**
+| Factor | Points | Criteria |
+|--------|--------|----------|
+| 📺 Livestream | +25 | Public meeting broadcasts available |
+| 📁 Searchable Archive | +25 | Historical records digitized/searchable |
+| 📋 Minutes Posted | +25 | Within 14 days = full, 15-30 days = 15, >30 days = 0 |
+| 🌐 Online Portal | +25 / -50 | Present = +25, Missing = -50 SHADOW PENALTY |
+
+**Data Sources:**
+- NY Open Meetings Law compliance data
+- Municipal website audits
+- FOIL response time tracking
+- County Clerk records
+
+**Legal Basis:**
+- NY Public Officers Law § 103 (Open Meetings)
+- NY FOIL (Freedom of Information Law)
+- NY Municipal Home Rule Law Article 2
+            """)
         
         st.divider()
         st.subheader("🔍 Red Flag Keyword Scanner")
@@ -3053,6 +3129,32 @@ def page_foreign_influence():
                 st.markdown(f"**FARA Status:** {entity.get('fara_status', 'Unknown')}")
                 st.markdown(f"**Concern:** {entity.get('concern', 'N/A')}")
                 st.markdown(f"**Recommended Action:** {entity.get('recommended_action', 'N/A')}")
+    
+    st.divider()
+    with st.expander("ℹ️ Transparency: Foreign Influence Sources & Methodology"):
+        st.markdown("""
+**Data Sources:**
+- **FARA Database:** efile.fara.gov (DOJ National Security Division)
+- **FEC Filings:** Federal Election Commission public records
+- **OpenSecrets.org:** Campaign finance tracking (Center for Responsive Politics)
+- **IRS Form 990:** Non-profit financial disclosures
+- **State Charity Registrations:** AG offices (NY, CA, etc.)
+
+**Legal Framework:**
+- **52 U.S.C. § 30121:** Foreign national prohibition (campaign contributions)
+- **22 U.S.C. § 611:** FARA registration requirements
+- **18 U.S.C. § 951:** Foreign agents without diplomatic status
+- **26 U.S.C. § 501(c)(4):** Social welfare organization rules
+
+**Risk Assessment Criteria:**
+- Foreign government ties (direct or indirect)
+- Dark money conduit patterns (pass-through giving)
+- Missing FARA registrations
+- Cross-border fund flows without disclosure
+
+**Affidavit Requirement:**
+Access to this page requires a signed Affidavit of Integrity to protect against misuse and ensure users act in good faith under penalty of perjury.
+        """)
 
 def page_fara_reporter():
     st.header("⚖️ FARA Violation Reporter")
@@ -3142,6 +3244,32 @@ https://github.com/russellnomer/plainview-protocol
             st.success("✅ Report generated! Download and submit to the DOJ FARA Unit.")
         else:
             st.error("Please select a target and provide evidence summary.")
+    
+    with st.expander("ℹ️ Transparency: FARA Reporting Sources & Legal Basis"):
+        st.markdown("""
+**Legal Framework:**
+- **22 U.S.C. § 611-621:** Foreign Agents Registration Act
+- **22 U.S.C. § 618:** Criminal penalties (up to $250K + 5 years)
+- **18 U.S.C. § 3571:** Daily continuing offense penalties
+
+**Vampire Tax Calculation:**
+| Component | Amount | Basis |
+|-----------|--------|-------|
+| Base Penalty | $250,000 | Per foreign principal |
+| Daily Offense | $1,000/day | Each day unregistered |
+| Shadow Income | 100% | All income while unregistered |
+
+**Data Sources:**
+- FEC.gov campaign finance filings
+- OpenSecrets.org PAC tracking
+- efile.fara.gov registrations
+- IRS Form 990 disclosures
+
+**Submission Target:**
+FARA Unit, National Security Division
+U.S. Department of Justice
+175 N Street NE, Washington, DC 20002
+        """)
 
 def page_shadow_watch():
     st.header("👁️ Shadow Watch Tracker")
