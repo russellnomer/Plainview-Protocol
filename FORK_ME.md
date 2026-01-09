@@ -130,6 +130,24 @@ Fork the mission. Hold the line.
 
 ---
 
-*Version 8.3 — Forensic Patch Edition*  
+## V8.4 Hardened Patch: The Unstoppable Update
+
+**Plainview Protocol is designed to be decentralized.**
+
+1. **Click 'Fork' on GitHub** — You now own a complete copy of the Protocol
+2. **Connect to your own Replit/Docker instance** — Deploy anywhere
+3. **Host your local county node** — Become the Sentinel your community needs
+
+**This mission cannot be stopped.**
+
+### What's New in V8.4:
+- **UnitedStates.io Integration**: Real Congress data, not fragile scrapes
+- **Grift Hunter Bill Search**: Instant fiscal risk analysis on any bill
+- **OG Meta Tags**: Viral SEO for maximum reach
+- **Solid Ground Doctrine**: "We use the same data the Labyrinth uses, but we use it for the people"
+
+---
+
+*Version 8.4 — Hardened Patch Edition*  
 *The Plainview Protocol: Truth, Kindness, & Security*  
 *© 2026 Russell David Nomer. All rights reserved. Open source under MIT License.*

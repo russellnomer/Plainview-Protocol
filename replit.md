@@ -1,7 +1,14 @@
 # The Plainview Protocol: Truth, Kindness, & Security
 
 ## Overview
-Version 8.3 - Forensic Patch. Established January 8, 2026. A production-ready Streamlit web application with bipartisan corruption tracking across all 50 states and 3,143 counties. Features Corruption Heatmap with Shadow Penalty scoring, Foreign Influence Tracker with Affidavit Gate (now with localStorage persistence), Revolving Door Tracker for lobbyist cooling-off violations, Ethics Complaint Trigger for OCC/Senate submissions, Agency Collaboration Portal with 72-hour correction window, and comprehensive FOIA/FARA tools. Pro-American, rule of law, domestic security focus.
+Version 8.4 - Hardened Patch. Established January 8, 2026. A production-ready Streamlit web application with bipartisan corruption tracking across all 50 states and 3,143 counties. Features Corruption Heatmap with Shadow Penalty scoring, Foreign Influence Tracker with Affidavit Gate (now with localStorage persistence), Revolving Door Tracker for lobbyist cooling-off violations, Ethics Complaint Trigger for OCC/Senate submissions, Agency Collaboration Portal with 72-hour correction window, and comprehensive FOIA/FARA tools. Pro-American, rule of law, domestic security focus.
+
+## Version 8.4 Features (Hardened Patch)
+- **UnitedStates.io Integration**: JSON API for reliable Congress legislator data with bioguide links
+- **OG Meta Tags**: Viral SEO with og:title, og:description via metadata_handler.py
+- **Grift Hunter Bill Search**: Mock AI fiscal risk analysis for bill numbers (HR 2617, S 1234)
+- **FORK_ME.md**: Updated decentralization guide with V8.4 features
+- **Solid Ground Doctrine**: "We use the same data the Labyrinth uses, but we use it for the people"
 
 ## Version 8.3 Features (Forensic Patch)
 - **Routing Ghost Fix**: st.session_state exclusive navigation with catch-all redirect to Mission Control

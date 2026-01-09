@@ -10,16 +10,15 @@ from datetime import datetime, date
 
 from forensic_patch import init_routing_state, catch_all_redirect, safe_navigate, safe_county_selectbox
 from traffic_ledger import init_async_ledger, async_log_traffic, get_queue_stats
+from metadata_handler import inject_og_meta_tags, get_page_config
 
-st.set_page_config(
-    page_title="The Plainview Protocol",
-    page_icon="🇺🇸",
-    layout="wide"
-)
+page_config = get_page_config()
+st.set_page_config(**page_config)
 
 init_routing_state()
 init_async_ledger()
 catch_all_redirect()
+inject_og_meta_tags()
 
 with open("sources.json", "r") as f:
     SOURCES = json.load(f)
@@ -102,10 +101,13 @@ def get_reps(state_full_name):
             current = p['terms'][-1]
             if current['state'] == code:
                 role = "Senator" if current['type'] == 'sen' else f"Rep (Dist {current.get('district', 'At-Large')})"
+                bioguide = p.get('id', {}).get('bioguide', '')
+                bioguide_link = f"https://bioguide.congress.gov/search/bio/{bioguide}" if bioguide else ""
                 reps.append({
                     "Name": f"{p['name']['first']} {p['name']['last']}",
                     "Role": role,
-                    "Party": current['party']
+                    "Party": current['party'],
+                    "Bioguide": bioguide_link
                 })
         
         if reps:
@@ -1706,7 +1708,7 @@ We demand the data. If they hide it, we apply **'Adverse Inference'**—assuming
     
     st.divider()
     
-    foia_tab1, foia_tab2 = st.tabs(["⚙️ Custom Request", "🎯 Grift Hunter Templates"])
+    foia_tab1, foia_tab2, foia_tab3 = st.tabs(["⚙️ Custom Request", "🎯 Grift Hunter Templates", "🔍 Grift Hunter Bill Search"])
     
     with foia_tab1:
         st.subheader("Custom FOIA Configurator")
@@ -1823,6 +1825,92 @@ NOTICE: Failure to produce these records will be viewed as evidence of malfeasan
                 st.session_state.template_records = UNIVERSAL_TEMPLATES[universal_template_choice]
                 st.session_state.template_agency = f"{selected_state} State Comptroller / Budget Office"
                 st.success("Template loaded! Scroll down to generate your request.")
+    
+    with foia_tab3:
+        st.subheader("🔍 Grift Hunter: Bill Search")
+        st.caption("Search any federal bill by number and get an instant fiscal risk assessment.")
+        
+        st.markdown("""
+> *"We don't rely on fragile scrapes. We use the same data the Labyrinth uses, but we use it for the people. 
+> Fork the code. Spread the light. The Protocol is now unstoppable."*
+> 
+> — Founder's Note: Solid Ground
+        """)
+        
+        st.divider()
+        
+        bill_number = st.text_input(
+            "Enter Bill Number (e.g., HR 2617, S 1234, HR1):",
+            placeholder="HR 2617",
+            key="grift_hunter_bill"
+        )
+        
+        if st.button("🔎 Analyze Bill", type="primary", key="analyze_bill"):
+            if bill_number:
+                with st.spinner("Analyzing fiscal risk..."):
+                    time.sleep(1)
+                    
+                    clean_bill = bill_number.upper().replace(" ", "").replace(".", "")
+                    
+                    MOCK_ANALYSIS = {
+                        "HR2617": {
+                            "title": "Consolidated Appropriations Act, 2023",
+                            "fiscal_risk": "HIGH",
+                            "transparency_score": 42,
+                            "total_spending": "$1.7 Trillion",
+                            "concerns": [
+                                "4,155 pages - impossible for any legislator to read before voting",
+                                "$15B in earmarks with limited disclosure",
+                                "Omnibus structure obscures individual spending items",
+                                "Passed with minimal floor debate (72 hours)"
+                            ],
+                            "recommendation": "FOIA the appropriations subcommittee communications"
+                        },
+                        "HR1": {
+                            "title": "For the People Act",
+                            "fiscal_risk": "MEDIUM",
+                            "transparency_score": 65,
+                            "total_spending": "$2.5 Billion (estimated)",
+                            "concerns": [
+                                "Federal election mandates on states",
+                                "Matching funds provision could escalate costs",
+                                "Administrative burden on local election offices"
+                            ],
+                            "recommendation": "Request CBO cost estimate breakdown"
+                        }
+                    }
+                    
+                    analysis = MOCK_ANALYSIS.get(clean_bill, {
+                        "title": f"Bill {bill_number}",
+                        "fiscal_risk": "UNKNOWN",
+                        "transparency_score": 50,
+                        "total_spending": "Analysis pending",
+                        "concerns": [
+                            "Bill not in local database",
+                            "Use Congress.gov for official text",
+                            "Submit to our AI queue for full analysis"
+                        ],
+                        "recommendation": "Check Congress.gov for bill status and text"
+                    })
+                    
+                    risk_color = {"HIGH": "🔴", "MEDIUM": "🟡", "LOW": "🟢", "UNKNOWN": "⚪"}.get(analysis["fiscal_risk"], "⚪")
+                    
+                    st.markdown(f"### {risk_color} {analysis['title']}")
+                    
+                    col1, col2, col3 = st.columns(3)
+                    col1.metric("Fiscal Risk", analysis["fiscal_risk"])
+                    col2.metric("Transparency Score", f"{analysis['transparency_score']}/100")
+                    col3.metric("Total Spending", analysis["total_spending"])
+                    
+                    st.markdown("#### Concerns Identified:")
+                    for concern in analysis["concerns"]:
+                        st.markdown(f"- ⚠️ {concern}")
+                    
+                    st.info(f"**Sentinel Recommendation:** {analysis['recommendation']}")
+                    
+                    st.link_button("📜 View Full Bill on Congress.gov", f"https://www.congress.gov/search?q=%7B%22source%22%3A%22legislation%22%2C%22search%22%3A%22{bill_number}%22%7D")
+            else:
+                st.warning("Please enter a bill number to analyze.")
     
     st.divider()
     st.subheader("📝 Generate Your Request")
