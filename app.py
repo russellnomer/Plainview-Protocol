@@ -1407,15 +1407,29 @@ def page_accountability_tribunal():
             governor_name = f"Governor of {selected_state}"
         
         local_data = [
-            {"Name": governor_name, "Role": "Governor", "Transparency": "Calculated", "Score": governor_score, "Status": "Based on State Data"},
-            {"Name": f"{selected_state} County Executive", "Role": "County Exec", "Transparency": "Low", "Score": -50, "Status": "HIDDEN (Adverse Inference)"},
-            {"Name": f"{selected_state} City Mayor", "Role": "Mayor", "Transparency": "Medium", "Score": 45, "Status": "Partial Data"}
+            {"Name": governor_name, "Role": "Governor", "Transparency": "Calculated", "Score": governor_score, "Status": "Based on State Data", "fiscal_impact": "HIGH", "power_level": "HIGH"},
+            {"Name": f"{selected_state} County Executive", "Role": "County Exec", "Transparency": "Low", "Score": -50, "Status": "HIDDEN (Adverse Inference)", "fiscal_impact": "MINIMAL", "power_level": "HIGH"},
+            {"Name": f"{selected_state} City Mayor", "Role": "Mayor", "Transparency": "Medium", "Score": 45, "Status": "Partial Data", "fiscal_impact": "MEDIUM", "power_level": "MEDIUM"},
+            {"Name": f"{selected_state} Zoning Board Chair", "Role": "Board Chair", "Transparency": "Low", "Score": 25, "Status": "Limited Disclosure", "fiscal_impact": "MINIMAL", "power_level": "HIGH"},
+            {"Name": f"{selected_state} Procurement Director", "Role": "Procurement", "Transparency": "Low", "Score": 15, "Status": "No-Bid Contracts", "fiscal_impact": "MINIMAL", "power_level": "HIGH"}
         ]
 
         df_shadow = pd.DataFrame(local_data)
 
         for index, row in df_shadow.iterrows():
             with st.container():
+                fiscal = row.get('fiscal_impact', 'UNKNOWN')
+                power = row.get('power_level', 'UNKNOWN')
+                is_grift_alert = (fiscal in ["MINIMAL", "LOW"]) and (power == "HIGH")
+                
+                if is_grift_alert:
+                    st.error(f"🚨 **GRIFT ALERT:** {row['Name']}")
+                    st.markdown(f"""
+> **Pattern:** Minimal fiscal footprint + High authority = Power without accountability.
+> 
+> Officials with small budgets but outsized influence over contracts, permits, or regulations are prime grift vectors.
+                    """)
+                
                 c1, c2, c3 = st.columns([2, 1, 1])
                 c1.markdown(f"**{row['Name']}** ({row['Role']})")
                 
@@ -1428,10 +1442,18 @@ def page_accountability_tribunal():
                         st.info("Go to 'FOIA Cannon' page to generate your legal demand.")
                 elif score < 50:
                     c2.warning(f"Score: {score} (D)")
-                    c3.markdown("🟡 **AT RISK**")
+                    if is_grift_alert:
+                        c3.markdown("🚨 **GRIFT ALERT**")
+                    else:
+                        c3.markdown("🟡 **AT RISK**")
                 else:
                     c2.success(f"Score: {score} (A)")
                     c3.markdown("🟢 **TRANSPARENT**")
+                
+                if is_grift_alert:
+                    grift_col1, grift_col2 = st.columns(2)
+                    grift_col1.metric("Fiscal Impact", f"🟢 {fiscal}", help="Budget/spending authority")
+                    grift_col2.metric("Power Level", f"🔴 {power}", help="Regulatory/contract authority")
                 
                 if selected_state == "New York" and row['Role'] == "Governor":
                     with st.expander("📋 SCRUTINY LOG: Kathy Hochul"):
@@ -1877,6 +1899,7 @@ NOTICE: Failure to produce these records will be viewed as evidence of malfeasan
                         "HR2617": {
                             "title": "Consolidated Appropriations Act, 2023",
                             "fiscal_risk": "HIGH",
+                            "power_level": "HIGH",
                             "transparency_score": 42,
                             "total_spending": "$1.7 Trillion",
                             "concerns": [
@@ -1890,6 +1913,7 @@ NOTICE: Failure to produce these records will be viewed as evidence of malfeasan
                         "HR1": {
                             "title": "For the People Act",
                             "fiscal_risk": "MEDIUM",
+                            "power_level": "HIGH",
                             "transparency_score": 65,
                             "total_spending": "$2.5 Billion (estimated)",
                             "concerns": [
@@ -1898,12 +1922,39 @@ NOTICE: Failure to produce these records will be viewed as evidence of malfeasan
                                 "Administrative burden on local election offices"
                             ],
                             "recommendation": "Request CBO cost estimate breakdown"
+                        },
+                        "S3520": {
+                            "title": "Federal Advisory Committee Modernization Act",
+                            "fiscal_risk": "MINIMAL",
+                            "power_level": "HIGH",
+                            "transparency_score": 35,
+                            "total_spending": "$2.1 Million",
+                            "concerns": [
+                                "Expands executive branch advisory appointments",
+                                "Reduces public comment periods from 30 to 10 days",
+                                "Grants waiver authority to agency heads without oversight"
+                            ],
+                            "recommendation": "GRIFT PATTERN: Low cost hides power grab. FOIA all agency head communications."
+                        },
+                        "HR4521": {
+                            "title": "Regulatory Streamlining Act",
+                            "fiscal_risk": "MINIMAL",
+                            "power_level": "HIGH",
+                            "transparency_score": 28,
+                            "total_spending": "$800,000",
+                            "concerns": [
+                                "Grants blanket exemptions from environmental review",
+                                "Removes congressional notification requirements",
+                                "Creates unilateral executive authority over permitting"
+                            ],
+                            "recommendation": "GRIFT PATTERN: Minimal budget masks regulatory capture. Request all lobbying contacts."
                         }
                     }
                     
                     analysis = MOCK_ANALYSIS.get(clean_bill, {
                         "title": f"Bill {bill_number}",
                         "fiscal_risk": "UNKNOWN",
+                        "power_level": "UNKNOWN",
                         "transparency_score": 50,
                         "total_spending": "Analysis pending",
                         "concerns": [
@@ -1914,14 +1965,33 @@ NOTICE: Failure to produce these records will be viewed as evidence of malfeasan
                         "recommendation": "Check Congress.gov for bill status and text"
                     })
                     
-                    risk_color = {"HIGH": "🔴", "MEDIUM": "🟡", "LOW": "🟢", "UNKNOWN": "⚪"}.get(analysis["fiscal_risk"], "⚪")
+                    fiscal = analysis.get("fiscal_risk", "UNKNOWN")
+                    power = analysis.get("power_level", "UNKNOWN")
+                    is_grift_alert = (fiscal in ["MINIMAL", "LOW"]) and (power == "HIGH")
+                    
+                    if is_grift_alert:
+                        st.error("🚨 **GRIFT ALERT: POWER GRAB DETECTED** 🚨")
+                        st.markdown("""
+**Pattern Identified:** This bill has **minimal fiscal impact** but grants **significant new powers** to officials or agencies.
+
+> *"When the price tag is small but the authority is vast, follow the power — that's where the grift hides."*
+
+This is a classic grift pattern: low-cost bills that fly under the radar while concentrating power in fewer hands.
+                        """)
+                    
+                    risk_color = {"HIGH": "🔴", "MEDIUM": "🟡", "LOW": "🟢", "MINIMAL": "🟢", "UNKNOWN": "⚪"}.get(fiscal, "⚪")
+                    power_color = {"HIGH": "🔴", "MEDIUM": "🟡", "LOW": "🟢", "UNKNOWN": "⚪"}.get(power, "⚪")
                     
                     st.markdown(f"### {risk_color} {analysis['title']}")
                     
-                    col1, col2, col3 = st.columns(3)
-                    col1.metric("Fiscal Risk", analysis["fiscal_risk"])
-                    col2.metric("Transparency Score", f"{analysis['transparency_score']}/100")
-                    col3.metric("Total Spending", analysis["total_spending"])
+                    col1, col2, col3, col4 = st.columns(4)
+                    col1.metric("Fiscal Risk", fiscal)
+                    col2.metric("Power Level", f"{power_color} {power}")
+                    col3.metric("Transparency", f"{analysis['transparency_score']}/100")
+                    col4.metric("Total Spending", analysis["total_spending"])
+                    
+                    if is_grift_alert:
+                        st.warning("⚠️ **SENTINEL ACTION:** Bills with low fiscal cost but high power concentration require extra scrutiny. Request all lobbying disclosures and sponsor communications.")
                     
                     st.markdown("#### Concerns Identified:")
                     for concern in analysis["concerns"]:
