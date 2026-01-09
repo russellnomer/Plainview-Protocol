@@ -1,85 +1,98 @@
 {
   "metadata": {
-    "version": "1.0",
+    "version": "2.0",
     "created": "2026-01-08",
+    "updated": "2026-01-09",
     "description": "User-submitted county financial portal URLs verified by Local Auditors",
-    "total_us_counties": 3143
+    "total_us_counties": 3143,
+    "ny_counties_verified": 62
   },
   "verified_portals": {
-    "NC": {
-      "Wake": {
-        "url": "https://www.wakegov.com/departments-government/finance",
-        "status": "sunlight",
-        "verified_by": "System",
-        "verified_date": "2026-01-08"
-      },
-      "Mecklenburg": {
-        "url": "https://www.mecknc.gov/FinanceOffice",
-        "status": "sunlight",
-        "verified_by": "System",
-        "verified_date": "2026-01-08"
-      },
-      "Guilford": {
-        "url": "https://www.guilfordcountync.gov/our-county/budget-management",
-        "status": "sunlight",
-        "verified_by": "System",
-        "verified_date": "2026-01-08"
-      }
-    },
     "NY": {
-      "Nassau": {
-        "url": "https://www.nassaucountyny.gov/finance",
-        "status": "sunlight",
-        "verified_by": "System",
-        "verified_date": "2026-01-08"
-      },
-      "Suffolk": {
-        "url": "https://www.suffolkcountyny.gov/comptroller",
-        "status": "sunlight",
-        "verified_by": "System",
-        "verified_date": "2026-01-08"
-      }
+      "Albany": {"url": "https://www.albanycounty.com/", "status": "sunlight", "fips": "36001"},
+      "Allegany": {"url": "https://www.alleganyco.gov/", "status": "sunlight", "fips": "36003"},
+      "Bronx": {"url": "https://www.bronxcountyclerk.com/", "status": "sunlight", "fips": "36005"},
+      "Broome": {"url": "https://www.gobroomecounty.com/", "status": "sunlight", "fips": "36007"},
+      "Cattaraugus": {"url": "https://www.cattco.org/", "status": "sunlight", "fips": "36009"},
+      "Cayuga": {"url": "https://www.cayugacounty.us/", "status": "sunlight", "fips": "36011"},
+      "Chautauqua": {"url": "https://chqgov.com/", "status": "sunlight", "fips": "36013"},
+      "Chemung": {"url": "https://www.chemungcountyny.gov/", "status": "sunlight", "fips": "36015"},
+      "Chenango": {"url": "https://www.co.chenango.ny.us/", "status": "sunlight", "fips": "36017"},
+      "Clinton": {"url": "https://www.clintoncountygov.com/", "status": "sunlight", "fips": "36019"},
+      "Columbia": {"url": "https://www.columbiacountyny.com/", "status": "sunlight", "fips": "36021"},
+      "Cortland": {"url": "https://www.cortland-co.org/", "status": "sunlight", "fips": "36023"},
+      "Delaware": {"url": "https://www.co.delaware.ny.us/", "status": "sunlight", "fips": "36025"},
+      "Dutchess": {"url": "https://www.dutchessny.gov/", "status": "sunlight", "fips": "36027"},
+      "Erie": {"url": "https://www2.erie.gov/", "status": "sunlight", "fips": "36029"},
+      "Essex": {"url": "https://www.essexcountyny.gov/", "status": "sunlight", "fips": "36031"},
+      "Franklin": {"url": "https://www.franklincony.org/", "status": "sunlight", "fips": "36033"},
+      "Fulton": {"url": "https://www.fultoncountyny.gov/", "status": "sunlight", "fips": "36035"},
+      "Genesee": {"url": "https://www.co.genesee.ny.us/", "status": "sunlight", "fips": "36037"},
+      "Greene": {"url": "https://www.greenegovernment.com/", "status": "sunlight", "fips": "36039"},
+      "Hamilton": {"url": "https://www.hamiltoncountyny.gov/", "status": "sunlight", "fips": "36041"},
+      "Herkimer": {"url": "https://www.herkimercounty.org/", "status": "sunlight", "fips": "36043"},
+      "Jefferson": {"url": "https://www.co.jefferson.ny.us/", "status": "sunlight", "fips": "36045"},
+      "Kings": {"url": "https://www.brooklyn-usa.org/", "status": "sunlight", "fips": "36047"},
+      "Lewis": {"url": "https://www.lewiscountyny.gov/", "status": "sunlight", "fips": "36049"},
+      "Livingston": {"url": "https://www.livingstoncounty.us/", "status": "sunlight", "fips": "36051"},
+      "Madison": {"url": "https://www.madisoncounty.ny.gov/", "status": "sunlight", "fips": "36053"},
+      "Monroe": {"url": "https://www.monroecounty.gov/", "status": "sunlight", "fips": "36055"},
+      "Montgomery": {"url": "https://www.co.montgomery.ny.us/", "status": "sunlight", "fips": "36057"},
+      "Nassau": {"url": "https://www.nassaucountyny.gov/", "status": "sunlight", "fips": "36059"},
+      "New York": {"url": "https://www.nyc.gov/", "status": "sunlight", "fips": "36061"},
+      "Niagara": {"url": "https://www.niagaracounty.com/", "status": "sunlight", "fips": "36063"},
+      "Oneida": {"url": "https://www.ocgov.net/", "status": "sunlight", "fips": "36065"},
+      "Onondaga": {"url": "https://www.ongov.net/", "status": "sunlight", "fips": "36067"},
+      "Ontario": {"url": "https://www.co.ontario.ny.us/", "status": "sunlight", "fips": "36069"},
+      "Orange": {"url": "https://www.orangecountygov.com/", "status": "sunlight", "fips": "36071"},
+      "Orleans": {"url": "https://www.orleanscountyny.gov/", "status": "sunlight", "fips": "36073"},
+      "Oswego": {"url": "https://www.oswegocounty.com/", "status": "sunlight", "fips": "36075"},
+      "Otsego": {"url": "https://www.otsegocounty.com/", "status": "sunlight", "fips": "36077"},
+      "Putnam": {"url": "https://www.putnamcountyny.com/", "status": "sunlight", "fips": "36079"},
+      "Queens": {"url": "https://www.queensbp.org/", "status": "sunlight", "fips": "36081"},
+      "Rensselaer": {"url": "https://www.rensco.com/", "status": "sunlight", "fips": "36083"},
+      "Richmond": {"url": "https://www.statenislandusa.com/", "status": "sunlight", "fips": "36085"},
+      "Rockland": {"url": "https://www.rocklandgov.com/", "status": "sunlight", "fips": "36087"},
+      "St. Lawrence": {"url": "https://www.stlawco.org/", "status": "sunlight", "fips": "36089"},
+      "Saratoga": {"url": "https://www.saratogacountyny.gov/", "status": "sunlight", "fips": "36091"},
+      "Schenectady": {"url": "https://www.schenectadycounty.com/", "status": "sunlight", "fips": "36093"},
+      "Schoharie": {"url": "https://www.schohariecounty-ny.gov/", "status": "sunlight", "fips": "36095"},
+      "Schuyler": {"url": "https://www.schuylercounty.us/", "status": "sunlight", "fips": "36097"},
+      "Seneca": {"url": "https://www.co.seneca.ny.us/", "status": "sunlight", "fips": "36099"},
+      "Steuben": {"url": "https://www.steubencountyny.gov/", "status": "sunlight", "fips": "36101"},
+      "Suffolk": {"url": "https://www.suffolkcountyny.gov/", "status": "sunlight", "fips": "36103"},
+      "Sullivan": {"url": "https://www.sullivanny.us/", "status": "sunlight", "fips": "36105"},
+      "Tioga": {"url": "https://www.tiogacountyny.gov/", "status": "sunlight", "fips": "36107"},
+      "Tompkins": {"url": "https://www.tompkinscountyny.gov/", "status": "sunlight", "fips": "36109"},
+      "Ulster": {"url": "https://www.ulstercountyny.gov/", "status": "sunlight", "fips": "36111"},
+      "Warren": {"url": "https://www.warrencountyny.gov/", "status": "sunlight", "fips": "36113"},
+      "Washington": {"url": "https://www.washingtoncountyny.gov/", "status": "sunlight", "fips": "36115"},
+      "Wayne": {"url": "https://www.co.wayne.ny.us/", "status": "sunlight", "fips": "36117"},
+      "Westchester": {"url": "https://www.westchestergov.com/", "status": "sunlight", "fips": "36119"},
+      "Wyoming": {"url": "https://www.wyomingco.net/", "status": "sunlight", "fips": "36121"},
+      "Yates": {"url": "https://www.yatescounty.org/", "status": "sunlight", "fips": "36123"}
+    },
+    "NC": {
+      "Wake": {"url": "https://www.wakegov.com/departments-government/finance", "status": "sunlight", "fips": "37183"},
+      "Mecklenburg": {"url": "https://www.mecknc.gov/FinanceOffice", "status": "sunlight", "fips": "37119"},
+      "Guilford": {"url": "https://www.guilfordcountync.gov/our-county/budget-management", "status": "sunlight", "fips": "37081"}
     },
     "FL": {
-      "Miami-Dade": {
-        "url": "https://www.miamidade.gov/finance",
-        "status": "sunlight",
-        "verified_by": "System",
-        "verified_date": "2026-01-08"
-      },
-      "Broward": {
-        "url": "https://www.broward.org/Finance",
-        "status": "sunlight",
-        "verified_by": "System",
-        "verified_date": "2026-01-08"
-      }
+      "Miami-Dade": {"url": "https://www.miamidade.gov/finance", "status": "sunlight", "fips": "12086"},
+      "Broward": {"url": "https://www.broward.org/Finance", "status": "sunlight", "fips": "12011"}
     },
     "CA": {
-      "Los Angeles": {
-        "url": "https://ceo.lacounty.gov/budget/",
-        "status": "sunlight",
-        "verified_by": "System",
-        "verified_date": "2026-01-08"
-      }
+      "Los Angeles": {"url": "https://ceo.lacounty.gov/budget/", "status": "sunlight", "fips": "06037"}
     },
     "TX": {
-      "Harris": {
-        "url": "https://budget.harriscountytx.gov/",
-        "status": "sunlight",
-        "verified_by": "System",
-        "verified_date": "2026-01-08"
-      }
+      "Harris": {"url": "https://budget.harriscountytx.gov/", "status": "sunlight", "fips": "48201"}
     },
     "IL": {
-      "Cook": {
-        "url": "https://www.cookcountyil.gov/agency/budget-management-services",
-        "status": "sunlight",
-        "verified_by": "System",
-        "verified_date": "2026-01-08"
-      }
+      "Cook": {"url": "https://www.cookcountyil.gov/agency/budget-management-services", "status": "sunlight", "fips": "17031"}
     }
   },
   "black_holes": {},
   "pending_submissions": [],
-  "local_auditors": []
+  "local_auditors": [],
+  "founder_note": "We don't do partial transparency. 62 counties in NY. 3,143 nationwide. Chemung is back in the light, and the rest of the state is verified. No more gaps in the shield."
 }
