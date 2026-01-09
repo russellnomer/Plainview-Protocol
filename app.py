@@ -246,7 +246,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v4.1 | Resilient Referendum")
+st.sidebar.caption("v4.2 | The Sovereignty Pivot")
 
 if "selected_state" not in st.session_state:
     st.session_state.selected_state = "New York"
@@ -269,6 +269,11 @@ if is_system_online:
     st.sidebar.success("🟢 System Status: Online")
 else:
     st.sidebar.warning("⚠️ System Status: Degraded")
+
+st.sidebar.divider()
+st.sidebar.markdown("### The Washington Doctrine")
+st.sidebar.caption("*George Washington's Farewell Address warned against 'entangling alliances'. In 2026, our greatest entanglements are our foreign-dependent supply chains.*")
+st.sidebar.info("Check the Scrutiny Hub to see if your medicine is made by a rival.")
 
 st.sidebar.divider()
 st.sidebar.markdown("### Fuel the Mission")
@@ -438,10 +443,29 @@ def page_trade_industry():
                 ("Wholesale Central", "US Wholesale Directory"),
                 ("TopTenWholesale (USA Section)", "Verified US Suppliers"),
                 ("Made in USA Certified", "Certification Program")
+            ],
+            "Pharmaceuticals (APIs/Generics)": [
+                ("Phlow Corp (phlow-usa.com)", "US-Based API Manufacturing"),
+                ("API Innovation Center (apiic.org)", "Domestic Active Ingredient Production"),
+                ("Accessible Meds (accessiblemeds.org)", "Generic Drug Industry Association")
+            ],
+            "Automobiles & Parts": [
+                ("MEMA (mema.org)", "Motor & Equipment Manufacturers Association"),
+                ("OESA (oesa.org)", "Original Equipment Suppliers Association"),
+                ("Thomasnet Auto Filter", "Automotive Parts Sourcing"),
+                ("Reshoring Institute", "Auto Supply Chain Reshoring")
             ]
         }
         
+        sourcing_alerts = {
+            "Pharmaceuticals (APIs/Generics)": "⚠️ **CRITICAL:** 88% of Active Pharmaceutical Ingredients (APIs) are currently foreign-sourced. COVID-19 exposed a survival gap when supply chains failed.",
+            "Automobiles & Parts": "⚠️ **CRITICAL:** Dependency on Asian semiconductors halted 93% of US auto production in 2020. Local sourcing is national security."
+        }
+        
         selected_industry = st.selectbox("Select Your Industry:", list(sourcing_resources.keys()))
+        
+        if selected_industry in sourcing_alerts:
+            st.error(sourcing_alerts[selected_industry])
         
         st.markdown(f"### Resources for {selected_industry}")
         for name, desc in sourcing_resources[selected_industry]:
@@ -489,6 +513,24 @@ def page_trade_industry():
         biz_template = f"I'm a {selected_state} business owner who wants to hire American. Use Tariff revenue to give tax credits to small businesses who switch to US suppliers. #MadeInAmerica #PlainviewProtocol"
         st.code(biz_template, language=None)
         st.link_button("Share on X", f"https://twitter.com/intent/tweet?text={biz_template.replace(' ', '%20').replace('#', '%23')}")
+        
+        with st.expander("ℹ️ COVID-19 Lessons: Dependency = Vulnerability"):
+            st.markdown("""
+**Citations:** USITC Investigation No. 332-596 (ID-091) & GAO-21-271
+
+**The Hard Truth:**
+- **80%** of Active Pharmaceutical Ingredients (APIs) come from China and India
+- A single port closure, pandemic, or geopolitical conflict = **national emergency**
+- "Just-in-Time" efficiency optimized for cost, not survival
+- COVID-19 exposed that our medicine cabinet is controlled by strategic rivals
+
+**The Pivot:**
+- **Resilience over efficiency** - 12-month buffers for critical materials
+- **Reshoring incentives** - Tax credits for domestic API manufacturing
+- **Transparency mandates** - Require disclosure of API country of origin
+
+*"Dependency is not trade. Dependency is surrender."*
+            """)
 
 def page_doge_scrutiny():
     st.header("🔦 DOGE-Level Scrutiny: Fight the Grift")
@@ -790,6 +832,8 @@ Silence is not neutral. Silence is an admission.
     
     if 'audit_votes' not in st.session_state:
         st.session_state.audit_votes = {}
+    if 'policy_votes' not in st.session_state:
+        st.session_state.policy_votes = {}
     
     officials_to_audit = [
         {"name": "Governor", "state": selected_state},
@@ -811,13 +855,45 @@ Silence is not neutral. Silence is an admission.
         ref_col3.metric("Votes", st.session_state.audit_votes[key])
     
     st.divider()
+    st.markdown("### 🏭 The Sovereignty Pivot: Policy Referendum")
+    st.caption("**National Mandate Questions** - Build consensus for supply chain independence.")
+    
+    policy_questions = [
+        {"id": "api_mandate", "question": "Should the US mandate that 50% of all essential antibiotics (APIs) be produced domestically by 2028?"},
+        {"id": "semiconductor_buffer", "question": "Should US automakers be required to maintain a 12-month domestic 'Semiconductor Buffer'?"}
+    ]
+    
+    for pq in policy_questions:
+        pkey = f"{pq['id']}_{selected_state}"
+        if pkey not in st.session_state.policy_votes:
+            st.session_state.policy_votes[pkey] = 0
+        
+        st.markdown(f"**{pq['question']}**")
+        pq_col1, pq_col2 = st.columns([1, 3])
+        
+        if pq_col1.button("✅ YES", key=f"yes_{pkey}"):
+            st.session_state.policy_votes[pkey] += 1
+        
+        pq_col2.metric("Support", f"{st.session_state.policy_votes[pkey]} votes from {selected_state}")
+        st.caption(f"*Your state carries {STATE_CORRUPTION_DATA.get(selected_state, {}).get('ec_votes', 10)} Electoral College votes.*")
+    
+    st.divider()
     st.markdown("### 📊 Electoral College-Weighted Consensus")
     
     total_ec_votes = 538
     
     weighted_votes = 0
     states_voting = set()
+    
     for key, count in st.session_state.audit_votes.items():
+        if count > 0:
+            state_name = key.split("_")[-1]
+            if state_name not in states_voting:
+                states_voting.add(state_name)
+                state_ec = STATE_CORRUPTION_DATA.get(state_name, {}).get("ec_votes", 0)
+                weighted_votes += state_ec
+    
+    for key, count in st.session_state.get("policy_votes", {}).items():
         if count > 0:
             state_name = key.split("_")[-1]
             if state_name not in states_voting:
@@ -828,7 +904,7 @@ Silence is not neutral. Silence is an admission.
     weighted_consensus = (weighted_votes / total_ec_votes) * 100
     
     st.progress(min(1.0, weighted_consensus / 100))
-    st.caption(f"**{weighted_consensus:.1f}%** toward National Audit Consensus ({weighted_votes}/{total_ec_votes} EC votes, 270 = majority)")
+    st.caption(f"**{weighted_consensus:.1f}%** toward National Consensus ({weighted_votes}/{total_ec_votes} EC votes, 270 = majority)")
     
     if weighted_votes >= 270:
         st.success("🎉 **NATIONAL MANDATE FOR AUDIT!** 270+ Electoral College points reached. The People have spoken.")

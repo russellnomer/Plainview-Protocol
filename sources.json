@@ -17,5 +17,13 @@
   "ncsl_recall": "https://www.ncsl.org/research/elections-and-campaigns/recall-of-state-officials.aspx",
   "naag_ag_finder": "https://www.naag.org/find-my-ag/",
   "usaspending": "https://www.usaspending.gov",
-  "opensecrets": "https://www.opensecrets.org"
+  "opensecrets": "https://www.opensecrets.org",
+  "phlow_corp": "https://phlow-usa.com",
+  "api_innovation_center": "https://apiic.org",
+  "accessible_meds": "https://accessiblemeds.org",
+  "mema": "https://mema.org",
+  "oesa": "https://oesa.org",
+  "reshoring_institute": "https://reshoringinstitute.org",
+  "usitc_report": "https://www.usitc.gov/research_and_analysis/id091.htm",
+  "gao_supply_chain": "https://www.gao.gov/products/gao-21-271"
 }
