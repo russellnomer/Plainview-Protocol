@@ -246,7 +246,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v4.4 | The Legislative Guardian")
+st.sidebar.caption("v4.5 | The Local Watchdog")
 
 if "selected_state" not in st.session_state:
     st.session_state.selected_state = "New York"
@@ -1306,13 +1306,127 @@ Politicians hide power behind section numbers. We pull the alarm when jargon thr
 **Sources:** NY Senate S7011, NY Assembly A7388, 5 U.S.C. § 552 (Freedom of Information Act)
         """)
     
+    with st.expander("ℹ️ Pulling the Local Levers"):
+        st.markdown("""
+**Why Local Government Matters:**
+Residents who watch just one meeting a year are 5x more likely to trust their government. We make that meeting easy to find and decode.
+
+**Your Local Powers (NY Municipal Home Rule Law):**
+- **Right to Attend:** All board meetings must be open to the public (Open Meetings Law)
+- **Right to Speak:** Most boards allow public comment periods
+- **Right to Records:** FOIL applies to towns, villages, and counties
+- **Right to Petition:** Collect signatures to force referendums on local issues
+
+**Sources:** NY Municipal Home Rule Law, CivicPlus 2024 Local Government Survey, Open Meetings Law (Public Officers Law Art. 7)
+        """)
+    
     st.divider()
     
-    filter_col1, filter_col2 = st.columns(2)
+    filter_col1, filter_col2, filter_col3 = st.columns(3)
     with filter_col1:
-        jurisdiction = st.selectbox("Jurisdiction", ["Federal", "State (New York)", "State (California)", "State (Texas)"], index=1)
+        jurisdiction = st.selectbox("Jurisdiction", [
+            "Federal", 
+            "State (New York)", 
+            "State (California)", 
+            "State (Texas)",
+            "County (Nassau, NY)",
+            "County (Suffolk, NY)",
+            "Municipality (Oyster Bay, NY)",
+            "Municipality (Hempstead, NY)"
+        ], index=1)
     with filter_col2:
-        issue_filter = st.selectbox("Issue Filter", ["All", "Overreach", "Borders", "Education", "Animal Rights", "Fiscal"])
+        issue_filter = st.selectbox("Issue Filter", ["All", "Overreach", "Borders", "Education", "Animal Rights", "Fiscal", "Local Spending"])
+    with filter_col3:
+        scan_mode = st.selectbox("Scan Mode", ["Bills & Resolutions", "Meeting Agendas", "Meeting Minutes"])
+    
+    RED_FLAG_KEYWORDS = ["no-bid", "emergency contract", "fee increase", "special assessment", 
+                         "executive session", "without public hearing", "sole source", 
+                         "administrative authority", "budget transfer", "waiver of competitive bidding"]
+    
+    LOCAL_TRANSPARENCY_DATA = {
+        "Nassau County": {"livestream": True, "searchable_archive": True, "minutes_days": 7, "portal": True, "score": 85},
+        "Suffolk County": {"livestream": True, "searchable_archive": True, "minutes_days": 14, "portal": True, "score": 75},
+        "Oyster Bay": {"livestream": False, "searchable_archive": False, "minutes_days": 30, "portal": False, "score": 25},
+        "Hempstead": {"livestream": True, "searchable_archive": True, "minutes_days": 10, "portal": True, "score": 80},
+        "Brookhaven": {"livestream": False, "searchable_archive": True, "minutes_days": 21, "portal": True, "score": 55},
+        "Islip": {"livestream": False, "searchable_archive": False, "minutes_days": 45, "portal": False, "score": 15}
+    }
+    
+    if jurisdiction.startswith("County") or jurisdiction.startswith("Municipality"):
+        st.divider()
+        st.subheader("📊 Local Transparency Index")
+        
+        local_name = jurisdiction.split("(")[1].replace(", NY)", "").replace(")", "")
+        local_data = LOCAL_TRANSPARENCY_DATA.get(local_name, {"livestream": False, "searchable_archive": False, "minutes_days": 60, "portal": False, "score": 0})
+        
+        trans_col1, trans_col2, trans_col3, trans_col4 = st.columns(4)
+        
+        base_score = 100
+        livestream_points = 25 if local_data["livestream"] else 0
+        archive_points = 25 if local_data["searchable_archive"] else 0
+        minutes_points = 25 if local_data["minutes_days"] <= 14 else (15 if local_data["minutes_days"] <= 30 else 0)
+        portal_penalty = 0 if local_data["portal"] else -50
+        
+        transparency_score = min(100, max(0, livestream_points + archive_points + minutes_points + 25 + portal_penalty))
+        
+        trans_col1.metric("📺 Livestream", "✅ Yes" if local_data["livestream"] else "❌ No", delta=f"+25" if local_data["livestream"] else "0")
+        trans_col2.metric("📁 Searchable Archive", "✅ Yes" if local_data["searchable_archive"] else "❌ No", delta=f"+25" if local_data["searchable_archive"] else "0")
+        trans_col3.metric("📋 Minutes Posted", f"{local_data['minutes_days']} days", delta="Good" if local_data["minutes_days"] <= 14 else "Slow", delta_color="normal" if local_data["minutes_days"] <= 14 else "inverse")
+        trans_col4.metric("🌐 Online Portal", "✅ Yes" if local_data["portal"] else "❌ No", delta="-50 SHADOW" if not local_data["portal"] else "+25")
+        
+        st.progress(transparency_score / 100)
+        
+        if transparency_score >= 70:
+            st.success(f"**Transparency Score: {transparency_score}/100** - This government is reasonably transparent.")
+        elif transparency_score >= 40:
+            st.warning(f"**Transparency Score: {transparency_score}/100** - Room for improvement. Demand better access.")
+        else:
+            st.error(f"**Transparency Score: {transparency_score}/100** - 🔴 SHADOW PENALTY APPLIED. This government operates in darkness.")
+            st.markdown("**Action Required:** File FOIL requests and demand livestreaming at the next board meeting.")
+        
+        st.divider()
+        st.subheader("🔍 Red Flag Keyword Scanner")
+        st.caption("We scan meeting agendas and minutes for warning signs of hidden spending or overreach.")
+        
+        SAMPLE_AGENDA_ITEMS = [
+            {"item": "Resolution to approve emergency contract for road repairs - $450,000", "red_flags": ["emergency contract"], "grift": True},
+            {"item": "Public hearing on proposed zoning amendment for Main Street", "red_flags": [], "grift": False},
+            {"item": "Authorization for sole source procurement of IT services", "red_flags": ["sole source"], "grift": True},
+            {"item": "Adoption of 2026 budget with 3.5% tax levy increase", "red_flags": [], "grift": False},
+            {"item": "Resolution to waive competitive bidding for consulting contract - $125,000", "red_flags": ["waiver of competitive bidding"], "grift": True},
+            {"item": "Fee increase for building permits effective July 1", "red_flags": ["fee increase"], "grift": False}
+        ]
+        
+        for item in SAMPLE_AGENDA_ITEMS:
+            with st.container():
+                item_col1, item_col2 = st.columns([3, 1])
+                
+                item_col1.markdown(f"**{item['item']}**")
+                
+                if item['red_flags']:
+                    item_col2.error(f"🚩 {', '.join(item['red_flags']).upper()}")
+                    
+                    if item['grift']:
+                        st.error("🚨 **GRIFT ALERT: HIDDEN LOCAL SPENDING** - This item may bypass public oversight. Demand a line-item breakdown and public hearing.")
+                else:
+                    item_col2.success("✅ Clear")
+                
+                st.divider()
+        
+        st.markdown("### 📜 The Local Good/Bad/Ugly")
+        st.caption("Sample town ordinance decoded into plain English:")
+        
+        with st.expander("Example: 'Emergency Procurement Authorization'"):
+            st.markdown("""
+| Assessment | Plain English |
+|------------|---------------|
+| ✅ **THE GOOD** | Allows fast response to genuine emergencies (storm damage, infrastructure failures) |
+| ⚠️ **THE BAD** | "Emergency" is often defined loosely, allowing routine work to skip bidding |
+| 💀 **THE UGLY** | Politically connected contractors get no-bid deals worth millions; taxpayers pay premium prices |
+| 🛡️ **YOUR LEVER** | Demand quarterly reports on all emergency contracts; compare prices to market rates |
+            """)
+        
+        st.divider()
     
     st.divider()
     
