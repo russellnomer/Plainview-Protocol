@@ -246,7 +246,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v4.3 | The Hochul Audit")
+st.sidebar.caption("v4.4 | The Legislative Guardian")
 
 if "selected_state" not in st.session_state:
     st.session_state.selected_state = "New York"
@@ -1287,6 +1287,276 @@ Anonymous tips can trigger full investigations.
 * **IRS Whistleblower:** 26 U.S.C. § 7623 (rewards for tax fraud tips)
         """)
 
+def page_docket_decoder():
+    selected_state = st.session_state.get("selected_state", "New York")
+    st.header("🛡️ Bill Docket Decoder: Cutting Through the Code")
+    st.markdown("**Politicians hide power behind section numbers.** We decode the jargon and pull the alarm when legislation threatens your due process.")
+    
+    with st.expander("ℹ️ Decoding the Wool"):
+        st.markdown("""
+**How We Read Bills:**
+Politicians hide power behind section numbers. We pull the alarm when jargon threatens your due process.
+
+**Our Method:**
+1. **Plain Language Translation** - We convert legalese into everyday terms
+2. **Risk/Reward Assessment** - Every bill gets a score: WANT / NEED / NICE-TO-HAVE and VALUE / WASTE
+3. **Grift Detection** - We flag bills that grant wide power with minimal fiscal impact
+4. **Due Process Check** - We verify bills protect citizen rights
+
+**Sources:** NY Senate S7011, NY Assembly A7388, 5 U.S.C. § 552 (Freedom of Information Act)
+        """)
+    
+    st.divider()
+    
+    filter_col1, filter_col2 = st.columns(2)
+    with filter_col1:
+        jurisdiction = st.selectbox("Jurisdiction", ["Federal", "State (New York)", "State (California)", "State (Texas)"], index=1)
+    with filter_col2:
+        issue_filter = st.selectbox("Issue Filter", ["All", "Overreach", "Borders", "Education", "Animal Rights", "Fiscal"])
+    
+    st.divider()
+    
+    BILL_DATABASE = [
+        {
+            "id": "S7011/A7388",
+            "name": "Peanut's Law",
+            "jurisdiction": "State (New York)",
+            "status": "Referred to Environmental Conservation Committee (2026 Session)",
+            "summary": "Amends ECL 11-0512 to mandate a 72-hour waiting period and emergency appeal rights before state-ordered euthanasia of seized animals.",
+            "sponsors": ["Sen. Jessica Scarcella-Spanton", "Asm. Michael Blumencranz"],
+            "issue": "Animal Rights",
+            "reward_pct": 90,
+            "risk_pct": 10,
+            "classification": "NEED",
+            "value_waste": "VALUE",
+            "good": "Protects due process for pet owners; prevents bureaucratic overreach; honors Peanut & Fred's memory",
+            "bad": "72-hour window may delay action in genuine danger cases",
+            "ugly": "State agencies fought similar reforms before",
+            "fiscal_impact": "$0 - Procedural change only",
+            "admin_power": "Low",
+            "grift_alert": False
+        },
+        {
+            "id": "HR-1234",
+            "name": "Border Security Enhancement Act",
+            "jurisdiction": "Federal",
+            "status": "House Committee on Homeland Security",
+            "summary": "Increases funding for border infrastructure and mandates E-Verify for all federal contractors.",
+            "sponsors": ["Rep. Example (R-TX)"],
+            "issue": "Borders",
+            "reward_pct": 75,
+            "risk_pct": 25,
+            "classification": "WANT",
+            "value_waste": "VALUE",
+            "good": "Enforces existing immigration law; protects American workers",
+            "bad": "Implementation costs may exceed estimates",
+            "ugly": "Lobbyist carve-outs for certain industries",
+            "fiscal_impact": "$2.3B over 5 years",
+            "admin_power": "Medium",
+            "grift_alert": False
+        },
+        {
+            "id": "S-5678",
+            "name": "Educational Freedom Act",
+            "jurisdiction": "Federal",
+            "status": "Senate HELP Committee",
+            "summary": "Expands school choice through federal tax credits for private school tuition.",
+            "sponsors": ["Sen. Example (R-FL)"],
+            "issue": "Education",
+            "reward_pct": 60,
+            "risk_pct": 40,
+            "classification": "NICE-TO-HAVE",
+            "value_waste": "VALUE",
+            "good": "Empowers parents; creates competition",
+            "bad": "May reduce public school funding in some districts",
+            "ugly": "Wealthy families benefit disproportionately",
+            "fiscal_impact": "$1.8B annual",
+            "admin_power": "Low",
+            "grift_alert": False
+        },
+        {
+            "id": "A-9999",
+            "name": "Climate Resilience Administrative Authority Act",
+            "jurisdiction": "State (New York)",
+            "status": "Assembly Environmental Committee",
+            "summary": "Grants DEC broad authority to issue emergency regulations on carbon emissions without legislative approval.",
+            "sponsors": ["Asm. Example (D-Manhattan)"],
+            "issue": "Overreach",
+            "reward_pct": 20,
+            "risk_pct": 80,
+            "classification": "WASTE",
+            "value_waste": "WASTE",
+            "good": "Faster response to environmental emergencies",
+            "bad": "Bypasses legislative oversight; no sunset clause",
+            "ugly": "Unlimited administrative power with 'minimal' $50K fiscal note",
+            "fiscal_impact": "$50,000 (reported)",
+            "admin_power": "High",
+            "grift_alert": True
+        },
+        {
+            "id": "S-2026",
+            "name": "Sanctuary City Enforcement Protection Act",
+            "jurisdiction": "State (New York)",
+            "status": "Senate Judiciary Committee",
+            "summary": "Prohibits state agencies from cooperating with federal immigration enforcement without court order.",
+            "sponsors": ["Sen. Example (D-Brooklyn)"],
+            "issue": "Borders",
+            "reward_pct": 30,
+            "risk_pct": 70,
+            "classification": "WASTE",
+            "value_waste": "WASTE",
+            "good": "Protects immigrant communities from deportation raids",
+            "bad": "Obstructs federal law enforcement; creates legal conflicts",
+            "ugly": "Costs taxpayers while reducing security cooperation",
+            "fiscal_impact": "$500,000 (legal defense fund)",
+            "admin_power": "Medium",
+            "grift_alert": False
+        },
+        {
+            "id": "A-7788",
+            "name": "Small Business Regulatory Relief Act",
+            "jurisdiction": "State (New York)",
+            "status": "Assembly Small Business Committee",
+            "summary": "Waives first-time regulatory fines for small businesses and requires agencies to provide compliance assistance.",
+            "sponsors": ["Asm. Example (R-Long Island)"],
+            "issue": "Fiscal",
+            "reward_pct": 85,
+            "risk_pct": 15,
+            "classification": "NEED",
+            "value_waste": "VALUE",
+            "good": "Helps small businesses survive; reduces bureaucratic burden",
+            "bad": "May reduce enforcement revenue",
+            "ugly": "Carve-out for 'connected' businesses could be exploited",
+            "fiscal_impact": "$2M revenue reduction",
+            "admin_power": "Low",
+            "grift_alert": False
+        }
+    ]
+    
+    if jurisdiction != "Federal":
+        filtered_bills = [b for b in BILL_DATABASE if b["jurisdiction"] == jurisdiction or b["jurisdiction"] == "Federal"]
+    else:
+        filtered_bills = [b for b in BILL_DATABASE if b["jurisdiction"] == "Federal"]
+    
+    if issue_filter != "All":
+        filtered_bills = [b for b in filtered_bills if b["issue"] == issue_filter]
+    
+    st.subheader(f"📜 Live Bill Feed ({len(filtered_bills)} bills)")
+    
+    peanuts_law = next((b for b in BILL_DATABASE if b["id"] == "S7011/A7388"), None)
+    if peanuts_law and (jurisdiction == "State (New York)" or issue_filter == "Animal Rights" or issue_filter == "All"):
+        st.markdown("### 🐿️ FEATURED: Peanut's Law (S7011/A7388)")
+        
+        feat_col1, feat_col2, feat_col3 = st.columns([2, 1, 1])
+        feat_col1.info(f"**Status:** {peanuts_law['status']}")
+        feat_col2.metric("Reward", f"{peanuts_law['reward_pct']}%", delta="High Value")
+        feat_col3.metric("Risk", f"{peanuts_law['risk_pct']}%", delta="Low", delta_color="inverse")
+        
+        st.markdown(f"**Summary:** {peanuts_law['summary']}")
+        st.success(f"**VERDICT:** {peanuts_law['reward_pct']}% REWARD / {peanuts_law['risk_pct']}% RISK ({peanuts_law['classification']})")
+        
+        with st.expander("📊 The Good, The Bad, and The Ugly"):
+            st.markdown(f"""
+| Assessment | Details |
+|------------|---------|
+| ✅ **THE GOOD** | {peanuts_law['good']} |
+| ⚠️ **THE BAD** | {peanuts_law['bad']} |
+| 💀 **THE UGLY** | {peanuts_law['ugly']} |
+            """)
+        
+        st.markdown("#### 🗡️ Citizen Sword: Take Action")
+        petition_text = f"""Dear Sen. Scarcella-Spanton and Asm. Blumencranz,
+
+I am a constituent writing in STRONG SUPPORT of Peanut's Law (S7011/A7388).
+
+The 72-hour waiting period and emergency appeal rights are essential due process protections. The tragic case of Peanut and Fred demonstrated that bureaucratic overreach can result in irreversible harm.
+
+I urge you to bring this bill to a floor vote immediately.
+
+Respectfully,
+[YOUR NAME]
+[YOUR ADDRESS]
+"""
+        st.text_area("📧 Pre-Filled Petition Letter", petition_text, height=200, key="peanut_petition")
+        st.link_button("📤 Email NY Senate", "mailto:scarcella-spanton@nysenate.gov?subject=Support%20Peanut%27s%20Law%20S7011")
+        
+        st.divider()
+    
+    for bill in filtered_bills:
+        if bill["id"] == "S7011/A7388":
+            continue
+        
+        with st.container():
+            bill_col1, bill_col2 = st.columns([3, 1])
+            
+            with bill_col1:
+                st.markdown(f"### {bill['name']} ({bill['id']})")
+                st.caption(f"**{bill['jurisdiction']}** | {bill['issue']} | {bill['status']}")
+                st.markdown(f"{bill['summary']}")
+            
+            with bill_col2:
+                if bill['grift_alert']:
+                    st.error("🚨 GRIFT ALERT")
+                    st.caption("BUREAUCRATIC OVERREACH")
+                
+                reward_color = "normal" if bill['reward_pct'] >= 50 else "inverse"
+                st.metric("Reward/Risk", f"{bill['reward_pct']}% / {bill['risk_pct']}%")
+                
+                if bill['classification'] == "NEED":
+                    st.success(f"**{bill['classification']}** - {bill['value_waste']}")
+                elif bill['classification'] == "WANT":
+                    st.info(f"**{bill['classification']}** - {bill['value_waste']}")
+                elif bill['classification'] == "NICE-TO-HAVE":
+                    st.warning(f"**{bill['classification']}** - {bill['value_waste']}")
+                else:
+                    st.error(f"**{bill['classification']}** - {bill['value_waste']}")
+            
+            with st.expander(f"📊 The Good, The Bad, and The Ugly - {bill['id']}"):
+                st.markdown(f"""
+| Assessment | Details |
+|------------|---------|
+| ✅ **THE GOOD** | {bill['good']} |
+| ⚠️ **THE BAD** | {bill['bad']} |
+| 💀 **THE UGLY** | {bill['ugly']} |
+| 💰 **Fiscal Impact** | {bill['fiscal_impact']} |
+| 🏛️ **Admin Power** | {bill['admin_power']} |
+                """)
+                
+                if bill['grift_alert']:
+                    st.error("""
+**🚨 GRIFT ALARM TRIGGERED:**
+This bill grants wide administrative power with minimal reported fiscal impact. 
+When power is free, citizens pay the hidden cost.
+                    """)
+            
+            sponsor_list = ", ".join(bill['sponsors'])
+            petition_bill = f"""Dear {sponsor_list},
+
+I am writing regarding {bill['name']} ({bill['id']}).
+
+Based on my analysis:
+- Reward Assessment: {bill['reward_pct']}%
+- Risk Assessment: {bill['risk_pct']}%
+- Classification: {bill['classification']}
+
+{"I OPPOSE this legislation due to excessive administrative overreach." if bill['grift_alert'] or bill['reward_pct'] < 50 else "I SUPPORT this legislation and urge you to bring it to a floor vote."}
+
+Respectfully,
+[YOUR NAME]
+"""
+            
+            if st.button(f"🗡️ One-Click Petition: {bill['id']}", key=f"petition_{bill['id']}"):
+                st.text_area(f"Petition for {bill['id']}", petition_bill, height=180, key=f"petition_text_{bill['id']}")
+            
+            st.divider()
+    
+    st.markdown("### 🚨 Grift Alarm Criteria")
+    st.caption("Bills are flagged when they meet these red flags:")
+    grift_col1, grift_col2, grift_col3 = st.columns(3)
+    grift_col1.warning("**Wide Admin Power**\n+ Minimal Fiscal Note")
+    grift_col2.warning("**No Sunset Clause**\n+ Emergency Powers")
+    grift_col3.warning("**Vague Language**\n+ Broad Discretion")
+
 def page_course_correction():
     selected_state = st.session_state.get("selected_state", "New York")
     st.header("⚖️ The Course Correction Manual")
@@ -1473,6 +1743,7 @@ pages = [
     st.Page(page_corruption_heatmap, title="Corruption Heatmap", icon="🗺️"),
     st.Page(page_activism_hub, title="The Activism Hub", icon="🌉"),
     st.Page(page_accountability_tribunal, title="Accountability Tribunal", icon="⚖️"),
+    st.Page(page_docket_decoder, title="Docket Decoder", icon="🛡️"),
     st.Page(page_foia_cannon, title="FOIA Cannon", icon="📄"),
     st.Page(page_lever_map, title="Lever Map", icon="🗺️"),
     st.Page(page_course_correction, title="Course Correction", icon="⚖️"),
