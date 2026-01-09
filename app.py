@@ -13,6 +13,7 @@ from traffic_ledger import init_async_ledger, async_log_traffic, get_queue_stats
 from metadata_handler import inject_og_meta_tags, get_page_config, get_share_url
 from mamdani_watchdog import render_mamdani_watchdog, get_mamdani_profile, render_mamdani_sidebar_status
 from bds_audit_logic import render_bds_clawback_tracker, get_total_discretionary_funding, get_grift_alerts as get_bds_grift_alerts
+from safety_shield_logic import render_safety_shield, get_proximity_alerts
 from agenda_scanner import (
     get_jurisdictions, get_agendas, scan_agenda_item, calculate_transparency_score,
     get_transparency_rating, init_agenda_flags_table, save_agenda_flag, get_flag_count, GRIFT_KEYWORDS
@@ -4058,6 +4059,10 @@ def page_bds_clawback():
     """BDS Clawback Tracker - V6.21 audit of NYC discretionary funding."""
     render_bds_clawback_tracker()
 
+def page_safety_shield():
+    """Safety Shield - V6.22 public safety alert for communal protection."""
+    render_safety_shield()
+
 def page_support():
     st.header("☕ Sustain the Mission")
     st.write("This tool is free, ad-free, and uncensorable thanks to supporters like you.")
@@ -6765,6 +6770,7 @@ pages = [
     st.Page(page_protocol_pulse, title="Protocol Pulse", icon="📊"),
     st.Page(page_mamdani_watchdog, title="Mamdani Watchdog", icon="🏛️"),
     st.Page(page_bds_clawback, title="BDS Clawback Tracker", icon="💰"),
+    st.Page(page_safety_shield, title="Safety Shield", icon="🛡️"),
 ]
 
 nav = st.navigation(pages)
