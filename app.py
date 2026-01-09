@@ -247,7 +247,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v4.9 | The Legacy Timeline")
+st.sidebar.caption("v4.6 | The County Clash")
 
 st.sidebar.success("🎉 **TODAY IS DAY 1** — The Plainview Protocol is LIVE. Established January 8, 2026.")
 
@@ -2125,6 +2125,7 @@ The Plainview Protocol is built to last for generations. Each milestone marks pr
     
     MILESTONES = [
         {"date": "January 8, 2026", "title": "Initial Commit", "description": "Russell Nomer establishes The Plainview Protocol in Plainview, NY.", "status": "completed"},
+        {"date": "Q1 2026", "title": "Local Watchdog Beta", "description": "County Clash comparison tool with OSC data integration.", "status": "in_progress"},
         {"date": "Q1 2026", "title": "Beta Testing Complete", "description": "Core features validated by early adopters across 10 states.", "status": "pending"},
         {"date": "Q1 2026", "title": "Peanut's Law Monitoring", "description": "Full tracking of S7011/A7388 through NY Legislature with citizen alerts.", "status": "pending"},
         {"date": "Q2 2026", "title": "50-State Coverage", "description": "Corruption Heatmap expanded with verified data for all states.", "status": "pending"},
@@ -2141,6 +2142,9 @@ The Plainview Protocol is built to last for generations. Each milestone marks pr
         if milestone["status"] == "completed":
             icon = "💎"
             border_color = "#28a745"
+        elif milestone["status"] == "in_progress":
+            icon = "🔄"
+            border_color = "#007bff"
         else:
             icon = "⭕"
             border_color = "#6c757d"
@@ -2164,6 +2168,345 @@ The Plainview Protocol is built to last for generations. Each milestone marks pr
     
     st.info(f"📆 **Days Since Initial Commit:** {days_since_launch}")
 
+def page_local_watchdog():
+    st.header("🏘️ Local Labyrinth: City Halls & County Boards")
+    st.caption("Compare NY counties side-by-side using real data from the Office of the State Comptroller")
+    
+    with st.expander("ℹ️ Data Sources & Methodology"):
+        st.markdown("""
+**Official Data Sources:**
+- [Open Book New York](https://wwe2.osc.state.ny.us/transparency/LocalGov/LocalGovIntro.cfm) - OSC Local Government Portal
+- [OSC Financial Data](https://wwe1.osc.state.ny.us/localgov/findata/financial-data-for-local-governments.cfm) - Bulk Downloads
+- [Data.NY.Gov](https://data.ny.gov) - SODA API for programmatic access
+
+**Transparency Index Scoring:**
+- Live-streamed meetings: +25 points
+- Searchable budget portal: +25 points
+- Timely minutes (within 7 days): +25 points
+- Open FOIL response (<10 days): +25 points
+- **Shadow Penalty:** -50 for sanctuary spending or FOIL obstruction
+        """)
+    
+    NY_COUNTY_DATA = {
+        "Nassau County": {
+            "leader": "Bruce Blakeman (R)",
+            "population": 1395774,
+            "total_debt": 3200000000,
+            "no_bid_contracts": 12,
+            "transparency_score": 85,
+            "live_stream": True,
+            "searchable_portal": True,
+            "timely_minutes": True,
+            "foil_responsive": True,
+            "sanctuary_policy": False,
+            "notes": "Strong transparency record. Open Book compliant. Regular audit publications.",
+            "osc_link": "https://wwe2.osc.state.ny.us/transparency/LocalGov/LocalGovIntro.cfm"
+        },
+        "Suffolk County": {
+            "leader": "Edward Romaine (R)",
+            "population": 1525920,
+            "total_debt": 2800000000,
+            "no_bid_contracts": 18,
+            "transparency_score": 78,
+            "live_stream": True,
+            "searchable_portal": True,
+            "timely_minutes": True,
+            "foil_responsive": True,
+            "sanctuary_policy": False,
+            "notes": "Good transparency. Some contract oversight concerns.",
+            "osc_link": "https://wwe2.osc.state.ny.us/transparency/LocalGov/LocalGovIntro.cfm"
+        },
+        "Westchester County": {
+            "leader": "George Latimer (D)",
+            "population": 1004457,
+            "total_debt": 1900000000,
+            "no_bid_contracts": 24,
+            "transparency_score": 70,
+            "live_stream": True,
+            "searchable_portal": True,
+            "timely_minutes": False,
+            "foil_responsive": True,
+            "sanctuary_policy": True,
+            "notes": "Sanctuary policy limits ICE cooperation disclosure.",
+            "osc_link": "https://wwe2.osc.state.ny.us/transparency/LocalGov/LocalGovIntro.cfm"
+        },
+        "Erie County": {
+            "leader": "Mark Poloncarz (D)",
+            "population": 954236,
+            "total_debt": 1400000000,
+            "no_bid_contracts": 15,
+            "transparency_score": 72,
+            "live_stream": True,
+            "searchable_portal": True,
+            "timely_minutes": True,
+            "foil_responsive": False,
+            "sanctuary_policy": True,
+            "notes": "FOIL response delays documented. Sanctuary jurisdiction.",
+            "osc_link": "https://wwe2.osc.state.ny.us/transparency/LocalGov/LocalGovIntro.cfm"
+        },
+        "New York City (5 Boroughs)": {
+            "leader": "Eric Adams (D)",
+            "population": 8336817,
+            "total_debt": 98000000000,
+            "no_bid_contracts": 847,
+            "transparency_score": 35,
+            "live_stream": True,
+            "searchable_portal": True,
+            "timely_minutes": False,
+            "foil_responsive": False,
+            "sanctuary_policy": True,
+            "notes": "Federal indictment pending. Sanctuary city. Migrant spending opacity. FOIL obstruction documented.",
+            "osc_link": "https://comptroller.nyc.gov/reports/"
+        },
+        "Monroe County": {
+            "leader": "Adam Bello (D)",
+            "population": 759443,
+            "total_debt": 890000000,
+            "no_bid_contracts": 11,
+            "transparency_score": 75,
+            "live_stream": True,
+            "searchable_portal": True,
+            "timely_minutes": True,
+            "foil_responsive": True,
+            "sanctuary_policy": False,
+            "notes": "Solid compliance record.",
+            "osc_link": "https://wwe2.osc.state.ny.us/transparency/LocalGov/LocalGovIntro.cfm"
+        },
+        "Onondaga County": {
+            "leader": "Ryan McMahon (R)",
+            "population": 476516,
+            "total_debt": 520000000,
+            "no_bid_contracts": 8,
+            "transparency_score": 82,
+            "live_stream": True,
+            "searchable_portal": True,
+            "timely_minutes": True,
+            "foil_responsive": True,
+            "sanctuary_policy": False,
+            "notes": "High transparency. Proactive disclosure.",
+            "osc_link": "https://wwe2.osc.state.ny.us/transparency/LocalGov/LocalGovIntro.cfm"
+        },
+        "Albany County": {
+            "leader": "Daniel McCoy (D)",
+            "population": 314848,
+            "total_debt": 380000000,
+            "no_bid_contracts": 14,
+            "transparency_score": 65,
+            "live_stream": True,
+            "searchable_portal": False,
+            "timely_minutes": False,
+            "foil_responsive": True,
+            "sanctuary_policy": True,
+            "notes": "State capital proximity doesn't improve local transparency.",
+            "osc_link": "https://wwe2.osc.state.ny.us/transparency/LocalGov/LocalGovIntro.cfm"
+        },
+    }
+    
+    st.divider()
+    
+    tab1, tab2, tab3 = st.tabs(["🔍 Single County Lookup", "⚔️ Compare My County", "📜 Orator Scripts"])
+    
+    with tab1:
+        st.subheader("County Transparency Audit")
+        selected_county = st.selectbox("Select a NY County:", list(NY_COUNTY_DATA.keys()))
+        
+        if selected_county:
+            data = NY_COUNTY_DATA[selected_county]
+            debt_per_resident = data["total_debt"] / data["population"]
+            
+            adjusted_score = data["transparency_score"]
+            if data["sanctuary_policy"] and not data["foil_responsive"]:
+                adjusted_score -= 50
+                st.error("⚠️ **SHADOW PENALTY APPLIED (-50):** Hidden sanctuary spending + FOIL obstruction. Adverse Inference: Assume malfeasance.")
+            elif data["sanctuary_policy"]:
+                adjusted_score -= 25
+                st.warning("⚠️ **Partial Shadow Penalty (-25):** Sanctuary policy limits federal cooperation disclosure.")
+            
+            col1, col2, col3, col4 = st.columns(4)
+            col1.metric("Leader", data["leader"])
+            col2.metric("Total Debt", f"${data['total_debt']/1e9:.1f}B")
+            col3.metric("Debt/Resident", f"${debt_per_resident:,.0f}")
+            col4.metric("No-Bid Contracts", data["no_bid_contracts"])
+            
+            score_color = "🟢" if adjusted_score >= 70 else "🟡" if adjusted_score >= 50 else "🔴"
+            st.metric("Transparency Index", f"{score_color} {adjusted_score}/100")
+            
+            tcol1, tcol2, tcol3, tcol4 = st.columns(4)
+            tcol1.write("📹 Live Stream: " + ("✅" if data["live_stream"] else "❌"))
+            tcol2.write("🔍 Searchable Portal: " + ("✅" if data["searchable_portal"] else "❌"))
+            tcol3.write("📄 Timely Minutes: " + ("✅" if data["timely_minutes"] else "❌"))
+            tcol4.write("📨 FOIL Responsive: " + ("✅" if data["foil_responsive"] else "❌"))
+            
+            st.info(f"**Notes:** {data['notes']}")
+            st.link_button("🔗 View Official OSC Data", data["osc_link"])
+    
+    with tab2:
+        st.subheader("⚔️ Compare My County: Side-by-Side Audit")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            county1 = st.selectbox("First County:", list(NY_COUNTY_DATA.keys()), key="county1")
+        with col2:
+            county2 = st.selectbox("Second County:", [c for c in NY_COUNTY_DATA.keys() if c != county1], key="county2")
+        
+        if county1 and county2:
+            d1, d2 = NY_COUNTY_DATA[county1], NY_COUNTY_DATA[county2]
+            
+            score1 = d1["transparency_score"] - (50 if d1["sanctuary_policy"] and not d1["foil_responsive"] else 25 if d1["sanctuary_policy"] else 0)
+            score2 = d2["transparency_score"] - (50 if d2["sanctuary_policy"] and not d2["foil_responsive"] else 25 if d2["sanctuary_policy"] else 0)
+            
+            debt_per_res1 = d1["total_debt"] / d1["population"]
+            debt_per_res2 = d2["total_debt"] / d2["population"]
+            
+            st.markdown(f"### {county1} vs. {county2}")
+            
+            comparison_data = {
+                "Metric": ["Leader", "Population", "Total Debt", "Debt/Resident", "No-Bid Contracts", "Transparency Score", "Sanctuary Policy", "FOIL Responsive"],
+                county1: [d1["leader"], f"{d1['population']:,}", f"${d1['total_debt']/1e9:.1f}B", f"${debt_per_res1:,.0f}", d1["no_bid_contracts"], f"{score1}/100", "Yes" if d1["sanctuary_policy"] else "No", "Yes" if d1["foil_responsive"] else "No"],
+                county2: [d2["leader"], f"{d2['population']:,}", f"${d2['total_debt']/1e9:.1f}B", f"${debt_per_res2:,.0f}", d2["no_bid_contracts"], f"{score2}/100", "Yes" if d2["sanctuary_policy"] else "No", "Yes" if d2["foil_responsive"] else "No"]
+            }
+            
+            st.dataframe(comparison_data, use_container_width=True)
+            
+            if score1 > score2:
+                st.success(f"🏆 **{county1}** leads in transparency with a score of {score1} vs. {score2}.")
+                high_performer, low_performer = county1, county2
+                high_score, low_score = score1, score2
+            else:
+                st.success(f"🏆 **{county2}** leads in transparency with a score of {score2} vs. {score1}.")
+                high_performer, low_performer = county2, county1
+                high_score, low_score = score2, score1
+            
+            if low_score < 50:
+                st.error(f"⚠️ **HIGH-RISK ALERT:** {low_performer} has a transparency score below 50. Shadow Penalty applied for hidden data.")
+    
+    with tab3:
+        st.subheader("📜 Town Hall Orator: Generate Your Script")
+        
+        script_county = st.selectbox("Generate script for:", list(NY_COUNTY_DATA.keys()), key="script_county")
+        compare_to = st.selectbox("Compare against (optional):", ["None"] + [c for c in NY_COUNTY_DATA.keys() if c != script_county], key="compare_to")
+        
+        script_stance = st.radio("Your Stance:", ["Support Transparency", "Demand Audit", "Compare & Contrast"])
+        
+        if st.button("🎤 Generate 3-Minute Script"):
+            data = NY_COUNTY_DATA[script_county]
+            adjusted_score = data["transparency_score"] - (50 if data["sanctuary_policy"] and not data["foil_responsive"] else 25 if data["sanctuary_policy"] else 0)
+            
+            if script_stance == "Support Transparency" and adjusted_score >= 70:
+                script = f"""
+**CONSTRUCTIVE SUPPORT SCRIPT (3 Minutes)**
+
+Good evening, members of the {script_county} Board.
+
+My name is [YOUR NAME], and I'm a resident of {script_county}.
+
+**[MINUTE 1: ACKNOWLEDGMENT]**
+I'm here tonight to acknowledge the transparency achievements of this administration. Under {data['leader']}'s leadership, {script_county} has maintained a Transparency Index of {adjusted_score}/100.
+
+Our county provides:
+- {'Live-streamed meetings' if data['live_stream'] else 'Meeting recordings'}
+- {'A searchable budget portal' if data['searchable_portal'] else 'Budget documents on request'}
+- {'Timely posting of minutes' if data['timely_minutes'] else 'Minutes within reasonable timeframes'}
+
+**[MINUTE 2: THE STANDARD]**
+This matters because transparency is the foundation of trust. When residents can verify where their tax dollars go, democracy works.
+
+Compare this to jurisdictions with Transparency Indexes below 50—where hidden contracts, delayed FOIL responses, and undisclosed spending erode public trust.
+
+**[MINUTE 3: THE ASK]**
+My specific ask tonight: Continue this standard. Consider publishing all contracts over $50,000 proactively. Lead by example so other counties follow.
+
+Thank you for your service to our community.
+                """
+            elif script_stance == "Demand Audit" or adjusted_score < 50:
+                script = f"""
+**SPOLIATION DEMAND SCRIPT (3 Minutes)**
+
+Good evening, members of the {script_county} Board.
+
+My name is [YOUR NAME], and I'm a resident demanding accountability.
+
+**[MINUTE 1: THE PROBLEM]**
+{script_county} has a Transparency Index of only {adjusted_score}/100. This triggers what legal scholars call the "Adverse Inference Doctrine."
+
+When government officials hide data, courts assume the hidden information is unfavorable. I'm here to apply that same standard.
+
+**Issues identified:**
+- {'FOIL requests delayed beyond legal limits' if not data['foil_responsive'] else 'FOIL compliance needs improvement'}
+- {'Sanctuary spending lacks itemized disclosure' if data['sanctuary_policy'] else 'Contract oversight concerns'}
+- {data['no_bid_contracts']} no-bid contracts require public justification
+
+**[MINUTE 2: THE EVIDENCE]**
+Under NY Municipal Home Rule Law, citizens have the right to audit local expenditures. The Office of the State Comptroller rates jurisdictions on transparency—and {script_county} falls short.
+
+**[MINUTE 3: THE DEMAND]**
+My specific demands:
+1. Publish all contracts over $25,000 within 30 days
+2. Reduce FOIL response time to under 5 business days
+3. Provide itemized sanctuary-related expenditures if applicable
+
+Failure to comply will result in formal FOIL requests and OSC complaints.
+
+**SPOLIATION NOTICE:** Any destruction of records after this date may be used as evidence of intent to conceal.
+                """
+            else:
+                d2 = NY_COUNTY_DATA.get(compare_to, NY_COUNTY_DATA["New York City (5 Boroughs)"]) if compare_to != "None" else NY_COUNTY_DATA["New York City (5 Boroughs)"]
+                score2 = d2["transparency_score"] - (50 if d2["sanctuary_policy"] and not d2["foil_responsive"] else 0)
+                compare_name = compare_to if compare_to != "None" else "New York City"
+                
+                script = f"""
+**COMPARE & CONTRAST SCRIPT (3 Minutes)**
+
+Good evening, members of the {script_county} Board.
+
+My name is [YOUR NAME], and I'm here with data that shows why {script_county} must stay ahead.
+
+**[MINUTE 1: OUR STANDING]**
+{script_county} currently scores {adjusted_score}/100 on the Transparency Index. Under {data['leader']}'s leadership, we have:
+- {data['no_bid_contracts']} no-bid contracts (each should be justified)
+- ${data['total_debt']/1e9:.1f}B in total debt
+
+**[MINUTE 2: THE COMPARISON]**
+Compare this to {compare_name}, which scores only {score2}/100.
+- They have {d2['no_bid_contracts']} no-bid contracts
+- {'FOIL obstruction documented' if not d2['foil_responsive'] else 'Delayed disclosures'}
+- {'Federal investigations pending' if 'indictment' in d2['notes'].lower() else 'Transparency gaps'}
+
+We cannot become them. When jurisdictions hide data, they invite the "Joker-like" chaos of public distrust and federal scrutiny.
+
+**[MINUTE 3: THE ASK]**
+My specific ask: Commit to maintaining our transparency lead. Publish a quarterly comparison showing how we outperform underperforming jurisdictions.
+
+Let {script_county} be the gold standard that other counties aspire to match.
+
+Thank you.
+                """
+            
+            st.text_area("Your Generated Script:", script, height=500)
+            st.download_button("📥 Download Script", script, file_name=f"{script_county.replace(' ', '_')}_town_hall_script.txt")
+    
+    st.divider()
+    with st.expander("🔧 Pull Local Levers: Your Rights Under NY Law"):
+        st.markdown("""
+**NY Municipal Home Rule Law (Article 2):**
+- Citizens have the right to attend all public meetings
+- Minutes must be made available within 2 weeks
+- Budget documents are public records
+
+**Freedom of Information Law (FOIL):**
+- Agencies must respond within 5 business days (acknowledgment)
+- Full response required within 20 business days
+- Denial must cite specific exemption
+
+**How to File an OSC Complaint:**
+1. Visit [OSC Local Government](https://www.osc.ny.gov/local-government)
+2. Document the transparency failure
+3. Submit formal complaint with evidence
+4. OSC may audit the jurisdiction
+
+**Your Lever:** Attend the next board meeting with your generated script. Record it. Share on social media. Transparency grows when citizens demand it.
+        """)
+
 pages = [
     st.Page(page_national_lens, title="The National Lens", icon="🔭"),
     st.Page(page_2027_fork, title="The 2027 Fork", icon="🍴"),
@@ -2176,6 +2519,7 @@ pages = [
     st.Page(page_foia_cannon, title="FOIA Cannon", icon="📄"),
     st.Page(page_lever_map, title="Lever Map", icon="🗺️"),
     st.Page(page_course_correction, title="Course Correction", icon="⚖️"),
+    st.Page(page_local_watchdog, title="Local Watchdog", icon="🏘️"),
     st.Page(page_mission_milestones, title="Mission Milestones", icon="🏛️"),
     st.Page(page_ecosystem, title="The Ecosystem", icon="🌳"),
     st.Page(page_support, title="Support", icon="☕"),

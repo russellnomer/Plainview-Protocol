@@ -1,7 +1,7 @@
 # The Plainview Protocol: Truth, Kindness, & Security
 
 ## Overview
-Version 4.9 - The Legacy Timeline. Established January 8, 2026. A production-ready Streamlit web application with bipartisan corruption tracking across all 50 states. Features Corruption Heatmap with Shadow Penalty scoring, Course Correction Manual (recall/impeachment/grand jury guides), bipartisan Grift Hunter FOIA templates, Electoral College-weighted Referendum Prototype, and citizen lever-pulling guides. Pro-American, rule of law, domestic security focus.
+Version 4.6 - The County Clash. Established January 8, 2026. A production-ready Streamlit web application with bipartisan corruption tracking across all 50 states. Features Corruption Heatmap with Shadow Penalty scoring, Course Correction Manual (recall/impeachment/grand jury guides), bipartisan Grift Hunter FOIA templates, Electoral College-weighted Referendum Prototype, and citizen lever-pulling guides. Pro-American, rule of law, domestic security focus.
 
 ## Features
 - **The National Lens**: Live national debt from Treasury API, state debt share, immigration burden with border state multipliers (1.6x)
