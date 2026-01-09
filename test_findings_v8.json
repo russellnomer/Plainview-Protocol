@@ -1,157 +1,93 @@
 {
-  "test_suite": "The Plainview Protocol V6.18 Zero-Day Forensic Audit",
+  "test_suite": "The Plainview Protocol V8.2 Zero-Day Forensic Audit",
   "test_date": "2026-01-09",
-  "version": "6.18",
-  "codename": "Sovereign Affidavit Portal",
-  "audit_status": "REMEDIATION COMPLETE",
-  "architect_review": {
-    "initial_status": "FAIL",
-    "remediated_status": "PASS",
-    "issues_found": 8,
-    "issues_fixed": 5,
-    "issues_accepted": 3
+  "version": "8.2",
+  "codename": "Traffic Audit & Adoption Ledger",
+  "audit_status": "COMPLETE",
+  "features_implemented": {
+    "v8_1_forensic_error_tracking": {
+      "status": "IMPLEMENTED",
+      "components": [
+        "Global exception handler with database logging",
+        "Structured sentinel_logs table with incident IDs",
+        "Admin-only Audit Logs dashboard",
+        "Copy Log for Gemini/Grok Guidance button",
+        "Stack trace capture and display"
+      ]
+    },
+    "v8_2_traffic_audit": {
+      "status": "IMPLEMENTED",
+      "components": [
+        "Sovereign Traffic Ledger (PostgreSQL-backed)",
+        "Session ID, Page URL, Referrer, Action Type logging",
+        "Rate limiting: >10 FOIA requests/60s triggers flag",
+        "Nefarious activity flagging to database",
+        "Protocol Pulse founder dashboard"
+      ]
+    },
+    "v8_2_adoption_ledger": {
+      "status": "IMPLEMENTED",
+      "components": [
+        "Sentinel signup tracking",
+        "Cumulative growth chart (Plotly)",
+        "Top referrer domains chart",
+        "Founder-only access control"
+      ]
+    }
+  },
+  "database_tables": {
+    "sentinel_logs": "Error tracking with incident IDs, stack traces, resolution status",
+    "traffic_ledger": "Page views, sessions, referrers, action types",
+    "nefarious_activity": "Rate limit violations for human review",
+    "sentinel_signups": "Affidavit signers for adoption tracking"
+  },
+  "security_features": {
+    "rate_limiting": {
+      "threshold": "10 requests",
+      "window": "60 seconds",
+      "action": "Flag IP hash, log to nefarious_activity table"
+    },
+    "admin_access": {
+      "method": "Founder Access Key",
+      "pages": ["Audit Logs", "Protocol Pulse"]
+    },
+    "ip_hashing": "SHA-256 hash of IP addresses (no raw IPs stored)"
   },
   "test_cases": {
     "test_case_a": {
       "name": "Affidavit Signing Flow",
-      "description": "Simulate a Sovereign Auditor signing the V6.18 Affidavit and accessing the Foreign Influence Tracker",
-      "steps": [
-        "Navigate to Foreign Influence Tracker page",
-        "Verify affidavit gate is displayed for unsigned users",
-        "Type full legal name in signature field",
-        "Check 'I AGREE' checkbox",
-        "Click 'Sign Affidavit' button",
-        "Verify SHA-256 hash is generated WITH CODE_OF_CONDUCT.md binding",
-        "Verify access is granted to Foreign Influence data",
-        "Navigate to FARA Reporter and verify access is granted"
-      ],
-      "expected_result": "User can sign affidavit and access protected pages",
       "status": "PASS",
-      "remediation_applied": "Hash now includes CODE_OF_CONDUCT.md checksum binding"
+      "notes": "Hash binds to CODE_OF_CONDUCT.md version"
     },
     "test_case_b": {
       "name": "FOIA Cannon Litigation Trigger",
-      "description": "Fire a FOIA Cannon request and verify the Litigation Trigger countdown logic",
-      "steps": [
-        "Navigate to FOIA Cannon page",
-        "Select target agency and state",
-        "Generate FOIA request",
-        "Verify 20-day clock reference in request template",
-        "Verify legal citations are correct (5 U.S.C. § 552(a)(6)(A))"
-      ],
-      "expected_result": "FOIA requests generate with correct legal basis and timeline references",
       "status": "PASS",
-      "notes": "Litigation Trigger references 20 working days per federal law"
+      "notes": "20-day countdown per 5 U.S.C. § 552(a)(6)(A)"
     },
     "test_case_c": {
-      "name": "Bad-Faith Submission Guard",
-      "description": "Attempt a bad-faith submission to verify Code of Conduct enforcement",
-      "steps": [
-        "Verify Code of Conduct is accessible",
-        "Verify Pillar 5 (Accountability) is documented",
-        "Verify bad-faith consequences are defined",
-        "Verify SHA-256 hash binding to CODE_OF_CONDUCT.md version"
-      ],
-      "expected_result": "Bad-faith auditors face badge removal and Shadow Watch list",
+      "name": "Error Logging System",
       "status": "PASS",
-      "remediation_applied": "CODE_OF_CONDUCT.md hash now embedded in signature"
+      "notes": "Database-backed with fallback to JSON"
+    },
+    "test_case_d": {
+      "name": "Rate Limiting",
+      "status": "PASS",
+      "notes": ">10 FOIA in 60s triggers nefarious flag"
+    },
+    "test_case_e": {
+      "name": "Founder Dashboards",
+      "status": "PASS",
+      "notes": "Access key required for Audit Logs and Protocol Pulse"
     }
   },
-  "security_audit": {
-    "affidavit_gate_security": {
-      "initial_status": "FAIL",
-      "remediated_status": "PASS",
-      "issue": "SHA-256 hash did not incorporate CODE_OF_CONDUCT.md hash",
-      "fix_applied": "Hash now computed as SHA256(name|timestamp|coc_hash)",
-      "notes": "Session-based storage acceptable for attestation use case per PRIVACY.md disclosure"
-    },
-    "agency_portal_email_validation": {
-      "initial_status": "PARTIAL PASS",
-      "remediated_status": "PASS",
-      "issue": "Uppercase domains could bypass .gov/.mil check",
-      "fix_applied": "Email normalized to lowercase before validation"
-    },
-    "data_integrity": {
-      "initial_status": "FAIL",
-      "remediated_status": "PASS",
-      "issue": "JSON files lacked source URLs for claims",
-      "fix_applied": "Added source_url, irs_990_link, fec_source fields to foreign_influence_audit.json"
-    },
-    "session_security": {
-      "status": "ACCEPTED RISK",
-      "issue": "Session-based storage could theoretically be manipulated client-side",
-      "mitigation": "Documented in PRIVACY.md as session-only attestation, not PKI-grade security",
-      "notes": "Full PKI implementation would require database and exceeds MVP scope"
-    }
-  },
-  "component_status": {
-    "affidavit_portal": {
-      "status": "PASS",
-      "file": "affidavit_portal.py",
-      "features": ["SHA-256 signature binding to CODE_OF_CONDUCT.md", "Session-based storage", "Reusable guard function"]
-    },
-    "foreign_influence_gate": {
-      "status": "PASS",
-      "file": "app.py",
-      "features": ["Access control for unsigned users", "COC hash binding", "Post-signature access"]
-    },
-    "fara_reporter_gate": {
-      "status": "PASS",
-      "file": "app.py",
-      "features": ["Access control for unsigned users", "Redirect to Foreign Influence for signing"]
-    },
-    "agency_collaboration_portal": {
-      "status": "PASS",
-      "file": "app.py",
-      "features": [".gov/.mil email validation with lowercase normalization", "72-hour correction workflow", "Verified by Agency badge system"]
-    },
-    "legal_documents": {
-      "status": "PASS",
-      "files": ["TERMS.md", "PRIVACY.md", "SAFE_HARBOR.md"],
-      "features": ["AS-IS disclaimer", "AI disclosure", "Safe Harbor policy", "Footer modal"]
-    },
-    "foia_cannon": {
-      "status": "PASS",
-      "file": "app.py",
-      "features": ["20-day litigation countdown", "5 U.S.C. § 552 citations", "Grift Hunter templates"]
-    }
-  },
-  "data_files": {
-    "foreign_influence_audit.json": {
-      "status": "ENRICHED",
-      "changes": "Added source_url, irs_990_link, fec_source for all entities"
-    },
-    "revolving_door_audit.json": "Lobbyist database with cooling-off tracking",
-    "leftist_target_list.json": "Updated with AI regulation PACs",
-    "technical_audit.json": "Silicon & Soros Audit data"
-  },
-  "legal_compliance": {
-    "code_of_conduct": "5 Pillars of Evidentiary Integrity - GAGAS aligned",
-    "terms_of_service": "AS-IS warranty disclaimer - PASS",
-    "privacy_policy": "AI processing disclosure - PASS",
-    "safe_harbor": "72-hour correction window for agencies - PASS"
-  },
-  "bipartisan_neutrality": {
-    "status": "PASS",
-    "notes": "No Trump/MAGA references; focus balanced on Silicon & Soros targets with verifiable sources"
-  },
-  "performance_metrics": {
-    "page_load_time": "< 2 seconds",
-    "api_response_time": "Treasury API cached (1 hour TTL)",
-    "session_state_handling": "Streamlit native"
-  },
-  "console_errors": [],
-  "latency_logs": {
-    "average_response_time_ms": 150,
-    "peak_response_time_ms": 500
-  },
-  "founder_smoke_test_note": "We don't launch on hope; we launch on proof. If the AI finds a crack in the shield, we weld it shut now. We audit ourselves more strictly than we audit the Labyrinth.",
-  "multi_model_consensus": {
-    "replit_agent": "PASS - Implementation complete, security hardened",
-    "architect_review": "PASS - All critical issues remediated",
-    "gemini_review": "PENDING - Codebase prepared for 2M token context audit",
-    "grok_review": "PENDING - Red team legal resilience check"
+  "founder_notes": {
+    "zero_day_injection": "We don't tolerate ghosts in the machine. Every 'Page not found' is a failure of evidence. Log it, track it, and fix it.",
+    "sunlight_audit": "We don't just track traffic; we audit it. If the Labyrinth tries to flood our servers with bots, we'll see them coming."
   },
   "recommendation": "READY FOR DEPLOYMENT",
-  "reviewer_notes": "V6.18 implementation complete. Critical security issues from initial audit have been remediated. Affidavit gate now binds to CODE_OF_CONDUCT.md version. Email validation hardened. Data files enriched with source URLs. Session-based security is documented and acceptable for attestation use case."
+  "next_steps": [
+    "Monitor Audit Logs for any 404/500 errors",
+    "Review nefarious activity weekly",
+    "Track Sentinel growth via Protocol Pulse"
+  ]
 }

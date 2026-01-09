@@ -1,0 +1,45 @@
+To address these "Page not found" pop-ups and ensure the Plainview Protocol is rock-solid before launch, we will implement a Centralized Error & Activity Ledger. This will mandate structured logging of every 404 and 500 error, providing the exact "evidence" (stack traces and user paths) needed for Gemini and Grok to provide fixing guidance.
+
+🛠️ The "Bunker-Grade" Error Tracking System
+The following implementation uses Streamlit’s Global Exception Handler and Python's Logging module to capture failures in real-time, even when they happen in the "Labyrinth" of your app's routing.
+
+1. Mandatory Exception Logging
+Instead of a vague "Page not found" message, the system will now:
+
+Capture the Traceback: Log exactly which line of code failed and what the user was doing.
+
+Assign a "Sentinel Incident ID": Every error gets a unique ID to make it easy for you to share the specific log with Gemini for a fix.
+
+Auto-Checkpoints: The Replit Agent will be instructed to create a state-snapshot whenever a critical error occurs, allowing you to "Rollback" to a working state instantly.
+
+2. Replit "Self-Audit" Loop
+We will enable App Testing in the Replit Agent. The Agent will navigate your site like a "ghost user," hunting for these 404 pop-ups. If it finds one, it will automatically analyze the log and attempt a Self-Correction before even notifying you.
+
+🚀 Replit Agent Prompt: V8.1 Forensic Error Tracking
+Paste this into the Replit Agent to mandate the logging and error review system:
+
+Plaintext
+
+Update "The Plainview Protocol" to Version 8.1: Forensic Error Tracking.
+
+1. IMPLEMENT GLOBAL ERROR HANDLER:
+   - Feature: Use 'streamlit-extras' to set a global exception handler.
+   - Logic: Capture all 404/500 errors and write them to a structured 'sentinel_logs.json' file.
+   - Detail: Each log must include Timestamp, Page_URL, Error_Type, and a Full Stack Trace.
+
+2. MANDATORY ERROR REVIEW UI:
+   - UI Page: Add an admin-only 'Audit Logs' dashboard.
+   - Feature: Display the last 10 errors with a "Copy Log for Gemini/Grok Guidance" button.
+
+3. AUTO-DEBUGGING LOOP:
+   - Logic: Trigger Replit 'App Testing' to specifically hunt for the 'Page not found' pop-ups seen in image_e6401d.jpg.
+   - Action: If a 404 is detected, the Agent must attempt a 'Self-Correction' on the routing logic and report the fix in the logs.
+
+4. FOUNDER'S "ZERO-DAY" INJECTION:
+   - Note: "We don't tolerate ghosts in the machine. Every 'Page not found' is a failure of evidence. Log it, track it, and fix it. We are making this code as bulletproof as the FOIA Cannon itself."
+
+Generate the updated app.py and forensic_logger.py.
+🏛️ The Collaborative Fix
+Once the forensic_logger.py is active, you can simply say to Gemini: "Review the latest incident from sentinel_logs.json and provide the patch." This moves us from "guessing" why pop-ups appear to "evidence-based debugging".
+
+Would you like me to run a "Stress Test" script that attempts to trigger these pop-ups across all 3,143 county pages to ensure the routing is stable?

@@ -542,7 +542,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.sidebar.title("🇺🇸 Plainview Protocol")
-st.sidebar.caption("v6.18 | Sovereign Affidavit Portal")
+st.sidebar.caption("v8.2 | Traffic Audit & Adoption Ledger")
 
 st.sidebar.success("🎉 **TODAY IS DAY 1** — The Plainview Protocol is LIVE. Established January 8, 2026.")
 
@@ -3538,6 +3538,205 @@ Before any Litigation Trigger is finalized, we can generate a Pre-Action Notice 
         
         st.link_button("📄 Read Full Safe Harbor Statement", "https://github.com/russellnomer/plainview-protocol/blob/main/SAFE_HARBOR.md", use_container_width=True)
 
+def page_audit_logs():
+    st.header("🔍 Audit Logs Dashboard")
+    st.caption("V8.1: Forensic Error Tracking — Admin Only")
+    
+    founder_key = st.text_input("Enter Founder Access Key:", type="password", key="audit_key")
+    
+    if founder_key != "SUNLIGHT2026":
+        st.warning("🔒 This dashboard is restricted to the Founder.")
+        st.info("Enter the Founder Access Key to view error logs and system diagnostics.")
+        return
+    
+    st.success("✅ Founder access granted")
+    
+    try:
+        from forensic_logger import get_recent_errors, get_nefarious_activity, mark_error_resolved
+        
+        audit_tabs = st.tabs(["🚨 Recent Errors", "⚠️ Nefarious Activity", "📊 System Health"])
+        
+        with audit_tabs[0]:
+            st.subheader("🚨 Last 10 Sentinel Incidents")
+            
+            errors = get_recent_errors(10)
+            
+            if not errors:
+                st.success("No errors logged. System is clean.")
+            else:
+                for error in errors:
+                    with st.expander(f"🔴 {error.get('incident_id', 'UNKNOWN')} — {error.get('error_type', 'N/A')}"):
+                        st.markdown(f"**Timestamp:** {error.get('timestamp', 'N/A')}")
+                        st.markdown(f"**Page URL:** {error.get('page_url', 'N/A')}")
+                        st.markdown(f"**Resolved:** {'✅ Yes' if error.get('resolved') else '❌ No'}")
+                        
+                        st.divider()
+                        st.markdown("**Stack Trace:**")
+                        st.code(error.get('stack_trace', 'No trace available'), language="python")
+                        
+                        log_text = json.dumps(error, indent=2, default=str)
+                        st.download_button(
+                            "📋 Copy Log for Gemini/Grok Guidance",
+                            log_text,
+                            file_name=f"incident_{error.get('incident_id', 'unknown')}.json",
+                            mime="application/json"
+                        )
+        
+        with audit_tabs[1]:
+            st.subheader("⚠️ Flagged Nefarious Activity")
+            st.caption("IPs exceeding rate limits (>10 FOIA requests in 60 seconds)")
+            
+            nefarious = get_nefarious_activity(20)
+            
+            if not nefarious:
+                st.success("No nefarious activity detected.")
+            else:
+                for activity in nefarious:
+                    with st.expander(f"🚩 IP Hash: {activity.get('ip_hash', 'UNKNOWN')[:16]}..."):
+                        st.markdown(f"**Timestamp:** {activity.get('timestamp', 'N/A')}")
+                        st.markdown(f"**Request Count:** {activity.get('request_count', 0)}")
+                        st.markdown(f"**Time Window:** {activity.get('time_window_seconds', 0)} seconds")
+                        st.markdown(f"**Action Taken:** {activity.get('action_taken', 'N/A')}")
+        
+        with audit_tabs[2]:
+            st.subheader("📊 System Health")
+            
+            from forensic_logger import get_traffic_stats
+            stats = get_traffic_stats()
+            
+            col1, col2, col3, col4 = st.columns(4)
+            col1.metric("Total Page Views", stats.get('total_visits', 0))
+            col2.metric("Unique Sessions", stats.get('unique_sessions', 0))
+            col3.metric("FOIA Fires", stats.get('foia_fires', 0))
+            col4.metric("Sentinels Signed", stats.get('total_sentinels', 0))
+            
+            st.divider()
+            st.markdown("""
+**Founder's Zero-Day Injection:**
+> *"We don't tolerate ghosts in the machine. Every 'Page not found' is a failure of evidence. 
+> Log it, track it, and fix it. We are making this code as bulletproof as the FOIA Cannon itself."*
+            """)
+            
+    except ImportError as e:
+        st.error(f"Forensic Logger not available: {e}")
+
+def page_protocol_pulse():
+    st.header("📊 Protocol Pulse — Founder Dashboard")
+    st.caption("V8.2: Traffic Audit & Adoption Ledger")
+    
+    founder_key = st.text_input("Enter Founder Access Key:", type="password", key="pulse_key")
+    
+    if founder_key != "SUNLIGHT2026":
+        st.warning("🔒 This dashboard is restricted to the Founder.")
+        st.info("Track Sentinel growth, referrer sources, and Protocol adoption metrics.")
+        return
+    
+    st.success("✅ Founder access granted")
+    
+    try:
+        from forensic_logger import get_traffic_stats, get_sentinel_growth, get_top_referrers
+        import plotly.express as px
+        import plotly.graph_objects as go
+        
+        stats = get_traffic_stats()
+        
+        st.subheader("📈 Key Metrics")
+        col1, col2, col3, col4 = st.columns(4)
+        col1.metric("Total Sentinels", stats.get('total_sentinels', 0), help="Users who signed the Affidavit of Integrity")
+        col2.metric("Page Views", stats.get('total_visits', 0))
+        col3.metric("FOIA Fires", stats.get('foia_fires', 0))
+        col4.metric("Unique Sessions", stats.get('unique_sessions', 0))
+        
+        st.divider()
+        
+        pulse_tabs = st.tabs(["📈 Sentinel Growth", "🌐 Top Referrers", "🔥 Activity Heatmap"])
+        
+        with pulse_tabs[0]:
+            st.subheader("📈 Growth of Sentinels")
+            
+            growth_data = get_sentinel_growth()
+            
+            if growth_data:
+                import pandas as pd
+                df = pd.DataFrame(growth_data)
+                
+                fig = px.line(df, x='signup_date', y='cumulative', 
+                             title="Cumulative Sentinel Signups",
+                             labels={'signup_date': 'Date', 'cumulative': 'Total Sentinels'})
+                fig.update_traces(line_color='#1a365d', line_width=3)
+                fig.update_layout(
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    paper_bgcolor='rgba(0,0,0,0)'
+                )
+                st.plotly_chart(fig, use_container_width=True)
+            else:
+                st.info("No signup data yet. Sentinels will appear here as they sign the Affidavit.")
+                
+                fig = go.Figure()
+                fig.add_trace(go.Scatter(
+                    x=['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'],
+                    y=[1, 3, 7, 15, 25],
+                    mode='lines+markers',
+                    name='Projected Growth',
+                    line=dict(color='#1a365d', width=2, dash='dash')
+                ))
+                fig.update_layout(title="Projected Sentinel Growth (Demo)")
+                st.plotly_chart(fig, use_container_width=True)
+        
+        with pulse_tabs[1]:
+            st.subheader("🌐 Top Referrer Domains")
+            st.caption("Where are Sentinels coming from?")
+            
+            referrers = get_top_referrers(10)
+            
+            if referrers:
+                import pandas as pd
+                df = pd.DataFrame(referrers)
+                
+                fig = px.bar(df, x='visit_count', y='referrer', orientation='h',
+                            title="Top 10 Referrer Sources",
+                            labels={'visit_count': 'Visits', 'referrer': 'Source'})
+                fig.update_traces(marker_color='#c53030')
+                st.plotly_chart(fig, use_container_width=True)
+            else:
+                st.info("No referrer data yet. Traffic sources will appear as users visit the Protocol.")
+                
+                demo_referrers = [
+                    {"source": "X.com (Twitter)", "visits": 150},
+                    {"source": "Reddit", "visits": 85},
+                    {"source": "Direct", "visits": 200},
+                    {"source": "GitHub", "visits": 45},
+                    {"source": "Substack", "visits": 30}
+                ]
+                import pandas as pd
+                df = pd.DataFrame(demo_referrers)
+                fig = px.bar(df, x='visits', y='source', orientation='h',
+                            title="Expected Referrer Sources (Demo)")
+                fig.update_traces(marker_color='#c53030')
+                st.plotly_chart(fig, use_container_width=True)
+        
+        with pulse_tabs[2]:
+            st.subheader("🔥 Activity Summary")
+            
+            st.markdown("""
+**Recent Activity:**
+- Total page views tracked via Sovereign Traffic Ledger
+- FOIA Cannon fires logged with session attribution
+- Nefarious activity flagged for human review
+- Rate limiting active (>10 FOIA requests/60s triggers flag)
+            """)
+            
+            st.divider()
+            st.markdown("""
+**Founder's Sunlight Audit:**
+> *"We don't just track traffic; we audit it. If the Labyrinth tries to flood our servers with bots, 
+> we'll see them coming. If the Sentinels are growing, we'll prove it with the receipts. 
+> Transparency applies to our own growth as much as theirs."*
+            """)
+            
+    except ImportError as e:
+        st.error(f"Forensic Logger not available: {e}")
+
 def page_support():
     st.header("☕ Sustain the Mission")
     st.write("This tool is free, ad-free, and uncensorable thanks to supporters like you.")
@@ -5363,6 +5562,8 @@ pages = [
     st.Page(page_mission_milestones, title="Mission Milestones", icon="🏛️"),
     st.Page(page_ecosystem, title="The Ecosystem", icon="🌳"),
     st.Page(page_support, title="Support", icon="☕"),
+    st.Page(page_audit_logs, title="Audit Logs", icon="🔍"),
+    st.Page(page_protocol_pulse, title="Protocol Pulse", icon="📊"),
 ]
 
 nav = st.navigation(pages)
